@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <link rel="stylesheet" href="/style.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <script type="importmap">
+    {
+      "imports": {
+        "kaplay": "https://cdn.skypack.dev/kaplay"
+      }
+    }
+  </script>
+  <title>CATastrophe2</title>
+</head>
+
+<body>
+
+ <div id="stars"></div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="left-dropdown">
+        <button class="menu-trigger">
+          <img src="/assets/images/Niels2.png" class="home-icon" alt="Menu">
+        </button>
+        <div class="left-menu">
+          <a href="https://mkb0020.onrender.com" class="menu-item">Home</a>
+          <a href="https://mkb0020.github.io/" class="menu-item">Javascript Projects</a>
+          <a href="https://mkb0020.github.io/Toolkit.html" class="menu-item">Schrödinger's Toolbox</a>
+          <a href="https://mkb0020.onrender.com/resume" class="menu-item">Resume</a>
+          <a href="https://mkb0020.onrender.com/contact" class="menu-item">Contact</a>
+          <a href="https://mkb0020.onrender.com/review" class="menu-item">Review CATastrophe 2</a>
+          <a href="https://mkb0020.onrender.com/support" class="menu-item">Report an Issue</a>
+          <a href="https://mkb0020.onrender.com/admin_login" class="menu-item">Admin</a>
+        </div>
+      </div>
+
+      <a href="/"><div class="logo">♡ mkb0020</div></a>
+
+      <div class="help-dropdown">
+        <button class="help-icon" id="helpBtn"><div class="question-mark">?</div></button>
+        <div class="dropdown-menu">
+          <button id="openHelp">About This Player</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="helpModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">🐱 CATastrophe 2</h1>
+        <button class="modal-close" id="closeModal">X</button>
+      </div>
+      <div class="modal-body">
+        <blockquote>
+          <p><em>"Nature has no reverence towards life. Nature treats life as though it were the most valueless thing in the world....<br>
+          Nature does not act by purposes."</em><br>
+          <cite>— Erwin Schrödinger</cite></p>
+        </blockquote>         
+            <h3> Welcome to Schrödinger's Cat Café! </h3>
+            <p>
+                The café is in a state of quantum catastrophe — simultaneously fine and <em>very much not fine</em>. </p>
+                <p>The vibe is off. And the sass levels are dangerously high. </p>
+                <p><strong>Your mission:</strong> Stretch your toe beans, sharpen those claws. Grab the catnip. And help the cats collapse the wavefunction in the right direction and save the café from becoming... unalive. </p>
+            <h5>🎮 How to Play</h5>
+            <ul>
+                <li><strong>Move Left / Right:</strong> Arrow Keys</li>
+                <li><strong>Jump:</strong> SPACE</li>
+                <li><strong>Pause & Audio Controls:</strong> Top‑left corner</li>
+            </ul>
+            <p>
+                Your goal in each level is simple: platform your way through the café, cause maximum cup‑related destruction, avoid (or stomp!) enemies, and reach the Cat Tower to finish the level.
+            </p>
+            <h5>Platformer Levels</h5>
+            <h6> Items </h6>
+            <ul>
+                <li><strong>Knock Cups Off Platforms:</strong> Just run into them — gravity does the rest!</li>
+                <li><strong>Fish Bones:</strong> Extra points for your trouble.</li>
+                <li><strong>Tuna Cans:</strong> Restores HP. Delicious and nutritious.</li>
+                <li><strong>Milk Bottles:</strong> Grants an extra life. Calcium bonus!</li>
+                <li><strong>Catnip:</strong> activate <em>zoomies</em> </li>
+            </ul>
+            <h6> Enemies </h6>
+            <ul>
+                <li><strong>Falling Cucumbers:</strong> The ancient feline nemesis. Avoid at all costs.</li>
+                <li><strong>Lasers:</strong> They’re not for chasing — dodge them!</li>
+                <li><strong>Rats:</strong> You can stomp these squeaky foes for extra points.</li>
+            </ul>
+            <p>
+               <!--Defeat <strong>7 rats</strong> and you’ll earn a quantum upgrade:  
+                <strong>+5 points</strong> to one stat of your choice — <em>Attack</em>, <em>Defense</em>, or <em>Speed</em>.-->
+            </p>
+            <h6>Level Completion</h6>
+            <p>
+                Reach the <strong>Cat Tower</strong> at the end of each level and leap onto it to finish.  
+            </p>
+            <h5>⚔️ Boss Battles ⚔️</h5>
+            <p>
+                When you reach a boss, the game shifts into a turn‑based showdown.  
+                Choose your move, then the boss retaliates. Your <strong>Speed</strong> stat determines who acts first — because even in quantum combat, fast paws win fights.
+            </p>
+            <ul>
+                <li>Reduce the boss’s HP to <strong>0</strong> to win the battle.</li>
+                <li>Stay strategic — your stats matter!</li>
+            </ul>
+            <!--<h5>🔮 Secrets & Collectibles</h5>
+            <ul>
+                <li><strong>The Three Neko States:</strong> Collect all three to unlock a special thing!</li>
+            </ul>-->
+
+        <p class="mission-text"><strong>Good luck, brave cat warrior!</strong><br>
+        The fate of Schrödinger's Cat Café is now in your <em>toe beans</em>! 🐾</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="JS-page">
+    <div class="Game-content">
+      <canvas id="gameCanvas"></canvas>
+    </div>
+  </div>
+
+
+  <script type="module" src="modules/game.js"></script>   
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const helpBtn = document.getElementById('helpBtn');
+      const modal = document.getElementById('helpModal');
+      const closeBtn = document.getElementById('closeModal');
+
+      helpBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+      });
+
+    
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+  </script>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="/modules/utils/KittyCore.js"></script>
+  <script>
+        const starsDiv = document.getElementById('stars');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = star.style.height = Math.random() * 2 + 'px';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 4 + 's';
+            starsDiv.appendChild(star);
+        }
+  </script>
+</body>
+</html>
