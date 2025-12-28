@@ -1,6 +1,8 @@
 // bossHelpers.js - BOSS BATTLE SETUP AND ANIMATIONS
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
-import { createVolumeToggle, stopAllMusic, startBossMusic } from '../utils/audioControls.js';
+import { createVolumeToggle, stopAllMusic, startBossMusic } from '../helpers/kittyHelpers.js';
+import { rainbowCat, SPRITE_FRAMES } from '../config/characters.js';
+
 
 export function setupBossMusic() {
   startBossMusic();
@@ -18,8 +20,9 @@ export function addBossBackground(bossConfig) {
 }
 
 export function addBattleSprites(character, bossConfig) {
+  const prefix = character.name; 
   const playerGlow = add([
-    sprite("glow"),
+    sprite("characterGlow"),
     pos(260, 240),
     anchor("center"),
     scale(1.05),
@@ -29,7 +32,7 @@ export function addBattleSprites(character, bossConfig) {
   ]);
 
   const playerSprite = add([
-    sprite(character.sprites.battle),
+    sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.battle }),
     pos(260, 240),
     anchor("center"),
     scale(1),
@@ -481,10 +484,7 @@ export function animateDefeat(sprite, glow, isPlayer) {
   );
 }
 
-// ============================================================================
-// FANCY  ANIMATIONS
-// ============================================================================
-
+// ================================= FANCY  ANIMATIONS ===========================================
 // ========================= GENERAL =========================
 export function animateKaBAM(target) {
   shake(20);
@@ -1354,7 +1354,6 @@ export function animatePoisonAttack(boss, hero) {
 // ========================= FINISH HIM =========================
 
 // =================== CAT ARROW ===================
-
   export function animateCatArrow(hero, boss) {
     const lock = add([ // LOCK ON
       sprite("lock", { anim: "glitch" }),
@@ -1839,7 +1838,7 @@ export function animatePoisonAttack(boss, hero) {
           tween(rifle.pos, aimingPos, 0.8, (p) => rifle.pos = p, easings.easeInOutQuad);
           
           const lock = add([ // LOCK ON TARGET
-              sprite("lock2", { anim: "glitch" }),
+              sprite("lock", { anim: "glitch" }),
               pos(boss.pos.add(vec2(-90, -70))),
               scale(2),
               opacity(0),
