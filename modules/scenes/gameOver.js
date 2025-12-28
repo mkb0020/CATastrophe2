@@ -1,6 +1,6 @@
 // gameOver.js
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
-import { createVolumeToggle, stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../utils/audioControls.js';
+import { createVolumeToggle, stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../helpers/kittyHelpers.js';
 import{getCharacterStats} from '../config/characters.js'; 
 
 export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
@@ -11,11 +11,10 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   stopAllMusic(); 
   startGameOverMusic();
  
-
   const darkRedOverlay = add([
     rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
-    color(0, 0, 0), // #400003
+    color(0, 0, 0),
     z(1000),
     opacity(1),
     fixed()
@@ -27,24 +26,55 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     destroy(darkRedOverlay);
   });
 
-  const bg = add([ // BG
-    sprite('gameOverBG'),
+  const bg = add([ // 
+    sprite('menuBG'),
     pos(0, 0),
     scale(SCREEN_W / 1000, SCREEN_H / 480),
     z(0),
     opacity(0)
   ]);
 
-  //const textPanel = add([ // TEXT PANEL
-   // rect(750, 145, { radius: 40 }),
-   // pos(125, 185),
-   // color(17, 12, 30),
-   // outline(4, rgb(144,144,192)),
-   // z(1),
-   // opacity(0)
-  //]);
+  const darkOverlay = add([
+    rect(SCREEN_W, SCREEN_H),
+    pos(0, 0),
+    color(0, 0, 0),
+    opacity(0),
+    z(1)
+  ]);
 
+  const textPanel = add([ // TEXT PANEL
+    rect(750, 320, { radius: 40 }),
+    pos(125, 90),
+    color(17, 12, 30),
+    outline(4, rgb(144,144,192)),
+    z(2),
+    opacity(0)
+  ]);
 
+  // "GAME OVER" 
+  const gameOverTitle = add([
+    text("GAME OVER", { 
+      size: 60, 
+      font: "science" 
+    }),
+    pos(SCREEN_W / 2, 150),
+    anchor("center"),
+    color(Color.fromHex(Colors.NuclearFuscia)),
+    z(3),
+    opacity(0)
+  ]);
+
+  const gameOverTitleShadow = add([
+    text("GAME OVER", { 
+      size: 60, 
+      font: "science" 
+    }),
+    pos(SCREEN_W / 2 + 2, 152),
+    anchor("center"),
+    color(Color.fromHex(Colors.Black)),
+    z(2),
+    opacity(0)
+  ]);
 
   const disappointText = add([
     text("YOU'VE DISAPPOINTED EVERYONE", { 
@@ -54,11 +84,11 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     pos(SCREEN_W / 2, 230),
     anchor("center"),
     color(Color.fromHex(Colors.White)),
-    z(2),
+    z(3),
     opacity(0)
   ]);
 
-    const disappointText2 = add([
+  const disappointText2 = add([
     text("YOU'VE DISAPPOINTED EVERYONE", { 
       size: 38, 
       font: "science" 
@@ -66,7 +96,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     pos(SCREEN_W / 2 + 1, 231),
     anchor("center"),
     color(Color.fromHex(Colors.Black)),
-    z(1),
+    z(2),
     opacity(0)
   ]);
 
@@ -77,31 +107,29 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
         size: 22, 
         font: "science" 
       }),
-      pos(SCREEN_W / 2, 220),
+      pos(SCREEN_W / 2, 270),
       anchor("center"),
       color(200, 200, 200),
-      z(2),
+      z(3),
       opacity(0)
     ]);
   }
 
-
   const scoreText = add([
     text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2, 285),
+    pos(SCREEN_W / 2, 310),
     anchor("center"),
     color(219, 226, 233),
-    z(2),
+    z(3),
     opacity(0)
   ]);
 
-
-    const scoreText2 = add([
+  const scoreText2 = add([
     text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2 + 1, 286),
+    pos(SCREEN_W / 2 + 1, 311),
     anchor("center"),
     color(0, 0, 0),
-    z(1),
+    z(2),
     opacity(0)
   ]);
 
@@ -111,7 +139,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     color(0, 0, 0),
     outline(3, rgb(144,144,192)),
     area(),
-    z(1),
+    z(3),
     opacity(0),
     "restartBtn"
   ]);
@@ -121,7 +149,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     pos(140, 28),
     anchor("center"),
     color(255, 255, 255),
-    z(3)
+    z(4)
   ]);
 
   const restartBtnShadow = restartBtn.add([
@@ -129,7 +157,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     pos(141, 29),
     anchor("center"),
     color(0, 255, 255),
-    z(2)
+    z(3)
   ]);
 
   restartBtn.onClick(() => {
@@ -153,7 +181,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     color(0, 0, 0),
     outline(3, rgb(144,144,192)),
     area(),
-    z(1),
+    z(3),
     opacity(0),
     "menuBtn"
   ]);
@@ -163,7 +191,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     pos(140, 28),
     anchor("center"),
     color(255, 255, 255),
-    z(3)
+    z(4)
   ]);
 
   const menuBtnShadow = menuBtn.add([
@@ -171,7 +199,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     pos(141, 29),
     anchor("center"),
     color(0, 255, 255),
-    z(2)
+    z(3)
   ]);
 
   menuBtn.onClick(() => {
@@ -192,7 +220,16 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   wait(0.5, () => {
     tween(0, 1, 1.2, (o) => {
       bg.opacity = o;
- 
+    }, easings.easeOutQuad);
+    
+    tween(0, 0.85, 1.2, (o) => {
+      darkOverlay.opacity = o;
+    }, easings.easeOutQuad);
+    
+    tween(0, 1, 1.5, (o) => {
+      textPanel.opacity = o;
+      gameOverTitle.opacity = o;
+      gameOverTitleShadow.opacity = o;
       disappointText.opacity = o;
       disappointText2.opacity = o;
       if (reasonText) reasonText.opacity = o;
