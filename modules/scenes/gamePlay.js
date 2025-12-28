@@ -27,7 +27,7 @@ import {
   setupLevelPause, 
   setupOneWayPlatforms
 } from '../helpers/levelHelpers.js';
-import { createVolumeToggle } from '../utils/audioControls.js';
+import { createVolumeToggle } from '../helpers/kittyHelpers.js';
 
 
 function createUnifiedLevel(levelId, data) {
