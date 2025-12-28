@@ -1,11 +1,9 @@
-// levelHelpers.js - Updated with new items and cleaner structure
-import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
+// levelHelpers.js
+import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from '../config/gameConfig.js';
 import { spawnEnemy, handlePlayerEnemyCollision, updateEnemies } from '../systems/levelSystem.js';
-import { createVolumeToggle, stopAllMusic, startLevelMusic, startBossMusic, startFinalBossMusic} from '../utils/audioControls.js';
-import { setupPauseSystem } from '../utils/pauseSystem.js';
+import { setupPauseSystem,createVolumeToggle, stopAllMusic, startLevelMusic, startBossMusic, startFinalBossMusic} from '../helpers/kittyHelpers.js';
 import { animateGhostPoof } from '../helpers/bossHelpers.js';
-import { rainbowCat } from '../config/characters.js';
-
+import { rainbowCat, SPRITE_FRAMES } from '../config/characters.js';
 
 function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {
   console.log('☠️ No lives remaining - GAME OVER');
@@ -52,7 +50,6 @@ function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, charact
   });
 }
 
-
 export function updatePlayerAnim(player, character) {
   let newState;
   const grounded = player.isGrounded();
@@ -68,28 +65,23 @@ export function updatePlayerAnim(player, character) {
   if (newState !== player.curState) {
     player.curState = newState;
     
-    // Use rainbow sprites if catnip is active, otherwise use normal character
-    const activeCharacter = player.rainbowActive ? rainbowCat : character;
+    const activePrefix = player.rainbowActive ? "rainbowCat" : character.name;
     
     if (newState === 'walk') {
-      player.use(sprite(activeCharacter.sprites.walk));
+      player.use(sprite(`${activePrefix}Walk`));
       player.play("walk");
     } else if (newState === 'jump') {
-      player.use(sprite(activeCharacter.sprites.jump));
+      player.use(sprite(`${activePrefix}Platformer`, { frame: SPRITE_FRAMES.jump }));
     } else {
-      const idleSpr = activeCharacter.sprites.idle || activeCharacter.sprites.stand;
-      player.use(sprite(idleSpr));
+      player.use(sprite(`${activePrefix}Platformer`, { frame: SPRITE_FRAMES.idle }));
       if (player.curAnim()) player.stop();
     }
-
   }
 }
-
 
 export function setupLevelMusic(levelConfig) {
   startLevelMusic(levelConfig.levelMusic);
 }
-
 
 export function addLevelEnvironment(levelConfig) {
   const bg = add([
@@ -100,7 +92,6 @@ export function addLevelEnvironment(levelConfig) {
     "background"
   ]);
 
-
   const yeet = add([
         sprite('yeet'),
         pos(-960, 265),
@@ -108,22 +99,20 @@ export function addLevelEnvironment(levelConfig) {
         z(2),
       ]);
 
-
-
   levelConfig.platforms.forEach(platform => {
     add([
       rect(platform.width, platform.height, { radius: 5 }),
       pos(platform.x, platform.y),
-      color(rgb(144, 144, 192)),
-      outline(3, rgb(144, 144, 192)),
+      color(rgb(97, 9, 165)),
+      opacity(0.7),
       z(0)
     ]);
 
-    const topHeight = platform.height * 0.3;
+    const topHeight = platform.height * 0.45;
     add([
       rect(platform.width, topHeight, { radius: [5, 5, 0, 0] }), 
       pos(platform.x, platform.y),
-      color(rgb(103,254,189)),
+      color(rgb(0,255,255)),
       z(1)
     ]);
 
@@ -139,21 +128,20 @@ export function addLevelEnvironment(levelConfig) {
 
   });
 
-
   levelConfig.GroundSegments.forEach(GroundSegment => {
     add([
       rect(GroundSegment.width, GroundSegment.height, { radius: 0 }),
       pos(GroundSegment.x, GroundSegment.y),
-      color(rgb(42, 52, 57)),
-      outline(5, rgb(42, 52, 57)),
+      color(rgb(43, 4, 73)),
+      outline(2, rgb(43, 4, 73)),
       z(0)
     ]);
 
-    const topHeight = GroundSegment.height * 0.2;
+    const topHeight = GroundSegment.height * 0.4;
     add([
       rect(GroundSegment.width, topHeight),
       pos(GroundSegment.x, GroundSegment.y),
-      color(rgb(24, 20, 41)),
+      color(rgb(57, 5, 97)),
       z(1)
     ]);
 
@@ -169,30 +157,16 @@ export function addLevelEnvironment(levelConfig) {
 
   });
 
-  //const ground = levelConfig.groundPlatform;
-
-    add([
+  add([
     rect(15000, 480),
     pos(-1000, 0),
     color(0, 0, 0),
-    opacity(0.4),
+    opacity(0.1),
     z(0)
   ]);
 
- // add([
-  //  rect(ground.width, ground.height),
-  //  pos(ground.x, ground.y),
-  //  area(),
-  //  body({ isStatic: true }),
-  //  color(rgb(47, 54, 61)),
-  //  outline(5, rgb(56, 63, 73)),
-  //  "ground"
-  //]);
-
   return { bg };
 }
-
-
 
 export function setupOneWayPlatforms(player) {
   player.onCollide("oneWayPlatform", (platform) => {
@@ -222,7 +196,6 @@ export function setupOneWayPlatforms(player) {
     });
   });
 }
-
 
 export function addUIBackgrounds() {
   add([
@@ -295,8 +268,7 @@ export function addVictoryArea(levelConfig) {
     "arrow"
   ]);
 
-
-let pulseTime = 0;
+  let pulseTime = 0;
 
       arrow.onUpdate(() => {
         pulseTime += dt();
@@ -304,7 +276,6 @@ let pulseTime = 0;
         const pulseScale = 0.7 + Math.sin(pulseTime * 6) * 0.04; 
         arrow.scale = vec2(pulseScale);
         });
-
 
   const victoryPlatform = add([
     rect(5, 5),
@@ -364,7 +335,6 @@ export function addCups(levelConfig) {
     }
   });
 }
-
 
 export function addSpecialItems(levelConfig) {
   const eligiblePlatforms = levelConfig.platforms.filter(p => p.width >= 200);
@@ -429,12 +399,11 @@ export function addSpecialItems(levelConfig) {
   }
 }
 
-
-
-
 export function createPlayer(levelConfig, character, startHP) {
+  const prefix = character.name;
+
   const player = add([
-    sprite(character.sprites.standSmall),
+    sprite(`${prefix}Platformer`, { frame: SPRITE_FRAMES.idle }),
     pos(levelConfig.playerSpawn.x, levelConfig.playerSpawn.y - 50),
     area(),
     body(),
@@ -450,6 +419,7 @@ export function createPlayer(levelConfig, character, startHP) {
       invulnerable: false,
       invulnerableTime: 0,
       catnipActive: false,
+      rainbowActive: false,
       curState: 'idle'
     },
     "player"
@@ -457,7 +427,6 @@ export function createPlayer(levelConfig, character, startHP) {
 
   return player;
 }
-
 
 export function setupPlayerControls(player, gameStateGetter) {
   onKeyDown("left", () => {
@@ -489,10 +458,7 @@ export function setupPlayerControls(player, gameStateGetter) {
   });
 }
 
-
 export function createUnifiedHUD(player, showDebug = true) {
-
-
 
   const scoreText = add([
     text(`Score: 0`, { size: 24, font: "science" }),
@@ -559,7 +525,6 @@ export function createUnifiedHUD(player, showDebug = true) {
   return { scoreText, hpText, livesText, timerText, clock, debugText };
 }
 
-
 export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
   hudElements.scoreText.text = `Score: ${score}`;
   hudElements.hpText.text = `HP: ${player.hp}/${player.maxHP}`;
@@ -573,9 +538,7 @@ export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
   if (hudElements.debugText) {
     hudElements.debugText.text = `X: ${Math.round(player.pos.x)}  Y: ${Math.round(player.pos.y)}`;
   }
-
 }
-
 
 export function setupVictoryCollision(player, levelName, nextBoss, character, gameStateGetter, gameStateSetter, scoreGetter, levelConfig, bossSpriteName) {
   player.onCollide("victoryPlatform", async (platform) => {
@@ -601,7 +564,8 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
       
       player.vel.x = 0;
       player.vel.y = 0;
-      player.use(sprite(character.sprites.standSmall)); 
+      const prefix = character.name;
+      player.use(sprite(`${prefix}Platformer`, { frame: SPRITE_FRAMES.idle })); 
       
       const arrows = get("arrow");
       arrows.forEach(a => destroy(a));
@@ -638,32 +602,28 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
       
       await wait(0.2);
       
-      const exclamationBubble = add([
-        sprite('exclamationBubble'),
-        pos(bossX - 45, 65),
-        scale(1.8),
-        z(15),
-        "bubble"
-      ]);
+  const exclamationBubble = add([
+    sprite('bubbles', { frame: BUBBLE_FRAMES.exclamation }),
+    pos(bossX - 45, 65),
+    scale(1.8),
+    z(15),
+    "bubble"
+  ]);
       
       await wait(0.7);
       
-      play('meow02');
-      const questionBubble = add([
-        sprite('questionBubble'),
-        pos(levelConfig.length - 540, 130),
-        scale(1.8),
-        z(12),
-        "bubble"
-      ]);
+  play('meow02');
+  const questionBubble = add([
+    sprite('bubbles', { frame: BUBBLE_FRAMES.question }),
+    pos(levelConfig.length - 540, 130),
+    scale(1.8),
+    z(12),
+    "bubble"
+  ]);
       
       await wait(1.0);
       
-
-      
-
-
-        const levelShift = add([
+      const levelShift = add([
           sprite('levelShiftStart'),
           pos(0,0), 
           scale(10,10), 
@@ -673,29 +633,19 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
           "transition"
         ]);
         
-        console.log("Level shift created:", levelShift);
-        console.log("Has sprite component?", levelShift.sprite);
-        console.log("Can play animation?", typeof levelShift.play);
-
-        levelShift.play("glitch");
-        console.log("Animation started!");
-
-      
+      levelShift.play("glitch");
       
       await wait(2);
       
-     
       go(nextBoss, {
         level: levelName,
         score: scoreGetter(),
         character: character,
         playerHP: player.hp,
-
       });
     }
   });
 }
-
 
 export function setupCupCollection(player, scoreGetter, scoreSetter) {
   player.onCollide("cup", (cup) => {
@@ -721,12 +671,11 @@ export function setupCupCollection(player, scoreGetter, scoreSetter) {
   });
 }
 
-
 export function setupSpecialItemCollection(player, livesGetter, livesSetter, scoreGetter, scoreSetter) {
  
-  function showBubble(bubbleSprite) {
+  function showBubble(bubbleFrame) {
     const bubble = add([
-      sprite(bubbleSprite),
+      sprite('bubbles', { frame: bubbleFrame }),
       pos(player.pos.x + 160, player.pos.y - 20), 
       anchor("center"),
       z(100), 
@@ -735,59 +684,47 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
       "bubble"
     ]);
     
-   
     tween(bubble.opacity, 1, 0.2, (val) => bubble.opacity = val);
     tween(bubble.scale.x, 1, 0.3, (val) => { bubble.scale.x = val; bubble.scale.y = val; });
     
-  
     tween(bubble.pos.y, bubble.pos.y - 20, 1, (val) => bubble.pos.y = val);
     
-   
     wait(1, () => {
       tween(bubble.opacity, 0, 0.3, (val) => bubble.opacity = val, easings.easeInQuad);
       wait(0.3, () => destroy(bubble));
     });
   }
-  
 
   player.onCollide("fishBones", (item) => {
     destroy(item);
     scoreSetter(scoreGetter() + 10);
-    console.log('🐟 Collected Fish Bones! +10 points');
     play("happyMeow", { volume: 0.4 });
-    showBubble("plusTenBubble");
+    showBubble(BUBBLE_FRAMES.plusTen);
   });
   
-
   player.onCollide("tunaCan", (item) => {
     destroy(item);
     const healAmount = 25;
     player.hp = Math.min(player.hp + healAmount, player.maxHP);
-    console.log(`🥫 Collected Tuna Can! +${healAmount} HP`);
     play("powerUp", { volume: 0.4 });
-    showBubble("plusHPBubble");
+    showBubble(BUBBLE_FRAMES.plusHP);
   });
   
- 
   player.onCollide("milkBottle", (item) => {
     destroy(item);
     livesSetter(livesGetter() + 1);
-    console.log(`🥛 Collected Milk Bottle! +1 Life`);
     play("extraLife", { volume: 0.5 });
-    showBubble("heartBubble");
+    showBubble(BUBBLE_FRAMES.heart);
   });
   
-
   player.onCollide("catnip", (item) => {
     destroy(item);
-    console.log('🌿 CATNIP ACTIVATED!');
-    //play("catnipTrack", { volume: 0.6 });
     player.catnipActive = true;
     player.invulnerable = true;
     player.speed = player.baseSpeed * 1.5;
     
     player.rainbowActive = true;
-    showBubble("starBubble");
+    showBubble(BUBBLE_FRAMES.star);
 
     wait(15, () => {
       player.catnipActive = false;
@@ -795,13 +732,14 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
       player.speed = player.baseSpeed;
       player.rainbowActive = false;
 
-      
       player.curState = null;
-
-      console.log('🌿 Catnip wore off');
     });
   });
 }
+
+
+
+
 
 export function setupTimer(levelConfig, gameStateGetter, gameStateSetter, timeLeftGetter, timeLeftSetter, levelName, scoreGetter, livesGetter, livesSetter, characterGetter) {
   loop(1, () => {
@@ -810,7 +748,6 @@ export function setupTimer(levelConfig, gameStateGetter, gameStateSetter, timeLe
       timeLeftSetter(newTime);
       
       if (newTime <= 0) {
-        console.log('⏰ TIME RAN OUT!');
         gameStateSetter(false);
         
         const currentLives = livesGetter();
@@ -833,7 +770,6 @@ export function setupTimer(levelConfig, gameStateGetter, gameStateSetter, timeLe
   });
 }
 
-
 export function setupFallDetection(
   player,
   gameStateGetter,
@@ -850,8 +786,6 @@ export function setupFallDetection(
 
       const currentLives = livesGetter();
       const character = characterGetter?.();
-      console.log(`🎮 You had: ${currentLives} currentLives`);
-
 
       if (currentLives > 0) {
         go("youDied", {
@@ -872,8 +806,6 @@ export function setupFallDetection(
     }
   });
 }
-
-
 
 export function setupCucumberSpawner(levelConfig, gameStateGetter) {
   if (!levelConfig.enemies.cucumbers.enabled) return;
@@ -936,14 +868,12 @@ export function setupCucumberSpawner(levelConfig, gameStateGetter) {
   });
 }
 
-
 export function setupCucumberCollision(player, levelConfig, gameStateGetter, gameStateSetter, levelName, scoreGetter, livesGetter, livesSetter, characterGetter) {
   player.onCollide("cucumber", (cucumber) => {
     if (!player.invulnerable && !player.catnipActive) {
       player.hp -= cucumber.damage;
       player.invulnerable = true;
       
-      console.log(`🥒 Hit by cucumber! HP: ${player.hp}`);
       play("takeHit", { volume: 0.4 });
       destroy(cucumber);
       
@@ -1093,7 +1023,6 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
   });
 }
 
-
 export function setupRatCollision(player, levelConfig, gameStateGetter, gameStateSetter, levelName, scoreGetter, scoreSetter, livesGetter, livesSetter, characterGetter) {
   player.onCollide("rat", (rat) => {
     const playerBottom = player.pos.y + 40;
@@ -1106,7 +1035,6 @@ export function setupRatCollision(player, levelConfig, gameStateGetter, gameStat
       
       scoreSetter(scoreGetter() + 5);
       player.jump(400);
-      console.log('🐀 Stomped a rat! +5 points');
       play("ratKill", { volume: 0.4 });
       
     } else {
@@ -1114,7 +1042,6 @@ export function setupRatCollision(player, levelConfig, gameStateGetter, gameStat
         player.hp -= 10;
         player.invulnerable = true;
         
-        console.log(`🐀 Rat hit! HP: ${player.hp}`);
         play("takeHit", { volume: 0.4 });
         
         const flashInterval = setInterval(() => {
@@ -1149,7 +1076,6 @@ export function setupRatCollision(player, levelConfig, gameStateGetter, gameStat
     }
   });
 }
-
 
 export function addLaserBeams(levelConfig) {
   if (!levelConfig.enemies.lasers.enabled) return;
@@ -1215,7 +1141,6 @@ export function setupLaserCollision(player, levelConfig, gameStateGetter, gameSt
       player.hp -= 5;
       player.invulnerable = true;
       
-      console.log(`🔴 Hit by laser! HP: ${player.hp}`);
       play("takeHit", { volume: 0.4 });
       
       const flashInterval = setInterval(() => {
@@ -1231,7 +1156,6 @@ export function setupLaserCollision(player, levelConfig, gameStateGetter, gameSt
       if (player.hp <= 0) {
         gameStateSetter(false);
         const currentLives = livesGetter();
-        console.log(`🎮 You had: ${currentLives} currentLives`);
 
         const character = characterGetter ? characterGetter() : null;
         
@@ -1247,19 +1171,14 @@ export function setupLaserCollision(player, levelConfig, gameStateGetter, gameSt
         } else {
           playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character);
         }
-
-
-
       }
     }
   });
 }
 
-
 export function setupLevelPause(gameActiveGetter, gameActiveSetter, onQuitCallback = null) {
   return setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallback);
 }
-
 
 export function setupPlayerCamera(player, character, bg, gameStateGetter) {
   player.onUpdate(() => {
