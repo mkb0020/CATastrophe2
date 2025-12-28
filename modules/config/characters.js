@@ -1,38 +1,56 @@
 // characters.js
-function getCharacterSpritePaths(catName) { // HELPER TO GET IMAGE PATHS
+function getCharacterSpritePaths(catName) {
   const base = 'assets/images/cats';
   return {
-    battle: `${base}/battle/${catName}.png`,
-    catch: `${base}/catch/${catName}.png`,
-    cup00: `${base}/cup/00/${catName}.png`,
-    cup01: `${base}/cup/01/${catName}.png`,
-    cup02: `${base}/cup/02/${catName}.png`,
-    jump: `${base}/jump/${catName}.png`,
-    king00: `${base}/king/00/${catName}.png`,
-    king01: `${base}/king/01/${catName}.png`,
-    king02: `${base}/king/02/${catName}.png`,
-    menu: `${base}/sit/img/${catName}.png`,
-    sitSmall: `${base}/sit/small/${catName}.png`,
-    sitLookForwardRegular: `${base}/sit/forward/regular/${catName}.png`,
-    sitLookForwardMad: `${base}/sit/forward/mad/${catName}.png`,
-    sitLookBackRegular: `${base}/sit/back/regular/${catName}.png`,
-    sitLookBackMad: `${base}/sit/back/mad/${catName}.png`,
-    idle: `${base}/stand/idle/${catName}.png`,
-    standRegular: `${base}/stand/regular/${catName}.png`,
-    standMad: `${base}/stand/mad/${catName}.png`,
-    standSmall: `${base}/stand/small/${catName}.png`,
-    pounce: `${base}/pounce/${catName}.png`,
-    select: `${base}/select/${catName}.png`,
-    sleep: `${base}/sleep/${catName}.png`,
-    stretch: `${base}/stretch/${catName}.png`,
-    wakeUp: `${base}/wakeUp/${catName}.png`,
-    walk: `${base}/walk/${catName}.png`,
-    glow: `${base}/battle/Glow.png`,
-    glitchBlue: `${base}/sit/GlitchCatBlue.png`,
-    glitchRed: `${base}/sit/GlitchCatRed.png`
-
+    sheet: `${base}/${catName}.png`,
+    sheet2: `${base}/${catName}2.png`,
+    walk: `${base}/${catName}3.png`,
+    glow: `${base}/Glow.png`,
+    glitchBlue: `${base}/GlitchCatBlue.png`,
   };
 }
+
+// FRAME MAPPING (6x3 grid = 18 frames)
+// Row 1: [0]battle [1]catch [2]cup00 [3]cup01 [4]cup02 [5]king00
+// Row 2: [6]king01 [7]king02 [8]wakeUp [9]menu [10]sitLookBackMad [11]sitLookBackRegular
+// Row 3: [12]sitLookForwardMad [13]sitLookForwardRegular [14]sitSmall [15]sleep [16]standMad [17]standRegular
+
+export const SPRITE_FRAMES = {
+  battle: 0,
+  pounce: 0,        
+  catch: 1,
+  stretch: 1,       
+  cup00: 2,
+  cup01: 3,
+  cup02: 4,
+  king00: 5,
+  king01: 6,
+  king02: 7,
+  wakeUp: 8,
+  menu: 14,
+  select: 9,        
+  sitLookBackMad: 10,
+  sitLookBackRegular: 11,
+  sitLookForwardMad: 12,
+  sitLookForwardRegular: 13,
+  sitSmall: 14,
+  sleep: 15,
+  standMad: 16,
+  standRegular: 17,
+ // 2 FRAME PLATFORMER SHEET
+  idle: 0,
+  standSmall: 0,    
+  jump: 1
+};
+
+export const SPRITE_SCALES = {
+  battle: 1.0,      
+  pounce: 0.75,    
+  catch: 1.0,      
+  stretch: 0.75,    
+  menu: 0.75,        
+  select: 1.1       
+};
 
 export const CHARACTERS = {
   NONA: {
@@ -187,10 +205,10 @@ export function getCharacterStats(characterName) {
   return {
     name: char.name,
     stats: {
-      maxHP: char.baseHP,
-      atk: char.baseAtk,
-      speed: char.baseSpeed,
-      defense: char.baseDefense
+      maxHP: char.stats.maxHP,
+      atk: char.stats.baseAtk,
+      speed: char.stats.baseSpeed,
+      defense: char.stats.baseDefense
     },
     moves: JSON.parse(JSON.stringify(char.moves)), 
     sprites: char.sprites
@@ -200,8 +218,8 @@ export function getCharacterStats(characterName) {
 export const rainbowCat = {
   name: "Rainbow Cat",
   sprites: {
-    idle: "rainbowIdle",
-    jump: "rainbowJump", 
-    walk: "rainbowWalk"
+    idle: "rainbowCatPlatformer",
+    jump: "rainbowCatPlatformer", 
+    walk: "rainbowCatWalk"
   }
 };
