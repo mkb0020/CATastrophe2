@@ -1,7 +1,7 @@
 // mainMenu.js
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
-import { getCharacterList } from '../config/characters.js';
-import { createVolumeToggle, stopAllMusic, startMenuMusic } from '../utils/audioControls.js';
+import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
+import { createVolumeToggle, stopAllMusic, startMenuMusic } from '../helpers/kittyHelpers.js';
 
 
 export function createStartScene(){
@@ -62,10 +62,6 @@ export function createStartScene(){
     go("menu");
   });
 
- // onClick(() => {
-//  audioCtx.resume();
-//  go("menu");
-//});
 
 }
 
@@ -77,7 +73,6 @@ export function createMainMenuScene() {
     z(0)
   ]);
 
-
   const titlePanel = add([
     rect(800, 100, { radius: 30 }),
     pos(center().x - 400, 30),
@@ -85,7 +80,6 @@ export function createMainMenuScene() {
     outline(6),
     z(1)
   ]);
-
   
   titlePanel.onUpdate(() => {
     const h = (time() * 30) % 360 / 360;  
@@ -126,8 +120,6 @@ export function createMainMenuScene() {
     z(2)
   ]);
 
-
-
   const testPanel = add([
     rect(600, 150, { radius: 30 }),
     pos(center().x - 300, 150),
@@ -136,7 +128,6 @@ export function createMainMenuScene() {
     opacity(0.8),
     z(1)
   ]);
-
 
   add([
     text("TEST VERSION", { size: 60, font: "orbitronBold" }),
@@ -275,8 +266,6 @@ export function createMainMenuScene() {
     z(2)
   ]);
 
-
-
   backBtn.onHoverUpdate(() => {
     backBtn.scale = vec2(1.1);
     backBtn.color = rgb(144,144,192);
@@ -299,22 +288,10 @@ export function createMainMenuScene() {
     window.location.href = '/';
   });
 
-
-  //showMenuUI({
-  //  onPlay: () => go("charSelect"),
-  //  onBack: () => window.location.href = "/",
- // });
-
   createVolumeToggle();
 }
 
 export function createCharSelectScene() {
-
-  //onSceneLeave("mainMenu", () => {
-  //  hideMenuUI();
- // });
-
-
   let selectedIndex = null;
 
   add([ // BACKGROUND
@@ -324,38 +301,72 @@ export function createCharSelectScene() {
     z(0)
   ]);
   
-  add([ //  TITLE PANEL
+
+const titlePanelGlow = add([
+    rect(904, 64, { radius: 35 }), 
+    pos(50, 15),
+    color(Color.fromHex("#000000")), 
+    outline(10, Color.fromHex("#dc4ce8")),
+    opacity(0.2), 
+    z(0) 
+]);
+
+
+
+const titlePanelShine = add([
+    rect(883, 56, { radius: 35 }),
+    pos(50 + 15, 15 + 2), 
+    color(Color.fromHex("#000000")), 
+    opacity(1),
+    z(2) 
+]);
+
+
+const titlePanel = add([
     rect(900, 60, { radius: 30 }),
     pos(50, 15),
-    color(17, 12, 30),
+    color(Color.fromHex("#ffd5fa")),
     outline(4, Color.fromHex("#dc4ce8")),
-    z(1)
-  ]);
+    opacity(0.7),
+    z(1) 
+]);
 
   add([
-    text("Choose Your Feline Fighter!", { 
-      size: 32, 
+    text("CHOOSE YOUR FELINE FIGHTER", { 
+      size: 38, 
       font: "orbitronBold",
       weight: "bold"
     }),
     pos(SCREEN_W / 2, 45),
     anchor("center"),
     color(255, 255, 255),
-    z(3)
+    z(4)
   ]);
 
     add([
-    text("Choose Your Feline Fighter!", { 
-      size: 32, 
+    text("CHOOSE YOUR FELINE FIGHTER", { 
+      size: 38, 
       font: "orbitronBold",
       weight: "bold"
     }),
-    pos(SCREEN_W / 2 + 1, 46),
+    pos(SCREEN_W / 2 + 2, 47),
     anchor("center"),
-    color(rgb(144,144,192)),
-    z(2)
+    color(rgb(115,1,50)),
+    z(3)
   ]);
 
+
+  add([
+    text("CHOOSE YOUR FELINE FIGHTER", { 
+      size: 38, 
+      font: "orbitronBold",
+      weight: "bold"
+    }),
+    pos(SCREEN_W / 2 + 3, 48),
+    anchor("center"),
+    color(rgb(0,255,255)),
+    z(2)
+  ]);
 
   add([ // LEFT PANEL - CHARACTER SELECTIONS
     rect(560, 385, { radius: 40 }),
@@ -381,8 +392,10 @@ export function createCharSelectScene() {
 
   const characterCards = [];
 
-  catPositions.forEach((position, i) => {
+   catPositions.forEach((position, i) => {
     const [x, y] = position;
+    const char = characters[i];
+    const charName = char.name;
     
     const card = add([
       rect(160, 170, { radius: 40 }),
@@ -404,39 +417,25 @@ export function createCharSelectScene() {
       { index: i }
     ]);
 
-
-    
-
-    
     const charSprite = cardPop.add([
-      sprite(characters[i].sprites.menu),
+      sprite(`${charName}Sheet`, { frame: SPRITE_FRAMES.menu }),
       pos(74, 80),
       anchor("center"),
-      scale(1.1),
+      scale(SPRITE_SCALES.menu),
       z(7)
     ]);
 
     const glitchBlue = cardPop.add([
-      sprite(characters[i].sprites.glitchBlue),
-      pos(69, 84),
+      sprite('glitchBlue'),  
+      pos(69, 86),
       anchor("center"),
-      scale(1),
+      scale(0.9),
       opacity(0.5),
       z(6)
     ]);
 
-    const glitchRed = cardPop.add([
-      sprite(characters[i].sprites.glitchRed),
-      pos(75, 80),
-      anchor("center"),
-      scale(1.1),
-      opacity(0),
-      z(5)
-    ]);
-
-  
     cardPop.add([
-      text(characters[i].name, { 
+      text(char.name, { 
         size: 25, 
         font: "science",
         weight: "bold"
@@ -447,13 +446,13 @@ export function createCharSelectScene() {
       z(7)
     ]);
 
-        card.add([
-      text(characters[i].name, { 
+    cardPop.add([
+      text(char.name, { 
         size: 25, 
         font: "science",
         weight: "bold"
       }),
-      pos(81, 31),
+      pos(82, 32),
       anchor("center"),
       color(0, 0, 0),
       z(6)
@@ -492,127 +491,176 @@ export function createCharSelectScene() {
   });
 
   const previewSprite = add([ // RIGHT PANEL - PREVIEW
-    sprite(characters[0].sprites.select),
+    sprite(`${characters[0].name}Sheet`, { frame: SPRITE_FRAMES.select }),
     pos(750, 290),
     anchor("center"),
-    scale(1.2),
+    scale(SPRITE_SCALES.select),
     z(4),
     opacity(0),
     "preview"
   ]);
 
-
-
-
-
-
-//  const previewName = add([
-//    text("", { 
-//        size: 48, 
-//        font: "science",
-//        weight: "bold"
-//      }),
-//      pos(789, 140),
-//      anchor("center"),
-//      color(0, 0, 0),
-//      z(4),
-//      "previewName"
-//    ]);
-
-//  const previewName2 = add([
-//    text("", { 
-//      size: 48, 
-//      font: "science",
-//      weight: "bold"
-//    }),
-//    pos(787, 130),
-//    anchor("center"),
-//    color(255, 255, 255),
-//    z(5),
-//    "previewName2",
-//    ]);
-
   function updatePreview(index) {
     const char = characters[index];
     
-    previewSprite.use(sprite(char.sprites.select));
-    previewSprite.scale = vec2(1.1,1.1);
+    previewSprite.use(sprite(`${char.name}Sheet`, { frame: SPRITE_FRAMES.select }));
+    previewSprite.scale = vec2(SPRITE_SCALES.select, SPRITE_SCALES.select);
     previewSprite.opacity = 1;
-    
-//    previewName.text = char.name;
-//    previewName2.text = char.name;  }
-  }
- const confirmBtn = add([
-    rect(150, 40, { radius: 30 }),
-    pos(625, 425),
-    color(Color.fromHex(Colors.Highlight)), 
-    outline(3, Color.fromHex(Colors.Highlight)),
-    area(),
-    z(1),
-    opacity(0.4),
-    "confirmBtn"
-  ]);
+      }
 
-  confirmBtn.add([
+ const confirmBtn = add([
+    rect(150, 40, { radius: 53 }),
+    pos(625, 425),
+    color(rgb(0, 0, 0)),
+    outline(5, rgb(88, 232, 76)),
+    opacity(1),
+    area(),
+    scale(1),
+    z(5),
+    anchor("topleft"),
+    "confirmBtn"
+]);
+
+const confirmGlow = confirmBtn.add([
+    rect(152, 42, { radius: 58 }),
+    anchor("center"),
+    color(rgb(88, 232, 76)),
+    opacity(0.15),
+    pos(75, 20),
+    z(1),
+    "confirmGlow"
+]);
+
+const confirmShine = confirmBtn.add([
+    rect(145, 35, { radius: 58 }),
+    anchor("center"),
+    color(rgb(158, 255, 158)),
+    opacity(0.2),
+    pos(70, 15),
+    z(2),
+    "confirmShine"
+]);
+
+confirmBtn.add([
     text("CONFIRM", { size: 22, font: "science", weight: "bold" }),
     pos(75, 20),
     anchor("center"),
     color(255, 255, 255),
-    z(3)
-  ]);
+    z(6)
+]);
 
-    confirmBtn.add([
+confirmBtn.add([
     text("CONFIRM", { size: 22, font: "science", weight: "bold" }),
-    pos(76, 21),
+    pos(77, 22),
     anchor("center"),
-    color(0, 255, 255),
+    color(0, 0, 0),
     z(2)
-  ]);
+]);
 
-  confirmBtn.onClick(() => {
+confirmBtn.onClick(() => {
     if (selectedIndex !== null) {
-      const selectedChar = characters[selectedIndex];
-      go("transition", "Transition1", selectedChar);
+        const selectedChar = characters[selectedIndex];
+        go("transition", "Transition1", selectedChar);
     }
-  });
+});
 
-  const backBtn = add([
+confirmBtn.onHoverUpdate(() => {
+    confirmBtn.scale = vec2(1.1);
+    confirmBtn.color = rgb(88, 232, 76);
+    confirmGlow.scale = vec2(1.05);
+    confirmShine.scale = vec2(1.05);
+    confirmShine.color = rgb(14, 170, 0);
+    confirmGlow.opacity = 1;
+    confirmShine.opacity = 0.7;
+});
+
+confirmBtn.onHoverEnd(() => {
+    confirmBtn.scale = vec2(1);
+    confirmBtn.color = rgb(0, 0, 0);
+    confirmGlow.scale = vec2(1);
+    confirmShine.scale = vec2(1);
+    confirmShine.color = rgb(158, 255, 158);
+    confirmGlow.opacity = 0.15;
+    confirmShine.opacity = 0.2;
+});
+
+const backBtn = add([
     rect(150, 40, { radius: 30 }),
     pos(810, 425),
-    color(0,0,0), 
-    outline(3, Color.fromHex('#730132')),
+    color(rgb(0, 0, 0)),
+    outline(3, rgb(144,144,192)),
     area(),
-    z(1),
+    scale(1),
+    z(5),
+    anchor("topleft"),
     "backBtn"
-  ]);
+]);
 
-  backBtn.add([
+const backGlow = backBtn.add([
+    rect(152, 42, { radius: 58 }),
+    anchor("center"),
+    color(rgb(101,115,131)),
+    opacity(0.3),
+    pos(75, 20),
+    z(1),
+    "backGlow"
+]);
+
+const backShine = backBtn.add([
+    rect(145, 35, { radius: 58 }),
+    anchor("center"),
+    color(rgb(219,226,233)),
+    opacity(0.3),
+    pos(70, 15),
+    z(2),
+    "backShine"
+]);
+
+backBtn.add([
     text("BACK", { size: 22, font: "science", weight: "bold" }),
     pos(75, 20),
     anchor("center"),
     color(255, 255, 255),
-    z(3)
-  ]);
+    z(5)
+]);
 
-    backBtn.add([
+backBtn.add([
     text("BACK", { size: 22, font: "science", weight: "bold" }),
-    pos(76, 21),
+    pos(77, 22),
     anchor("center"),
-    color(0, 255, 255),
+    color(0, 0, 0),
     z(2)
-  ]);
+]);
 
-  backBtn.onClick(() => {
+backBtn.onClick(() => {
     go("menu");
-  });
+});
 
-  onUpdate(() => {
+backBtn.onHoverUpdate(() => {
+    backBtn.scale = vec2(1.1);
+    backBtn.color = rgb(144,144,192);
+    backGlow.scale = vec2(1.05);
+    backShine.scale = vec2(1.05);
+    backGlow.opacity = 1;
+    backShine.opacity = 0.4;
+});
+
+backBtn.onHoverEnd(() => {
+    backBtn.scale = vec2(1);
+    backBtn.color = rgb(0, 0, 0);
+    backGlow.scale = vec2(1);
+    backShine.scale = vec2(1);
+    backGlow.opacity = 0.3;
+    backShine.opacity = 0.3;
+});
+
+onUpdate(() => {
     if (selectedIndex !== null) {
-      confirmBtn.opacity = 1;
+        confirmBtn.opacity = 1;
     } else {
-      confirmBtn.opacity = 0.4;
+        confirmBtn.opacity = 0.4;
     }
-  });
+});
   
   createVolumeToggle();
 }
