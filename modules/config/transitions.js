@@ -48,7 +48,7 @@ export const TRANSITIONS = {
     Text1: ["It was you the whole time! I guess we're about to open the box to see ..."],
     Text2: ["...who's alive..."],
     Text3: ["AND WHO'S DEAD!"],
-    sprites: ['sitLookForwardMad', 'standMad', 'pounce'], 
+    sprites: ['sitLookForwardMad', 'standMad', 'battle'], 
     background: 'transitionBG6', 
     nextState: 'observerBoss',
   },

@@ -45,9 +45,9 @@ export const SPRITE_FRAMES = {
 
 export const SPRITE_SCALES = {
   battle: 1.0,      
-  pounce: 0.75,    
+  pounce: 1.0,    
   catch: 1.0,      
-  stretch: 0.75,    
+  stretch: 1.0,    
   menu: 0.75,        
   select: 1.1       
 };

@@ -1,4 +1,24 @@
 /// levels.js - Clean, organized level configurations
+// Load bubble sprite sheet (10 frames in 1 row)
+
+
+// Bubble frame mapping
+export const BUBBLE_FRAMES = {
+  beep: 0,
+  exclamation: 1,
+  heart: 2,
+  plusHP: 3,
+  ko: 4,
+  hit: 5,
+  hit2: 6,
+  question: 7,
+  star: 8,
+  plusTen: 9
+};
+
+
+
+
 export const LEVELS = {
   level1: { 
     id: 'level1',
@@ -14,29 +34,29 @@ export const LEVELS = {
     ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
     platforms: [
-    {x: 1300, y: 330, width: 250, height: 12},  
-    {x: 1720, y: 300, width: 245, height: 12}, 
-    {x: 2145, y: 270, width: 240, height: 12}, 
-    {x: 2565, y: 305, width: 235, height: 12}, 
-    {x: 2985, y: 280, width: 240, height: 12}, 
+    {x: 1300, y: 330, width: 250, height: 20},  
+    {x: 1720, y: 300, width: 245, height: 20}, 
+    {x: 2145, y: 270, width: 240, height: 20}, 
+    {x: 2565, y: 305, width: 235, height: 20}, 
+    {x: 2985, y: 280, width: 240, height: 20}, 
     
-    {x: 3900, y: 285, width: 240, height: 12}, 
-    {x: 4325, y: 315, width: 235, height: 12},
-    {x: 4750, y: 345, width: 230, height: 12}, 
-    {x: 5180, y: 310, width: 225, height: 12},  
-    {x: 5615, y: 275, width: 240, height: 12}, 
+    {x: 3900, y: 285, width: 240, height: 20}, 
+    {x: 4325, y: 315, width: 235, height: 20},
+    {x: 4750, y: 345, width: 230, height: 20}, 
+    {x: 5180, y: 310, width: 225, height: 20},  
+    {x: 5615, y: 275, width: 240, height: 20}, 
     
-    {x: 6380, y: 360, width: 245, height: 12},  
-    {x: 6815, y: 295, width: 240, height: 12},  
-    {x: 7250, y: 325, width: 235, height: 12},  
-    {x: 7700, y: 280, width: 230, height: 12}, 
-    {x: 8130, y: 310, width: 240, height: 12}, 
+    {x: 6380, y: 360, width: 245, height: 20},  
+    {x: 6815, y: 295, width: 240, height: 20},  
+    {x: 7250, y: 325, width: 235, height: 20},  
+    {x: 7700, y: 280, width: 230, height: 20}, 
+    {x: 8130, y: 310, width: 240, height: 20}, 
     
-    {x: 8875, y: 340, width: 235, height: 12},  
-    {x: 9310, y: 305, width: 230, height: 12},  
-    {x: 9740, y: 270, width: 225, height: 12},  
-    {x: 10175, y: 290, width: 240, height: 12}, 
-    {x: 10625, y: 220, width: 220, height: 12},
+    {x: 8875, y: 340, width: 235, height: 20},  
+    {x: 9310, y: 305, width: 230, height: 20},  
+    {x: 9740, y: 270, width: 225, height: 20},  
+    {x: 10175, y: 290, width: 240, height: 20}, 
+    {x: 10625, y: 220, width: 220, height: 20},
   ],
 
     cups: { enabled: true, count: 15 }, 
@@ -52,7 +72,7 @@ export const LEVELS = {
       catnip: { enabled: false },
     },
     playerHP: { start: 120, max: 120 },
-    background: 'level1BG',
+    background: 'levelBG',
     levelMusic: 'PlatformerTrack1',
     nextBoss: 'cupBoss',
     bossSprite: "bossCup", 
@@ -74,29 +94,29 @@ export const LEVELS = {
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },  
     platforms: [
-    {x: 1300, y: 320, width: 250, height: 12},  
-    {x: 1725, y: 285, width: 245, height: 12}, 
-    {x: 2150, y: 310, width: 240, height: 12},  
-    {x: 2575, y: 270, width: 235, height: 12},  
-    {x: 3005, y: 300, width: 240, height: 12}, 
+    {x: 1300, y: 320, width: 250, height: 20},  
+    {x: 1725, y: 285, width: 245, height: 20}, 
+    {x: 2150, y: 310, width: 240, height: 20},  
+    {x: 2575, y: 270, width: 235, height: 20},  
+    {x: 3005, y: 300, width: 240, height: 20}, 
 
-    {x: 3890, y: 280, width: 240, height: 12},  
-    {x: 4320, y: 310, width: 235, height: 12},  
-    {x: 4755, y: 265, width: 230, height: 12},  
-    {x: 5195, y: 290, width: 225, height: 12},  
-    {x: 5635, y: 260, width: 240, height: 12}, 
+    {x: 3890, y: 280, width: 240, height: 20},  
+    {x: 4320, y: 310, width: 235, height: 20},  
+    {x: 4755, y: 265, width: 230, height: 20},  
+    {x: 5195, y: 290, width: 225, height: 20},  
+    {x: 5635, y: 260, width: 240, height: 20}, 
 
-    {x: 6380, y: 340, width: 245, height: 12}, 
-    {x: 6825, y: 280, width: 240, height: 12},  
-    {x: 7270, y: 305, width: 235, height: 12},  
-    {x: 7725, y: 270, width: 230, height: 12}, 
-    {x: 8165, y: 295, width: 240, height: 12}, 
+    {x: 6380, y: 340, width: 245, height: 20}, 
+    {x: 6825, y: 280, width: 240, height: 20},  
+    {x: 7270, y: 305, width: 235, height: 20},  
+    {x: 7725, y: 270, width: 230, height: 20}, 
+    {x: 8165, y: 295, width: 240, height: 20}, 
 
-    {x: 8880, y: 325, width: 235, height: 12},  
-    {x: 9320, y: 285, width: 230, height: 12},  
-    {x: 9755, y: 260, width: 225, height: 12},  
-    {x: 10195, y: 275, width: 240, height: 12}, 
-    {x: 10655, y: 200, width: 220, height: 12}
+    {x: 8880, y: 325, width: 235, height: 20},  
+    {x: 9320, y: 285, width: 230, height: 20},  
+    {x: 9755, y: 260, width: 225, height: 20},  
+    {x: 10195, y: 275, width: 240, height: 20}, 
+    {x: 10655, y: 200, width: 220, height: 20}
   ],
 
     cups: { enabled: true, count: 15 },
@@ -107,7 +127,7 @@ export const LEVELS = {
           damage: 5,
           spawnZones: [
             { start: 3190, end: 4200 },  
-            { start: 6000, end: 6800 }
+            { start: 6200, end: 6800 }
           ]
         },
       rats: { enabled: false },
@@ -118,13 +138,13 @@ export const LEVELS = {
 
     milkBottlePosition: { x: 10765, y: 130 },
     items: {
-      fishBones: { enabled: true, count: 2 },
+      fishBones: { enabled: true, count: 1 },
       tunaCan: { enabled: true, count: 1 },
       milkBottle: { enabled: true, count: 1 },
       catnip: { enabled: false }
     },
     playerHP: { start: 120, max: 120 },
-    background: 'l2BG',
+    background: 'levelBG',
     levelMusic: 'PlatformerTrack2',
     nextBoss: 'cucumberBoss',
     bossSprite: "bossCucumber", 
@@ -149,26 +169,27 @@ export const LEVELS = {
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
     
     platforms: [
-    {x: 1300, y: 340, width: 250, height: 12}, 
-    {x: 1715, y: 300, width: 245, height: 12},  
-    {x: 2125, y: 355, width: 240, height: 12},  
-    {x: 2530, y: 290, width: 235, height: 12},  
-    {x: 2945, y: 340, width: 240, height: 12},  
-    {x: 3900, y: 320, width: 240, height: 12},  
-    {x: 4310, y: 355, width: 235, height: 12},  
-    {x: 4715, y: 270, width: 230, height: 12},
-    {x: 5135, y: 245, width: 225, height: 12},  
-    {x: 5530, y: 315, width: 240, height: 12},  
-    {x: 6400, y: 300, width: 245, height: 12},  
-    {x: 6820, y: 360, width: 240, height: 12}, 
-    {x: 7235, y: 340, width: 235, height: 12},  
-    {x: 7670, y: 295, width: 230, height: 12}, 
-    {x: 8075, y: 325, width: 240, height: 12},  
-    {x: 8900, y: 375, width: 235, height: 12}, 
-    {x: 9315, y: 295, width: 230, height: 12},
-    {x: 9725, y: 315, width: 225, height: 12}, 
-    {x: 10157, y: 278, width: 240, height: 12},
-    {x: 10680, y: 180, width: 220, height: 12}, 
+    {x: 1300, y: 340, width: 250, height: 20}, 
+    {x: 1715, y: 300, width: 245, height: 20},  
+    {x: 2125, y: 355, width: 240, height: 20},  
+    {x: 2530, y: 290, width: 235, height: 20},  
+    {x: 2945, y: 340, width: 240, height: 20},  
+    {x: 3900, y: 320, width: 240, height: 20},  
+    {x: 4310, y: 355, width: 235, height: 20},  
+    {x: 4715, y: 270, width: 230, height: 20},
+    {x: 5135, y: 245, width: 225, height: 20},  
+    {x: 5530, y: 315, width: 240, height: 20},  
+    {x: 6400, y: 300, width: 245, height: 20}, 
+    {x: 6770, y: 150, width: 150, height: 20}, // CAT NIP PLATFORM
+    {x: 6820, y: 370, width: 200, height: 20}, 
+    {x: 7235, y: 340, width: 235, height: 20},  
+    {x: 7670, y: 295, width: 230, height: 20}, 
+    {x: 8075, y: 325, width: 240, height: 20},  
+    {x: 8900, y: 375, width: 235, height: 20}, 
+    {x: 9315, y: 295, width: 230, height: 20},
+    {x: 9725, y: 315, width: 225, height: 20}, 
+    {x: 10157, y: 278, width: 240, height: 20},
+    {x: 10680, y: 210, width: 220, height: 20}, 
     ],
     cups: { enabled: true, count: 15 },
 
@@ -177,7 +198,7 @@ export const LEVELS = {
     enemies: {
       cucumbers: { 
         enabled: true,
-        spawnRate: 2000,
+        spawnRate: 2200,
         damage: 5,
         spawnZones: [
           { start: 3600, end: 4300 },   
@@ -200,17 +221,15 @@ export const LEVELS = {
     
     
     catnipZones: [
-        { x: 4600, y: 270 }, 
-        { x: 6900, y: 270 }, 
-        { x: 9000, y: 270 } ],
+        { x: 6860, y: 10 }],
     items: {
-      fishBones: { enabled: true, count: 2 },
-      tunaCan: { enabled: true, count: 2 },
+      fishBones: { enabled: true, count: 1 },
+      tunaCan: { enabled: true, count: 1 },
       milkBottle: { enabled: false },
       catnip: { enabled: true, count: 1 }
     },
     playerHP: { start: 120, max: 120 },
-    background: 'l3BG',
+    background: 'levelBG',
     levelMusic: 'PlatformerTrack3',
     nextBoss: 'bossRatKing',
     bossSprite: "bossRat", 
@@ -233,25 +252,30 @@ export const LEVELS = {
 
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
     platforms: [
-    {x: 1300, y: 360, width: 220, height: 12},  
-    {x: 1750, y: 280, width: 210, height: 12},  
-    {x: 2195, y: 315, width: 230, height: 12}, 
-    {x: 2635, y: 265, width: 200, height: 12}, 
-    {x: 3100, y: 330, width: 230, height: 12},  
-    {x: 4200, y: 265, width: 190, height: 12}, 
-    {x: 4645, y: 290, width: 225, height: 12},  
-    {x: 5105, y: 320, width: 220, height: 12}, 
-    {x: 5550, y: 375, width: 215, height: 12}, 
-    {x: 6005, y: 255, width: 200, height: 12}, 
-    {x: 6900, y: 300, width: 190, height: 12}, 
-    {x: 7355, y: 325, width: 230, height: 12}, 
-    {x: 7830, y: 255, width: 200, height: 12},   
-    {x: 8275, y: 290, width: 210, height: 12}, 
-    {x: 8745, y: 320, width: 220, height: 12},
-    {x: 9600, y: 345, width: 220, height: 12},  
-    {x: 10032, y: 300, width: 200, height: 12},
-    {x: 10465, y: 248, width: 200, height: 12}, 
-    {x: 10928, y: 205, width: 160, height: 12}, 
+    {x: 1300, y: 360, width: 220, height: 20},  
+    {x: 1750, y: 280, width: 210, height: 20},  
+    {x: 2195, y: 315, width: 230, height: 20}, 
+    {x: 2635, y: 265, width: 200, height: 20}, 
+    {x: 3100, y: 300, width: 230, height: 20}, 
+    {x: 3500, y: 100, width: 100, height: 20}, // CATNIP
+
+
+    {x: 4200, y: 265, width: 190, height: 20}, 
+    {x: 4645, y: 290, width: 225, height: 20},  
+    {x: 5105, y: 320, width: 220, height: 20}, 
+    {x: 5550, y: 375, width: 215, height: 20}, 
+    {x: 6005, y: 255, width: 200, height: 20}, 
+    {x: 6900, y: 300, width: 190, height: 20}, 
+    {x: 7355, y: 325, width: 230, height: 20}, 
+    {x: 7830, y: 255, width: 200, height: 20},   
+    {x: 8275, y: 290, width: 210, height: 20}, 
+
+    {x: 8745, y: 320, width: 220, height: 20},
+    
+    {x: 9600, y: 345, width: 220, height: 20},  
+    {x: 10032, y: 300, width: 200, height: 20},
+    {x: 10465, y: 248, width: 200, height: 20}, 
+    {x: 10928, y: 205, width: 160, height: 20}, 
   ],
     cups: { enabled: true, count: 15 },
 
@@ -259,10 +283,10 @@ export const LEVELS = {
     enemies: {
       cucumbers: { 
         enabled: true,
-        spawnRate: 1800,
+        spawnRate: 2100,
         damage: 5,
         spawnZones: [
-          { start: 3300, end: 4000 },
+          { start: 3800, end: 4000 },
           { start: 5800, end: 6300 },
           { start: 9200, end: 10800 }
         ]
@@ -274,7 +298,7 @@ export const LEVELS = {
         { start: 3000, end: 4550 },
         { start: 4550, end: 6700 },
         { start: 6700, end: 8500 },
-        { start: 8950, end: 11350 }
+        { start: 8950, end: 9200 }
       ]
     },
 
@@ -286,18 +310,17 @@ export const LEVELS = {
 
 
   catnipZones: [
-    { x: 4300, y: 270 }, 
-    { x: 6500, y: 270 }, 
-    { x: 8800, y: 270 }  
+    { x: 3555, y: 70 }, 
+
   ],
     items: {
-      fishBones: { enabled: true, count: 2 },
+      fishBones: { enabled: true, count: 1 },
       tunaCan: { enabled: true, count: 2 },
       milkBottle: { enabled: false },
       catnip: { enabled: true, count: 1 }
     },
     playerHP: { start: 120, max: 120 },
-    background: 'l4BG',
+    background: 'levelBG',
     levelMusic: 'PlatformerTrack4',
     nextBoss: 'laserPointerBoss',
     bossSprite: 'bossLaserPointer'
@@ -322,28 +345,32 @@ export const LEVELS = {
 
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
     platforms: [
-    {x: 1300, y: 350, width: 200, height: 12},  
-    {x: 1730, y: 270, width: 200, height: 12},  
-    {x: 2165, y: 300, width: 190, height: 12},  
-    {x: 2610, y: 252, width: 170, height: 12},  
-    {x: 3060, y: 285, width: 185, height: 12}, 
+    {x: 1300, y: 350, width: 200, height: 20},  
+    {x: 1730, y: 270, width: 200, height: 20},  
+    {x: 2165, y: 300, width: 190, height: 20},  
+    {x: 2610, y: 252, width: 170, height: 20},  
+    {x: 3060, y: 355, width: 170, height: 20}, 
+    {x: 3460, y: 100, width: 150, height: 20}, 
 
-    {x: 4200, y: 258, width: 175, height: 12},  
-    {x: 4625, y: 285, width: 180, height: 12},  
-    {x: 5070, y: 310, width: 190, height: 12},  
-    {x: 5525, y: 365, width: 200, height: 12}, 
-    {x: 5895, y: 250, width: 165, height: 12}, 
+    {x: 4200, y: 258, width: 175, height: 20},  
+    {x: 4625, y: 285, width: 180, height: 20},  
+    {x: 5070, y: 310, width: 190, height: 20},  
+    {x: 5525, y: 365, width: 200, height: 20}, 
+    {x: 6100, y: 160, width: 100, height: 20}, 
+    {x: 5895, y: 250, width: 165, height: 20}, 
+    {x: 6350, y: 130, width: 100, height: 20},
 
-    {x: 6900, y: 295, width: 185, height: 12},  
-    {x: 7345, y: 320, width: 195, height: 12},  
-    {x: 7810, y: 248, width: 170, height: 12},  
-    {x: 8265, y: 280, width: 180, height: 12},  
-    {x: 8745, y: 310, width: 190, height: 12}, 
 
-    {x: 9600, y: 340, width: 195, height: 12},  
-    {x: 10035, y: 290, width: 175, height: 12}, 
-    {x: 10475, y: 242, width: 160, height: 12}, 
-    {x: 10905, y: 170, width: 150, height: 12}, 
+    {x: 6900, y: 295, width: 185, height: 20},  
+    {x: 7345, y: 320, width: 195, height: 20},  
+    {x: 7810, y: 248, width: 170, height: 20},  
+    {x: 8265, y: 280, width: 180, height: 20},  
+    {x: 8745, y: 310, width: 190, height: 20}, 
+
+    {x: 9600, y: 340, width: 195, height: 20},  
+    {x: 10035, y: 290, width: 175, height: 20}, 
+    {x: 10475, y: 242, width: 160, height: 20}, 
+    {x: 10905, y: 170, width: 150, height: 20}, 
 
     //{x:1717,y:324,width:228,height:12},
    // {x:2117,y:210,width:203,height:12},
@@ -370,12 +397,11 @@ export const LEVELS = {
     enemies: {
         cucumbers: { 
           enabled: true,
-          spawnRate: 1500,
+          spawnRate: 2000,
           damage: 5,
           spawnZones: [
-            { start: 2900, end: 3800 },  
+            { start: 3200, end: 3800 },  
             { start: 5100, end: 5400 },  
-            { start: 6200, end: 7800 },   
             { start: 8900, end: 9200 },   
           ]
         },
@@ -388,7 +414,6 @@ export const LEVELS = {
         { start: 4500, end: 6000 },   
         { start: 6100, end: 7930 },    
         { start: 8100, end: 9500 },    
-        { start: 10000, end: 11900 },  
         { start: 12000, end: 14000 }   
       ]
     },
@@ -399,16 +424,14 @@ export const LEVELS = {
             3800,   
             5200,  
             7100,  
-            9300,   
             10600   
           ]
         }
     },
 
     catnipZones: [
-      { x: 3900, y: 270 }, 
-      { x: 5950, y: 270 }, 
-      { x: 9850, y: 270 } ],
+      { x: 3600, y: 70 }, 
+],
     milkBottlePosition: { x: 10980, y: 100 },
     items: {
       fishBones: { enabled: true, count: 2 },
