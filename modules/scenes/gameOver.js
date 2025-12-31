@@ -43,8 +43,8 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   ]);
 
   const textPanel = add([ // TEXT PANEL
-    rect(750, 320, { radius: 40 }),
-    pos(125, 90),
+    rect(750, 405, { radius: 40 }),
+    pos(125, 40),
     color(17, 12, 30),
     outline(4, rgb(144,144,192)),
     z(2),
@@ -54,46 +54,46 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   // "GAME OVER" 
   const gameOverTitle = add([
     text("GAME OVER", { 
-      size: 60, 
+      size: 70, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2, 150),
+    pos(SCREEN_W / 2, 110),
     anchor("center"),
-    color(Color.fromHex(Colors.NuclearFuscia)),
+    color(173,8,5),
     z(3),
     opacity(0)
   ]);
 
   const gameOverTitleShadow = add([
     text("GAME OVER", { 
-      size: 60, 
+      size: 70, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2 + 2, 152),
+    pos(SCREEN_W / 2 + 2, 112),
     anchor("center"),
-    color(Color.fromHex(Colors.Black)),
+    color(Color.fromHex(Colors.White)),
     z(2),
     opacity(0)
   ]);
 
   const disappointText = add([
     text("YOU'VE DISAPPOINTED EVERYONE", { 
-      size: 38, 
+      size: 33, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2, 230),
+    pos(SCREEN_W / 2, 190),
     anchor("center"),
-    color(Color.fromHex(Colors.White)),
+    color(rgb(255,255,255)),
     z(3),
     opacity(0)
   ]);
 
   const disappointText2 = add([
     text("YOU'VE DISAPPOINTED EVERYONE", { 
-      size: 38, 
+      size: 35, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2 + 1, 231),
+    pos(SCREEN_W / 2 + 1, 192),
     anchor("center"),
     color(Color.fromHex(Colors.Black)),
     z(2),
@@ -107,7 +107,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
         size: 22, 
         font: "science" 
       }),
-      pos(SCREEN_W / 2, 270),
+      pos(SCREEN_W / 2, 240),
       anchor("center"),
       color(200, 200, 200),
       z(3),
@@ -117,7 +117,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
 
   const scoreText = add([
     text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2, 310),
+    pos(SCREEN_W / 2, 260),
     anchor("center"),
     color(219, 226, 233),
     z(3),
@@ -126,7 +126,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
 
   const scoreText2 = add([
     text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2 + 1, 311),
+    pos(SCREEN_W / 2 + 1, 261),
     anchor("center"),
     color(0, 0, 0),
     z(2),
@@ -135,7 +135,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
 
   const restartBtn = add([
     rect(280, 50, { radius: 30 }),
-    pos(360, 340),
+    pos(360, 305),
     color(0, 0, 0),
     outline(3, rgb(144,144,192)),
     area(),
@@ -177,7 +177,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
 
   const menuBtn = add([
     rect(280, 50, { radius: 30 }),
-    pos(360, 405),
+    pos(360, 370),
     color(0, 0, 0),
     outline(3, rgb(144,144,192)),
     area(),

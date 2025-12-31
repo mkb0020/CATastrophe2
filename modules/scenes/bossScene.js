@@ -2,7 +2,7 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getBoss, initializeBoss, chooseBossMove } from '../config/bosses.js';
 import { calculateDamage } from '../systems/battleSystem.js';
-import { createVolumeToggle, stopAllMusic, startBossMusic, startFinalBossMusic } from '../utils/audioControls.js';
+import { createVolumeToggle, stopAllMusic, startBossMusic, startFinalBossMusic } from '../helpers/kittyHelpers.js';
 import {
   addBossBackground,
   addBattleSprites,
@@ -51,7 +51,6 @@ import {
 } from '../helpers/bossHelpers.js';
 
 export function createBossBattleScene(bossId, character, playerHP) {
-  // Play SECOND HALF of transition for all bosses EXCEPT Observer
   if (bossId !== 'observerBoss' && bossId !== 'observer') {
     stopAllMusic();
     startBossMusic();
