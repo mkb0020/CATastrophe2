@@ -54,10 +54,10 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   // "GAME OVER" 
   const gameOverTitle = add([
     text("GAME OVER", { 
-      size: 70, 
+      size: 80, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2, 110),
+    pos(SCREEN_W / 2, 125),
     anchor("center"),
     color(173,8,5),
     z(3),
@@ -66,10 +66,10 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
 
   const gameOverTitleShadow = add([
     text("GAME OVER", { 
-      size: 70, 
+      size: 80, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2 + 2, 112),
+    pos(SCREEN_W / 2 + 2, 127),
     anchor("center"),
     color(Color.fromHex(Colors.White)),
     z(2),
@@ -81,7 +81,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
       size: 33, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2, 190),
+    pos(SCREEN_W / 2, 230),
     anchor("center"),
     color(rgb(255,255,255)),
     z(3),
@@ -93,7 +93,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
       size: 35, 
       font: "science" 
     }),
-    pos(SCREEN_W / 2 + 1, 192),
+    pos(SCREEN_W / 2 + 1, 232),
     anchor("center"),
     color(Color.fromHex(Colors.Black)),
     z(2),
@@ -117,7 +117,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
 
   const scoreText = add([
     text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2, 260),
+    pos(SCREEN_W / 2, 305),
     anchor("center"),
     color(219, 226, 233),
     z(3),
@@ -126,58 +126,17 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
 
   const scoreText2 = add([
     text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2 + 1, 261),
+    pos(SCREEN_W / 2 + 1, 306),
     anchor("center"),
     color(0, 0, 0),
     z(2),
     opacity(0)
   ]);
 
-  const restartBtn = add([
-    rect(280, 50, { radius: 30 }),
-    pos(360, 305),
-    color(0, 0, 0),
-    outline(3, rgb(144,144,192)),
-    area(),
-    z(3),
-    opacity(0),
-    "restartBtn"
-  ]);
-
-  const restartBtnText = restartBtn.add([
-    text("START OVER", { size: 28, font: "science" }),
-    pos(140, 28),
-    anchor("center"),
-    color(255, 255, 255),
-    z(4)
-  ]);
-
-  const restartBtnShadow = restartBtn.add([
-    text("START OVER", { size: 28, font: "science" }),
-    pos(141, 29),
-    anchor("center"),
-    color(0, 255, 255),
-    z(3)
-  ]);
-
-  restartBtn.onClick(() => {
-    console.log('🔄 Starting over from character select');
-    stopAllMusic();
-    startMenuMusic();
-    go("charSelect");
-  });
-
-  restartBtn.onHover(() => {
-    restartBtn.color = rgb(101,115,131);
-  });
-
-  restartBtn.onHoverEnd(() => {
-    restartBtn.color = rgb(0,0,0);
-  });
-
+  
   const menuBtn = add([
     rect(280, 50, { radius: 30 }),
-    pos(360, 370),
+    pos(360, 360),
     color(0, 0, 0),
     outline(3, rgb(144,144,192)),
     area(),
@@ -235,7 +194,6 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
       if (reasonText) reasonText.opacity = o;
       scoreText.opacity = o;
       scoreText2.opacity = o;
-      restartBtn.opacity = o;
       menuBtn.opacity = o;
     }, easings.easeOutQuad);
   });
