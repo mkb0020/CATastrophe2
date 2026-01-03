@@ -48,8 +48,8 @@ export const SPRITE_SCALES = {
   pounce: 1.0,    
   catch: 1.0,      
   stretch: 1.0,    
-  menu: 0.75,        
-  select: 1.1       
+  menu: 0.6,        
+  select: 1.2       
 };
 
 export const CHARACTERS = {
@@ -79,11 +79,11 @@ export const CHARACTERS = {
   GATO: {
     name: 'GATO',
     stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 37,
-      baseSpeed: 38,
-      baseDefense: 30,
+      maxHP: 135,
+      baseHP: 135,
+      baseAtk: 40,
+      baseSpeed: 30,
+      baseDefense: 32,
       },
     platformerStats: {  
       speed: 5,
@@ -102,11 +102,11 @@ export const CHARACTERS = {
   NIELS: {
     name: 'NIELS',
     stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 37,
-      baseSpeed: 38,
-      baseDefense: 30,
+      maxHP: 110,
+      baseHP: 110,
+      baseAtk: 35,
+      baseSpeed: 46,
+      baseDefense: 26,
     },
     platformerStats: {  
       speed: 5,
@@ -125,11 +125,11 @@ export const CHARACTERS = {
   NOVA: {
     name: 'NOVA',
   stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 37,
-      baseSpeed: 38,
-      baseDefense: 30,
+      maxHP: 115,
+      baseHP: 115, 
+      baseAtk: 38,
+      baseSpeed: 40,
+      baseDefense: 28,
     },
     platformerStats: {  
       speed: 5,
@@ -140,7 +140,7 @@ export const CHARACTERS = {
       "SCRATCH": { dmg: 24, uses: 5 },
       "CATNIP CLAW": { dmg: 42, uses: 2 },
       "ZOOMIES": { dmg: 25, speedBoost: true, uses: 3 },
-      "MAKE BISCUITS": { heal: 30, uses: 3 }
+      "MAKE BISCUITS": { heal: 30, uses: 90 }
     },
     sprites: getCharacterSpritePaths('Nova')
   },
@@ -148,11 +148,11 @@ export const CHARACTERS = {
   AUBIE: {
     name: 'AUBIE',
     stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 37,
-      baseSpeed: 38,
-      baseDefense: 30,
+      maxHP: 140,
+      baseHP: 140,
+      baseAtk: 32,
+      baseSpeed: 32,
+      baseDefense: 38,
     },
     platformerStats: {  
       speed: 5,
@@ -171,11 +171,11 @@ export const CHARACTERS = {
   DOUG: {
     name: 'DOUG',
     stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 37,
-      baseSpeed: 38,
-      baseDefense: 30,
+      maxHP: 100,
+      baseHP: 100,
+      baseAtk: 44,
+      baseSpeed: 42,
+      baseDefense: 24,
     },
     platformerStats: {  
       speed: 5,

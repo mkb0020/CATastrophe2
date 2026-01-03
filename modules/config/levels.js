@@ -1,8 +1,7 @@
-/// levels.js - Clean, organized level configurations
-// Load bubble sprite sheet (10 frames in 1 row)
+/// levels.js 
 
 
-// Bubble frame mapping
+// BUBBLES
 export const BUBBLE_FRAMES = {
   beep: 0,
   exclamation: 1,
@@ -24,7 +23,7 @@ export const LEVELS = {
     id: 'level1',
     name: 'Level 1',
     timeLimit: 90,
-    length: 12000,
+    length:  12000,
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
       {x: -1000, y: 440, width: 5000, height: 50}, 
@@ -82,7 +81,7 @@ export const LEVELS = {
     id: 'level2',
     name: 'Level 2',
     timeLimit: 90,
-    length: 12000,
+    length:  12000,
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
   { x: -1000, y: 440, width: 3600, height: 50 },
@@ -155,7 +154,7 @@ export const LEVELS = {
     id: 'level3',
     name: 'Level 3',
     timeLimit: 90,
-    length: 12000,
+    length:  12000,
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
   { x: -1000, y: 440, width: 3200, height: 50 },
@@ -178,9 +177,10 @@ export const LEVELS = {
     {x: 4310, y: 355, width: 235, height: 20},  
     {x: 4715, y: 270, width: 230, height: 20},
     {x: 5135, y: 245, width: 225, height: 20},  
-    {x: 5530, y: 315, width: 240, height: 20},  
+    {x: 5530, y: 340, width: 240, height: 20},  
+    {x: 5870, y: 180, width: 150, height: 20}, // CAT NIP PLATFORM
+
     {x: 6400, y: 300, width: 245, height: 20}, 
-    {x: 6770, y: 150, width: 150, height: 20}, // CAT NIP PLATFORM
     {x: 6820, y: 370, width: 200, height: 20}, 
     {x: 7235, y: 340, width: 235, height: 20},  
     {x: 7670, y: 295, width: 230, height: 20}, 
@@ -221,7 +221,7 @@ export const LEVELS = {
     
     
     catnipZones: [
-        { x: 6860, y: 10 }],
+        { x: 5940, y: 80 }],
     items: {
       fishBones: { enabled: true, count: 1 },
       tunaCan: { enabled: true, count: 1 },
@@ -239,15 +239,15 @@ export const LEVELS = {
     id: 'level4',
     name: 'Level 4',
     timeLimit: 90,
-    length: 12000,
+    length:  12000,
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
-      { x: -1000, y: 440, width: 3000, height: 50 },
-      { x: 3000, y: 440, width: 1650, height: 50 },
-      { x: 4550, y: 440, width: 1990, height: 50 },
-      { x: 6700, y: 440, width: 2000, height: 50 },
-      { x: 8950, y: 440, width: 2150, height: 50 },
-      { x: 11350, y: 440, width: 3000, height: 50 }
+      { x: -1000, y: 440, width: 3000, height: 50 }, 
+      { x: 3000, y: 440, width: 1650, height: 50 }, 
+      { x: 4550, y: 440, width: 1750, height: 50 }, 
+      { x: 6600, y: 440, width: 2100, height: 50 }, 
+      { x: 8950, y: 440, width: 2150, height: 50 }, 
+      { x: 11350, y: 440, width: 3000, height: 50 } 
 ],
 
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
@@ -256,8 +256,8 @@ export const LEVELS = {
     {x: 1750, y: 280, width: 210, height: 20},  
     {x: 2195, y: 315, width: 230, height: 20}, 
     {x: 2635, y: 265, width: 200, height: 20}, 
-    {x: 3100, y: 300, width: 230, height: 20}, 
-    {x: 3500, y: 100, width: 100, height: 20}, // CATNIP
+    {x: 3100, y: 325, width: 230, height: 20}, 
+    {x: 3500, y: 170, width: 100, height: 20}, // CATNIP
 
 
     {x: 4200, y: 265, width: 190, height: 20}, 
@@ -265,12 +265,13 @@ export const LEVELS = {
     {x: 5105, y: 320, width: 220, height: 20}, 
     {x: 5550, y: 375, width: 215, height: 20}, 
     {x: 6005, y: 255, width: 200, height: 20}, 
+    {x: 6300, y: 140, width: 150, height: 20}, 
     {x: 6900, y: 300, width: 190, height: 20}, 
     {x: 7355, y: 325, width: 230, height: 20}, 
     {x: 7830, y: 255, width: 200, height: 20},   
     {x: 8275, y: 290, width: 210, height: 20}, 
 
-    {x: 8745, y: 320, width: 220, height: 20},
+    {x: 8745, y: 320, width: 150, height: 20},
     
     {x: 9600, y: 345, width: 220, height: 20},  
     {x: 10032, y: 300, width: 200, height: 20},
@@ -310,7 +311,7 @@ export const LEVELS = {
 
 
   catnipZones: [
-    { x: 3555, y: 70 }, 
+    { x: 3555, y: 125 }, 
 
   ],
     items: {
@@ -330,7 +331,7 @@ export const LEVELS = {
     id: 'level5',
     name: 'Level 5',
     timeLimit: 90,
-    length: 12000,
+    length:  12000,
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
       { x: -1000, y: 440, width: 2600, height: 50 },
@@ -338,7 +339,7 @@ export const LEVELS = {
       { x: 4050, y: 440, width: 450, height: 50 },
       { x: 4500, y: 440, width: 1600, height: 50 },
       { x: 6100, y: 440, width: 1730, height: 50 },
-      { x: 8100, y: 440, width: 1500, height: 50 },
+      { x: 8150, y: 440, width: 1500, height: 50 },
       { x: 10000, y: 440, width: 2200, height: 50 },
       { x: 12000, y: 440, width: 3500, height: 50 }
 ],
@@ -348,22 +349,21 @@ export const LEVELS = {
     {x: 1300, y: 350, width: 200, height: 20},  
     {x: 1730, y: 270, width: 200, height: 20},  
     {x: 2165, y: 300, width: 190, height: 20},  
-    {x: 2610, y: 252, width: 170, height: 20},  
-    {x: 3060, y: 355, width: 170, height: 20}, 
-    {x: 3460, y: 100, width: 150, height: 20}, 
+    {x: 2590, y: 252, width: 170, height: 20},  
+    {x: 3000, y: 320, width: 170, height: 20}, 
 
     {x: 4200, y: 258, width: 175, height: 20},  
     {x: 4625, y: 285, width: 180, height: 20},  
     {x: 5070, y: 310, width: 190, height: 20},  
     {x: 5525, y: 365, width: 200, height: 20}, 
-    {x: 6100, y: 160, width: 100, height: 20}, 
     {x: 5895, y: 250, width: 165, height: 20}, 
-    {x: 6350, y: 130, width: 100, height: 20},
+    {x: 6250, y: 165, width: 100, height: 20}, 
+    {x: 6550, y: 140, width: 100, height: 20},
 
 
     {x: 6900, y: 295, width: 185, height: 20},  
-    {x: 7345, y: 320, width: 195, height: 20},  
-    {x: 7810, y: 248, width: 170, height: 20},  
+    {x: 7500, y: 320, width: 195, height: 20},  
+    {x: 7810, y: 220, width: 170, height: 20},  
     {x: 8265, y: 280, width: 180, height: 20},  
     {x: 8745, y: 310, width: 190, height: 20}, 
 
@@ -372,24 +372,6 @@ export const LEVELS = {
     {x: 10475, y: 242, width: 160, height: 20}, 
     {x: 10905, y: 170, width: 150, height: 20}, 
 
-    //{x:1717,y:324,width:228,height:12},
-   // {x:2117,y:210,width:203,height:12},
-    //{x:2606,y:282,width:247,height:12},
-   // {x:3053,y:308,width:247,height:12},
-   // {x:3594,y:359,width:259,height:12},
-   // {x:4076,y:240,width:235,height:12},
-   // {x:4640,y:300,width:298,height:12},
-   // {x:5131,y:311,width:308,height:12},
-   // {x:5666,y:339,width:246,height:12},
-   // {x:6551,y:321,width:230,height:12},
-  //  {x:6975,y:385,width:324,height:12},
-   // {x:7484,y:277,width:248,height:12},
-  //  {x:7931,y:206,width:256,height:12},
-   // {x:8364,y:279,width:246,height:12},
-  //  {x:9082,y:322,width:225,height:12},
-   // {x:9485,y:194,width:248,height:12},
-   // {x:9929,y:221,width:317,height:12},
-   // {x:10450,y:304,width:279,height:12}
     ],
     cups: { enabled: true, count: 15 },
 
@@ -430,7 +412,7 @@ export const LEVELS = {
     },
 
     catnipZones: [
-      { x: 3600, y: 70 }, 
+      { x: 7890, y: 415 }, 
 ],
     milkBottlePosition: { x: 10980, y: 100 },
     items: {

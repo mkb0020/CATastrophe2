@@ -1,9 +1,9 @@
 import kaplay from "kaplay";
-import { SCREEN_W, SCREEN_H, Colors } from './config/gameConfig.js';
+import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from './config/gameConfig.js';
 import { getCharacterList } from './config/characters.js';
 import { getLevel } from './config/levels.js';
 import { getBoss } from './config/bosses.js';
-import { createVolumeToggle, stopAllMusic, startMenuMusic } from './utils/audioControls.js';
+import { createVolumeToggle, stopAllMusic, startMenuMusic } from './helpers/kittyHelpers.js';
 // IMPORT SCENES
 import { createStartScene, createMainMenuScene, createCharSelectScene } from './scenes/mainMenu.js';
 import { createTransitionScene } from './scenes/transitionScene.js';
@@ -23,6 +23,9 @@ import {
   createGameOverScene,
   //createCreditsScene  
 } from './scenes/gameOver.js';
+import { initDebugTools } from './helpers/debugTools.js';
+
+
 
 console.log('🎮 CATastrophe 2 - Kaplay Edition Loading...');
 
@@ -42,11 +45,13 @@ Object.assign(window, k);
 
 console.log('✅ Kaplay initialized!');
 
+initDebugTools(k);
+
+
 loadFont("narrow", "assets/fonts/PTSansNarrow-Regular.ttf");
 loadFont("narrowBold", "assets/fonts/PTSansNarrow-Bold.ttf");
 loadFont("orbitron", "assets/fonts/Orbitron-Regular.ttf");
 loadFont("orbitronBold", "assets/fonts/Orbitron-Bold.ttf");
-loadFont("silkscreen", "assets/fonts/Silkscreen-Regular.ttf");
 loadFont("science", "assets/fonts/ScienceGothic.ttf");
 
 /**
@@ -58,8 +63,8 @@ async function loadAssets() {
   loadSound("menuMusic", "assets/sounds/tracks/MenuTrack.mp3"); 
   loadSound("finalBossMusic", "assets/sounds/tracks/FnalBossTrack.mp3");
   loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.mp3")
-  loadSound("VictoryTrack", "assets/sounds/tracks/VictoryTrack.mp3");
-  loadSound("catnipTrack", "assets/sounds/tracks/CatnipTrack.mp3");
+ // loadSound("VictoryTrack", "assets/sounds/tracks/VictoryTrack.mp3");
+//  loadSound("catnipTrack", "assets/sounds/tracks/CatnipTrack.mp3");
   loadSound("finalVictory", "assets/sounds/tracks/FinalVictory.mp3");
   loadSound("levelMusic", "assets/sounds/tracks/PlatformerTrack.mp3");
   loadSound("bossMusic", "assets/sounds/tracks/BossTrack.mp3");
@@ -69,11 +74,14 @@ async function loadAssets() {
   loadSound("PlatformerTrack4", "assets/sounds/tracks/PlatformerTrack4.mp3");
   loadSound("PlatformerTrack5", "assets/sounds/tracks/PlatformerTrack5.mp3");
   //SOUNDS
-  loadSound("collectCup", "assets/sounds/fx/cup.mp3");
-  loadSound("powerUp", "assets/sounds/fx/getPoints.mp3");
+  loadSound("door", "assets/sounds/fx/doorOpen.mp3");
+  loadSound("pour", "assets/sounds/fx/coffeePour.mp3");
+  loadSound("shop", "assets/sounds/fx/coffeeShop.mp3");
+  loadSound("collectCup", "assets/sounds/fx/collectCup.mp3");
+  loadSound("powerUp", "assets/sounds/fx/HappyMeow.mp3");
   loadSound("extraLife", "assets/sounds/fx/exrtraLife.mp3");
   loadSound("flip", "assets/sounds/fx/flip.mp3");
-  loadSound("ratKill", "assets/sounds/fx/rat.mp3");
+  loadSound("ratKill", "assets/sounds/fx/ratKill.mp3");
   loadSound("takeHit", "assets/sounds/fx/takehit.mp3");
   loadSound("laserHit", "assets/sounds/fx/laserHit.mp3");
   loadSound("gameOverSound", "assets/sounds/fx/gameOverSound.mp3");
@@ -93,19 +101,18 @@ async function loadAssets() {
   loadSound("finalFinishHim", "assets/sounds/fx/finalBoom.mp3");
 
 
-  loadSprite("questionBubble", "assets/images/items/question.png");
-  loadSprite("purrBubble", "assets/images/items/purr.png");
-  loadSprite("meowBubble", "assets/images/items/meow.png");
-  loadSprite("heartBubble", "assets/images/items/heart.png");
-  loadSprite("plusHeartBubble", "assets/images/items/plusHeart.png");
-  loadSprite("starBubble", "assets/images/items/star.png");
-  loadSprite("plusTenBubble", "assets/images/items/ten.png");
-  loadSprite("plusHPBubble", "assets/images/items/HP.png");
-  loadSprite("exclamationBubble", "assets/images/items/exclamation.png");
+
+  loadSprite("bubbles", "assets/images/items/bubbles.png", {
+    sliceX: 10,
+    sliceY: 1
+  });
+
+
+
   // BACKGRUNDS
   loadSprite("startBG", "assets/images/backgrounds/StartBG.png");
   loadSprite("menuBG", "assets/images/backgrounds/MenuBG3.png");
-  loadSprite("SelectBG", "assets/images/backgrounds/Select.png");
+  loadSprite("SelectBG", "assets/images/backgrounds/Select2.png");
   loadSprite("transitionBG", "assets/images/backgrounds/transitionBG.png");
   loadSprite("transitionBG2", "assets/images/backgrounds/transitionBG2.png");
   loadSprite("transitionBG3", "assets/images/backgrounds/transitionBG3.png");
@@ -115,37 +122,10 @@ async function loadAssets() {
   loadSprite("transitionBG7", "assets/images/backgrounds/transitionBG7.png");
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
   loadSprite("battleBG1", "assets/images/backgrounds/BattleBG1.png");
-  loadSprite("gameOverBG", "assets/images/backgrounds/GameOverBG.png"); // FOR LOSING ALL LIVES
-  loadSprite("VictoryBG", "assets/images/backgrounds/VictoryBG.png"); // FOR FINAL VICTORY
-  loadSprite("creditsBG", "assets/images/backgrounds/creditsBG.png"); // FOR FINAL VICTORY
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
-  loadSprite("darkCafe", "assets/images/backgrounds/DarkCafe.png"); // FOR FINAL VICTORY
+ 
 
-  loadSprite("level1BG", "assets/images/backgrounds/level1BG.png", {
-    sliceX: 1,  
-    sliceY: 1,   
-    anims: {
-      idle: { from: 0, to: 0} 
-    }
-  });
-
-    loadSprite("l2BG", "assets/images/backgrounds/Level2BG.png", {
-    sliceX: 1,  
-    sliceY: 1,   
-    anims: {
-      idle: { from: 0, to: 0} 
-    }
-  });
-
-    loadSprite("l3BG", "assets/images/backgrounds/Level3BG.png", {
-    sliceX: 1,  
-    sliceY: 1,  
-    anims: {
-      idle: { from: 0, to: 0} 
-    }
-  });
-
-    loadSprite("l4BG", "assets/images/backgrounds/Level4BG.png", {
+  loadSprite("levelBG", "assets/images/backgrounds/levelBG.png", {
     sliceX: 1,  
     sliceY: 1,   
     anims: {
@@ -162,13 +142,11 @@ async function loadAssets() {
   });
   
   // ENEMIES
-  loadSprite("glow", "assets/images/cats/battle/Glow.png");
   loadSprite("cup", "assets/images/enemies/Cup.png");
   loadSprite("littleCucumber", "assets/images/animationSprites/LittleCucumber.png");
   loadSprite("smallRat", "assets/images/animationSprites/SmallRat.png");
   loadSprite("smallRat2", "assets/images/enemies/SmallRat2.png");
   loadSprite("ghostRat", "assets/images/animationSprites/GhostRat.png");
-  loadSprite("bigRat", "assets/images/enemies/BigRat.png");
 
   loadSprite("bossLaserPointer", "assets/images/enemies/BossLaserPointer.png");
   loadSprite("laserPointerGlow", "assets/images/enemies/LaserGlow.png");
@@ -190,12 +168,11 @@ async function loadAssets() {
   loadSprite("milkBottle", "assets/images/items/MilkBottle.png");
   loadSprite("clock", "assets/images/items/clock.png");
   loadSprite("catnip", "assets/images/items/Catnip.png");
-  loadSprite("yeet", "assets/images/CATastrophe/yeet.png");
-  loadSprite("pawsed", "assets/images/CATastrophe/pawsed.png");
-  loadSprite("nekoState", "assets/images/animationSprites/nekoState.png", { sliceX:8, sliceY:1, anims:{pulse:{from:0,to:7, loop: false, speed:7}} });
-  loadSprite("nekoNA", "assets/images/animationSprites/nekoNA.png", { sliceX:33, sliceY:1, anims:{pulse:{from:0,to:32, loop: false, speed:7}} });
+  loadSprite("yeet", "assets/images/items/yeet.png");
+  loadSprite("pawsed", "assets/images/items/pawsed.png");
+ // loadSprite("nekoState", "assets/images/animationSprites/nekoState.png", { sliceX:8, sliceY:1, anims:{pulse:{from:0,to:7, loop: false, speed:7}} });
+ // loadSprite("nekoNA", "assets/images/animationSprites/nekoNA.png", { sliceX:33, sliceY:1, anims:{pulse:{from:0,to:32, loop: false, speed:7}} });
   // SCENES
-  loadSprite("drip", "assets/images/animationSprites/BloodDrip.png", { sliceX:10, sliceY:1, anims:{drip:{from:0,to:9, loop: false, speed:7}} });
   loadSprite("drip2", "assets/images/animationSprites/Drip2.png", { 
     sliceX: 17, 
     sliceY: 1, 
@@ -207,8 +184,6 @@ async function loadAssets() {
     anims: { drip: { from: 0, to: 11 } } 
 });
   loadSprite("lightning", "assets/images/animationSprites/Lightning.png", { sliceX:6, sliceY:1, anims:{glitch:{from:0,to:5}} });
-  loadSprite("smokeReveal1", "assets/images/animationSprites/smokeReveal1.png", { sliceX:21, sliceY:1, anims:{puff:{from:0,to:20, loop: false, speed:15}} });
-  loadSprite("smoke2", "assets/images/animationSprites/smokeReveal2.png", { sliceX:14, sliceY:1, anims:{puff:{from:0,to:13, loop: false, speed:10}} });
   loadSprite("smokeClear", "assets/images/animationSprites/smokeClear.png", { sliceX:18, sliceY:1, anims:{puff:{from:0,to:17, loop: false, speed:10}} });
   loadSprite("levelShiftStart", "assets/images/animationSprites/glitchTransition.png", { 
     sliceX: 55, 
@@ -226,18 +201,31 @@ async function loadAssets() {
     } 
   });
 
+
+  loadSprite("cafeDay", "assets/images/backgrounds/cafeDay.png", { 
+    sliceX: 2, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 1 } } 
+});
+
+
+  loadSprite("pour", "assets/images/animationSprites/pour2.png", { 
+    sliceX: 18, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 17 } } 
+});
+
   // BATTLE ANIMATIONS
-  loadSprite("explosion", "assets/images/animationSprites/Explosion.png", { sliceX:6, sliceY:1, anims:{burst:{from:0,to:5}} });
-  loadSprite("fire", "assets/images/animationSprites/Fire.png", { sliceX:9, sliceY:1, anims:{ball:{from:0,to:8}} });
-  loadSprite("smoke", "assets/images/animationSprites/Smoke.png", { sliceX:9, sliceY:1, anims:{puff:{from:0,to:8}} });
-  loadSprite("swirl", "assets/images/animationSprites/Swirl.png", { sliceX:12, sliceY:1, anims:{spin:{from:0,to:11}} });
+  loadSprite("explosion", "assets/images/animationSprites/redBoom.png", { sliceX:9, sliceY:1, anims:{burst:{from:0,to:8}} });
+  loadSprite("smoke", "assets/images/animationSprites/Poof2.png", { sliceX:5, sliceY:1, anims:{puff:{from:0,to:4}} });
+  loadSprite("swirl", "assets/images/animationSprites/swirl.png", { sliceX:10, sliceY:1, anims:{spin:{from:0,to:9}} });
   loadSprite("powerup", "assets/images/animationSprites/Powerup.png", { sliceX:9, sliceY:1, anims:{beam:{from:0,to:8}} });
   loadSprite("zoomies", "assets/images/animationSprites/Zoomies.png", { sliceX:3, sliceY:3, anims:{glitch:{from:0,to:8}} });
   loadSprite("claw", "assets/images/animationSprites/CatnipClaw.png", { sliceX:32, sliceY:1, anims:{slash:{from:0,to:31,speed:30}} }); 
   loadSprite("greenBlast", "assets/images/animationSprites/GreenBlast.png", { sliceX:12, sliceY:1, anims:{glitch:{from:0,to:11}} });
   loadSprite("biscuits", "assets/images/animationSprites/Biscuits.png", { sliceX:8, sliceY:3, anims:{glitch:{from:0,to:23}} });
   loadSprite("fireball", "assets/images/animationSprites/Fireball.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
-  loadSprite("scratch", "assets/images/animationSprites/Scratch.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
+  loadSprite("scratch2", "assets/images/animationSprites/Scratch2.png", { sliceX:5, sliceY:1, anims:{glitch:{from:0,to:4}} });
   loadSprite("superposition", "assets/images/animationSprites/Superposition.png", { sliceX: 4,   sliceY: 1,   anims: { glitch: { from: 0, to: 3 } }});
   loadSprite("shock", "assets/images/animationSprites/Shock.png", {   sliceX: 4, sliceY: 1,   anims: { burst: { from: 0, to: 3 } }});
   loadSprite("hammer", "assets/images/animationSprites/HydrogenHammer.png", { sliceX: 10, sliceY: 1, anims: { smash: { from: 0, to: 9 } }});
@@ -249,19 +237,18 @@ async function loadAssets() {
   loadSprite("bite", "assets/images/animationSprites/Bite.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});
   loadSprite("laserCharge", "assets/images/animationSprites/LaserCharge.png", { sliceX: 6, sliceY: 1, anims: { glitch: { from: 0, to: 5 } }});
   loadSprite("laserBeam", "assets/images/animationSprites/LaserBeam.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});
-  loadSprite("zap", "assets/images/animationSprites/Zap.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});
   loadSprite("rage", "assets/images/animationSprites/RodentRage.png", { sliceX:3, sliceY:3, anims:{glitch:{from:0,to:8}} });
-  loadSprite("boom", "assets/images/animationSprites/RedBoom.png", { sliceX:6, sliceY:1, anims:{burst:{from:0,to:5}} });
+  loadSprite("boom", "assets/images/animationSprites/redBoom.png", { sliceX:9, sliceY:1, anims:{burst:{from:0,to:8}} });
+  loadSprite("greenBoom", "assets/images/animationSprites/greenBoom.png", { sliceX:5, sliceY:1, anims:{burst:{from:0,to:4}} });
   loadSprite("poof", "assets/images/animationSprites/Poof.png", { sliceX:8, sliceY:1, anims:{burst:{from:0,to:7}} });
   //FINISH HIM MOVES
   loadSprite("lock", "assets/images/animationSprites/LockOn.png", { sliceX:22, sliceY:1, anims:{glitch:{from:0,to:21,speed:15}} });
   loadSprite("catArrow", "assets/images/animationSprites/CatArrow2.png");
   loadSprite("CocktailLight", "assets/images/animationSprites/MeowlotovCocktailLight2.png", { sliceX:3, sliceY:1, anims:{glitch:{from:0,to:2}} });
   loadSprite("CocktailSpin", "assets/images/animationSprites/MeowlotovCocktailSpin2.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
-  loadSprite("lock2", "assets/images/animationSprites/LockOn2.png", { sliceX:22, sliceY:1, anims:{glitch:{from:0,to:21,speed:30}} });
   loadSprite("Burn", "assets/images/animationSprites/Burn.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
+  loadSprite("Burn2", "assets/images/animationSprites/Burn2.png", { sliceX:16, sliceY:1, anims:{glitch:{from:0,to:15}} });
   loadSprite("MuzzleFlash", "assets/images/animationSprites/MuzzleFlash.png", { sliceX:6, sliceY:1, anims:{burst:{from:0,to:5}} });
-  loadSprite("pinkBoom", "assets/images/animationSprites/PinkBoom.png", { sliceX:6, sliceY:1, anims:{burst:{from:0,to:5}} });
   loadSprite("mushroom", "assets/images/animationSprites/MushroomCloud2.png", { sliceX:4, sliceY:2, anims:{burst:{from:0,to:7}} });
   loadSprite("splat", "assets/images/animationSprites/Splat.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});
   loadSprite("BrassToeBeans", "assets/images/animationSprites/BrassToeBeans2.png");
@@ -273,60 +260,46 @@ async function loadAssets() {
   const characters = getCharacterList();
   
   for (const char of characters) {
-    loadSprite(char.sprites.glitchBlue, `${char.sprites.glitchBlue}`);
-    loadSprite(char.sprites.glitchRed, `${char.sprites.glitchRed}`);
-    loadSprite(char.sprites.glow, `${char.sprites.glow}`);
-    loadSprite(char.sprites.battle, `${char.sprites.battle}`);
-    loadSprite(char.sprites.catch, `${char.sprites.catch}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.cup00, `${char.sprites.cup00}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.cup01, `${char.sprites.cup01}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.cup02, `${char.sprites.cup02}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.jump, `${char.sprites.jump}`);
-    loadSprite(char.sprites.king00, `${char.sprites.king00}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.king01, `${char.sprites.king01}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.king02, `${char.sprites.king02}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.menu, `${char.sprites.menu}`);
-    loadSprite(char.sprites.sitSmall, `${char.sprites.sitSmall}`);
-    loadSprite(char.sprites.sitLookForwardRegular, `${char.sprites.sitLookForwardRegular}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.sitLookForwardMad, `${char.sprites.sitLookForwardMad}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.sitLookBackRegular, `${char.sprites.sitLookBackRegular}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.sitLookBackMad, `${char.sprites.sitLookBackMad}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.idle, `${char.sprites.idle}`);
-    loadSprite(char.sprites.standRegular, `${char.sprites.standRegular}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.standMad, `${char.sprites.standMad}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.standSmall, `${char.sprites.standSmall}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.pounce, `${char.sprites.pounce}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.select, `${char.sprites.select}`);
-    loadSprite(char.sprites.sleep, `${char.sprites.sleep}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.stretch, `${char.sprites.stretch}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.wakeUp, `${char.sprites.wakeUp}`); // FOR TRANSITION SCENE
-    loadSprite(char.sprites.walk, `${char.sprites.walk}`, {
-      sliceX: 8,  
-      sliceY: 1,
-      anims: {
-        walk: { from: 0, to: 7, loop: true, speed: 10 }
-      }});
-
- 
-    loadSprite("rainbowIdle", "assets/images/cats/catnip/stand.png");
-    loadSprite("rainbowJump", "assets/images/cats/catnip/jump.png");
-    loadSprite("rainbowWalk", "assets/images/cats/catnip/walk.png", {
+    const charName = char.name;
+    
+    loadSprite(`${charName}Sheet`, char.sprites.sheet, {
+      sliceX: 6,
+      sliceY: 3
+    });
+    
+    loadSprite(`${charName}Platformer`, char.sprites.sheet2, {
+      sliceX: 2,
+      sliceY: 1
+    });
+    
+    loadSprite(`${charName}Walk`, char.sprites.walk, {
       sliceX: 8,
       sliceY: 1,
       anims: {
         walk: { from: 0, to: 7, loop: true, speed: 10 }
       }
     });
-
-   
   }
+
+loadSprite('characterGlow', characters[0].sprites.glow);
+loadSprite('glitchBlue', characters[0].sprites.glitchBlue);
+
+loadSprite("rainbowCatPlatformer", "assets/images/cats/Catnip2.png", {
+  sliceX: 2,
+  sliceY: 1
+});
+loadSprite("rainbowCatWalk", "assets/images/cats/Catnip3.png", {
+  sliceX: 8,
+  sliceY: 1,
+  anims: {
+    walk: { from: 0, to: 7, loop: true, speed: 10 }
+  }
+});
   
   console.log('✅ Assets loaded!');
 }
 
-/**
- * REGISTER ALL GAME SCENES
- */
+
 function registerScenes() {
   console.log('🎬 Registering scenes...');
 
