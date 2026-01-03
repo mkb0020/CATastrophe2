@@ -47,7 +47,9 @@ import {
   animateFelineFission,
   animatePoooof,
   animateKaBAM,
-  setupBossMusic
+  setupBossMusic,
+  animateGreenBoom,
+  animateBurn
 } from '../helpers/bossHelpers.js';
 
 export function createBossBattleScene(bossId, character, playerHP) {
@@ -185,8 +187,8 @@ export function createBossBattleScene(bossId, character, playerHP) {
         break;
         
       case "STEAM BURN":
-        animateSmoke(targetSprite);
-        animateExplosion(targetSprite);
+        animatePoooof(targetSprite);
+        animateBurn(targetSprite);
         animateAttack(attackerSprite, attackerGlow, isPlayer);
         wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
         break;
@@ -198,7 +200,7 @@ export function createBossBattleScene(bossId, character, playerHP) {
       
       // BOSS CUCUMBER MOVES
       case "CUCUMBER CRUNCH":
-        animateExplosion(targetSprite);
+        animateGreenBoom(targetSprite);
         shake(20);
         animateAttack(attackerSprite, attackerGlow, isPlayer);
         wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
