@@ -5,19 +5,24 @@ import { createVolumeToggle, stopAllMusic, startMenuMusic, startFinalVictoryMusi
 
 export function createTransitionScene(transitionKey, character, playerHP) {
   
-  // ⚡ SPECIAL CINEMATIC HANDLING FOR TRANSITION6 (OBSERVER REVEAL)
+  //  OBSERVER REVEAL
   if (transitionKey === 'Transition6') {
     createTransition6ObserverIntro(character, playerHP);
     return;
   }
   
-  // 🎬 SPECIAL CINEMATIC HANDLING FOR TRANSITION7 (POST-NUCLEAR)
+  // POST-NUCLEAR
   if (transitionKey === 'Transition7') {
     createTransition7Cinematic(character, playerHP);
     return;
   }
   
-  // STANDARD TRANSITION LOGIC FOR ALL OTHER TRANSITIONS
+  // STANDARD TRANSITION 
+  renderStandardTransition(transitionKey, character, playerHP);
+}
+
+// CORE TRANSITION 
+function renderStandardTransition(transitionKey, character, playerHP, skipFlipSound = false) {
   const transition = getTransition(transitionKey);
   
   if (!transition) {
@@ -27,11 +32,12 @@ export function createTransitionScene(transitionKey, character, playerHP) {
   }
 
   console.log(`🎬 Playing transition: ${transitionKey}`);
+  console.log(`🐱 Character: ${character.name}`);
+  console.log(`📋 Transition sprites:`, transition.sprites);
 
   let textIndex = 0;
   const textKeys = ['Text1', 'Text2', 'Text3'];
   
-  // BG
   add([
     sprite(transition.background),
     pos(0, 0),
@@ -39,7 +45,7 @@ export function createTransitionScene(transitionKey, character, playerHP) {
     z(0),
   ]);
 
-  add([   // DARK OVERLAY TO DIM BG
+  add([  
     rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(0, 0, 0),
@@ -50,6 +56,8 @@ export function createTransitionScene(transitionKey, character, playerHP) {
   const initialSpriteKey = transition.sprites[0];
   const initialFrame = SPRITE_FRAMES[initialSpriteKey] || SPRITE_FRAMES.menu;
   const initialScale = SPRITE_SCALES[initialSpriteKey] || 1.0;
+
+  console.log(`🎭 Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
 
   const catSprite = add([
     sprite(`${character.name}Sheet`, { frame: initialFrame }),
@@ -118,13 +126,20 @@ export function createTransitionScene(transitionKey, character, playerHP) {
     textDisplay.text = transition[textKeys[textIndex]][0];
     
     const newSpriteKey = transition.sprites[textIndex];
-    const newFrame = SPRITE_FRAMES[newSpriteKey] || SPRITE_FRAMES.menu;
+    const newFrame = SPRITE_FRAMES[newSpriteKey];
     const newScale = SPRITE_SCALES[newSpriteKey] || 1.0;
     
-    catSprite.use(sprite(`${character.name}Sheet`, { frame: newFrame }));
+    console.log(`🔄 Updating to sprite: ${newSpriteKey} -> frame ${newFrame} (textIndex: ${textIndex})`);
+    
+    const frameToUse = newFrame !== undefined ? newFrame : SPRITE_FRAMES.menu;
+    
+    if (newFrame === undefined) {
+      console.warn(`⚠️ Frame not found for sprite key "${newSpriteKey}", using menu frame ${SPRITE_FRAMES.menu}`);
+    }
+    
+    catSprite.use(sprite(`${character.name}Sheet`, { frame: frameToUse }));
     catSprite.scale = vec2(newScale * 1.2, newScale * 1.2);
     
-    // FADE-IN
     catSprite.opacity = 0;
     tween(
       0,
@@ -153,7 +168,9 @@ export function createTransitionScene(transitionKey, character, playerHP) {
     if (textIndex < textKeys.length - 1) {
       textIndex++;
       updateText();
-      play("flip", { volume: 0.3 });
+      if (!skipFlipSound) {
+        play("flip", { volume: 0.3 });
+      }
     } else {
       const nextState = transition.nextState;
       
@@ -185,6 +202,7 @@ export function createTransitionScene(transitionKey, character, playerHP) {
   createVolumeToggle();
 }
 
+// TRANSITION 6: OBSERVER REVEAL
 function createTransition6ObserverIntro(character, playerHP) {
   console.log('⚡ Starting Transition6 - Observer Reveal Cinematic');
   const blackScreen = add([
@@ -273,7 +291,7 @@ function createTransition6ObserverIntro(character, playerHP) {
               tween(finalFlash.opacity, 1, 0.1, (o) => finalFlash.opacity = o).then(() => {
                 wait(0.1, () => {
                   destroyAll();
-                  createStandardTransition('Transition6', character, playerHP);
+                  renderStandardTransition('Transition6', character, playerHP, true);
                 });
               });
             });
@@ -286,183 +304,13 @@ function createTransition6ObserverIntro(character, playerHP) {
   createVolumeToggle();
 }
 
-function createStandardTransition(transitionKey, character, playerHP) {
-  const transition = getTransition(transitionKey);
-  
-  if (!transition) {
-    console.error(`Transition ${transitionKey} not found!`);
-    go("menu");
-    return;
-  }
-
-  console.log(`🎬 Playing transition: ${transitionKey}`);
-
-  let textIndex = 0;
-  const textKeys = ['Text1', 'Text2', 'Text3'];
-  
-  // BG
-  add([
-    sprite(transition.background),
-    pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
-    z(0),
-  ]);
-
-  add([   // DARK OVERLAY TO DIM BG
-    rect(SCREEN_W, SCREEN_H),
-    pos(0, 0),
-    color(0, 0, 0),
-    opacity(0.4),
-    z(1)
-  ]);
-
-  const initialSpriteKey = transition.sprites[0];
-  const initialFrame = SPRITE_FRAMES[initialSpriteKey] || SPRITE_FRAMES.menu;
-  const initialScale = SPRITE_SCALES[initialSpriteKey] || 1.0;
-
-  const catSprite = add([
-    sprite(`${character.name}Sheet`, { frame: initialFrame }),
-    pos(SCREEN_W / 2, SCREEN_H / 2 - 35),
-    anchor('center'),
-    scale(initialScale * 1.2),
-    z(2),
-    opacity(1)
-  ]);
-
-  add([ // TEXT BG
-    rect(SCREEN_W - 100, 100, { radius: 20 }),
-    pos(SCREEN_W / 2, SCREEN_H - 80),
-    anchor('center'),
-    color(0, 0, 0),
-    opacity(0.8),
-    outline(4, Color.fromHex(Colors.Highlight)),
-    z(2)
-  ]);
-
-  const textDisplay = add([   // TEXT
-    text(transition[textKeys[0]][0], {
-      size: 25,
-      width: SCREEN_W - 150,
-      align: 'center',
-      font: 'science'
-    }),
-    pos(SCREEN_W / 2, SCREEN_H - 85),
-    anchor('center'),
-    color(255, 255, 255),
-    z(3)
-  ]);
-
-  const dots = [];   // DOTS
-
-  for (let i = 0; i < 3; i++) {
-    const dot = add([
-      circle(i === 0 ? 7 : 4),
-      pos(SCREEN_W / 2 - 30 + i * 30, SCREEN_H - 45),
-      anchor('center'),
-      color(i === 0 ? Color.fromHex(Colors.Highlight) : rgb(100, 100, 100)),
-      z(3)
-    ]);
-    dots.push(dot);
-  }
-
-  const prompt = add([   // PROMPT - PRESS SPACE
-    text('Press SPACE or ENTER to continue', { 
-      size: 18, 
-      font: 'science'
-    }),
-    pos(SCREEN_W / 2, SCREEN_H - 15),
-    anchor('center'),
-    color(200, 200, 200),
-    opacity(0.8),
-    z(3)
-  ]);
-
-  let blinkTime = 0;   // BLINKING PROMPT
-  prompt.onUpdate(() => {
-    blinkTime += dt();
-    prompt.opacity = Math.sin(blinkTime * 3) * 0.3 + 0.6;
-  });
-
-  function updateText() {   // UPDATE TEXT AND DOTS
-    textDisplay.text = transition[textKeys[textIndex]][0];
-    
-    const newSpriteKey = transition.sprites[textIndex];
-    const newFrame = SPRITE_FRAMES[newSpriteKey] || SPRITE_FRAMES.menu;
-    const newScale = SPRITE_SCALES[newSpriteKey] || 1.0;
-    
-    catSprite.use(sprite(`${character.name}Sheet`, { frame: newFrame }));
-    catSprite.scale = vec2(newScale * 1.2, newScale * 1.2);
-    
-    // FADE-IN
-    catSprite.opacity = 0;
-    tween(
-      0,
-      1,
-      0.3,
-      (val) => catSprite.opacity = val,
-      easings.easeOutCubic
-    );
-    
-    // PROGRESS DOTS
-    dots.forEach((dot, i) => {
-      if (i === textIndex) {
-        dot.radius = 10;
-        dot.color = Color.fromHex(Colors.Highlight);
-      } else if (i < textIndex) {
-        dot.radius = 6;
-        dot.color = Color.fromHex(Colors.Green);
-      } else {
-        dot.radius = 6;
-        dot.color = rgb(100, 100, 100);
-      }
-    });
-  }
-
-  function handleNext() {
-    if (textIndex < textKeys.length - 1) {
-      textIndex++;
-      updateText();
-      if (transitionKey !== 'Transition6') {
-        play("flip", { volume: 0.3 });
-      }
-    } else {
-      const nextState = transition.nextState;
-      
-      if (nextState === 'level1') {
-        go('level1', { character });
-      } else if (nextState === 'level2') {
-        go('level2', { character, playerHP });
-      } else if (nextState === 'level3') {
-        go('level3', { character, playerHP });
-      } else if (nextState === 'level4') {
-        go('level4', { character, playerHP });
-      } else if (nextState === 'level5') {
-        go('level5', { character, playerHP });
-      } else if (nextState === 'observerBoss') {
-        go('observerBoss', { character, playerHP });
-      } else if (nextState === 'credits') { 
-        go('credits', { character });
-      } else {
-        go(nextState, { character, playerHP });
-      }
-    }
-  }
-
-  // INPUT HANDLING
-  onKeyPress('space', handleNext);
-  onKeyPress('enter', handleNext);
-  onClick(handleNext);
-
-  createVolumeToggle();
-}
-
+// TRANSITION 7: POST-NUCLEAR VICTORY + CREDITS
 function createTransition7Cinematic(character, playerHP) {
   console.log('🎬 Starting Transition7 - Post Nuclear Cinematic + Credits');
   console.log('🎵 Starting FinalVictoryTrack (50 seconds)');
   stopAllMusic();
   startFinalVictoryMusic();
   
-  // ===== PHASE 1: POST-NUCLEAR BLAST  =====
   const bg = add([
     sprite("transitionBG7"),
     pos(0, 0),
