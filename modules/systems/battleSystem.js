@@ -349,9 +349,7 @@ export function getHPBarColor(percentage) {
 }
 
 
-/**
- * CALCULATE DAMAGE FOR OUTSIDE OF BATTLE SYSTEM
- */
+
 export function calculateDamage(attacker, defender, power, critChance = 0.12) {
   const randomFactor = 0.92 + Math.random() * 0.16;
   
@@ -369,9 +367,6 @@ export function calculateDamage(attacker, defender, power, critChance = 0.12) {
   };
 }
 
-/**
- * EXECUTE MOVE
- */
 
 export function executeMove(attacker, defender, moveName, move) {
   let log = "";
@@ -379,12 +374,12 @@ export function executeMove(attacker, defender, moveName, move) {
   if (move.heal) {
   
     const healAmount = Math.min(parseInt(move.heal), attacker.maxHP - attacker.hp);
-    attacker.hp = parseInt(attacker.hp) + healAmount;  // ← Force to number!
+    attacker.hp = parseInt(attacker.hp) + healAmount;  
     log = `${attacker.name} used ${moveName} and restored ${healAmount} HP!`;
   } else if (move.dmg) {
  
     const damage = calculateDamage(attacker, defender, parseInt(move.dmg));
-    defender.hp = Math.max(0, parseInt(defender.hp) - damage);  // ← Force to number!
+    defender.hp = Math.max(0, parseInt(defender.hp) - damage);  
     log = `${attacker.name} used ${moveName} and dealt ${damage} damage!`;
     
   
