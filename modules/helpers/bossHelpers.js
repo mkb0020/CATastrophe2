@@ -487,11 +487,11 @@ export function animateDefeat(sprite, glow, isPlayer) {
 // ================================= FANCY  ANIMATIONS ===========================================
 // ========================= GENERAL =========================
 export function animateKaBAM(target) {
-  shake(20);
+  shake(30);
   const kabam = add([
     sprite("bam", { anim: "glitch" }),
     pos(target.pos),
-    scale(6),
+    scale(7),
     anchor("center"),
     z(40),
     opacity(1)
@@ -500,6 +500,90 @@ export function animateKaBAM(target) {
   wait(0.4, () => destroy(kabam))
 }
 
+export function animateBurn(target) {
+  shake(30);
+  
+  const burn = add([
+    sprite("Burn", { anim: "glitch" }),
+    pos(target.pos.add(vec2(-15, 10))), 
+    scale(6),
+    anchor("center"),
+    z(40),
+    opacity(0)
+  ]);
+  
+  const burn2 = add([
+    sprite("Burn2", { anim: "glitch" }),
+    pos(target.pos.add(vec2(20, -8))),
+    scale(6),
+    anchor("center"),
+    z(39),
+    opacity(0)
+  ]);
+  
+  const burn3 = add([
+    sprite("Burn", { anim: "glitch" }),
+    pos(target.pos.add(vec2(8, -15))),
+    scale(4),
+    anchor("center"),
+    z(44),
+    opacity(0)
+  ]);
+  
+  const burn4 = add([
+    sprite("Burn2", { anim: "glitch" }),
+    pos(target.pos.add(vec2(-12, 12))), 
+    scale(4),
+    anchor("center"),
+    z(42),
+    opacity(0)
+  ]);
+  
+  const pooooof = add([
+    sprite("poof", { anim: "burst" }),
+    pos(target.pos),
+    scale(3),
+    opacity(0),
+    z(12),
+    anchor("center")
+  ]);
+  
+
+  tween(0, 0.6, 0.15, (val) => burn.opacity = val, easings.easeOutQuad);
+  wait(0.05, () => tween(0, 0.4, 0.15, (val) => burn2.opacity = val, easings.easeOutQuad));
+  wait(0.1, () => tween(0, 0.7, 0.15, (val) => burn3.opacity = val, easings.easeOutQuad));
+  wait(0.15, () => tween(0, 0.5, 0.15, (val) => burn4.opacity = val, easings.easeOutQuad));
+
+  wait(0.3, () => {
+    tween(0, 0.5, 0.2, (val) => pooooof.opacity = val, easings.easeOutQuad);
+  });
+  
+
+  wait(0.3, () => {
+    tween(burn4.opacity, 0, 0.2, (val) => burn4.opacity = val, easings.easeInQuad);
+    wait(0.2, () => destroy(burn4));
+  });
+  
+  wait(0.4, () => {
+    tween(burn.opacity, 0, 0.2, (val) => burn.opacity = val, easings.easeInQuad);
+    wait(0.2, () => destroy(burn));
+  });
+  
+  wait(0.5, () => {
+    tween(burn2.opacity, 0, 0.2, (val) => burn2.opacity = val, easings.easeInQuad);
+    wait(0.2, () => destroy(burn2));
+  });
+  
+  wait(0.6, () => {
+    tween(burn3.opacity, 0, 0.2, (val) => burn3.opacity = val, easings.easeInQuad);
+    wait(0.2, () => destroy(burn3));
+  });
+  
+  wait(0.8, () => {
+    tween(pooooof.opacity, 0, 0.4, (val) => pooooof.opacity = val, easings.easeInQuad);
+    wait(0.4, () => destroy(pooooof));
+  });
+}
 
 export function animateGhostPoof(target) {
   const pooooof = add([
@@ -552,6 +636,23 @@ export function animateRedBoom(target) {
   shake(30);
   const boom = add([
     sprite("boom", { anim: "burst" }),
+    pos(target.pos),
+    scale(4),
+    opacity(1),
+    z(100),
+    anchor("center")
+  ]);
+  wait(0.5, () => {
+    tween(boom.opacity, 0, 0.3, (o) => boom.opacity = o, easings.easeOutQuad)
+      .then(() => destroy(boom));
+  });
+}
+
+
+export function animateGreenBoom(target) {
+  shake(30);
+  const boom = add([
+    sprite("greenBoom", { anim: "burst" }),
     pos(target.pos),
     scale(4),
     opacity(1),
@@ -741,14 +842,16 @@ export function animateScratch(attacker, target) {
       if (i >= angles.length) return;
 
       const slash = add([
-        sprite("scratch", { anim: "glitch" }),
+        sprite("scratch2", { anim: "glitch" }),
         pos(target.pos.add(offsets[i])),
-        scale(10),
+        scale(4),
         anchor("center"),
         rotate(angles[i]),
         z(30),
         opacity(1)
       ]);
+
+
 
       tween(1, 0, 0.7, (o) => slash.opacity = o)
         .then(() => destroy(slash));
@@ -788,8 +891,8 @@ export function animateBiscuits(target) {
 
 export function animateClaw(attacker, target) {
   shake(20);
-  const startX = target.pos.x-50;
-  const endX = target.pos.x - 250;
+  const startX = target.pos.x - 150; //-50;
+  const endX = target.pos.x - 150; // - 250;
   
   const slash = add([
     sprite("claw", { anim: "slash" }),
@@ -882,9 +985,9 @@ export function animateZap(attacker, target) {
   shake(20);
 
   const zap = add([
-    sprite("zap", { anim: "glitch" }),
+    sprite("shock", { anim: "burst" }),
     pos(target.pos),
-    scale(8),
+    scale(5),
     anchor("center"),
     opacity(1),
     z(20)
@@ -987,7 +1090,7 @@ export function animateGreenBlast(attacker, target) {
 
     wait(0.45, () => {
       destroy(charge);
-      shake(10);
+      shake(40);
 
       const shot = add([
         sprite("littleCucumber"),
@@ -999,7 +1102,7 @@ export function animateGreenBlast(attacker, target) {
 
       tween(shot.pos, target.pos, 0.45, (p) => shot.pos = p, easings.easeOutQuad)
         .then(() => {
-          animateExplosion(target);
+          animateKaBAM(target);
           animateSmoke(target);
           destroy(shot);
         });
@@ -1671,38 +1774,7 @@ export function animatePoisonAttack(boss, hero) {
               ]);
               tween(flash2.opacity, 1, 0.3, (val) => flash2.opacity = val, easings.easeInQuad); // LINGERING FULL WHITE SCREEN 
               
-             // wait(1.5, () => {
-              //    for (let i = 0; i < 12; i++) { // FILL SCREEN WITH SMOKE
-               //       const xPos = (i % 4) * (width() / 3) + rand(-50, 50);
-             //         const yPos = Math.floor(i / 4) * (height() / 2) + rand(-50, 50);
-              //        const poof = add([ // SMOKE
-              //            sprite("smoke", { anim: "puff" }),
-              //            pos(xPos, yPos),
-              //            scale(6 + rand(-1, 1)),
-              //            opacity(0),
-              //            z(9999),
-              //            anchor("center"),
-              //            fixed(),
-              //        ]);
-              //        poof.play("puff", { loop: true });
-                      
-              //        wait(i * 0.03, () => { // FILL SCREEN WITH SMOKE
-              //            tween(poof.opacity, 0.8, 0.3, (o) => poof.opacity = o);
-              //            tween(poof.pos.y, poof.pos.y + rand(-30, 30), 2, (y) => poof.pos.y = y, easings.easeOutQuad); // DRIFT SMOKE
-                          
-             //             wait(1.5, () => { // FADE OUT SMOKE
-              //                shake(10);
-                //              tween(poof.opacity, 0, 1.0, (o) => poof.opacity = o, easings.easeOutQuad)
-               //                   .then(() => destroy(poof));
-               //           });
-              //        });
-               //   }
-              //    wait(0.35, () => { // FADE WHITE OUT SLOWLY
-              //        tween(flash2.opacity, 0, 1.2, (val) => flash2.opacity = val, easings.easeOutQuad);
-              //        wait(1.2, () => destroy(flash2));
-                      
-              //    });
-         //     });
+           
           });
       });
   }
@@ -1872,20 +1944,11 @@ export function animatePoisonAttack(boss, hero) {
               });
               
               wait(0.07, () => {
-                  //const boom = add([ // PINK BOOM ON boss
-                    //  sprite("pinkBoom", { anim: "burst" }),
-                      //pos(boss.pos.add(vec2(-150, -190))),
-                     // scale(0.6),
-                      //z(50),
-                  //]);
-                  
-                 // tween(boom.scale, vec2(8, 8), 0.4, (s) => boom.scale = s, easings.easeOutQuad); // GROW PINK BOOM
-                 // boom.play("burst", { loop: false, speed: 12 });
+
                  animateKaBAM(boss);
                   shake(45);
                   wait(0.5, () => {
                       destroy(flash);
-                     // destroy(boom);
                       
                       wait(0.2, () => {
                           tween(rifle.opacity, 0, 0.3, (o) => rifle.opacity = o);
