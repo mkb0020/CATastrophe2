@@ -301,21 +301,31 @@ export function addVictoryArea(levelConfig) {
   return { catTower, arrow, victoryPlatform, helperPlatform };
 }
 
+
+
+
 export function addCups(levelConfig) {
   if (!levelConfig.cups.enabled) return;
   
   const totalCups = levelConfig.cups.count;
   const platforms = levelConfig.platforms;
+  
+  const platformsWithCups = new Set();
+  
+  const platformsToUse = Math.min(platforms.length, totalCups);
+  const interval = Math.floor(platforms.length / platformsToUse);
+  
   let cupsPlaced = 0;
   
-  platforms.forEach((platform, platformIndex) => {
-  
-    const cupsRemaining = totalCups - cupsPlaced;
-    const platformsRemaining = platforms.length - platformIndex;
-    const numCups = Math.ceil(cupsRemaining / platformsRemaining);
+  for (let i = 0; i < platforms.length && cupsPlaced < totalCups; i += Math.max(1, interval)) {
+    const platform = platforms[i];
+    const cupsOnThisPlatform = Math.min(
+      Math.ceil((totalCups - cupsPlaced) / Math.ceil((platforms.length - i) / interval)),
+      totalCups - cupsPlaced
+    );
     
-    for (let i = 0; i < numCups && cupsPlaced < totalCups; i++) {
-      const x = platform.x + (platform.width / (numCups + 1)) * (i + 1);
+    for (let j = 0; j < cupsOnThisPlatform; j++) {
+      const x = platform.x + (platform.width / (cupsOnThisPlatform + 1)) * (j + 1);
       const y = platform.y - 61;
       add([
         sprite('cup'),
@@ -327,22 +337,43 @@ export function addCups(levelConfig) {
         {
           hasBeenKnocked: false,
           rotationSpeed: 0,
-          fallSpeed: 0
+          fallSpeed: 0,
+          points: 5  
         },
         "cup"
       ]);
       cupsPlaced++;
+      platformsWithCups.add(i); 
     }
-  });
+  }
+  
+  return platformsWithCups;
 }
 
-export function addSpecialItems(levelConfig) {
-  const eligiblePlatforms = levelConfig.platforms.filter(p => p.width >= 200);
+export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
+  const eligiblePlatforms = levelConfig.platforms.filter((p, index) => 
+    p.width >= 200 && !platformsWithCups.has(index)
+  );
+  
+  if (eligiblePlatforms.length === 0) {
+    console.warn("No eligible platforms for special items!");
+    return;
+  }
   
   if (levelConfig.items.fishBones.enabled) {
     const count = levelConfig.items.fishBones.count;
+    const usedPlatforms = new Set();
+    
     for (let i = 0; i < Math.min(count, eligiblePlatforms.length); i++) {
-      const platform = choose(eligiblePlatforms);
+      let platform;
+      let attempts = 0;
+      do {
+        platform = choose(eligiblePlatforms);
+        attempts++;
+      } while (usedPlatforms.has(platform) && attempts < 50);
+      
+      usedPlatforms.add(platform);
+      
       const x = platform.x + rand(50, platform.width - 50);
       const y = platform.y - 70;
       
@@ -359,8 +390,18 @@ export function addSpecialItems(levelConfig) {
   
   if (levelConfig.items.tunaCan.enabled) {
     const count = levelConfig.items.tunaCan.count;
+    const usedPlatforms = new Set();
+    
     for (let i = 0; i < Math.min(count, eligiblePlatforms.length); i++) {
-      const platform = choose(eligiblePlatforms);
+      let platform;
+      let attempts = 0;
+      do {
+        platform = choose(eligiblePlatforms);
+        attempts++;
+      } while (usedPlatforms.has(platform) && attempts < 50);
+      
+      usedPlatforms.add(platform);
+      
       const x = platform.x + rand(50, platform.width - 50);
       const y = platform.y - 70;
       
@@ -398,6 +439,8 @@ export function addSpecialItems(levelConfig) {
     ]);
   }
 }
+
+
 
 export function createPlayer(levelConfig, character, startHP) {
   const prefix = character.name;
@@ -680,7 +723,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
       anchor("center"),
       z(100), 
       opacity(0),
-      scale(2),
+      scale(3),
       "bubble"
     ]);
     
@@ -955,6 +998,18 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
       const spawnArea = choose(offScreenAreas);
       const spawnX = rand(spawnArea.start, spawnArea.end);
       const spawnY = 390;
+      
+      const hasGroundAtSpawn = levelConfig.GroundSegments.some(segment => 
+        spawnX >= segment.x && 
+        spawnX <= segment.x + segment.width &&
+        segment.y >= spawnY - 10 && 
+        segment.y <= spawnY + 60
+      );
+      
+      if (!hasGroundAtSpawn) {
+        console.warn(`Rat spawn aborted at x:${spawnX} - no ground detected!`);
+        return;
+      }
       
       const rat = add([
         sprite('smallRat2'),
