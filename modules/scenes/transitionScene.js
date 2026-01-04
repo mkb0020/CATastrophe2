@@ -3,26 +3,35 @@ import { getTransition } from '../config/transitions.js';
 import { SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { createVolumeToggle, stopAllMusic, startMenuMusic, startFinalVictoryMusic } from '../helpers/kittyHelpers.js';
 
-export function createTransitionScene(transitionKey, character, playerHP) {
-  
+export function createTransitionScene(transitionKey, character, startHP, lives = 3, score = 0) {
+    console.log('🎬 RAW PARAMS:', { transitionKey, character, startHP, lives, score });
+  console.log('🎬 lives type:', typeof lives, 'value:', lives);
+    console.log('🎬 Transition Scene received:', {
+    transitionKey,
+    character: character?.name,
+    startHP,
+    lives,
+    score
+  });
+
   //  OBSERVER REVEAL
   if (transitionKey === 'Transition6') {
-    createTransition6ObserverIntro(character, playerHP);
+    createTransition6ObserverIntro(character, startHP, lives, score);
     return;
   }
   
   // POST-NUCLEAR
   if (transitionKey === 'Transition7') {
-    createTransition7Cinematic(character, playerHP);
+    createTransition7Cinematic(character, startHP);
     return;
   }
   
   // STANDARD TRANSITION 
-  renderStandardTransition(transitionKey, character, playerHP);
+  renderStandardTransition(transitionKey, character, startHP, false, lives, score);
 }
 
 // CORE TRANSITION 
-function renderStandardTransition(transitionKey, character, playerHP, skipFlipSound = false) {
+function renderStandardTransition(transitionKey, character, startHP, skipFlipSound = false, lives = 3, score = 0){
   const transition = getTransition(transitionKey);
   
   if (!transition) {
@@ -164,7 +173,7 @@ function renderStandardTransition(transitionKey, character, playerHP, skipFlipSo
     });
   }
 
-  function handleNext() {
+function handleNext() {
     if (textIndex < textKeys.length - 1) {
       textIndex++;
       updateText();
@@ -173,23 +182,24 @@ function renderStandardTransition(transitionKey, character, playerHP, skipFlipSo
       }
     } else {
       const nextState = transition.nextState;
-      
+          console.log('🎬 Transition going to next state:', nextState, 'with HP:', startHP, 'lives:', lives, 'score:', score);
+
       if (nextState === 'level1') {
-        go('level1', { character });
+        go('level1', { character, startHP, lives, score });
       } else if (nextState === 'level2') {
-        go('level2', { character, playerHP });
+        go('level2', { character, startHP, lives, score });
       } else if (nextState === 'level3') {
-        go('level3', { character, playerHP });
+        go('level3', { character, startHP, lives, score });
       } else if (nextState === 'level4') {
-        go('level4', { character, playerHP });
+        go('level4', { character, startHP, lives, score });
       } else if (nextState === 'level5') {
-        go('level5', { character, playerHP });
+        go('level5', { character, startHP, lives, score });
       } else if (nextState === 'observerBoss') {
-        go('observerBoss', { character, playerHP });
+        go('observerBoss', { character, startHP, lives });
       } else if (nextState === 'credits') { 
         go('credits', { character });
       } else {
-        go(nextState, { character, playerHP });
+        go(nextState, { character, startHP, lives, score });
       }
     }
   }
@@ -203,7 +213,7 @@ function renderStandardTransition(transitionKey, character, playerHP, skipFlipSo
 }
 
 // TRANSITION 6: OBSERVER REVEAL
-function createTransition6ObserverIntro(character, playerHP) {
+function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0) {
   console.log('⚡ Starting Transition6 - Observer Reveal Cinematic');
   const blackScreen = add([
     rect(width(), height()),
@@ -291,7 +301,7 @@ function createTransition6ObserverIntro(character, playerHP) {
               tween(finalFlash.opacity, 1, 0.1, (o) => finalFlash.opacity = o).then(() => {
                 wait(0.1, () => {
                   destroyAll();
-                  renderStandardTransition('Transition6', character, playerHP, true);
+                    renderStandardTransition('Transition6', character, startHP, true, lives, score);
                 });
               });
             });
@@ -305,7 +315,7 @@ function createTransition6ObserverIntro(character, playerHP) {
 }
 
 // TRANSITION 7: POST-NUCLEAR VICTORY + CREDITS
-function createTransition7Cinematic(character, playerHP) {
+function createTransition7Cinematic(character, startHP) {
   console.log('🎬 Starting Transition7 - Post Nuclear Cinematic + Credits');
   console.log('🎵 Starting FinalVictoryTrack (50 seconds)');
   stopAllMusic();

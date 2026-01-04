@@ -26,7 +26,7 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     destroy(darkRedOverlay);
   });
 
-  const bg = add([ // 
+  const bg = add([ 
     sprite('menuBG'),
     pos(0, 0),
     scale(SCREEN_W / 1000, SCREEN_H / 480),
@@ -347,24 +347,24 @@ export function createYouDiedScene(data) {
   ]);
 
  
-  useLifeBtn.onClick(() => {
-    console.log(`🎮 You had: ${lives} lives`);
-    const newLives = lives - 1;
-    console.log(`🎮 Continuing ${level} with ${newLives} lives`);
-    console.log(`👤 Character:`, character);
-    
-    const maxHP = character.stats?.maxHP || 100;
-    const restoredHP = Math.floor(maxHP * 0.5);
-    
-    console.log(`❤️ Restoring HP to ${restoredHP} (50% of ${maxHP})`);
-    
-   
-    go(level, {
-        character,
-        playerHP: restoredHP,
-        lives: newLives
-      });
-    });
+useLifeBtn.onClick(() => {
+  console.log(`🎮 You had: ${lives} lives`);
+  const newLives = lives - 1;
+  character.lives = newLives; 
+  console.log(`🎮 Continuing ${level} with ${newLives} lives`);
+  console.log(`👤 Character:`, character);
+  
+  const maxHP = character.stats?.maxHP || 100;
+  const restoredHP = Math.floor(maxHP * 0.5);
+  
+  console.log(`❤️ Restoring HP to ${restoredHP} (50% of ${maxHP})`);
+  
+  go(level, {
+    character,
+    startHP: restoredHP,
+    lives: newLives
+  });
+});
 
   useLifeBtn.onHover(() => {
     useLifeBtn.color = rgb(144,144,192);
@@ -561,7 +561,7 @@ export function createLevelCompleteScene(data) {
   console.log('🎊 LEVEL COMPLETE SCENE');
   console.log('📦 Data received:', data);
   
-  const { level, score, nextLevel, character, playerHP } = data;
+  const { level, score, nextLevel, character, startHP  } = data;
     play("VictorySound", { volume: 0.5 });
 
   add([
@@ -629,7 +629,7 @@ export function createLevelCompleteScene(data) {
   ]);
 
   const hpText = add([
-    text(`HP Remaining: ${playerHP}`, { size: 40, font: "science" }),
+    text(`HP Remaining: ${startHP}`, { size: 40, font: "science" }),
     pos(center().x, 280),
     anchor("center"),
     color(200, 255, 200),
@@ -692,7 +692,7 @@ export function createLevelCompleteScene(data) {
   continueBtn.onClick(() => {
     go(nextLevel, { 
       character: character,
-      playerHP: playerHP 
+      startHP: startHP
     });
   });
 
@@ -702,8 +702,20 @@ export function createLevelCompleteScene(data) {
 
 
 export function createBossDefeatedScene(data) {
-  const { level = "cupBoss", score = 0, nextLevel = "level2", character, playerHP } = data || {};
-  
+    console.log('🏆 Boss Defeated Scene received:', data);
+
+  const { 
+    level = "cupBoss", 
+    score = 0, 
+    nextLevel = "level2", 
+    character, 
+    playerHP, 
+    lives = 3 
+  } = data || {};  
+    console.log('📊 Extracted values:', { score, playerHP, lives });
+    console.log('📊 Character.lives:', character.lives);  
+    console.log('📊 Data.lives:', data.lives);  
+
   stopAllMusic();
   play("VictorySound", { volume: 0.6 }); 
   
@@ -800,17 +812,21 @@ export function createBossDefeatedScene(data) {
   createVolumeToggle();
 
   onClick(() => {
+      console.log('🚀 BEFORE go() - values are:', { nextLevel, playerHP, lives, score });
+
     if (nextLevel.startsWith("Transition")) {
-      go("transition", nextLevel, character, playerHP);
+          console.log('🚀 Calling go with these exact params:', nextLevel, character.name, playerHP, lives, score);
+
+      go("transition", nextLevel, character, playerHP, lives, score);  
     }
     else if (nextLevel === "level2") {
-      go("level2", { character, playerHP });
+      go("level2", { character, startHP: playerHP, lives, score });  
     } else if (nextLevel === "level3") {
-      go("level3", { character, playerHP });
+      go("level3", { character, startHP: playerHP, lives, score });  
     } else if (nextLevel === "level4") {
-      go("level4", { character, playerHP });
+      go("level4", { character, startHP: playerHP, lives, score });  
     } else if (nextLevel === "level5") {
-      go("level5", { character, playerHP });
+      go("level5", { character, startHP: playerHP, lives, score });  
     } else {
       go("menu");
     }

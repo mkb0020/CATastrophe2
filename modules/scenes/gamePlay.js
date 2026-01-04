@@ -32,12 +32,13 @@ import { createVolumeToggle } from '../helpers/kittyHelpers.js';
 
 function createUnifiedLevel(levelId, data) {
   const character = data?.character || data;
-  const startHP = data?.playerHP || data?.startHP;
+  const startHP = data?.startHP;
   const startLives = data?.lives ?? 3;
+  const startScore = data?.score ?? 0;
   
   const levelConfig = getLevel(levelId);
   console.log(`🎮 ${levelConfig.name.toUpperCase()} INITIATED`);
-  console.log('❤️ Starting HP:', startHP || levelConfig.playerHP.start);
+  console.log('❤️ Starting HP:', startHP);
   console.log('💙 Starting Lives:', startLives);
 
   onKeyPress("d", () => {
@@ -57,10 +58,10 @@ function createUnifiedLevel(levelId, data) {
   
   addLaserBeams(levelConfig);
 
-  const player = createPlayer(levelConfig, character, startHP || levelConfig.playerHP.start);
+  const player = createPlayer(levelConfig, character, startHP);
   setupOneWayPlatforms(player);
 
-  let score = 0;
+  let score = startScore; 
   let timeLeft = levelConfig.timeLimit;
   let gameActive = true;
   let lives = startLives;
@@ -129,12 +130,12 @@ export function createLevel4Scene(data) {
 
 export function createLevel5Scene(data) {
   const character = data?.character || data;
-  const startHP = data?.playerHP || data?.startHP;
+  const startHP = data?.startHP;
   const startLives = data?.lives || 3;
   
   const levelConfig = getLevel('level5');
   console.log('🎮 LEVEL 5 - FINAL GAUNTLET');
-  console.log('❤️ Starting HP:', startHP || levelConfig.playerHP.start);
+  console.log('❤️ Starting HP:', startHP);
   console.log('💙 Starting Lives:', startLives);
 
   onKeyPress("d", () => {
@@ -153,7 +154,7 @@ export function createLevel5Scene(data) {
   addSpecialItems(levelConfig);
   addLaserBeams(levelConfig);
   
-  const player = createPlayer(levelConfig, character, startHP || levelConfig.playerHP.start);
+  const player = createPlayer(levelConfig, character, startHP);
   setupOneWayPlatforms(player);
 
 
@@ -189,7 +190,7 @@ export function createLevel5Scene(data) {
       setGameActive(false);
       
       wait(0.5, () => {
-        go("transition", "Transition6", character, player.hp);
+        go("transition", "Transition6", character, player.hp, getLives(), getScore()); 
       });
     }
   });

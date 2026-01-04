@@ -49,10 +49,18 @@ import {
   animateKaBAM,
   setupBossMusic,
   animateGreenBoom,
-  animateBurn
+  animateBurn,
+  animateFlash
 } from '../helpers/bossHelpers.js';
 
-export function createBossBattleScene(bossId, character, playerHP) {
+export function createBossBattleScene(bossId, character, startHP, startScore = 0) {
+    console.log('🎮 Boss Battle Starting:', {
+      bossId,
+      character: character.name,
+      startHP,
+      startScore
+    });
+
   if (bossId !== 'observerBoss' && bossId !== 'observer') {
     stopAllMusic();
     startBossMusic();
@@ -97,17 +105,18 @@ export function createBossBattleScene(bossId, character, playerHP) {
   const boss = initializeBoss(bossId);
   
   // PLAYER STATS
-  const player = {
-    name: character.name,
-    hp: parseInt(playerHP) || character.stats.maxHP,
-    maxHP: parseInt(character.stats.maxHP),
-    atk: parseInt(character.stats.baseAtk),
-    speed: parseInt(character.stats.baseSpeed),
-    defense: parseInt(character.stats.baseDefense),
-    moves: JSON.parse(JSON.stringify(character.moves)),
-    speedBuffTurns: 0,
-    defenseBuffTurns: 0
-  };
+const player = {
+  name: character.name,
+  hp: parseInt(startHP) || character.stats.maxHP,
+  maxHP: parseInt(character.stats.maxHP),
+  atk: parseInt(character.stats.baseAtk),
+  speed: parseInt(character.stats.baseSpeed),
+  defense: parseInt(character.stats.baseDefense),
+  moves: JSON.parse(JSON.stringify(character.moves)),
+  speedBuffTurns: 0,
+  defenseBuffTurns: 0,
+  lives: character.lives !== undefined ? character.lives : 3 
+};
 
   // BATTLE STATE
   let battleLog = bossConfig.introMessage[0];
@@ -168,6 +177,13 @@ export function createBossBattleScene(bossId, character, playerHP) {
         break;
       
       // LASER POINTER BOSS MOVES
+
+      case "PHOTON FLASH":
+        animateFlash();
+        animateAttack(attackerSprite, attackerGlow, isPlayer);
+        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        break;
+
       case "ZAP":
         animateZap(attackerSprite, targetSprite);
         animateAttack(attackerSprite, attackerGlow, isPlayer);
@@ -240,6 +256,11 @@ export function createBossBattleScene(bossId, character, playerHP) {
         wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
         break;
 
+      case "SCURRY":
+          animatePowerup(attackerSprite);
+          animateHeal(attackerSprite, attackerGlow);
+          break;
+
       // OBSERVER MOVES 
       case "POISON":
         animatePoisonAttack(attackerSprite, targetSprite);
@@ -258,6 +279,12 @@ export function createBossBattleScene(bossId, character, playerHP) {
         animateAttack(attackerSprite, attackerGlow, isPlayer);
         wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
         break;
+
+      case "QUANTUM RECOVER":
+        animatePowerup(attackerSprite);
+        animateHeal(attackerSprite, attackerGlow);
+        break;
+
         
       // DEFAULT: SIMPLE EXPLOSION
       default:
@@ -651,7 +678,7 @@ function checkBattleEnd() {
             wait(victoryDelay, () => {
               if (bossId === 'observerBoss') {
                 console.log('🎬 Final boss defeated! Transitioning to white screen then Transition7...');
-                go("transition", "Transition7", character, player.hp);
+                  go("transition", "Transition7", character, player.hp, player.lives, startScore);
               } else {
                 animateDefeat(bossSprite, bossGlow, false);
                 updateLog(`FLAWLESS VICTORY! THE ${boss.name} HAS BEEN DEFEATED!`);
@@ -660,34 +687,45 @@ function checkBattleEnd() {
                   if (bossId === 'BossLaserPointer') {
                     go("bossDefeated", {
                       level: "laserPointerBoss",
-                      score: 0,
+                      score: startScore, 
                       nextLevel: "Transition5",
                       character: character,
-                      playerHP: player.hp
+                      playerHP: player.hp,
+                      lives: player.lives
                     });
                   } else if (bossId === 'BossCup') {
                     go("bossDefeated", {
                       level: "cupBoss",
-                      score: 0,
+                      score: startScore,
                       nextLevel: "Transition2",
                       character: character,
-                      playerHP: player.hp
+                      playerHP: player.hp,
+                      lives: player.lives
                     });
+                    console.log('✅ Boss defeated, passing to bossDefeated:', {
+                        score: startScore,
+                        playerHP: player.hp,
+                        lives: player.lives
+                      });
+
+            
                   } else if (bossId === 'BossCucumber') {
                     go("bossDefeated", {
                       level: "cucumberBoss",
-                      score: 0,
+                      score: startScore,
                       nextLevel: "Transition3",
                       character: character,
-                      playerHP: player.hp
+                      playerHP: player.hp,
+                      lives: player.lives
                     });
                   } else if (bossId === 'BossRatKing') {
                     go("bossDefeated", {
                       level: "ratKingBoss",
-                      score: 0,
+                      score: startScore,
                       nextLevel: "Transition4",
                       character: character,
-                      playerHP: player.hp
+                      playerHP: player.hp,
+                      lives: player.lives
                     });
                   }
                 });
@@ -707,7 +745,7 @@ function checkBattleEnd() {
       
       animateDefeat(playerSprite, playerGlow, true);
       wait(1, () => {
-        const currentLives = player.lives || 0;
+        const currentLives = character.lives !== undefined ? character.lives : (player.lives || 0);
         if (currentLives > 0) {
           console.log(`💚 Player has ${currentLives} lives remaining - going to You Died screen`);
           
@@ -724,30 +762,47 @@ function checkBattleEnd() {
             restartLevel = "level5";
           }
           
-          go("youDied", { 
-            score: 0,
-            level: restartLevel,
-            hp: 0,
-            lives: currentLives - 1, 
-            character: character,
-            reason: `Defeated by ${boss.name}`
-          });
+        go("youDied", { 
+          score: 0,
+          level: restartLevel,
+          hp: 0,
+          lives: currentLives,  
+          character: character,
+          reason: `Defeated by ${boss.name}`
+        });
+
         } else {
           console.log('☠️ No lives remaining - GAME OVER');
+          stopAllMusic();
+          
+          const bloodDrip = add([
+            sprite('drip2', { anim: 'drip' }),
+            pos(0, 0),
+            scale(10, 10),
+            z(1000),
+            fixed(),
+            opacity(1)
+          ]);
+
+          bloodDrip.play('drip');
+          
+          const bloodDrip2 = add([
+            sprite('drip3', { anim: 'drip' }),
+            pos(0, 0),
+            scale(10, 10), 
+            z(999),
+            fixed(),
+            opacity(1)
+          ]);
+          
+          bloodDrip2.play('drip');
+          
+          wait(1, () => {
+            tween(bloodDrip.opacity, 0, 1.0, (val) => bloodDrip.opacity = val, k.easings.easeOutQuad);
+            destroy(bloodDrip);
+          });
+          
           wait(1.5, () => {
-            console.log('☠️ Playing blood drip animation...');
-            stopAllMusic();
-            
-            const bloodDrip = add([
-              sprite('drip', { anim: 'drip' }),
-              pos(0, 0),
-              scale(10, 10),
-              z(1000),
-              fixed(),
-              opacity(1)
-            ]);
-    
-            bloodDrip.play('drip');
             go("gameOver", { 
               score: 0,
               level: "boss",
@@ -758,6 +813,7 @@ function checkBattleEnd() {
             });
           });
         }
+
       });
       
       return true;
@@ -772,22 +828,37 @@ function checkBattleEnd() {
   createVolumeToggle();
 }
 
-export function createLaserPointerBossScene(character, playerHP) {
-  createBossBattleScene('BossLaserPointer', character, playerHP);
+export function createLaserPointerBossScene(data) {
+  const character = data?.character || data;
+  const startHP = data?.startHP;
+  const startScore = data?.score || 0;  
+  createBossBattleScene('BossLaserPointer', character, startHP, startScore);
 }
 
-export function createCupBossScene(character, playerHP) {
-  createBossBattleScene('BossCup', character, playerHP);
+export function createCupBossScene(data) {
+  const character = data?.character || data;
+  const startHP = data?.startHP;
+  const startScore = data?.score || 0;
+  createBossBattleScene('BossCup', character, startHP, startScore);
 }
 
-export function createCucumberBossScene(character, playerHP) {
-  createBossBattleScene('BossCucumber', character, playerHP);
+export function createCucumberBossScene(data) {
+  const character = data?.character || data;
+  const startHP = data?.startHP;
+  const startScore = data?.score || 0;
+  createBossBattleScene('BossCucumber', character, startHP, startScore);
 }
 
-export function createRatKingBossScene(character, playerHP) {
-  createBossBattleScene('BossRatKing', character, playerHP);
+export function createRatKingBossScene(data) {
+  const character = data?.character || data;
+  const startHP = data?.startHP;
+  const startScore = data?.score || 0;
+  createBossBattleScene('BossRatKing', character, startHP, startScore);
 }
 
-export function createObserverBossScene(character, playerHP) {
-  createBossBattleScene('observerBoss', character, playerHP);
+export function createObserverBossScene(data) {
+  const character = data?.character || data;
+  const startHP = data?.startHP;
+  const startScore = data?.score || 0;
+  createBossBattleScene('observerBoss', character, startHP, startScore);
 }
