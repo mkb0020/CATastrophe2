@@ -15,9 +15,6 @@ export const BUBBLE_FRAMES = {
   plusTen: 9
 };
 
-
-
-
 export const LEVELS = {
   level1: { 
     id: 'level1',
@@ -70,7 +67,6 @@ export const LEVELS = {
       milkBottle: { enabled: false },
       catnip: { enabled: false },
     },
-    playerHP: { start: 120, max: 120 },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack1',
     nextBoss: 'cupBoss',
@@ -81,7 +77,7 @@ export const LEVELS = {
     id: 'level2',
     name: 'Level 2',
     timeLimit: 90,
-    length:  12000,
+    length:  12000, 
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
   { x: -1000, y: 440, width: 3600, height: 50 },
@@ -142,7 +138,6 @@ export const LEVELS = {
       milkBottle: { enabled: true, count: 1 },
       catnip: { enabled: false }
     },
-    playerHP: { start: 120, max: 120 },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack2',
     nextBoss: 'cucumberBoss',
@@ -228,7 +223,6 @@ export const LEVELS = {
       milkBottle: { enabled: false },
       catnip: { enabled: true, count: 1 }
     },
-    playerHP: { start: 120, max: 120 },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack3',
     nextBoss: 'bossRatKing',
@@ -320,7 +314,6 @@ export const LEVELS = {
       milkBottle: { enabled: false },
       catnip: { enabled: true, count: 1 }
     },
-    playerHP: { start: 120, max: 120 },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack4',
     nextBoss: 'laserPointerBoss',
@@ -331,7 +324,7 @@ export const LEVELS = {
     id: 'level5',
     name: 'Level 5',
     timeLimit: 90,
-    length:  12000,
+    length:  12000, 
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
       { x: -1000, y: 440, width: 2600, height: 50 },
@@ -421,7 +414,6 @@ export const LEVELS = {
       milkBottle: { enabled: true, count: 1 },
       catnip: { enabled: true, count: 1 }
     },
-    playerHP: { start: 120, max: 120 },
     background: 'l5BG',
     levelMusic: 'PlatformerTrack5',
     nextBoss: 'observerBoss',
