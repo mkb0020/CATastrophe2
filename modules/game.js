@@ -309,9 +309,9 @@ function registerScenes() {
   scene("charSelect", () => createCharSelectScene());
 
 
- scene("level1", (data) => {
-  createLevel1Scene(data); 
-});
+  scene("level1", (data) => {
+    createLevel1Scene(data); 
+  });
 
   scene("level2", (data) => {
       createLevel2Scene(data);
@@ -330,11 +330,11 @@ function registerScenes() {
     });
 
   // BOSS BATTLES
-  scene("laserPointerBoss", (data) => createLaserPointerBossScene(data.character, data.playerHP));
-  scene("cupBoss", (data) => createCupBossScene(data.character, data.playerHP));
-  scene("cucumberBoss", (data) => createCucumberBossScene(data.character, data.playerHP));
-  scene("bossRatKing", (data) => createRatKingBossScene(data.character, data.playerHP));
-  scene("observerBoss", (data) => createObserverBossScene(data.character, data.playerHP));
+  scene("laserPointerBoss", (data) => createLaserPointerBossScene(data));
+  scene("cupBoss", (data) => createCupBossScene(data));
+  scene("cucumberBoss", (data) => createCucumberBossScene(data));
+  scene("bossRatKing", (data) => createRatKingBossScene(data));
+  scene("observerBoss", (data) => createObserverBossScene(data));
   
   // GAME OVER AND VICTORY
   scene("youDied", (data) => createYouDiedScene(data));
@@ -343,11 +343,9 @@ function registerScenes() {
   scene("levelComplete", (data) => createLevelCompleteScene(data));
   scene("bossDefeated", (data) => createBossDefeatedScene(data));
   
-  scene("transition", (transitionKey, character, playerHP) => 
-    createTransitionScene(transitionKey, character, playerHP)
-    );
-
-
+  scene("transition", (transitionKey, character, startHP, lives, score) =>  
+    createTransitionScene(transitionKey, character, startHP, lives, score)
+  );
 
   console.log('✅ Scenes registered!');
 }
