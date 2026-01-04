@@ -1043,6 +1043,26 @@ export function animateLaserBeam(attacker, target) {
   });
 }
 
+
+export function animateFlash() {
+  const flash = document.createElement('div');
+  flash.style.position = 'fixed';
+  flash.style.top = '0';
+  flash.style.left = '0';
+  flash.style.width = '100vw';
+  flash.style.height = '100vh';
+  flash.style.backgroundColor = 'white';
+  flash.style.opacity = '0';
+  flash.style.pointerEvents = 'none';
+  flash.style.zIndex = '9999';
+  document.body.appendChild(flash);
+  
+  gsap.timeline()
+    .to(flash, { opacity: 0.9, duration: 0.1, ease: 'power2.out' })
+    .to(flash, { opacity: 0, duration: 0.2, ease: 'power2.in' })
+    .call(() => flash.remove());
+}
+
 // ========================= CUP =========================
 export function animateEspressoFireball(attacker, target) {
     const start = attacker.pos.add(40, -30);

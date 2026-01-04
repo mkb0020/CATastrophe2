@@ -305,22 +305,25 @@ export function addVictoryArea(levelConfig) {
 
 
 export function addCups(levelConfig) {
-  if (!levelConfig.cups.enabled) return;
+  if (!levelConfig.cups.enabled) return new Set();
   
   const totalCups = levelConfig.cups.count;
   const platforms = levelConfig.platforms;
   
   const platformsWithCups = new Set();
   
-  const platformsToUse = Math.min(platforms.length, totalCups);
-  const interval = Math.floor(platforms.length / platformsToUse);
+  const availableIndices = platforms.map((_, i) => i);
+  const shuffledIndices = availableIndices.sort(() => Math.random() - 0.5);
   
   let cupsPlaced = 0;
   
-  for (let i = 0; i < platforms.length && cupsPlaced < totalCups; i += Math.max(1, interval)) {
-    const platform = platforms[i];
+  for (let idx of shuffledIndices) {
+    if (cupsPlaced >= totalCups) break;
+    
+    const platform = platforms[idx];
+    
     const cupsOnThisPlatform = Math.min(
-      Math.ceil((totalCups - cupsPlaced) / Math.ceil((platforms.length - i) / interval)),
+      Math.floor(Math.random() * 2) + 1, 
       totalCups - cupsPlaced
     );
     
@@ -343,17 +346,20 @@ export function addCups(levelConfig) {
         "cup"
       ]);
       cupsPlaced++;
-      platformsWithCups.add(i); 
     }
+    
+    platformsWithCups.add(idx); 
   }
   
   return platformsWithCups;
 }
 
 export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
-  const eligiblePlatforms = levelConfig.platforms.filter((p, index) => 
-    p.width >= 200 && !platformsWithCups.has(index)
-  );
+  const eligiblePlatforms = levelConfig.platforms
+    .map((p, index) => ({ platform: p, index }))
+    .filter(({ platform, index }) => 
+      platform.width >= 200 && !platformsWithCups.has(index)
+    );
   
   if (eligiblePlatforms.length === 0) {
     console.warn("No eligible platforms for special items!");
@@ -362,20 +368,20 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
   
   if (levelConfig.items.fishBones.enabled) {
     const count = levelConfig.items.fishBones.count;
-    const usedPlatforms = new Set();
+    const usedPlatformObjs = new Set();
     
     for (let i = 0; i < Math.min(count, eligiblePlatforms.length); i++) {
-      let platform;
+      let platformObj;
       let attempts = 0;
       do {
-        platform = choose(eligiblePlatforms);
+        platformObj = choose(eligiblePlatforms);
         attempts++;
-      } while (usedPlatforms.has(platform) && attempts < 50);
+      } while (usedPlatformObjs.has(platformObj) && attempts < 50);
       
-      usedPlatforms.add(platform);
+      usedPlatformObjs.add(platformObj);
       
-      const x = platform.x + rand(50, platform.width - 50);
-      const y = platform.y - 70;
+      const x = platformObj.platform.x + rand(50, platformObj.platform.width - 50);
+      const y = platformObj.platform.y - 70;
       
       add([
         sprite('fish'),
@@ -390,20 +396,20 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
   
   if (levelConfig.items.tunaCan.enabled) {
     const count = levelConfig.items.tunaCan.count;
-    const usedPlatforms = new Set();
+    const usedPlatformObjs = new Set();
     
     for (let i = 0; i < Math.min(count, eligiblePlatforms.length); i++) {
-      let platform;
+      let platformObj;
       let attempts = 0;
       do {
-        platform = choose(eligiblePlatforms);
+        platformObj = choose(eligiblePlatforms);
         attempts++;
-      } while (usedPlatforms.has(platform) && attempts < 50);
+      } while (usedPlatformObjs.has(platformObj) && attempts < 50);
       
-      usedPlatforms.add(platform);
+      usedPlatformObjs.add(platformObj);
       
-      const x = platform.x + rand(50, platform.width - 50);
-      const y = platform.y - 70;
+      const x = platformObj.platform.x + rand(50, platformObj.platform.width - 50);
+      const y = platformObj.platform.y - 70;
       
       add([
         sprite('tunaCan'),
@@ -587,6 +593,12 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
   player.onCollide("victoryPlatform", async (platform) => {
     if (player.vel.y >= 0 && gameStateGetter()) {
       console.log('🏆 VICTORY!');
+      console.log('🏆 Calling boss with data:', {
+          level: levelName,
+          score: scoreGetter(),
+          character: character.name,
+          startHP: player.hp,
+        });
       gameStateSetter(false);
       stopAllMusic();
       if (nextBoss === "observerBoss" || nextBoss === "observer") {
@@ -596,7 +608,7 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
             score: scoreGetter(), 
             nextLevel: nextBoss,
             character: character, 
-            playerHP: player.hp 
+            startHP: player.hp  
           });
         });
         return;
@@ -684,7 +696,7 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
         level: levelName,
         score: scoreGetter(),
         character: character,
-        playerHP: player.hp,
+        startHP: player.hp, 
       });
     }
   });
@@ -746,9 +758,11 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
   });
   
   player.onCollide("tunaCan", (item) => {
+    console.log("🥫 TUNA COLLECTED - HP before:", player.hp, "Max:", player.maxHP);
     destroy(item);
     const healAmount = 25;
     player.hp = Math.min(player.hp + healAmount, player.maxHP);
+    console.log("🥫 HP after:", player.hp);
     play("powerUp", { volume: 0.4 });
     showBubble(BUBBLE_FRAMES.plusHP);
   });
