@@ -25,7 +25,8 @@ import {
   setupLaserCollision,
   setupPlayerCamera,
   setupLevelPause, 
-  setupOneWayPlatforms
+  setupOneWayPlatforms,
+  setupHintPlatforms
 } from '../helpers/levelHelpers.js';
 import { createVolumeToggle } from '../helpers/kittyHelpers.js';
 
@@ -60,6 +61,7 @@ function createUnifiedLevel(levelId, data) {
 
   const player = createPlayer(levelConfig, character, startHP);
   setupOneWayPlatforms(player);
+  setupHintPlatforms(player);
 
   let score = startScore; 
   let timeLeft = levelConfig.timeLimit;
