@@ -20,15 +20,15 @@ export const LEVELS = {
     id: 'level1',
     name: 'Level 1',
     timeLimit: 90,
-    length:  12000,
-    playerSpawn: { x: 1000, y: 300 },
+    length:  2200, // FOR TESTING
+    playerSpawn: { x: 1000, y: 300 },  
     GroundSegments: [
       {x: -1000, y: 440, width: 5000, height: 50}, 
       {x: 4250, y: 440, width: 2600, height: 50}, 
       {x: 7100, y: 440, width: 2150, height: 50}, 
       {x: 9500, y: 440, width: 6000, height: 50}, 
     ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
     platforms: [
     {x: 1300, y: 330, width: 250, height: 20},  
     {x: 1720, y: 300, width: 245, height: 20}, 
@@ -66,6 +66,7 @@ export const LEVELS = {
       tunaCan: { enabled: false },
       milkBottle: { enabled: false },
       catnip: { enabled: false },
+      bonusHP: { enabled: false }
     },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack1',
@@ -77,7 +78,7 @@ export const LEVELS = {
     id: 'level2',
     name: 'Level 2',
     timeLimit: 90,
-    length:  12000, 
+    length:  2200,  // FOR TESTING
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
   { x: -1000, y: 440, width: 3600, height: 50 },
@@ -87,7 +88,8 @@ export const LEVELS = {
   { x: 9900, y: 440, width: 2500, height: 50 },
   { x: 11900, y: 440, width: 4000, height: 50 }
 ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },  
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
+    hintPlatforms: [16, 17],
     platforms: [
     {x: 1300, y: 320, width: 250, height: 20},  
     {x: 1725, y: 285, width: 245, height: 20}, 
@@ -105,13 +107,13 @@ export const LEVELS = {
     {x: 6825, y: 280, width: 240, height: 20},  
     {x: 7270, y: 305, width: 235, height: 20},  
     {x: 7725, y: 270, width: 230, height: 20}, 
-    {x: 8165, y: 295, width: 240, height: 20}, 
+    {x: 8165, y: 190, width: 150, height: 20}, // PUT BONUS HP HERE AND MAKE THIS PLATFORM CHANGE COLOR ON COLLISON SO PLAYER KNOWS ITS SPECIAL
 
     {x: 8880, y: 325, width: 235, height: 20},  
     {x: 9320, y: 285, width: 230, height: 20},  
     {x: 9755, y: 260, width: 225, height: 20},  
     {x: 10195, y: 275, width: 240, height: 20}, 
-    {x: 10655, y: 200, width: 220, height: 20}
+    {x: 10655, y: 200, width: 220, height: 20} 
   ],
 
     cups: { enabled: true, count: 15 },
@@ -130,13 +132,16 @@ export const LEVELS = {
       lasers: { enabled: false }
     },
 
-
+    bonusHPZone: [
+      { x: 8800, y: -10 }, // EASY
+    ],
     milkBottlePosition: { x: 10765, y: 130 },
     items: {
       fishBones: { enabled: true, count: 1 },
       tunaCan: { enabled: true, count: 1 },
       milkBottle: { enabled: true, count: 1 },
-      catnip: { enabled: false }
+      catnip: { enabled: false },
+      bonusHP: { enabled: true, count: 1 } // MAKE THIS ONE EASY SO THE PLAYER WILL KNOW TO LOOK OUT FOR THEM
     },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack2',
@@ -159,37 +164,40 @@ export const LEVELS = {
   { x: 9050, y: 440, width: 2300, height: 50 },
   { x: 11050, y: 440, width: 3200, height: 50 }
 ],
-
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
-    
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
+    hintPlatforms: [16, 17],
     platforms: [
     {x: 1300, y: 340, width: 250, height: 20}, 
     {x: 1715, y: 300, width: 245, height: 20},  
     {x: 2125, y: 355, width: 240, height: 20},  
     {x: 2530, y: 290, width: 235, height: 20},  
-    {x: 2945, y: 340, width: 240, height: 20},  
+    {x: 2945, y: 340, width: 240, height: 20}, 
+    {x: 3400, y: 180, width: 150, height: 20}, // CAT NIP PLATFORM 
     {x: 3900, y: 320, width: 240, height: 20},  
     {x: 4310, y: 355, width: 235, height: 20},  
     {x: 4715, y: 270, width: 230, height: 20},
     {x: 5135, y: 245, width: 225, height: 20},  
     {x: 5530, y: 340, width: 240, height: 20},  
-    {x: 5870, y: 180, width: 150, height: 20}, // CAT NIP PLATFORM
+
 
     {x: 6400, y: 300, width: 245, height: 20}, 
     {x: 6820, y: 370, width: 200, height: 20}, 
     {x: 7235, y: 340, width: 235, height: 20},  
     {x: 7670, y: 295, width: 230, height: 20}, 
     {x: 8075, y: 325, width: 240, height: 20},  
+
+    {x: 8400, y: 180, width: 100, height: 20},  // MAKE THIS CHANGE COLORS WHEN YOU LAND ON IT SO PLAYER KNOWS ITS SPECIAL
+    {x: 8650, y: 110, width: 100, height: 20}, // MAKE THIS CHANGE COLORS WHEN YOU LAND ON IT SO PLAYER KNOWS ITS SPECIAL
+    {x: 8900, y: 1, width: 1300, height: 20},  // SECRET PLATFORMS
+
+
     {x: 8900, y: 375, width: 235, height: 20}, 
     {x: 9315, y: 295, width: 230, height: 20},
     {x: 9725, y: 315, width: 225, height: 20}, 
     {x: 10157, y: 278, width: 240, height: 20},
-    {x: 10680, y: 210, width: 220, height: 20}, 
+    {x: 10600, y: 210, width: 220, height: 20}, 
     ],
     cups: { enabled: true, count: 15 },
-
-
-
     enemies: {
       cucumbers: { 
         enabled: true,
@@ -198,7 +206,6 @@ export const LEVELS = {
         spawnZones: [
           { start: 3600, end: 4300 },   
           { start: 6000, end: 6500 },   
-          { start: 9000, end: 9700 }   
         ]
       },
     rats: { 
@@ -214,14 +221,17 @@ export const LEVELS = {
       lasers: { enabled: false }
     },  
     
-    
+    bonusHPZone: [
+      { x: 8800, y: -10 },
+    ],
     catnipZones: [
-        { x: 5940, y: 80 }],
+        { x: 3450, y: 80 }],
     items: {
       fishBones: { enabled: true, count: 1 },
       tunaCan: { enabled: true, count: 1 },
       milkBottle: { enabled: false },
-      catnip: { enabled: true, count: 1 }
+      catnip: { enabled: true, count: 1 },
+      bonusHP: { enabled: true, count: 1 }
     },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack3',
@@ -237,44 +247,48 @@ export const LEVELS = {
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 }, 
-      { x: 3000, y: 440, width: 1650, height: 50 }, 
-      { x: 4550, y: 440, width: 1750, height: 50 }, 
-      { x: 6600, y: 440, width: 2100, height: 50 }, 
-      { x: 8950, y: 440, width: 2150, height: 50 }, 
+      { x: 3000, y: 440, width: 870, height: 50 }, 
+      { x: 4100, y: 440, width: 2100, height: 50 }, 
+      { x: 8500, y: 440, width: 1100, height: 50 }, 
+      { x: 9700, y: 440, width: 1400, height: 50 }, 
       { x: 11350, y: 440, width: 3000, height: 50 } 
 ],
-
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
+    hintPlatforms: [16, 17], // CHANGE THIS
     platforms: [
     {x: 1300, y: 360, width: 220, height: 20},  
     {x: 1750, y: 280, width: 210, height: 20},  
     {x: 2195, y: 315, width: 230, height: 20}, 
     {x: 2635, y: 265, width: 200, height: 20}, 
     {x: 3100, y: 325, width: 230, height: 20}, 
-    {x: 3500, y: 170, width: 100, height: 20}, // CATNIP
-
 
     {x: 4200, y: 265, width: 190, height: 20}, 
     {x: 4645, y: 290, width: 225, height: 20},  
-    {x: 5105, y: 320, width: 220, height: 20}, 
-    {x: 5550, y: 375, width: 215, height: 20}, 
-    {x: 6005, y: 255, width: 200, height: 20}, 
-    {x: 6300, y: 140, width: 150, height: 20}, 
-    {x: 6900, y: 300, width: 190, height: 20}, 
-    {x: 7355, y: 325, width: 230, height: 20}, 
-    {x: 7830, y: 255, width: 200, height: 20},   
-    {x: 8275, y: 290, width: 210, height: 20}, 
+    {x: 5000, y: 160, width: 100, height: 20}, // CATNIP
+    {x: 5105, y: 370, width: 220, height: 20}, 
+    {x: 5550, y: 340, width: 215, height: 20}, 
 
-    {x: 8745, y: 320, width: 150, height: 20},
-    
+    {x: 6000, y: 260, width: 200, height: 20}, 
+    {x: 6280, y: 130, width: 330, height: 20}, // TOP LEVEL = SAFE
+    {x: 6800, y: 90, width: 250, height: 20}, 
+    {x: 7200, y: 110, width: 300, height: 20}, 
+    {x: 7690, y: 100, width: 250, height: 20}, 
+    {x: 8150, y: 120, width: 210, height: 20}, 
+
+    {x: 6500, y: 380, width: 100, height: 20}, // LOWER LEVEL, SCARY
+    {x: 6850, y: 350, width: 100, height: 20},
+    {x: 7200, y: 380, width: 75, height: 20},
+    {x: 7475, y: 370, width: 75, height: 20},
+    {x: 7800, y: 390, width: 75, height: 20 },
+    {x: 8100, y: 400, width: 75, height: 20}, // pUT EXTRA HP ON THIS ONE
+
+    {x: 9300, y: 290, width: 200, height: 20},
     {x: 9600, y: 345, width: 220, height: 20},  
     {x: 10032, y: 300, width: 200, height: 20},
     {x: 10465, y: 248, width: 200, height: 20}, 
     {x: 10928, y: 205, width: 160, height: 20}, 
   ],
     cups: { enabled: true, count: 15 },
-
-
     enemies: {
       cucumbers: { 
         enabled: true,
@@ -293,26 +307,19 @@ export const LEVELS = {
         { start: 3000, end: 4550 },
         { start: 4550, end: 6700 },
         { start: 6700, end: 8500 },
-        { start: 8950, end: 9200 }
-      ]
+        { start: 8950, end: 9200 }]
     },
-
     lasers: { 
       enabled: true,
-      positions: [3800, 6400, 9500]
-    }
+      positions: [3800, 6400, 9500]}
     },
-
-
-  catnipZones: [
-    { x: 3555, y: 125 }, 
-
-  ],
+  catnipZones: [{ x: 5050, y: 125 }, ],
     items: {
       fishBones: { enabled: true, count: 1 },
       tunaCan: { enabled: true, count: 2 },
       milkBottle: { enabled: false },
-      catnip: { enabled: true, count: 1 }
+      catnip: { enabled: true, count: 1 },
+      bonusHP: { enabled: true, count: 1 }
     },
     background: 'levelBG',
     levelMusic: 'PlatformerTrack4',
@@ -338,6 +345,7 @@ export const LEVELS = {
 ],
 
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
+    hintPlatforms: [16, 17], // CHANGE THIS
     platforms: [
     {x: 1300, y: 350, width: 200, height: 20},  
     {x: 1730, y: 270, width: 200, height: 20},  
@@ -412,7 +420,8 @@ export const LEVELS = {
       fishBones: { enabled: true, count: 2 },
       tunaCan: { enabled: true, count: 3 },
       milkBottle: { enabled: true, count: 1 },
-      catnip: { enabled: true, count: 1 }
+      catnip: { enabled: true, count: 1 },
+      bonusHP: { enabled: true, count: 1 }
     },
     background: 'l5BG',
     levelMusic: 'PlatformerTrack5',
