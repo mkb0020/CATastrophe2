@@ -103,7 +103,7 @@ async function loadAssets() {
 
 
   loadSprite("bubbles", "assets/images/items/bubbles.png", {
-    sliceX: 10,
+    sliceX: 11,
     sliceY: 1
   });
 
@@ -166,6 +166,7 @@ async function loadAssets() {
   loadSprite("fish", "assets/images/items/FishBones.png");
   loadSprite("tunaCan", "assets/images/items/TunaCan.png");
   loadSprite("milkBottle", "assets/images/items/MilkBottle.png");
+  loadSprite("egg", "assets/images/items/egg.png"); // BUNUS HP ITEM
   loadSprite("clock", "assets/images/items/clock.png");
   loadSprite("catnip", "assets/images/items/Catnip.png");
   loadSprite("yeet", "assets/images/items/yeet.png");

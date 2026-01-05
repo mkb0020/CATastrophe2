@@ -370,63 +370,104 @@ export function addVictoryArea(levelConfig) {
 
 
 
-export function addCups(levelConfig) { // MAKE IT SO THERE'S ONLY 1 CUP PER PLATFORM, CUPS ARE NOT ON SAME PLATFORMS AS OTHER ITEMS, CUPS AREN'T ON CHALLENGE PLATFORMS
+export function addCups(levelConfig) {
   if (!levelConfig.cups.enabled) return new Set();
   
   const totalCups = levelConfig.cups.count;
   const platforms = levelConfig.platforms;
   
+  const isInNoStuffZone = (platform) => { // noStuffZone CHECKER
+    if (!levelConfig.noStuffZones) return false;
+    const platformCenter = platform.x + (platform.width / 2);
+    return levelConfig.noStuffZones.some(zone => 
+      platformCenter >= zone.start && platformCenter <= zone.end
+    );
+  };
+  
   const platformsWithCups = new Set();
   
-  const availableIndices = platforms.map((_, i) => i);
-  const shuffledIndices = availableIndices.sort(() => Math.random() - 0.5);
+  const eligibleIndices = platforms
+    .map((platform, i) => ({ platform, index: i }))
+    .filter(({ platform }) => !isInNoStuffZone(platform))
+    .map(({ index }) => index);
+  
+
+  const shuffledIndices = eligibleIndices.sort(() => Math.random() - 0.5);
   
   let cupsPlaced = 0;
   
+
   for (let idx of shuffledIndices) {
     if (cupsPlaced >= totalCups) break;
     
     const platform = platforms[idx];
     
-    const cupsOnThisPlatform = Math.min(
-      Math.floor(Math.random() * 2) + 1, 
-      totalCups - cupsPlaced
-    );
+    const x = platform.x + (platform.width / 2);
+    const y = platform.y - 61;
     
-    for (let j = 0; j < cupsOnThisPlatform; j++) {
-      const x = platform.x + (platform.width / (cupsOnThisPlatform + 1)) * (j + 1);
-      const y = platform.y - 61;
-      add([
-        sprite('cup'),
-        pos(x, y),
-        area({ width: 40, height: 60 }),
-        anchor("center"),
-        scale(0.8),
-        rotate(0),
-        {
-          hasBeenKnocked: false,
-          rotationSpeed: 0,
-          fallSpeed: 0,
-          points: 5  
-        },
-        "cup"
-      ]);
-      cupsPlaced++;
-    }
+    add([
+      sprite('cup'),
+      pos(x, y),
+      area({ width: 40, height: 60 }),
+      anchor("center"),
+      scale(0.8),
+      rotate(0),
+      {
+        hasBeenKnocked: false,
+        rotationSpeed: 0,
+        fallSpeed: 0,
+        points: 10  
+      },
+      "cup"
+    ]);
     
-    platformsWithCups.add(idx); 
+    cupsPlaced++;
+    platformsWithCups.add(idx);
   }
   
   return platformsWithCups;
 }
 
-
+export function setupCupCollection(player, scoreGetter, scoreSetter) {
+  player.onCollide("cup", (cup) => {
+    if (!cup.hasBeenKnocked) {
+      cup.hasBeenKnocked = true;
+      cup.rotationSpeed = rand(-360, 360);
+      cup.fallSpeed = 200;
+      cup.z = 3;
+      
+      scoreSetter(scoreGetter() + cup.points);
+      play("collectCup", { volume: 0.3 });
+      
+      cup.onUpdate(() => {
+        cup.fallSpeed += 600 * dt();
+        cup.pos.y += cup.fallSpeed * dt();
+        cup.angle += cup.rotationSpeed * dt();
+        
+        if (cup.pos.y > 600) {
+          destroy(cup);
+        }
+      });
+    }
+  });
+}
 
 export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
-  const eligiblePlatforms = levelConfig.platforms
+  const isInNoStuffZone = (platform) => { // noStuffZone CHECKER
+    if (!levelConfig.noStuffZones) return false;
+    const platformCenter = platform.x + (platform.width / 2);
+    return levelConfig.noStuffZones.some(zone => 
+      platformCenter >= zone.start && platformCenter <= zone.end
+    );
+  };
+
+
+  const eligiblePlatforms = levelConfig.platforms  // PLATFORM FILTER - WIDE ENOUGH, NO CUPS, NOT IN noStuffZone
     .map((p, index) => ({ platform: p, index }))
     .filter(({ platform, index }) => 
-      platform.width >= 200 && !platformsWithCups.has(index)
+      platform.width >= 200 && 
+      !platformsWithCups.has(index) &&
+      !isInNoStuffZone(platform)
     );
   
   if (eligiblePlatforms.length === 0) {
@@ -434,9 +475,11 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
     return;
   }
   
-  if (levelConfig.items.fishBones.enabled) {
+  const usedPlatforms = new Set(); // TRACK USED PLATFORMS
+  
+ 
+  if (levelConfig.items.fishBones.enabled) { // FISHBONES
     const count = levelConfig.items.fishBones.count;
-    const usedPlatformObjs = new Set();
     
     for (let i = 0; i < Math.min(count, eligiblePlatforms.length); i++) {
       let platformObj;
@@ -444,9 +487,11 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
       do {
         platformObj = choose(eligiblePlatforms);
         attempts++;
-      } while (usedPlatformObjs.has(platformObj) && attempts < 50);
+      } while (usedPlatforms.has(platformObj) && attempts < 50);
       
-      usedPlatformObjs.add(platformObj);
+      if (attempts >= 50) break; // FALLBACK
+      
+      usedPlatforms.add(platformObj);
       
       const x = platformObj.platform.x + rand(50, platformObj.platform.width - 50);
       const y = platformObj.platform.y - 70;
@@ -462,9 +507,9 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
     }
   }
   
-  if (levelConfig.items.tunaCan.enabled) {
+
+  if (levelConfig.items.tunaCan.enabled) { // TUNA
     const count = levelConfig.items.tunaCan.count;
-    const usedPlatformObjs = new Set();
     
     for (let i = 0; i < Math.min(count, eligiblePlatforms.length); i++) {
       let platformObj;
@@ -472,9 +517,11 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
       do {
         platformObj = choose(eligiblePlatforms);
         attempts++;
-      } while (usedPlatformObjs.has(platformObj) && attempts < 50);
+      } while (usedPlatforms.has(platformObj) && attempts < 50);
       
-      usedPlatformObjs.add(platformObj);
+      if (attempts >= 50) break;
+      
+      usedPlatforms.add(platformObj);
       
       const x = platformObj.platform.x + rand(50, platformObj.platform.width - 50);
       const y = platformObj.platform.y - 70;
@@ -490,7 +537,8 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
     }
   }
   
-  if (levelConfig.items.milkBottle.enabled && levelConfig.milkBottlePosition) {
+ 
+  if (levelConfig.items.milkBottle.enabled && levelConfig.milkBottlePosition) { // MILK
     add([
       sprite('milkBottle'),
       pos(levelConfig.milkBottlePosition.x, levelConfig.milkBottlePosition.y),
@@ -501,7 +549,8 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
     ]);
   }
   
-  if (levelConfig.items.catnip.enabled && levelConfig.catnipZones) {
+
+  if (levelConfig.items.catnip.enabled && levelConfig.catnipZones) { // CATNIP
     const zone = choose(levelConfig.catnipZones); 
     add([
       sprite('catnip'),
@@ -513,18 +562,97 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
     ]);
   }
   
-  // NEW: BONUS HP
-  if (levelConfig.items.bonusHP.enabled && levelConfig.bonusHPZone) {
+ 
+  if (levelConfig.items.bonusHP.enabled && levelConfig.bonusHPZone) { // EGG
     const zone = choose(levelConfig.bonusHPZone);
     add([
-      sprite('tunaCan'), // PLACEHOLDER 
+      sprite('egg'),
       pos(zone.x, zone.y),
       area({ width: 50, height: 50 }),
       anchor("center"),
-      scale(0.8), 
+      scale(0.8),
       "bonusHP"
     ]);
   }
+}
+
+export function setupSpecialItemCollection(player, livesGetter, livesSetter, scoreGetter, scoreSetter) {
+ 
+  function showBubble(bubbleFrame) {
+    const bubble = add([
+      sprite('bubbles', { frame: bubbleFrame }),
+      pos(player.pos.x + 160, player.pos.y - 20), 
+      anchor("center"),
+      z(100), 
+      opacity(0),
+      scale(3),
+      "bubble"
+    ]);
+    
+    tween(bubble.opacity, 1, 0.2, (val) => bubble.opacity = val);
+    tween(bubble.scale.x, 1, 0.3, (val) => { bubble.scale.x = val; bubble.scale.y = val; });
+    
+    tween(bubble.pos.y, bubble.pos.y - 20, 1, (val) => bubble.pos.y = val);
+    
+    wait(1, () => {
+      tween(bubble.opacity, 0, 0.3, (val) => bubble.opacity = val, easings.easeInQuad);
+      wait(0.3, () => destroy(bubble));
+    });
+  }
+
+  player.onCollide("fishBones", (item) => { // FISH BONES
+    destroy(item);
+    scoreSetter(scoreGetter() + 25); 
+    play("happyMeow", { volume: 0.4 });
+    showBubble(BUBBLE_FRAMES.plusTen);
+  });
+  
+  player.onCollide("tunaCan", (item) => {
+    console.log("🥫 TUNA COLLECTED - HP before:", player.hp, "Max:", player.maxHP);
+    destroy(item);
+    const healAmount = 25;
+    player.hp = Math.min(player.hp + healAmount, player.maxHP);
+    console.log("🥫 HP after:", player.hp);
+    play("powerUp", { volume: 0.4 });
+    showBubble(BUBBLE_FRAMES.plusHP);
+  });
+  
+  player.onCollide("milkBottle", (item) => {
+    destroy(item);
+    livesSetter(livesGetter() + 1);
+    play("extraLife", { volume: 0.5 });
+    showBubble(BUBBLE_FRAMES.heart);
+  });
+  
+  player.onCollide("catnip", (item) => {
+    destroy(item);
+    player.catnipActive = true;
+    player.invulnerable = true;
+    player.speed = player.baseSpeed * 1.5;
+    
+    player.rainbowActive = true;
+    showBubble(BUBBLE_FRAMES.star);
+
+    wait(15, () => {
+      player.catnipActive = false;
+      player.invulnerable = false;
+      player.speed = player.baseSpeed;
+      player.rainbowActive = false;
+
+      player.curState = null;
+    });
+  });
+  
+
+  player.onCollide("bonusHP", (item) => { // EGG
+    console.log("🥚 BONUS HP COLLECTED - HP before:", player.hp, "Max:", player.maxHP);
+    destroy(item);
+    const healAmount = 50;
+    player.hp = Math.min(player.hp + healAmount, player.maxHP);
+    console.log("🥚 HP after:", player.hp);
+    play("powerUp", { volume: 0.5 });
+    showBubble(BUBBLE_FRAMES.bonusHP); 
+  });
 }
 
 
@@ -782,113 +910,6 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
     }
   });
 }
-
-export function setupCupCollection(player, scoreGetter, scoreSetter) {
-  player.onCollide("cup", (cup) => {
-    if (!cup.hasBeenKnocked) {
-      cup.hasBeenKnocked = true;
-      cup.rotationSpeed = rand(-360, 360);
-      cup.fallSpeed = 200;
-      cup.z = 3;
-      
-      scoreSetter(scoreGetter() + 1);
-      play("collectCup", { volume: 0.3 });
-      
-      cup.onUpdate(() => {
-        cup.fallSpeed += 600 * dt();
-        cup.pos.y += cup.fallSpeed * dt();
-        cup.angle += cup.rotationSpeed * dt();
-        
-        if (cup.pos.y > 600) {
-          destroy(cup);
-        }
-      });
-    }
-  });
-}
-
-
-
-export function setupSpecialItemCollection(player, livesGetter, livesSetter, scoreGetter, scoreSetter) {
- 
-  function showBubble(bubbleFrame) {
-    const bubble = add([
-      sprite('bubbles', { frame: bubbleFrame }),
-      pos(player.pos.x + 160, player.pos.y - 20), 
-      anchor("center"),
-      z(100), 
-      opacity(0),
-      scale(3),
-      "bubble"
-    ]);
-    
-    tween(bubble.opacity, 1, 0.2, (val) => bubble.opacity = val);
-    tween(bubble.scale.x, 1, 0.3, (val) => { bubble.scale.x = val; bubble.scale.y = val; });
-    
-    tween(bubble.pos.y, bubble.pos.y - 20, 1, (val) => bubble.pos.y = val);
-    
-    wait(1, () => {
-      tween(bubble.opacity, 0, 0.3, (val) => bubble.opacity = val, easings.easeInQuad);
-      wait(0.3, () => destroy(bubble));
-    });
-  }
-
-  player.onCollide("fishBones", (item) => {
-    destroy(item);
-    scoreSetter(scoreGetter() + 10);
-    play("happyMeow", { volume: 0.4 });
-    showBubble(BUBBLE_FRAMES.plusTen);
-  });
-  
-  player.onCollide("tunaCan", (item) => {
-    console.log("🥫 TUNA COLLECTED - HP before:", player.hp, "Max:", player.maxHP);
-    destroy(item);
-    const healAmount = 25;
-    player.hp = Math.min(player.hp + healAmount, player.maxHP);
-    console.log("🥫 HP after:", player.hp);
-    play("powerUp", { volume: 0.4 });
-    showBubble(BUBBLE_FRAMES.plusHP);
-  });
-  
-  player.onCollide("milkBottle", (item) => {
-    destroy(item);
-    livesSetter(livesGetter() + 1);
-    play("extraLife", { volume: 0.5 });
-    showBubble(BUBBLE_FRAMES.heart);
-  });
-  
-  player.onCollide("catnip", (item) => {
-    destroy(item);
-    player.catnipActive = true;
-    player.invulnerable = true;
-    player.speed = player.baseSpeed * 1.5;
-    
-    player.rainbowActive = true;
-    showBubble(BUBBLE_FRAMES.star);
-
-    wait(15, () => {
-      player.catnipActive = false;
-      player.invulnerable = false;
-      player.speed = player.baseSpeed;
-      player.rainbowActive = false;
-
-      player.curState = null;
-    });
-  });
-  
-  // NEW: BONUS HP
-  player.onCollide("bonusHP", (item) => {
-    console.log("💊 BONUS HP COLLECTED - HP before:", player.hp, "Max:", player.maxHP);
-    destroy(item);
-    const healAmount = 50;
-    player.hp = Math.min(player.hp + healAmount, player.maxHP);
-    console.log("💊 HP after:", player.hp);
-    play("powerUp", { volume: 0.5 }); // PLACEHOLDER - GET A DIFFERENT SOUND
-    showBubble(BUBBLE_FRAMES.plusHP); // PLACEHOLDER - MAKE A SPECIAL BUBBLE
-  });
-}
-
-
 
 
 

@@ -12,7 +12,8 @@ export const BUBBLE_FRAMES = {
   hit2: 6,
   question: 7,
   star: 8,
-  plusTen: 9
+  plusTen: 9,
+  bonusHP: 10, 
 };
 
 export const LEVELS = {
@@ -54,8 +55,8 @@ export const LEVELS = {
     {x: 10175, y: 290, width: 240, height: 20}, 
     {x: 10625, y: 220, width: 220, height: 20},
   ],
-
-    cups: { enabled: true, count: 15 }, 
+    noStuffZones: [{ start: 11000, end: 12000},], 
+    cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { enabled: false },
       rats: { enabled: false },
@@ -78,7 +79,7 @@ export const LEVELS = {
     id: 'level2',
     name: 'Level 2',
     timeLimit: 90,
-    length:  2200,  // FOR TESTING
+    length:  14000,  // FOR TESTING
     playerSpawn: { x: 1000, y: 300 },
     GroundSegments: [
   { x: -1000, y: 440, width: 3600, height: 50 },
@@ -86,10 +87,10 @@ export const LEVELS = {
   { x: 5100, y: 440, width: 2300, height: 50 },
   { x: 7400, y: 440, width: 2300, height: 50 },
   { x: 9900, y: 440, width: 2500, height: 50 },
-  { x: 11900, y: 440, width: 4000, height: 50 }
+  { x: 11900, y: 440, width: 10000, height: 50 }
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
-    hintPlatforms: [16, 17],
+    hintPlatforms: [14],
     platforms: [
     {x: 1300, y: 320, width: 250, height: 20},  
     {x: 1725, y: 285, width: 245, height: 20}, 
@@ -107,7 +108,7 @@ export const LEVELS = {
     {x: 6825, y: 280, width: 240, height: 20},  
     {x: 7270, y: 305, width: 235, height: 20},  
     {x: 7725, y: 270, width: 230, height: 20}, 
-    {x: 8165, y: 190, width: 150, height: 20}, // PUT BONUS HP HERE AND MAKE THIS PLATFORM CHANGE COLOR ON COLLISON SO PLAYER KNOWS ITS SPECIAL
+    {x: 8165, y: 190, width: 150, height: 20}, // BONUS HP  
 
     {x: 8880, y: 325, width: 235, height: 20},  
     {x: 9320, y: 285, width: 230, height: 20},  
@@ -115,7 +116,7 @@ export const LEVELS = {
     {x: 10195, y: 275, width: 240, height: 20}, 
     {x: 10655, y: 200, width: 220, height: 20} 
   ],
-
+    noStuffZones: [{ start: 8000, end: 8250}, { start: 10700, end: 10800}], // BONUS HP AND MILE BOTTLE
     cups: { enabled: true, count: 15 },
     enemies: {
     cucumbers: { 
@@ -133,7 +134,7 @@ export const LEVELS = {
     },
 
     bonusHPZone: [
-      { x: 8800, y: -10 }, // EASY
+      { x: 8250, y: 130 }, 
     ],
     milkBottlePosition: { x: 10765, y: 130 },
     items: {
@@ -165,14 +166,14 @@ export const LEVELS = {
   { x: 11050, y: 440, width: 3200, height: 50 }
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
-    hintPlatforms: [16, 17],
+    hintPlatforms: [16, 17, 18, 19],
     platforms: [
     {x: 1300, y: 340, width: 250, height: 20}, 
     {x: 1715, y: 300, width: 245, height: 20},  
     {x: 2125, y: 355, width: 240, height: 20},  
     {x: 2530, y: 290, width: 235, height: 20},  
     {x: 2945, y: 340, width: 240, height: 20}, 
-    {x: 3400, y: 180, width: 150, height: 20}, // CAT NIP PLATFORM 
+    {x: 3300, y: 180, width: 150, height: 20}, // CAT NIP PLATFORM 
     {x: 3900, y: 320, width: 240, height: 20},  
     {x: 4310, y: 355, width: 235, height: 20},  
     {x: 4715, y: 270, width: 230, height: 20},
@@ -186,17 +187,19 @@ export const LEVELS = {
     {x: 7670, y: 295, width: 230, height: 20}, 
     {x: 8075, y: 325, width: 240, height: 20},  
 
-    {x: 8400, y: 180, width: 100, height: 20},  // MAKE THIS CHANGE COLORS WHEN YOU LAND ON IT SO PLAYER KNOWS ITS SPECIAL
-    {x: 8650, y: 110, width: 100, height: 20}, // MAKE THIS CHANGE COLORS WHEN YOU LAND ON IT SO PLAYER KNOWS ITS SPECIAL
-    {x: 8900, y: 1, width: 1300, height: 20},  // SECRET PLATFORMS
+    {x: 8400, y: 180, width: 100, height: 20},  // STAIRWAY
+    {x: 8650, y: 110, width: 100, height: 20}, // STAIRWAY
+    {x: 8900, y: 1, width: 1300, height: 20},  // SECRET PLATFORM
+    {x: 10300, y: 120, width: 100, height: 20}, // EGG PLATFORM
 
 
-    {x: 8900, y: 375, width: 235, height: 20}, 
-    {x: 9315, y: 295, width: 230, height: 20},
-    {x: 9725, y: 315, width: 225, height: 20}, 
-    {x: 10157, y: 278, width: 240, height: 20},
-    {x: 10600, y: 210, width: 220, height: 20}, 
+    {x: 8900, y: 375, width: 200, height: 20}, 
+    {x: 9250, y: 295, width: 200, height: 20},
+    {x: 9700, y: 350, width: 200, height: 20}, 
+    {x: 10700, y: 320, width: 100, height: 20},
+    {x: 10900, y: 210, width: 100, height: 20}, 
     ],
+    noStuffZones: [{ start: 3350, end: 3550}, { start: 8400, end: 10350},], 
     cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { 
@@ -222,10 +225,10 @@ export const LEVELS = {
     },  
     
     bonusHPZone: [
-      { x: 8800, y: -10 },
+      { x: 10340, y: 50 },
     ],
     catnipZones: [
-        { x: 3450, y: 80 }],
+        { x: 3370, y: 100 }],
     items: {
       fishBones: { enabled: true, count: 1 },
       tunaCan: { enabled: true, count: 1 },
@@ -254,7 +257,7 @@ export const LEVELS = {
       { x: 11350, y: 440, width: 3000, height: 50 } 
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
-    hintPlatforms: [16, 17], // CHANGE THIS
+    hintPlatforms: [15, 16, 17, 18, 19, 20], 
     platforms: [
     {x: 1300, y: 360, width: 220, height: 20},  
     {x: 1750, y: 280, width: 210, height: 20},  
@@ -263,9 +266,9 @@ export const LEVELS = {
     {x: 3100, y: 325, width: 230, height: 20}, 
 
     {x: 4200, y: 265, width: 190, height: 20}, 
-    {x: 4645, y: 290, width: 225, height: 20},  
+    {x: 4645, y: 290, width: 180, height: 20},  
     {x: 5000, y: 160, width: 100, height: 20}, // CATNIP
-    {x: 5105, y: 370, width: 220, height: 20}, 
+    //{x: 5105, y: 370, width: 220, height: 20}, 
     {x: 5550, y: 340, width: 215, height: 20}, 
 
     {x: 6000, y: 260, width: 200, height: 20}, 
@@ -280,14 +283,15 @@ export const LEVELS = {
     {x: 7200, y: 380, width: 75, height: 20},
     {x: 7475, y: 370, width: 75, height: 20},
     {x: 7800, y: 390, width: 75, height: 20 },
-    {x: 8100, y: 400, width: 75, height: 20}, // pUT EXTRA HP ON THIS ONE
+    {x: 8100, y: 400, width: 100, height: 20}, // EGG
 
     {x: 9300, y: 290, width: 200, height: 20},
     {x: 9600, y: 345, width: 220, height: 20},  
     {x: 10032, y: 300, width: 200, height: 20},
     {x: 10465, y: 248, width: 200, height: 20}, 
-    {x: 10928, y: 205, width: 160, height: 20}, 
+    {x: 10900, y: 205, width: 170, height: 20}, 
   ],
+    noStuffZones: [{ start: 5000, end: 5100}, { start: 6280, end: 8200},], // CATNIP AND EGG
     cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { 
@@ -295,24 +299,25 @@ export const LEVELS = {
         spawnRate: 2100,
         damage: 5,
         spawnZones: [
-          { start: 3800, end: 4000 },
-          { start: 5800, end: 6300 },
-          { start: 9200, end: 10800 }
+          { start: 5800, end: 6000 },
+          { start: 9200, end: 9800 }
         ]
       },
     rats: { 
       enabled: true,
       spawnRate: 3500,
       spawnZones: [
-        { start: 3000, end: 4550 },
-        { start: 4550, end: 6700 },
+        { start: 3000, end: 3500 },
+        { start: 5000, end: 6700 },
         { start: 6700, end: 8500 },
-        { start: 8950, end: 9200 }]
+        { start: 8950, end: 9200 },
+      ]
     },
     lasers: { 
       enabled: true,
-      positions: [3800, 6400, 9500]}
+      positions: [3500, 9500]}
     },
+  bonusHPZone: [{ x: 8150, y: 300 }, ],  
   catnipZones: [{ x: 5050, y: 125 }, ],
     items: {
       fishBones: { enabled: true, count: 1 },
@@ -345,7 +350,7 @@ export const LEVELS = {
 ],
 
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 },
-    hintPlatforms: [16, 17], // CHANGE THIS
+    hintPlatforms: [16, 17], // PLACEHOLDER
     platforms: [
     {x: 1300, y: 350, width: 200, height: 20},  
     {x: 1730, y: 270, width: 200, height: 20},  
@@ -374,6 +379,7 @@ export const LEVELS = {
     {x: 10905, y: 170, width: 150, height: 20}, 
 
     ],
+    noStuffZones: [{ start: 3000, end: 4000}, { start: 7000, end: 7500}, { start: 9000, end: 9200 },], // PLACEHOLDER
     cups: { enabled: true, count: 15 },
 
 
@@ -411,7 +417,7 @@ export const LEVELS = {
           ]
         }
     },
-
+    bonusHPZone: [{ x: 8125, y: 370 }, ], // PLACEHOLDER
     catnipZones: [
       { x: 7890, y: 415 }, 
 ],
