@@ -350,11 +350,11 @@ export function createVolumeToggle() {
     }
 
     const volumeBtn = add([
-        rect(30, 30, { radius: 8 }),
-        pos(25, 25),
+        rect(24, 24, { radius: 8 }),
+        pos(25, 20),
         color(42, 26, 74),
         opacity(0.8),
-        outline(2, rgb(255, 255, 255)),
+        outline(1, rgb(255, 255, 255)),
         area(),
         fixed(),
         z(150),
@@ -362,8 +362,8 @@ export function createVolumeToggle() {
     ]);
 
     const volumeIcon = volumeBtn.add([
-        text(window.isMuted ? "X" : "🎶", { size: 20 }),
-        pos(15, 17),
+        text(window.isMuted ? "X" : "🎶", { size: 18 }),
+        pos(12, 13),
         anchor("center"),
         "volumeIcon"
     ]);
@@ -398,10 +398,10 @@ export function createVolumeToggle() {
 // ============================================================================
 export function createPauseButton(onPauseCallback) {
     const pauseBtn = add([
-        rect(30, 30, { radius: 10 }),
-        pos(65,25),
+        rect(24, 24, { radius: 10 }),
+        pos(65,20),
         color(Color.fromHex(Colors.MutedGrey)),
-        outline(3, Color.fromHex(Colors.VortexViolet)),
+        outline(1, Color.fromHex(Colors.VortexViolet)),
         area(),
         fixed(),
         z(100),
@@ -409,15 +409,15 @@ export function createPauseButton(onPauseCallback) {
     ]);
 
     pauseBtn.add([
-        rect(5, 20),
-        pos(7, 5),
+        rect(5, 16),
+        pos(6, 4),
         color(Color.fromHex(Colors.NuclearFuscia)),
         z(101)
     ]);
 
     pauseBtn.add([
-        rect(5, 20),
-        pos(17, 5),
+        rect(5, 16),
+        pos(13, 4),
         color(Color.fromHex(Colors.NuclearFuscia)),
         z(101)
     ]);

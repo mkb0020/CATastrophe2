@@ -93,30 +93,38 @@ export function addLevelEnvironment(levelConfig) {
   ]);
 
   const yeet = add([
-        sprite('yeet'),
-        pos(-960, 265),
-        scale(1.9),
-        z(2),
-      ]);
+    sprite('yeet'),
+    pos(-960, 265),
+    scale(1.9),
+    z(2),
+  ]);
 
-  levelConfig.platforms.forEach(platform => {
-    add([
+  levelConfig.platforms.forEach((platform, index) => {
+    const isHintPlatform = levelConfig.hintPlatforms?.includes(index);
+    
+   
+    const baseLayer = add([
       rect(platform.width, platform.height, { radius: 5 }),
       pos(platform.x, platform.y),
-      color(rgb(97, 9, 165)),
+      color(isHintPlatform ? rgb(120, 80, 180) : rgb(97, 9, 165)), 
       opacity(0.7),
-      z(0)
+      z(0),
+      isHintPlatform ? "hintPlatformBase" : "platformBase"
     ]);
 
     const topHeight = platform.height * 0.45;
-    add([
+    
+    
+    const topLayer = add([
       rect(platform.width, topHeight, { radius: [5, 5, 0, 0] }), 
       pos(platform.x, platform.y),
-      color(rgb(0,255,255)),
-      z(1)
+      color(isHintPlatform ? rgb(100, 255, 255) : rgb(0, 255, 255)), 
+      z(1),
+      isHintPlatform ? "hintPlatformTop" : "platformTop"
     ]);
 
-    add([
+  
+    const collisionLayer = add([
       rect(platform.width, platform.height, { radius: 5 }),
       pos(platform.x, platform.y),
       area(),
@@ -125,8 +133,14 @@ export function addLevelEnvironment(levelConfig) {
       "oneWayPlatform",
       z(2)
     ]);
-
+    
+   
+    if (isHintPlatform) {
+      collisionLayer.baseLayer = baseLayer;
+      collisionLayer.topLayer = topLayer;
+    }
   });
+
 
   levelConfig.GroundSegments.forEach(GroundSegment => {
     add([
@@ -153,9 +167,9 @@ export function addLevelEnvironment(levelConfig) {
       opacity(0),
       "ground",
       z(2)
-  ]);
-
+    ]);
   });
+
 
   add([
     rect(15000, 480),
@@ -166,6 +180,58 @@ export function addLevelEnvironment(levelConfig) {
   ]);
 
   return { bg };
+}
+
+
+export function setupHintPlatforms(player) {
+  const activatedPlatforms = new Set();
+  
+  player.onGround((platform) => {
+    if (platform.is("oneWayPlatform") && platform.baseLayer && !activatedPlatforms.has(platform)) {
+      activatedPlatforms.add(platform);
+      
+     
+      tween(
+        platform.baseLayer.color, 
+        rgb(218, 165, 32), 
+        0.3, 
+        (val) => platform.baseLayer.color = val,
+        easings.easeOutQuad
+      );
+      
+     
+      tween(
+        platform.topLayer.color, 
+        rgb(255, 215, 0),
+        0.3, 
+        (val) => platform.topLayer.color = val,
+        easings.easeOutQuad
+      ).then(() => {
+        platform.baseLayer.glowing = true;
+        platform.topLayer.glowing = true;
+      });
+      
+      
+      play("powerUp", { volume: 0.3, speed: 1.5 }); // PLACEHOLDER
+    }
+  });
+  
+  
+  onUpdate(() => {
+    get("hintPlatformBase").forEach(base => {
+      if (base.glowing) {
+        const pulse = Math.sin(time() * 3) * 0.1 + 0.9;
+        base.color = rgb(218 * pulse, 165 * pulse, 32 * pulse);
+      }
+    });
+    
+    get("hintPlatformTop").forEach(top => {
+      if (top.glowing) {
+        const pulse = Math.sin(time() * 3) * 0.1 + 0.9;
+        top.color = rgb(255 * pulse, 215 * pulse, 0);
+      }
+    });
+  });
 }
 
 export function setupOneWayPlatforms(player) {
@@ -199,52 +265,52 @@ export function setupOneWayPlatforms(player) {
 
 export function addUIBackgrounds() {
   add([
-    rect(200, 50, { radius: 50 }),
+    rect(200, 36, { radius: 50 }),
     pos(130, 15),
     fixed(),
     color(Color.fromHex("#000000")),
     opacity(1),
-    outline(3, Color.fromHex(Colors.NuclearFuscia)),
+    outline(2, Color.fromHex(Colors.NuclearFuscia)),
     z(99)
   ]);
 
   add([
-    rect(200, 50, { radius: 50 }),
+    rect(200, 36, { radius: 50 }),
     pos(350, 15),
     fixed(),
     color(Color.fromHex("#000000")),
     opacity(1),
-    outline(3, Color.fromHex(Colors.PlasmaPurple)),
+    outline(2, Color.fromHex(Colors.PlasmaPurple)),
     z(99)
   ]);
 
   add([
-    rect(200, 50, { radius: 50 }),
+    rect(200, 36, { radius: 50 }),
     pos(570, 15),
     fixed(),
     color(Color.fromHex("#000000")),
     opacity(1),
-    outline(3, Color.fromHex(Colors.MintBlue)),
+    outline(2, Color.fromHex(Colors.MintBlue)),
     z(99)
   ]);
 
   add([
-    rect(200, 50, { radius: 50 }),
+    rect(200, 36, { radius: 50 }),
     pos(790, 15),
     fixed(),
     color(Color.fromHex("#000000")),
     opacity(1),
-    outline(3, Color.fromHex(Colors.RadioactiveGreen)),
+    outline(2, Color.fromHex(Colors.RadioactiveGreen)),
     z(99)
   ]);
 
   add([
-    rect(100, 50, { radius: 50 }),
+    rect(100, 36, { radius: 50 }),
     pos(10, 15),
     fixed(),
     color(Color.fromHex("#000000")),
     opacity(1),
-    outline(3, Color.fromHex(Colors.LightGray)),
+    outline(2, Color.fromHex(Colors.LightGray)),
     z(99)
   ]);
 }
@@ -304,7 +370,7 @@ export function addVictoryArea(levelConfig) {
 
 
 
-export function addCups(levelConfig) {
+export function addCups(levelConfig) { // MAKE IT SO THERE'S ONLY 1 CUP PER PLATFORM, CUPS ARE NOT ON SAME PLATFORMS AS OTHER ITEMS, CUPS AREN'T ON CHALLENGE PLATFORMS
   if (!levelConfig.cups.enabled) return new Set();
   
   const totalCups = levelConfig.cups.count;
@@ -353,6 +419,8 @@ export function addCups(levelConfig) {
   
   return platformsWithCups;
 }
+
+
 
 export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
   const eligiblePlatforms = levelConfig.platforms
@@ -444,6 +512,19 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
       "catnip"
     ]);
   }
+  
+  // NEW: BONUS HP
+  if (levelConfig.items.bonusHP.enabled && levelConfig.bonusHPZone) {
+    const zone = choose(levelConfig.bonusHPZone);
+    add([
+      sprite('tunaCan'), // PLACEHOLDER 
+      pos(zone.x, zone.y),
+      area({ width: 50, height: 50 }),
+      anchor("center"),
+      scale(0.8), 
+      "bonusHP"
+    ]);
+  }
 }
 
 
@@ -510,8 +591,8 @@ export function setupPlayerControls(player, gameStateGetter) {
 export function createUnifiedHUD(player, showDebug = true) {
 
   const scoreText = add([
-    text(`Score: 0`, { size: 24, font: "science" }),
-    pos(230, 42),
+    text(`Score: 0`, { size: 22, font: "science" }),
+    pos(230, 35),
     anchor("center"),
     fixed(),
     z(100),
@@ -520,8 +601,8 @@ export function createUnifiedHUD(player, showDebug = true) {
   ]);
 
   const hpText = add([
-    text(`HP: ${player.hp}/${player.maxHP}`, { size: 24, font: "science" }),
-    pos(450, 42),
+    text(`HP: ${player.hp}/${player.maxHP}`, { size: 22, font: "science" }),
+    pos(450, 35),
     anchor("center"),
     fixed(),
     z(100),
@@ -530,8 +611,8 @@ export function createUnifiedHUD(player, showDebug = true) {
   ]);
 
   const livesText = add([
-    text(`Lives: 3`, { size: 24, font: "science" }),
-    pos(670, 42),
+    text(`Lives: 3`, { size: 22, font: "science" }),
+    pos(670, 35),
     anchor("center"),
     fixed(),
     z(100),
@@ -541,17 +622,17 @@ export function createUnifiedHUD(player, showDebug = true) {
 
   const clock = add([
     sprite('clock'),
-    pos(840, 38),
+    pos(840, 32),
     anchor("center"),
     fixed(),
-    scale(0.3),
+    scale(0.24),
     z(101),
     "clock"
   ]);
 
   const timerText = add([
-    text(`: 0s`, { size: 24, font: "science" }),
-    pos(905, 42),
+    text(`: 0s`, { size: 22, font: "science" }),
+    pos(905, 35),
     anchor("center"),
     fixed(),
     z(100),
@@ -726,6 +807,8 @@ export function setupCupCollection(player, scoreGetter, scoreSetter) {
   });
 }
 
+
+
 export function setupSpecialItemCollection(player, livesGetter, livesSetter, scoreGetter, scoreSetter) {
  
   function showBubble(bubbleFrame) {
@@ -791,6 +874,17 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
 
       player.curState = null;
     });
+  });
+  
+  // NEW: BONUS HP
+  player.onCollide("bonusHP", (item) => {
+    console.log("💊 BONUS HP COLLECTED - HP before:", player.hp, "Max:", player.maxHP);
+    destroy(item);
+    const healAmount = 50;
+    player.hp = Math.min(player.hp + healAmount, player.maxHP);
+    console.log("💊 HP after:", player.hp);
+    play("powerUp", { volume: 0.5 }); // PLACEHOLDER - GET A DIFFERENT SOUND
+    showBubble(BUBBLE_FRAMES.plusHP); // PLACEHOLDER - MAKE A SPECIAL BUBBLE
   });
 }
 
