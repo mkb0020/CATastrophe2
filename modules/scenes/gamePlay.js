@@ -1,4 +1,4 @@
-// gamePlay.js - Clean, unified level system (no autoscroll!)
+// gamePlay.js
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getLevel } from '../config/levels.js';
 import { 
@@ -26,7 +26,12 @@ import {
   setupPlayerCamera,
   setupLevelPause, 
   setupOneWayPlatforms,
-  setupHintPlatforms
+  setupHintPlatforms,
+  setupSequentialPlatforms,
+  setupSequentialPlatformActivation,
+  addMiniBoss,
+  setupMiniBossReflect,
+  spawnRewardItems
 } from '../helpers/levelHelpers.js';
 import { createVolumeToggle } from '../helpers/kittyHelpers.js';
 
@@ -63,6 +68,9 @@ function createUnifiedLevel(levelId, data) {
   const player = createPlayer(levelConfig, character, startHP);
   setupOneWayPlatforms(player);
   setupHintPlatforms(player);
+
+  const sequentialPlatforms = setupSequentialPlatforms(levelConfig);
+  setupSequentialPlatformActivation(player, sequentialPlatforms);
 
   let score = startScore; 
   let timeLeft = levelConfig.timeLimit;
@@ -135,6 +143,7 @@ export function createLevel5Scene(data) {
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startLives = data?.lives || 3;
+  const startScore = data?.score ?? 0;
   
   const levelConfig = getLevel('level5');
   console.log('🎮 LEVEL 5 - FINAL GAUNTLET');
@@ -160,8 +169,9 @@ export function createLevel5Scene(data) {
   const player = createPlayer(levelConfig, character, startHP);
   setupOneWayPlatforms(player);
 
+  const miniBoss = addMiniBoss(levelConfig, () => gameActive, player);
 
-  let score = 0;
+  let score = startScore;
   let timeLeft = levelConfig.timeLimit;
   let gameActive = true;
   let lives = startLives;
@@ -180,12 +190,16 @@ export function createLevel5Scene(data) {
   setupCupCollection(player, getScore, setScore);
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);
   
+  setupMiniBossReflect(player, miniBoss, () => {
+    spawnRewardItems(levelConfig.rewardItems);
+  });
+  
   setupCucumberSpawner(levelConfig, getGameActive);
-  setupCucumberCollision(player, levelConfig, getGameActive, setGameActive, 'level5', getScore, getLives, setLives, getCharacter);
+  setupCucumberCollision(player, levelConfig, getGameActive, setGameActive, 'level5', getScore, getLives, setLives, getCharacter, startScore);
   
   setupRatSpawner(levelConfig, getGameActive, player);
-  setupRatCollision(player, levelConfig, getGameActive, setGameActive, 'level5', getScore, setScore, getLives, setLives, getCharacter);  
-  setupLaserCollision(player, levelConfig, getGameActive, setGameActive, 'level5', getScore, getLives, setLives, getCharacter);
+  setupRatCollision(player, levelConfig, getGameActive, setGameActive, 'level5', getScore, setScore, getLives, setLives, getCharacter, startScore);  
+  setupLaserCollision(player, levelConfig, getGameActive, setGameActive, 'level5', getScore, getLives, setLives, getCharacter, startScore);
   
   player.onCollide("victoryPlatform", (platform) => {
     if (player.vel.y >= 0 && getGameActive()) {
@@ -198,8 +212,8 @@ export function createLevel5Scene(data) {
     }
   });
 
-  setupTimer(levelConfig, getGameActive, setGameActive, getTimeLeft, setTimeLeft, 'level5', getScore, getLives, setLives, getCharacter);
-  setupFallDetection(player, getGameActive, setGameActive, 'level5', getScore, getLives, setLives, getCharacter);
+  setupTimer(levelConfig, getGameActive, setGameActive, getTimeLeft, setTimeLeft, 'level5', getScore, getLives, setLives, getCharacter, startScore);
+  setupFallDetection(player, getGameActive, setGameActive, 'level5', getScore, getLives, setLives, getCharacter, startScore);
   
   const hudElements = createUnifiedHUD(player);
   setupLevelPause(getGameActive, setGameActive);

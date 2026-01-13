@@ -101,6 +101,8 @@ export function addLevelEnvironment(levelConfig) {
 
   levelConfig.platforms.forEach((platform, index) => {
     const isHintPlatform = levelConfig.hintPlatforms?.includes(index);
+    const isSolidPlatform = levelConfig.solidPlatforms?.includes(index); 
+
     
    
     const baseLayer = add([
@@ -128,9 +130,9 @@ export function addLevelEnvironment(levelConfig) {
       rect(platform.width, platform.height, { radius: 5 }),
       pos(platform.x, platform.y),
       area(),
+      body({ isStatic: true }), 
       opacity(0),
-      "platform",
-      "oneWayPlatform",
+      isSolidPlatform ? "platform" : "oneWayPlatform", 
       z(2)
     ]);
     
@@ -374,7 +376,62 @@ export function addVictoryArea(levelConfig) {
 }
 
 
+export function setupSequentialPlatforms(levelConfig) {
+  if (!levelConfig.sequentialPlatforms?.enabled) return;
+  
+  const platformIds = levelConfig.sequentialPlatforms.platformIds;
+  
+  const sequentialPlatforms = [];
+  
+  get("platform").forEach(platform => {
+    const platformIndex = levelConfig.platforms.findIndex(p => 
+      p.x === platform.pos.x && p.y === platform.pos.y
+    );
+    
+    const sequenceIndex = platformIds.indexOf(platformIndex);
+    
+    if (sequenceIndex !== -1) {
+      platform.sequenceId = sequenceIndex;
+      platform.visible = sequenceIndex === 0; 
+      platform.nextInSequence = sequenceIndex < platformIds.length - 1 ? sequenceIndex + 1 : null;
+      platform.opacity = platform.visible ? 1 : 0;
+      sequentialPlatforms.push(platform);
+      
+      if (platform.baseLayer) platform.baseLayer.opacity = platform.visible ? 0.7 : 0;
+      if (platform.topLayer) platform.topLayer.opacity = platform.visible ? 1 : 0;
+    }
+  });
+  
+  return sequentialPlatforms;
+}
 
+export function setupSequentialPlatformActivation(player, sequentialPlatforms) {
+  if (!sequentialPlatforms || sequentialPlatforms.length === 0) return;
+  
+  player.onGround((platform) => {
+    if (platform.sequenceId !== undefined && platform.visible && platform.nextInSequence !== null) {
+      const nextPlatform = sequentialPlatforms.find(p => p.sequenceId === platform.nextInSequence);
+      
+      if (nextPlatform && !nextPlatform.visible) {
+        nextPlatform.visible = true;
+        
+        tween(
+          0,
+          1,
+          0.5,
+          (val) => {
+            nextPlatform.opacity = val;
+            if (nextPlatform.baseLayer) nextPlatform.baseLayer.opacity = val * 0.7;
+            if (nextPlatform.topLayer) nextPlatform.topLayer.opacity = val;
+          },
+          easings.easeOutQuad
+        );
+        
+        play("powerUp", { volume: 0.2, speed: 2 });
+      }
+    }
+  });
+}
 
 export function addCups(levelConfig) {
   if (!levelConfig.cups.enabled) return new Set();
@@ -1475,6 +1532,271 @@ export function setupPlayerCamera(player, character, bg, gameStateGetter) {
       }
       
       updatePlayerAnim(player, character);
+    }
+  });
+}
+
+
+// ======= MINI BOSS =======
+
+export function addMiniBoss(levelConfig, gameStateGetter, player) {
+  if (!levelConfig.miniBoss?.enabled) return null;
+  
+  const boss = levelConfig.miniBoss;
+  
+  const miniBoss = add([
+    sprite('miniBossRat'),
+    pos(boss.x, boss.y),
+    area({ width: 80, height: 80 }),
+    anchor("center"),
+    scale(1.2),
+    {
+      hp: boss.hp || 3,
+      maxHP: boss.hp || 3,
+      throwTimer: 0,
+      throwInterval: boss.throwInterval || 2,
+      cucumberSpeed: boss.cucumberSpeed || 200,
+      defeated: false,
+      introPlayed: false,
+
+      moveTimer: 0,
+      moveInterval: 1.5,
+      moveDirection: 1,
+      moveSpeed: 100,
+      originalX: boss.x,
+      moveRange: 400 
+    },
+    z(10),
+    "miniBoss"
+  ]);
+  
+  miniBoss.onUpdate(() => {
+    const onPlatform = player.pos.y < 400; // Underground is y > 460
+    
+    if (!miniBoss.introPlayed && player.pos.x > boss.x - 800 && onPlatform) {
+      miniBoss.introPlayed = true;
+      
+      const bossExclamation = add([
+        sprite('bubbles', { frame: BUBBLE_FRAMES.exclamation }),
+        pos(miniBoss.pos.x, miniBoss.pos.y - 80),
+        anchor("center"),
+        scale(1.5),
+        z(100),
+        opacity(0),
+        "bubble"
+      ]);
+      
+      tween(bossExclamation.opacity, 1, 0.2, (val) => bossExclamation.opacity = val);
+      tween(bossExclamation.scale.x, 1.8, 0.3, (val) => {
+        bossExclamation.scale.x = val;
+        bossExclamation.scale.y = val;
+      });
+      
+      play("meow01", { volume: 0.4 });
+      
+      wait(0.5, () => {
+        const catBeep = add([
+          sprite('bubbles', { frame: BUBBLE_FRAMES.beep }),
+          pos(player.pos.x, player.pos.y - 70),
+          anchor("center"),
+          scale(1.3),
+          z(100),
+          opacity(0),
+          "bubble"
+        ]);
+        
+        tween(catBeep.opacity, 1, 0.2, (val) => catBeep.opacity = val);
+        tween(catBeep.scale.x, 1.6, 0.3, (val) => {
+          catBeep.scale.x = val;
+          catBeep.scale.y = val;
+        });
+        
+        play("meow02", { volume: 0.3 });
+        
+        wait(1.5, () => {
+          tween(bossExclamation.opacity, 0, 0.3, (val) => bossExclamation.opacity = val);
+          tween(catBeep.opacity, 0, 0.3, (val) => catBeep.opacity = val);
+          wait(0.3, () => {
+            destroy(bossExclamation);
+            destroy(catBeep);
+          });
+        });
+      });
+    }
+    
+    if (miniBoss.defeated || !gameStateGetter() || !miniBoss.introPlayed) return;
+    
+    const playerOnPlatform = player.pos.y < 400;
+    
+    if (!playerOnPlatform) return;
+    
+    miniBoss.moveTimer += dt();
+    if (miniBoss.moveTimer >= miniBoss.moveInterval) {
+      miniBoss.moveTimer = 0;
+      miniBoss.moveDirection *= -1; 
+    }
+
+    const targetX = miniBoss.originalX + (miniBoss.moveDirection * miniBoss.moveRange / 2);
+    const moveTowards = targetX - miniBoss.pos.x;
+
+    if (Math.abs(moveTowards) > 10) {
+      miniBoss.pos.x += Math.sign(moveTowards) * miniBoss.moveSpeed * dt();
+    }
+
+    miniBoss.flipX = player.pos.x < miniBoss.pos.x;
+    
+    miniBoss.throwTimer += dt();
+    
+    if (miniBoss.throwTimer >= miniBoss.throwInterval) {
+      miniBoss.throwTimer = 0;
+      
+      // ARC
+      const cucumber = add([
+        sprite('littleCucumber'),
+        pos(miniBoss.pos.x - 40, miniBoss.pos.y),
+        area({ width: 30, height: 40 }),
+        anchor("center"),
+        scale(0.6),
+        {
+          vel: vec2(-miniBoss.cucumberSpeed, -400), 
+          rotationSpeed: 360,
+          gravity: 500,
+          reflected: false,
+          damage: 15
+        },
+        z(9),
+        "miniBossCucumber"
+      ]);
+      
+      //play("throw", { volume: 0.3 });
+      
+      cucumber.onUpdate(() => {
+        cucumber.vel.y += cucumber.gravity * dt();
+        cucumber.pos = cucumber.pos.add(cucumber.vel.x * dt(), cucumber.vel.y * dt());
+        cucumber.angle += cucumber.rotationSpeed * dt();
+        
+        if (cucumber.pos.y > 500 || cucumber.pos.x < camPos().x - 500) {
+          destroy(cucumber);
+        }
+      });
+    }
+  });
+  
+  return miniBoss;
+}
+
+export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
+  if (!miniBoss) return;
+  
+  player.onCollide("miniBossCucumber", (cucumber) => {
+    const hitboxHeight = player.area.height || 60;
+    const hitboxOffsetY = player.area.offset?.y || 0;
+    const playerTop = player.pos.y - (hitboxHeight / 2) + hitboxOffsetY;
+    const cucumberBottom = cucumber.pos.y + 20;
+    
+    if (!cucumber.reflected && player.vel.y < 0 && playerTop < cucumberBottom) {
+      cucumber.reflected = true;
+      cucumber.vel.x = Math.abs(cucumber.vel.x) * 1.5;
+      cucumber.vel.y = -300;
+      cucumber.rotationSpeed = -720;
+      
+      play("powerUp", { volume: 0.5, speed: 1.5 });
+      
+      cucumber.color = rgb(255, 255, 100);
+      
+    } else if (!cucumber.reflected && !player.invulnerable) {
+      player.hp -= cucumber.damage;
+      player.invulnerable = true;
+      
+      play("takeHit", { volume: 0.4 });
+      destroy(cucumber);
+      
+      const flashInterval = setInterval(() => {
+        player.opacity = player.opacity === 1 ? 0.3 : 1;
+      }, 100);
+      
+      wait(1, () => {
+        clearInterval(flashInterval);
+        player.opacity = 1;
+        player.invulnerable = false;
+      });
+    }
+  });
+  
+  miniBoss.onCollide("miniBossCucumber", (cucumber) => {
+    if (cucumber.reflected) {
+      miniBoss.hp -= 1;
+      destroy(cucumber);
+      
+      shake(10);
+      play("ratKill", { volume: 0.6 });
+      
+      const originalColor = miniBoss.color || rgb(255, 255, 255);
+      miniBoss.color = rgb(255, 100, 100);
+      wait(0.2, () => miniBoss.color = originalColor);
+      
+      if (miniBoss.hp <= 0 && !miniBoss.defeated) {
+        miniBoss.defeated = true;
+        
+        const defeatBubble = add([
+          sprite('bubbles', { frame: BUBBLE_FRAMES.hit2 }),
+          pos(miniBoss.pos.x, miniBoss.pos.y - 60),
+          anchor("center"),
+          scale(0),
+          z(100),
+          "bubble"
+        ]);
+        
+        tween(defeatBubble.scale.x, 2, 0.3, (val) => {
+          defeatBubble.scale.x = val;
+          defeatBubble.scale.y = val;
+        }, easings.easeOutBack);
+        
+        wait(0.5, () => {
+          destroy(defeatBubble);
+          animateGhostPoof(miniBoss);
+          destroy(miniBoss);
+          
+          play("powerUp", { volume: 0.7 });
+          
+          if (onDefeatCallback) onDefeatCallback();
+        });
+      }
+    }
+  });
+}
+
+export function spawnRewardItems(positions) {
+  positions.forEach(pos => {
+    if (pos.type === 'egg') {
+      add([
+        sprite('egg'),
+        pos(pos.x, pos.y),
+        area({ width: 50, height: 50 }),
+        anchor("center"),
+        scale(0),
+        z(15),
+        "bonusHP"
+      ]);
+      
+      const egg = get("bonusHP")[get("bonusHP").length - 1];
+      tween(0, 0.8, 0.5, (val) => egg.scale = val, easings.easeOutBack);
+      
+    } else if (pos.type === 'milk') {
+      add([
+        sprite('milkBottle'),
+        pos(pos.x, pos.y),
+        area({ width: 50, height: 50 }),
+        anchor("center"),
+        scale(0),
+        z(15),
+        "milkBottle"
+      ]);
+      
+      const milk = get("milkBottle")[get("milkBottle").length - 1];
+      wait(0.2, () => {
+        tween(0, 0.6, 0.5, (val) => milk.scale = val, easings.easeOutBack);
+      });
     }
   });
 }

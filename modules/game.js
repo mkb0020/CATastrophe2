@@ -147,6 +147,8 @@ async function loadAssets() {
   loadSprite("smallRat", "assets/images/animationSprites/SmallRat.png");
   loadSprite("smallRat2", "assets/images/enemies/SmallRat2.png");
   loadSprite("ghostRat", "assets/images/animationSprites/GhostRat.png");
+  loadSprite("miniBossRat", "assets/images/enemies/BigRat.png");
+
 
   loadSprite("bossLaserPointer", "assets/images/enemies/BossLaserPointer.png");
   loadSprite("laserPointerGlow", "assets/images/enemies/LaserGlow.png");

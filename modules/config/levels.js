@@ -20,7 +20,7 @@ export const LEVELS = {
     name: 'Level 1',
     timeLimit: 90,
     length:  17000, 
-    playerSpawn: { x: 200, y: 200 },  
+    playerSpawn: { x: 16425, y: 200 },  
     GroundSegments: [
       { x: -1000, y: 440, width: 6000, height: 50 },
       { x: 6300, y: 440, width: 1300, height: 50 },
@@ -85,7 +85,7 @@ export const LEVELS = {
     name: 'Level 2',
     timeLimit: 90,
     length:  17000,  
-    playerSpawn: { x: 200, y: 200 },
+    playerSpawn: { x: 16425, y: 200 },
     GroundSegments: [
         { x: -1000, y: 440, width: 3300, height: 50 },
         { x: 3200, y: 440, width: 1600, height: 50 },
@@ -171,7 +171,7 @@ export const LEVELS = {
     name: 'Level 3',
     timeLimit: 90,
     length:  17000,
-    playerSpawn: { x: 200, y: 200 },
+    playerSpawn: { x: 16425, y: 200 },
     GroundSegments: [
       {x: -1000, y: 440, width: 3000, height: 50},
       {x: 3200, y: 440, width: 1600, height: 50},
@@ -268,7 +268,7 @@ export const LEVELS = {
     name: 'Level 4',
     timeLimit: 90,
     length:  17000,
-    playerSpawn: { x: 200, y: 200 },
+    playerSpawn: { x: 16425, y: 200 },
     GroundSegments: [
       {x: 0, y: 440, width: 1300, height: 50},
       {x: 3700, y: 440, width: 700, height: 50},
@@ -281,7 +281,11 @@ export const LEVELS = {
     ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
     hintPlatforms: [20, 21, 22, 23], 
-    platforms: [
+    sequentialPlatforms: {
+      enabled: true,
+      platformIds: [20, 21, 22, 23] // Indices of the 4 hard path platforms in your platforms array
+    },
+      platforms: [
       {x: 1500, y: 380, width: 150, height: 20}, // GAUNTLET 1
       {x: 1962, y: 350, width: 150, height: 20},
       {x: 2424, y: 390, width: 150, height: 20},
@@ -301,14 +305,14 @@ export const LEVELS = {
       {x: 9348, y: 350, width: 150, height: 20},
 
       {x: 10500, y: 300, width: 175, height: 20}, // GAUNTLET 4
-      {x: 10962, y: 180, width: 175, height: 20},
-      {x: 11424, y: 90, width: 175, height: 20},
-      {x: 11886, y: 80, width: 175, height: 20},
-      {x: 12348, y: 90, width: 175, height: 20},
+      {x: 10962, y: 180, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
+      {x: 11424, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
+      {x: 11886, y: 80, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
+      {x: 12348, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
 
-      {x: 10962, y: 440, width: 100, height: 20}, // SPECIAL PATH
-      {x: 11424, y: 430, width: 100, height: 20}, // SPECIAL PATH
-      {x: 11886, y: 460, width: 100, height: 20}, // SPECIAL PATH
+      {x: 10962, y: 440, width: 100, height: 20}, // HARD LOWER PATH TO EGG
+      {x: 11424, y: 430, width: 100, height: 20}, // HARD LOWER PATH TO EGG
+      {x: 11886, y: 460, width: 100, height: 20}, // HARD LOWER PATH TO EGG
       {x: 12348, y: 450, width: 100, height: 20}, // EGG
 
       {x: 13500, y: 370, width: 150, height: 20}, // GAUNTLET 5
@@ -366,7 +370,7 @@ export const LEVELS = {
     name: 'Level 5',
     timeLimit: 90,
     length:  17000, 
-    playerSpawn: { x: 200, y: 200 },
+    playerSpawn: { x: 10500, y: 200 },
     GroundSegments: [
       {x: 0, y: 440, width: 1200, height: 50},
       {x: 2650, y: 440, width: 1300, height: 50},
@@ -378,7 +382,8 @@ export const LEVELS = {
       {x: 15720, y: 440, width: 1000, height: 50}
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE
-    hintPlatforms: [20, 21, 22, 23], 
+    hintPlatforms: [20], 
+    solidPlatforms: [20],
     platforms: [
       {x: 1500, y: 380, width: 125, height: 20}, // GAUNTLET 1
       {x: 1962, y: 320, width: 125, height: 20},
@@ -404,10 +409,8 @@ export const LEVELS = {
       {x: 11886, y: 280, width: 125, height: 20},
       {x: 12348, y: 460, width: 125, height: 20},
 
-      {x: 13500, y: 320, width: 1000, height: 20}, // SPECIAL PATH
-      {x: 14424, y: 220, width: 300, height: 20}, // MINI BOSS
-      {x: 14886, y: 150, width: 75, height: 20}, // EGG
-      {x: 15248, y: 150, width: 75, height: 20} // MILK
+      {x: 13500, y: 320, width: 1000, height: 20}, // LONG PLATFORM THAT LEADS UP TO MINI BOSS
+
     ],
     noStuffZones: [  
       { start: 3250, end: 3548 }, 
@@ -441,9 +444,20 @@ export const LEVELS = {
           ]
         }
     },
-    bonusHPZone: [{ x: 14950, y: 70 }], 
+    miniBoss: {
+      enabled: true,
+      x: 14300, 
+      y: 250,
+      hp: 3,
+      throwInterval: 2.5,
+      cucumberSpeed: 200
+    },
+
+    rewardItems: [
+      { type: 'egg', x: 14886, y: 200 },
+      { type: 'milk', x: 15248, y: 200 }
+    ],
     catnipZones: [{ x: 3400, y: 100 }],
-    milkBottlePosition: { x: 15350, y: 70 },
     items: {
       fishBones: { enabled: true, count: 2 },
       tunaCan: { enabled: true, count: 3 },
