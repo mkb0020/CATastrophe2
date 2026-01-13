@@ -86,7 +86,7 @@ export function setupLevelMusic(levelConfig) {
 export function addLevelEnvironment(levelConfig) {
   const bg = add([
     sprite(levelConfig.background, { anim: "idle" }),
-    pos(0, 0),
+    pos(-500, 0),
     scale(2, 2),
     z(-1),
     "background"
@@ -172,10 +172,10 @@ export function addLevelEnvironment(levelConfig) {
 
 
   add([
-    rect(15000, 480),
+    rect(20000, 480),
     pos(-1000, 0),
     color(0, 0, 0),
-    opacity(0.1),
+    opacity(0.3),
     z(0)
   ]);
 
@@ -193,7 +193,7 @@ export function setupHintPlatforms(player) {
      
       tween(
         platform.baseLayer.color, 
-        rgb(218, 165, 32), 
+        rgb(117,251,30), 
         0.3, 
         (val) => platform.baseLayer.color = val,
         easings.easeOutQuad
@@ -202,7 +202,7 @@ export function setupHintPlatforms(player) {
      
       tween(
         platform.topLayer.color, 
-        rgb(255, 215, 0),
+        rgb(88,232,76),
         0.3, 
         (val) => platform.topLayer.color = val,
         easings.easeOutQuad
@@ -234,14 +234,17 @@ export function setupHintPlatforms(player) {
   });
 }
 
-export function setupOneWayPlatforms(player) {
-  player.onCollide("oneWayPlatform", (platform) => {
 
-    const playerBottom = player.pos.y + player.height / 2;
+export function setupOneWayPlatforms(player) {
+  const hitboxHeight = player.area.height || 60;    
+  const hitboxOffsetY = player.area.offset?.y || 0;
+  
+  player.onCollide("oneWayPlatform", (platform) => {
+    const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
     const platformTop = platform.pos.y - platform.height / 2;
     
     if (player.vel.y > 0 && playerBottom < platformTop + 10) {
-      player.pos.y = platformTop - player.height / 2;
+      player.pos.y = platformTop - (hitboxHeight / 2) - hitboxOffsetY;
       player.vel.y = 0;
       
       if (!platform.has("body")) {
@@ -249,9 +252,11 @@ export function setupOneWayPlatforms(player) {
       }
     }
   });
-    player.onUpdate(() => {
+  
+  player.onUpdate(() => {
+    const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
+    
     get("oneWayPlatform").forEach(platform => {
-      const playerBottom = player.pos.y + player.height / 2;
       const platformTop = platform.pos.y - platform.height / 2;
       
       if (player.vel.y < 0 || playerBottom > platformTop + 20) {
@@ -262,6 +267,7 @@ export function setupOneWayPlatforms(player) {
     });
   });
 }
+
 
 export function addUIBackgrounds() {
   add([
@@ -465,7 +471,7 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
   const eligiblePlatforms = levelConfig.platforms  // PLATFORM FILTER - WIDE ENOUGH, NO CUPS, NOT IN noStuffZone
     .map((p, index) => ({ platform: p, index }))
     .filter(({ platform, index }) => 
-      platform.width >= 200 && 
+      platform.width >= 150 && 
       !platformsWithCups.has(index) &&
       !isInNoStuffZone(platform)
     );
@@ -659,17 +665,40 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
 
 export function createPlayer(levelConfig, character, startHP) {
   const prefix = character.name;
+  
+  const originalWidth = 150;
+  const originalHeight = 108;
+  const targetWidth = 128;
+  const targetHeight = 92;
+  const scaleX = targetWidth / originalWidth;
+  const scaleY = targetHeight / originalHeight;
+  const hitboxWidth = 100;
+  const hitboxHeight = 40;
+  // const offsetX = -(targetWidth / 2) + (hitboxWidth / 2) + 95;
+  const offsetX = 6;
+  const offsetY = 0;
+
 
   const player = add([
     sprite(`${prefix}Platformer`, { frame: SPRITE_FRAMES.idle }),
     pos(levelConfig.playerSpawn.x, levelConfig.playerSpawn.y - 50),
-    area(),
-    body(),
-    scale(1.0),
+    area({ 
+      width: hitboxWidth,
+      height: hitboxHeight,
+      offset: vec2(offsetX, offsetY)
+    }),
+    body({
+      gravityScale: 1
+    }),
+    scale(vec2(scaleX, scaleY)),
+    anchor("center"),
     {
       speed: character.platformerStats.speed * 50,
       baseSpeed: character.platformerStats.speed * 50,
       playerJumpForce: Math.abs(character.platformerStats.jumpPower) * 65,
+      maxFallSpeed: character.platformerStats.maxFallSpeed || 400,
+      airControl: character.platformerStats.airControlMultiplier || 0.7,
+      groundControl: character.platformerStats.groundControlMultiplier || 1.0,
       hp: startHP || character.stats.maxHP,
       maxHP: character.stats.maxHP,
       isMoving: false,
@@ -686,10 +715,16 @@ export function createPlayer(levelConfig, character, startHP) {
   return player;
 }
 
+
 export function setupPlayerControls(player, gameStateGetter) {
   onKeyDown("left", () => {
     if (gameStateGetter()) {
-      player.move(-player.speed, 0);
+      const controlMultiplier = player.isGrounded() 
+        ? player.groundControl 
+        : player.airControl;
+      
+      const moveSpeed = player.speed * controlMultiplier;
+      player.move(-moveSpeed, 0);
       player.isMoving = true;
       player.facingRight = false;
       player.flipX = true;
@@ -698,7 +733,12 @@ export function setupPlayerControls(player, gameStateGetter) {
 
   onKeyDown("right", () => {
     if (gameStateGetter()) {
-      player.move(player.speed, 0);
+      const controlMultiplier = player.isGrounded() 
+        ? player.groundControl 
+        : player.airControl;
+      
+      const moveSpeed = player.speed * controlMultiplier;
+      player.move(moveSpeed, 0);
       player.isMoving = true;
       player.facingRight = true;
       player.flipX = false;
@@ -714,7 +754,14 @@ export function setupPlayerControls(player, gameStateGetter) {
       player.jump(player.playerJumpForce);
     }
   });
+  
+  player.onUpdate(() => {
+    if (player.vel.y > player.maxFallSpeed) {
+      player.vel.y = player.maxFallSpeed;
+    }
+  });
 }
+
 
 export function createUnifiedHUD(player, showDebug = true) {
 
@@ -913,7 +960,19 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
 
 
 
-export function setupTimer(levelConfig, gameStateGetter, gameStateSetter, timeLeftGetter, timeLeftSetter, levelName, scoreGetter, livesGetter, livesSetter, characterGetter) {
+export function setupTimer(
+  levelConfig, 
+  gameStateGetter, 
+  gameStateSetter, 
+  timeLeftGetter, 
+  timeLeftSetter, 
+  levelName, 
+  scoreGetter, 
+  livesGetter, 
+  livesSetter, 
+  characterGetter,
+  startingScore = 0  
+) {
   loop(1, () => {
     if (gameStateGetter()) {
       const newTime = timeLeftGetter() - 1;
@@ -931,12 +990,12 @@ export function setupTimer(levelConfig, gameStateGetter, gameStateSetter, timeLe
             level: levelName,
             lives: currentLives,
             character,
-            reason: "Time ran out!"
+            reason: "Time ran out!",
+            startingScore  
           });
         } else {
           playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character);
         }
-
       }
     }
   });
@@ -950,7 +1009,8 @@ export function setupFallDetection(
   scoreGetter,
   livesGetter,
   livesSetter,
-  characterGetter
+  characterGetter,
+  startingScore = 0  
 ) {
   player.onUpdate(() => {
     if (player.pos.y > SCREEN_H + 100 && gameStateGetter()) {
@@ -965,7 +1025,8 @@ export function setupFallDetection(
           level: levelName,
           lives: currentLives,
           character,
-          reason: "Fell into the abyss"
+          reason: "Fell into the abyss",
+          startingScore  
         });
       } else {
         playBloodDripAnimation(
@@ -1040,7 +1101,18 @@ export function setupCucumberSpawner(levelConfig, gameStateGetter) {
   });
 }
 
-export function setupCucumberCollision(player, levelConfig, gameStateGetter, gameStateSetter, levelName, scoreGetter, livesGetter, livesSetter, characterGetter) {
+export function setupCucumberCollision(
+  player, 
+  levelConfig, 
+  gameStateGetter, 
+  gameStateSetter, 
+  levelName, 
+  scoreGetter, 
+  livesGetter, 
+  livesSetter, 
+  characterGetter,
+  startingScore = 0  
+) {
   player.onCollide("cucumber", (cucumber) => {
     if (!player.invulnerable && !player.catnipActive) {
       player.hp -= cucumber.damage;
@@ -1070,16 +1142,17 @@ export function setupCucumberCollision(player, levelConfig, gameStateGetter, gam
             level: levelName,
             lives: currentLives,
             character,
-            reason: "Hit by cucumber"
+            reason: "Hit by cucumber",
+            startingScore  
           });
         } else {
           playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character);
         }
-
       }
     }
   });
 }
+
 
 export function setupRatSpawner(levelConfig, gameStateGetter, player) {
   if (!levelConfig.enemies.rats.enabled) return;
@@ -1207,9 +1280,25 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
   });
 }
 
-export function setupRatCollision(player, levelConfig, gameStateGetter, gameStateSetter, levelName, scoreGetter, scoreSetter, livesGetter, livesSetter, characterGetter) {
+
+export function setupRatCollision(
+  player, 
+  levelConfig, 
+  gameStateGetter, 
+  gameStateSetter, 
+  levelName, 
+  scoreGetter, 
+  scoreSetter, 
+  livesGetter, 
+  livesSetter, 
+  characterGetter,
+  startingScore = 0  
+) {
+  const hitboxHeight = player.area.height || 60;
+  const hitboxOffsetY = player.area.offset?.y || 0;
+  
   player.onCollide("rat", (rat) => {
-    const playerBottom = player.pos.y + 40;
+    const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
     const ratTop = rat.baseY - 15;
     rat.z = 3;
     
@@ -1243,14 +1332,14 @@ export function setupRatCollision(player, levelConfig, gameStateGetter, gameStat
           const currentLives = livesGetter();
           const character = characterGetter ? characterGetter() : null;
           
-
           if (currentLives > 0) {
             go("youDied", {
               score: scoreGetter(),
               level: levelName,
               lives: currentLives,
               character,
-              reason: "RABIES!"
+              reason: "RABIES!",
+              startingScore  
             });
           } else {
             playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character);
@@ -1260,6 +1349,8 @@ export function setupRatCollision(player, levelConfig, gameStateGetter, gameStat
     }
   });
 }
+
+
 
 export function addLaserBeams(levelConfig) {
   if (!levelConfig.enemies.lasers.enabled) return;
@@ -1301,7 +1392,7 @@ export function addLaserBeams(levelConfig) {
         laser.opacity = 0.7;
         
         laser.scanPos += laser.scanSpeed * laser.scanDirection * dt();
-        if (laser.scanPos > 100 || laser.scanPos < -100) {
+        if (laser.scanPos > 50 || laser.scanPos < -50) {
           laser.scanDirection *= -1;
         }
         laser.pos.x = x + laser.scanPos;
@@ -1319,7 +1410,18 @@ export function addLaserBeams(levelConfig) {
   });
 }
 
-export function setupLaserCollision(player, levelConfig, gameStateGetter, gameStateSetter, levelName, scoreGetter, livesGetter, livesSetter, characterGetter) {
+export function setupLaserCollision(
+  player, 
+  levelConfig, 
+  gameStateGetter, 
+  gameStateSetter, 
+  levelName, 
+  scoreGetter, 
+  livesGetter, 
+  livesSetter, 
+  characterGetter,
+  startingScore = 0  
+) {
   player.onCollide("laser", (laser) => {
     if (laser.isActive && !player.invulnerable && !player.catnipActive) {
       player.hp -= 5;
@@ -1340,9 +1442,7 @@ export function setupLaserCollision(player, levelConfig, gameStateGetter, gameSt
       if (player.hp <= 0) {
         gameStateSetter(false);
         const currentLives = livesGetter();
-
         const character = characterGetter ? characterGetter() : null;
-        
 
         if (currentLives > 0) {
           go("youDied", {
@@ -1350,7 +1450,8 @@ export function setupLaserCollision(player, levelConfig, gameStateGetter, gameSt
             level: levelName,
             lives: currentLives,
             character,
-            reason: "Lasered 😵"
+            reason: "Lasered 😵",
+            startingScore  
           });
         } else {
           playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character);
