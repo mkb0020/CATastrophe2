@@ -35,19 +35,20 @@ function createUnifiedLevel(levelId, data) {
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startLives = data?.lives ?? 3;
-  const startScore = data?.score ?? 0;
+  const startScore = data?.score ?? 0;  
   
   const levelConfig = getLevel(levelId);
   console.log(`🎮 ${levelConfig.name.toUpperCase()} INITIATED`);
   console.log('❤️ Starting HP:', startHP);
   console.log('💙 Starting Lives:', startLives);
+  console.log('💰 Starting Score:', startScore); 
 
   onKeyPress("d", () => {
     debug.inspect = !debug.inspect;
     debug.showArea = !debug.showArea;
   });
 
-  setGravity(1600);
+  setGravity(1500);
   setupLevelMusic(levelConfig);
 
   const { bg } = addLevelEnvironment(levelConfig);
@@ -84,15 +85,15 @@ function createUnifiedLevel(levelId, data) {
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);
   
   setupCucumberSpawner(levelConfig, getGameActive);
-  setupCucumberCollision(player, levelConfig, getGameActive, setGameActive, levelId, getScore, getLives, setLives, getCharacter);
-  
+  setupCucumberCollision(player, levelConfig, getGameActive, setGameActive, levelId, getScore, getLives, setLives, getCharacter, startScore);  
+    
   setupRatSpawner(levelConfig, getGameActive, player);
-  setupRatCollision(player, levelConfig, getGameActive, setGameActive, levelId, getScore, setScore, getLives, setLives, getCharacter);
-  
-  setupLaserCollision(player, levelConfig, getGameActive, setGameActive, levelId, getScore, getLives, setLives, getCharacter);
+  setupRatCollision(player, levelConfig, getGameActive, setGameActive, levelId, getScore, setScore, getLives, setLives, getCharacter, startScore);  
+    
+  setupLaserCollision(player, levelConfig, getGameActive, setGameActive, levelId, getScore, getLives, setLives, getCharacter, startScore);  
 
-  setupTimer(levelConfig, getGameActive, setGameActive, getTimeLeft, setTimeLeft, levelId, getScore, getLives, setLives, getCharacter);
-  setupFallDetection(player, getGameActive, setGameActive, levelId, getScore, getLives, setLives, getCharacter);
+  setupTimer(levelConfig, getGameActive, setGameActive, getTimeLeft, setTimeLeft, levelId, getScore, getLives, setLives, getCharacter, startScore);  
+  setupFallDetection(player, getGameActive, setGameActive, levelId, getScore, getLives, setLives, getCharacter, startScore); 
   
   const hudElements = createUnifiedHUD(player);
   
@@ -145,7 +146,7 @@ export function createLevel5Scene(data) {
     debug.showArea = !debug.showArea;
   });
 
-  setGravity(1600);
+  setGravity(1500);
   setupLevelMusic(levelConfig);
 
   const { bg } = addLevelEnvironment(levelConfig);

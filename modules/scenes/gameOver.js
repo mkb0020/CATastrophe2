@@ -221,12 +221,16 @@ function returnToMenu() {
   go("menu");
 }
   
+
 export function createYouDiedScene(data) {
   console.log('💀 YOU DIED SCENE');
   console.log('📦 Data received:', data);
   console.log('👤 Character:', data.character);
   
-  const { score, level, lives, character, reason } = data;
+  const { score, level, lives, character, reason, startingScore = 0 } = data;
+  
+  console.log('💰 Current Score (for display):', score);
+  console.log('💰 Starting Score (will restore to):', startingScore);
   
   if (!character) {
     console.error('❌ ERROR: No character data received!');
@@ -235,11 +239,9 @@ export function createYouDiedScene(data) {
     return;
   }
   
- 
   stopAllMusic();
   play("gameOverSound", { volume: 0.5 });
   
-
   add([
     sprite('menuBG'),
     pos(0, 0),
@@ -255,7 +257,6 @@ export function createYouDiedScene(data) {
     z(1)
   ]);
 
-
   add([
     rect(700, 415, { radius: 40 }),
     pos(150, 45),
@@ -263,7 +264,6 @@ export function createYouDiedScene(data) {
     outline(4, rgb(196,195,208)),
     z(1)
   ]);
-
 
   add([
     text("YOU DIED", { 
@@ -319,7 +319,6 @@ export function createYouDiedScene(data) {
     z(2)
   ]);
 
-  
   const useLifeBtn = add([
     rect(280, 45, { radius: 30 }),
     pos(360, 320),
@@ -346,25 +345,26 @@ export function createYouDiedScene(data) {
     z(2)
   ]);
 
- 
-useLifeBtn.onClick(() => {
-  console.log(`🎮 You had: ${lives} lives`);
-  const newLives = lives - 1;
-  character.lives = newLives; 
-  console.log(`🎮 Continuing ${level} with ${newLives} lives`);
-  console.log(`👤 Character:`, character);
-  
-  const maxHP = character.stats?.maxHP || 100;
-  const restoredHP = Math.floor(maxHP * 0.5);
-  
-  console.log(`❤️ Restoring HP to ${restoredHP} (50% of ${maxHP})`);
-  
-  go(level, {
-    character,
-    startHP: restoredHP,
-    lives: newLives
+  useLifeBtn.onClick(() => {
+    console.log(`🎮 You had: ${lives} lives`);
+    const newLives = lives - 1;
+    character.lives = newLives; 
+    console.log(`🎮 Continuing ${level} with ${newLives} lives`);
+    console.log(`👤 Character:`, character);
+    
+    const maxHP = character.stats?.maxHP || 100;
+    const restoredHP = Math.floor(maxHP * 0.5);
+    
+    console.log(`❤️ Restoring HP to ${restoredHP} (50% of ${maxHP})`);
+    console.log(`💰 Restoring score to ${startingScore} (from before level started)`);
+    
+    go(level, {
+      character,
+      startHP: restoredHP,
+      lives: newLives,
+      score: startingScore 
+    });
   });
-});
 
   useLifeBtn.onHover(() => {
     useLifeBtn.color = rgb(144,144,192);
@@ -373,7 +373,6 @@ useLifeBtn.onClick(() => {
   useLifeBtn.onHoverEnd(() => {
     useLifeBtn.color = Color.fromHex("#000000");
   });
-
 
   const quitBtn = add([
     rect(280, 45, { radius: 30 }),
