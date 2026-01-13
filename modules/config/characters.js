@@ -64,9 +64,11 @@ export const CHARACTERS = {
       baseDefense: 1000, // FOR TESTING
     },
     platformerStats: { 
-      speed: 5,
-      jumpPower: -12,
-      gravity: 0.6
+      speed: 8,
+      jumpPower: -11,            
+      maxFallSpeed: 500,           
+      airControlMultiplier: 0.95,  
+      groundControlMultiplier: 1.0
     },
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
@@ -86,10 +88,12 @@ export const CHARACTERS = {
       baseSpeed: 20,
       baseDefense: 29,
       },
-    platformerStats: {  
-      speed: 5,
-      jumpPower: -12,
-      gravity: 0.6
+    platformerStats: { 
+      speed: 8,
+      jumpPower: -11,            
+      maxFallSpeed: 500,           
+      airControlMultiplier: 0.95,  
+      groundControlMultiplier: 1.0
     },
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
@@ -109,10 +113,12 @@ export const CHARACTERS = {
       baseSpeed: 23,
       baseDefense: 23,
     },
-    platformerStats: {  
-      speed: 5,
-      jumpPower: -12,
-      gravity: 0.6
+    platformerStats: { 
+      speed: 8,
+      jumpPower: -11,            
+      maxFallSpeed: 500,           
+      airControlMultiplier: 0.95,  
+      groundControlMultiplier: 1.0
     },
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
@@ -132,10 +138,12 @@ export const CHARACTERS = {
       baseSpeed: 24,
       baseDefense:23,
     },
-    platformerStats: {  
-      speed: 5,
-      jumpPower: -12,
-      gravity: 0.6
+    platformerStats: { 
+      speed: 8,
+      jumpPower: -11,            
+      maxFallSpeed: 500,           
+      airControlMultiplier: 0.95,  
+      groundControlMultiplier: 1.0
     },
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
@@ -155,10 +163,12 @@ export const CHARACTERS = {
       baseSpeed: 20,
       baseDefense: 28,
     },
-    platformerStats: {  
-      speed: 5,
-      jumpPower: -12,
-      gravity: 0.6
+    platformerStats: { 
+      speed: 8,
+      jumpPower: -11,            
+      maxFallSpeed: 500,           
+      airControlMultiplier: 0.95,  
+      groundControlMultiplier: 1.0
     },
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
@@ -178,10 +188,12 @@ export const CHARACTERS = {
       baseSpeed: 27,
       baseDefense: 27,
     },
-    platformerStats: {  
-      speed: 5,
-      jumpPower: -12,
-      gravity: 0.6
+    platformerStats: { 
+      speed: 8,
+      jumpPower: -11,            
+      maxFallSpeed: 500,           
+      airControlMultiplier: 0.95,  
+      groundControlMultiplier: 1.0
     },
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
