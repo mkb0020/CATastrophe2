@@ -104,5 +104,6 @@ export const BUBBLE_FRAMES = {
   hit2: 6,
   question: 7,
   star: 8,
-  plusTen: 9
+  plusTen: 9,
+  bonusHP: 10, 
 };

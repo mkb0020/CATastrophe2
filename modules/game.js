@@ -88,6 +88,11 @@ async function loadAssets() {
   loadSound("VictorySound", "assets/sounds/fx/VictorySound.mp3");
   loadSound("lightning", "assets/sounds/fx/Lightning.mp3");
   loadSound("bossLand", "assets/sounds/fx/bossLand.mp3");
+  loadSound("egg", "assets/sounds/fx/egg.mp3");
+  loadSound("miniBossDie", "assets/sounds/fx/miniBossDie.mp3");
+  loadSound("throw", "assets/sounds/fx/throw.mp3");
+  loadSound("reflect", "assets/sounds/fx/reflect.mp3");
+
 // MEOWS
   loadSound("happyMeow", "assets/sounds/fx/meow06.mp3");
   loadSound("meow00", "assets/sounds/fx/meow00.mp3");
@@ -123,7 +128,10 @@ async function loadAssets() {
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
   loadSprite("battleBG1", "assets/images/backgrounds/BattleBG1.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
- 
+  loadSprite("platform", "assets/images/items/platform2.png", {
+    sliceX: 3,
+    sliceY: 1
+  });
 
   loadSprite("levelBG", "assets/images/backgrounds/levelBG.png", {
     sliceX: 1,  
@@ -147,7 +155,11 @@ async function loadAssets() {
   loadSprite("smallRat", "assets/images/animationSprites/SmallRat.png");
   loadSprite("smallRat2", "assets/images/enemies/SmallRat2.png");
   loadSprite("ghostRat", "assets/images/animationSprites/GhostRat.png");
-  loadSprite("miniBossRat", "assets/images/enemies/BigRat.png");
+  //loadSprite("miniBossRat", "assets/images/enemies/BigRat.png");
+  loadSprite("miniBossRat", "assets/images/animationSprites/bigRatAnimate.png", {
+    sliceX: 7,
+    sliceY: 1
+  });
 
 
   loadSprite("bossLaserPointer", "assets/images/enemies/BossLaserPointer.png");

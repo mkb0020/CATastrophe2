@@ -691,7 +691,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
     destroy(item);
     player.catnipActive = true;
     player.invulnerable = true;
-    player.speed = player.baseSpeed * 1.5;
+    player.speed = player.baseSpeed * 1.2;
     
     player.rainbowActive = true;
     showBubble(BUBBLE_FRAMES.star);
@@ -713,7 +713,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
     const healAmount = 50;
     player.hp = Math.min(player.hp + healAmount, player.maxHP);
     console.log("🥚 HP after:", player.hp);
-    play("powerUp", { volume: 0.5 });
+    play("egg", { volume: 0.5 });
     showBubble(BUBBLE_FRAMES.bonusHP); 
   });
 }
@@ -1545,11 +1545,11 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
   const boss = levelConfig.miniBoss;
   
   const miniBoss = add([
-    sprite('miniBossRat'),
+    sprite('miniBossRat', { frame: 0 }),
     pos(boss.x, boss.y),
-    area({ width: 80, height: 80 }),
+    area({ width: 100, height: 100 }),
     anchor("center"),
-    scale(1.2),
+    scale(1.6),
     {
       hp: boss.hp || 3,
       maxHP: boss.hp || 3,
@@ -1558,20 +1558,25 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
       cucumberSpeed: boss.cucumberSpeed || 200,
       defeated: false,
       introPlayed: false,
-
+      // MOVEMENT
       moveTimer: 0,
       moveInterval: 1.5,
       moveDirection: 1,
       moveSpeed: 100,
       originalX: boss.x,
-      moveRange: 400 
+      moveRange: 400,
+      // ANIMATION
+      currentState: 'walking',
+      walkTimer: 0,
+      throwingCucumber: false
     },
     z(10),
     "miniBoss"
   ]);
   
+  // MINI BOSS INTRO
   miniBoss.onUpdate(() => {
-    const onPlatform = player.pos.y < 400; // Underground is y > 460
+    const onPlatform = player.pos.y < 400;
     
     if (!miniBoss.introPlayed && player.pos.x > boss.x - 800 && onPlatform) {
       miniBoss.introPlayed = true;
@@ -1627,60 +1632,87 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
     if (miniBoss.defeated || !gameStateGetter() || !miniBoss.introPlayed) return;
     
     const playerOnPlatform = player.pos.y < 400;
-    
     if (!playerOnPlatform) return;
     
-    miniBoss.moveTimer += dt();
-    if (miniBoss.moveTimer >= miniBoss.moveInterval) {
-      miniBoss.moveTimer = 0;
-      miniBoss.moveDirection *= -1; 
-    }
-
-    const targetX = miniBoss.originalX + (miniBoss.moveDirection * miniBoss.moveRange / 2);
-    const moveTowards = targetX - miniBoss.pos.x;
-
-    if (Math.abs(moveTowards) > 10) {
-      miniBoss.pos.x += Math.sign(moveTowards) * miniBoss.moveSpeed * dt();
-    }
-
-    miniBoss.flipX = player.pos.x < miniBoss.pos.x;
     
-    miniBoss.throwTimer += dt();
-    
-    if (miniBoss.throwTimer >= miniBoss.throwInterval) {
-      miniBoss.throwTimer = 0;
+    // STATE: WALKING
+    if (miniBoss.currentState === 'walking') {
+      // MOVEMENT
+      miniBoss.moveTimer += dt();
+      if (miniBoss.moveTimer >= miniBoss.moveInterval) {
+        miniBoss.moveTimer = 0;
+        miniBoss.moveDirection *= -1;
+      }
       
-      // ARC
-      const cucumber = add([
-        sprite('littleCucumber'),
-        pos(miniBoss.pos.x - 40, miniBoss.pos.y),
-        area({ width: 30, height: 40 }),
-        anchor("center"),
-        scale(0.6),
-        {
-          vel: vec2(-miniBoss.cucumberSpeed, -400), 
-          rotationSpeed: 360,
-          gravity: 500,
-          reflected: false,
-          damage: 15
-        },
-        z(9),
-        "miniBossCucumber"
-      ]);
+      const targetX = miniBoss.originalX + (miniBoss.moveDirection * miniBoss.moveRange / 2);
+      const moveTowards = targetX - miniBoss.pos.x;
       
-      //play("throw", { volume: 0.3 });
+      if (Math.abs(moveTowards) > 10) {
+        miniBoss.pos.x += Math.sign(moveTowards) * miniBoss.moveSpeed * dt();
+      }
       
-      cucumber.onUpdate(() => {
-        cucumber.vel.y += cucumber.gravity * dt();
-        cucumber.pos = cucumber.pos.add(cucumber.vel.x * dt(), cucumber.vel.y * dt());
-        cucumber.angle += cucumber.rotationSpeed * dt();
-        
-        if (cucumber.pos.y > 500 || cucumber.pos.x < camPos().x - 500) {
-          destroy(cucumber);
-        }
-      });
+      miniBoss.walkTimer += dt();
+      if (miniBoss.walkTimer > 0.25) {
+        miniBoss.walkTimer = 0;
+        const newFrame = miniBoss.frame === 0 ? 1 : 0;
+        miniBoss.use(sprite('miniBossRat', { frame: newFrame }));
+      }
+      
+      miniBoss.throwTimer += dt();
+      if (miniBoss.throwTimer >= miniBoss.throwInterval && !miniBoss.throwingCucumber) {
+        miniBoss.throwTimer = 0;
+        miniBoss.throwingCucumber = true;
+        miniBoss.currentState = 'throwing';
+        playThrowSequence(miniBoss);
+      }
     }
   });
+  
+  async function playThrowSequence(miniBoss) {
+    miniBoss.use(sprite('miniBossRat', { frame: 2 }));
+    await wait(0.2);
+        miniBoss.use(sprite('miniBossRat', { frame: 3 }));
+    await wait(0.15);
+        miniBoss.use(sprite('miniBossRat', { frame: 4 }));
+    await wait(0.1);
+    miniBoss.use(sprite('miniBossRat', { frame: 5 }));
+    await wait(0.1);
+    miniBoss.use(sprite('miniBossRat', { frame: 6 }));
+    const cucumber = add([
+      sprite('littleCucumber'),
+      pos(miniBoss.pos.x - 40, miniBoss.pos.y),
+      area({ width: 30, height: 40 }),
+      anchor("center"),
+      scale(0.9),
+      {
+        vel: vec2(-miniBoss.cucumberSpeed, -550),
+        rotationSpeed: 360,
+        gravity: 500,
+        reflected: false,
+        damage: 15
+      },
+      z(9),
+      "miniBossCucumber"
+    ]);
+    
+    play("throw", { volume: 0.7 });
+    
+    cucumber.onUpdate(() => {
+      cucumber.vel.y += cucumber.gravity * dt();
+      cucumber.pos = cucumber.pos.add(cucumber.vel.x * dt(), cucumber.vel.y * dt());
+      cucumber.angle += cucumber.rotationSpeed * dt();
+      
+      if (cucumber.pos.y > 500 || cucumber.pos.x < camPos().x - 500) {
+        destroy(cucumber);
+      }
+    });
+    
+    await wait(0.2);
+    
+    miniBoss.currentState = 'walking';
+    miniBoss.throwingCucumber = false;
+    miniBoss.walkTimer = 0;
+  }
   
   return miniBoss;
 }
@@ -1694,13 +1726,20 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
     const playerTop = player.pos.y - (hitboxHeight / 2) + hitboxOffsetY;
     const cucumberBottom = cucumber.pos.y + 20;
     
-    if (!cucumber.reflected && player.vel.y < 0 && playerTop < cucumberBottom) {
+    console.log("🥒 Cucumber collision!");
+    console.log("Player vel.y:", player.vel.y);
+    console.log("Player top:", playerTop, "Cucumber bottom:", cucumberBottom);
+    console.log("Already reflected?", cucumber.reflected);
+
+
+    if (!cucumber.reflected && player.vel.y < 0 && playerTop < cucumberBottom + 30) { 
       cucumber.reflected = true;
       cucumber.vel.x = Math.abs(cucumber.vel.x) * 1.5;
       cucumber.vel.y = -300;
       cucumber.rotationSpeed = -720;
       
-      play("powerUp", { volume: 0.5, speed: 1.5 });
+      
+      play("reflect", { volume: 0.7});
       
       cucumber.color = rgb(255, 255, 100);
       
@@ -1710,7 +1749,9 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
       
       play("takeHit", { volume: 0.4 });
       destroy(cucumber);
-      
+      console.log("💔 Hit by cucumber!");
+
+
       const flashInterval = setInterval(() => {
         player.opacity = player.opacity === 1 ? 0.3 : 1;
       }, 100);
@@ -1730,7 +1771,8 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
       
       shake(10);
       play("ratKill", { volume: 0.6 });
-      
+      console.log("🎯 Boss hit! HP:", miniBoss.hp);
+
       const originalColor = miniBoss.color || rgb(255, 255, 255);
       miniBoss.color = rgb(255, 100, 100);
       wait(0.2, () => miniBoss.color = originalColor);
@@ -1757,7 +1799,7 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
           animateGhostPoof(miniBoss);
           destroy(miniBoss);
           
-          play("powerUp", { volume: 0.7 });
+          play("miniBossDie", { volume: 0.7 });
           
           if (onDefeatCallback) onDefeatCallback();
         });
@@ -1767,11 +1809,11 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
 }
 
 export function spawnRewardItems(positions) {
-  positions.forEach(pos => {
-    if (pos.type === 'egg') {
+  positions.forEach(position => {
+    if (position.type === 'egg') {
       add([
         sprite('egg'),
-        pos(pos.x, pos.y),
+        pos(position.x, position.y),
         area({ width: 50, height: 50 }),
         anchor("center"),
         scale(0),
@@ -1780,12 +1822,14 @@ export function spawnRewardItems(positions) {
       ]);
       
       const egg = get("bonusHP")[get("bonusHP").length - 1];
-      tween(0, 0.8, 0.5, (val) => egg.scale = val, easings.easeOutBack);
+      tween(0, 0.8, 0.5, (val) => {
+        egg.scale = vec2(val, val);
+      }, easings.easeOutBack);
       
-    } else if (pos.type === 'milk') {
+    } else if (position.type === 'milk') {
       add([
         sprite('milkBottle'),
-        pos(pos.x, pos.y),
+        pos(position.x, position.y),
         area({ width: 50, height: 50 }),
         anchor("center"),
         scale(0),
@@ -1795,7 +1839,9 @@ export function spawnRewardItems(positions) {
       
       const milk = get("milkBottle")[get("milkBottle").length - 1];
       wait(0.2, () => {
-        tween(0, 0.6, 0.5, (val) => milk.scale = val, easings.easeOutBack);
+        tween(0, 0.6, 0.5, (val) => {
+          milk.scale = vec2(val, val);
+        }, easings.easeOutBack);
       });
     }
   });

@@ -20,7 +20,7 @@ export const LEVELS = {
     name: 'Level 1',
     timeLimit: 90,
     length:  17000, 
-    playerSpawn: { x: 16425, y: 200 },  
+    playerSpawn: { x: 300, y: 200 }, 
     GroundSegments: [
       { x: -1000, y: 440, width: 6000, height: 50 },
       { x: 6300, y: 440, width: 1300, height: 50 },
@@ -85,7 +85,7 @@ export const LEVELS = {
     name: 'Level 2',
     timeLimit: 90,
     length:  17000,  
-    playerSpawn: { x: 16425, y: 200 },
+    playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
         { x: -1000, y: 440, width: 3300, height: 50 },
         { x: 3200, y: 440, width: 1600, height: 50 },
@@ -171,7 +171,7 @@ export const LEVELS = {
     name: 'Level 3',
     timeLimit: 90,
     length:  17000,
-    playerSpawn: { x: 16425, y: 200 },
+    playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
       {x: -1000, y: 440, width: 3000, height: 50},
       {x: 3200, y: 440, width: 1600, height: 50},
@@ -268,7 +268,7 @@ export const LEVELS = {
     name: 'Level 4',
     timeLimit: 90,
     length:  17000,
-    playerSpawn: { x: 16425, y: 200 },
+    playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
       {x: 0, y: 440, width: 1300, height: 50},
       {x: 3700, y: 440, width: 700, height: 50},
@@ -370,7 +370,7 @@ export const LEVELS = {
     name: 'Level 5',
     timeLimit: 90,
     length:  17000, 
-    playerSpawn: { x: 10500, y: 200 },
+    playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
       {x: 0, y: 440, width: 1200, height: 50},
       {x: 2650, y: 440, width: 1300, height: 50},
@@ -378,7 +378,7 @@ export const LEVELS = {
       {x: 6500, y: 440, width: 1000, height: 50},
       {x: 9700, y: 440, width: 600, height: 50},
       {x: 12700, y: 440, width: 600, height: 50},
-      {x: 13310, y: 460, width: 2400, height: 50},
+      {x: 13310, y: 470, width: 2400, height: 50},
       {x: 15720, y: 440, width: 1000, height: 50}
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE
@@ -409,7 +409,7 @@ export const LEVELS = {
       {x: 11886, y: 280, width: 125, height: 20},
       {x: 12348, y: 460, width: 125, height: 20},
 
-      {x: 13500, y: 320, width: 1000, height: 20}, // LONG PLATFORM THAT LEADS UP TO MINI BOSS
+      {x: 13500, y: 330, width: 1000, height: 20}, // LONG PLATFORM THAT LEADS UP TO MINI BOSS
 
     ],
     noStuffZones: [  
@@ -447,15 +447,15 @@ export const LEVELS = {
     miniBoss: {
       enabled: true,
       x: 14300, 
-      y: 250,
+      y: 270,
       hp: 3,
       throwInterval: 2.5,
       cucumberSpeed: 200
     },
 
     rewardItems: [
-      { type: 'egg', x: 14886, y: 200 },
-      { type: 'milk', x: 15248, y: 200 }
+      { type: 'egg', x: 14300, y: 260 },
+      { type: 'milk', x: 14350, y: 260 }
     ],
     catnipZones: [{ x: 3400, y: 100 }],
     items: {
