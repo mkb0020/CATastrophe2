@@ -83,6 +83,82 @@ export function setupLevelMusic(levelConfig) {
   startLevelMusic(levelConfig.levelMusic);
 }
 
+
+
+function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSolidPlatform = false) {
+  const segmentWidth = 25;
+  const numMiddleSegments = Math.floor(width / segmentWidth) - 2;
+  
+
+  add([
+    sprite('platform', { frame: 0 }),
+    pos(x, y),
+    scale(1, height / 20), 
+    z(1),
+    isHintPlatform ? "hintPlatformSprite" : "platformSprite"
+  ]);
+  
+  
+  for (let i = 0; i < numMiddleSegments; i++) {
+    add([
+      sprite('platform', { frame: 1 }),
+      pos(x + segmentWidth + (i * segmentWidth), y),
+      scale(1, height / 20),
+      z(1),
+      isHintPlatform ? "hintPlatformSprite" : "platformSprite"
+    ]);
+  }
+  
+
+  add([
+    sprite('platform', { frame: 2 }),
+    pos(x + width - segmentWidth, y),
+    scale(1, height / 20),
+    z(1),
+    isHintPlatform ? "hintPlatformSprite" : "platformSprite"
+  ]);
+  
+  const collisionLayer = add([
+    rect(width, height),
+    pos(x, y),
+    area(),
+    body({ isStatic: true }),
+    opacity(0),
+    isSolidPlatform ? "platform" : "oneWayPlatform",
+    z(2)
+  ]);
+  
+  return collisionLayer;
+}
+
+function createSpriteGround(x, y, width, height) {
+  const segmentWidth = 25;
+  const numSegments = Math.floor(width / segmentWidth);
+  
+  for (let i = 0; i < numSegments; i++) {
+    add([
+      sprite('groundPlatform', { frame: 1 }),
+      pos(x + (i * segmentWidth), y),
+      scale(1, height / 20), 
+      z(1),
+      "groundSprite"
+    ]);
+  }
+  
+  
+  add([
+    rect(width, height),
+    pos(x, y),
+    area(),
+    body({ isStatic: true }),
+    opacity(0),
+    "ground",
+    z(2)
+  ]);
+}
+
+
+
 export function addLevelEnvironment(levelConfig) {
   const bg = add([
     sprite(levelConfig.background, { anim: "idle" }),
@@ -99,77 +175,29 @@ export function addLevelEnvironment(levelConfig) {
     z(2),
   ]);
 
+  
   levelConfig.platforms.forEach((platform, index) => {
     const isHintPlatform = levelConfig.hintPlatforms?.includes(index);
-    const isSolidPlatform = levelConfig.solidPlatforms?.includes(index); 
-
+    const isSolidPlatform = levelConfig.solidPlatforms?.includes(index);
     
-   
-    const baseLayer = add([
-      rect(platform.width, platform.height, { radius: 5 }),
-      pos(platform.x, platform.y),
-      color(isHintPlatform ? rgb(120, 80, 180) : rgb(97, 9, 165)), 
-      opacity(0.7),
-      z(0),
-      isHintPlatform ? "hintPlatformBase" : "platformBase"
-    ]);
-
-    const topHeight = platform.height * 0.45;
+    const collisionLayer = createSpritePlatform(
+      platform.x, 
+      platform.y, 
+      platform.width, 
+      platform.height,
+      isHintPlatform,
+      isSolidPlatform
+    );
     
     
-    const topLayer = add([
-      rect(platform.width, topHeight, { radius: [5, 5, 0, 0] }), 
-      pos(platform.x, platform.y),
-      color(isHintPlatform ? rgb(100, 255, 255) : rgb(0, 255, 255)), 
-      z(1),
-      isHintPlatform ? "hintPlatformTop" : "platformTop"
-    ]);
-
-  
-    const collisionLayer = add([
-      rect(platform.width, platform.height, { radius: 5 }),
-      pos(platform.x, platform.y),
-      area(),
-      body({ isStatic: true }), 
-      opacity(0),
-      isSolidPlatform ? "platform" : "oneWayPlatform", 
-      z(2)
-    ]);
-    
-   
     if (isHintPlatform) {
-      collisionLayer.baseLayer = baseLayer;
-      collisionLayer.topLayer = topLayer;
+      collisionLayer.isHintPlatform = true;
     }
   });
 
-
-  levelConfig.GroundSegments.forEach(GroundSegment => {
-    add([
-      rect(GroundSegment.width, GroundSegment.height, { radius: 0 }),
-      pos(GroundSegment.x, GroundSegment.y),
-      color(rgb(43, 4, 73)),
-      outline(2, rgb(43, 4, 73)),
-      z(0)
-    ]);
-
-    const topHeight = GroundSegment.height * 0.4;
-    add([
-      rect(GroundSegment.width, topHeight),
-      pos(GroundSegment.x, GroundSegment.y),
-      color(rgb(57, 5, 97)),
-      z(1)
-    ]);
-
-    add([
-      rect(GroundSegment.width, GroundSegment.height, { radius: 0 }),
-      pos(GroundSegment.x, GroundSegment.y),
-      area(),
-      body({ isStatic: true }),
-      opacity(0),
-      "ground",
-      z(2)
-    ]);
+ 
+  levelConfig.GroundSegments.forEach(segment => {
+    createSpriteGround(segment.x, segment.y, segment.width, segment.height);
   });
 
 
@@ -177,12 +205,13 @@ export function addLevelEnvironment(levelConfig) {
     rect(20000, 480),
     pos(-1000, 0),
     color(0, 0, 0),
-    opacity(0.3),
+    opacity(0.4),
     z(0)
   ]);
 
   return { bg };
 }
+
 
 
 export function setupHintPlatforms(player) {
