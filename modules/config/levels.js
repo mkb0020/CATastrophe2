@@ -283,7 +283,7 @@ export const LEVELS = {
     hintPlatforms: [20, 21, 22, 23], 
     sequentialPlatforms: {
       enabled: true,
-      platformIds: [20, 21, 22, 23] // Indices of the 4 hard path platforms in your platforms array
+      platformIds: [20, 21, 22, 23] 
     },
       platforms: [
       {x: 1500, y: 380, width: 150, height: 20}, // GAUNTLET 1

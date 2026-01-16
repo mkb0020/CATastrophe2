@@ -1,72 +1,90 @@
-// characters.js
 function getCharacterSpritePaths(catName) {
   const base = 'assets/images/cats';
   return {
-    sheet: `${base}/${catName}.png`,
-    sheet2: `${base}/${catName}2.png`,
-    walk: `${base}/${catName}3.png`,
+    sheet: `${base}/${catName}.png`,  
     glow: `${base}/Glow.png`,
     glitchBlue: `${base}/GlitchCatBlue.png`,
   };
 }
 
-// FRAME MAPPING (6x3 grid = 18 frames)
-// Row 1: [0]battle [1]catch [2]cup00 [3]cup01 [4]cup02 [5]king00
-// Row 2: [6]king01 [7]king02 [8]wakeUp [9]menu [10]sitLookBackMad [11]sitLookBackRegular
-// Row 3: [12]sitLookForwardMad [13]sitLookForwardRegular [14]sitSmall [15]sleep [16]standMad [17]standRegular
-
 export const SPRITE_FRAMES = {
-  battle: 0,
-  pounce: 0,        
-  catch: 1,
-  stretch: 1,       
-  cup00: 2,
-  cup01: 3,
-  cup02: 4,
-  king00: 5,
-  king01: 6,
-  king02: 7,
-  wakeUp: 8,
-  menu: 14,
-  select: 9,        
-  sitLookBackMad: 10,
-  sitLookBackRegular: 11,
-  sitLookForwardMad: 12,
-  sitLookForwardRegular: 13,
+  select: 0,
+  walk0: 1,
+  walk1: 2,
+  walk2: 3,
+  walk3: 4,
+  walk4: 5,
+  walk5: 6,
+  walk6: 7,
+  walk7: 8,
+  jumpStart: 9,
+  jumpRising: 10,
+  jumpFalling: 11,
+  idle: 12,
+  standRegular: 12,
+  standMad: 13,
+  standSmall: 12,
+  menu: 14,  
+  sitLookForwardRegular: 14,
+  sitLookForwardMad: 15,
+  sitLookBackRegular: 16,
+  sitLookBackMad: 17,
   sitSmall: 14,
-  sleep: 15,
-  standMad: 16,
-  standRegular: 17,
- // 2 FRAME PLATFORMER SHEET
-  idle: 0,
-  standSmall: 0,    
-  jump: 1
+  battle: 18,
+  pounce: 18,
+  sleep: 19,
+  wakeUp: 20,
+  stretch: 21,
+  catch: 21,
+  cup00: 22,
+  cup01: 23,
+  cup02: 24,
+  king00: 25,
+  king01: 26,
+  king02: 27
 };
+
 
 export const SPRITE_SCALES = {
-  battle: 1.0,      
-  pounce: 1.0,    
-  catch: 1.0,      
-  stretch: 1.0,    
-  menu: 0.6,        
-  select: 1.2       
+  select: 1.2,
+  walk: 0.65,
+  jump: 0.65,
+  idle: 0.65,
+  standRegular: 1.0,
+  standMad: 1.0,
+  menu: 0.6,
+  sitLookForwardRegular: 1.0,
+  sitLookForwardMad: 1.0,
+  sitLookBackRegular: 1.0,
+  sitLookBackMad: 1.0,
+  battle: 1.0,
+  pounce: 1.0,
+  sleep: 1.0,
+  wakeUp: 1.0,
+  stretch: 1.0,
+  catch: 1.0,
+  cup00: 1.0,
+  cup01: 1.0,
+  cup02: 1.0,
+  king00: 1.0,
+  king01: 1.0,
+  king02: 1.0
 };
-
 
 export const CHARACTERS = {
   NONA: {
     name: 'NONA',
     stats: {
-      maxHP: 1000, // FOR TESTING
-      baseHP: 1000, // FOR TESTING
-      baseAtk: 1000, // FOR TESTING
-      baseSpeed: 1000, // FOR TESTING
-      baseDefense: 1000, // FOR TESTING
+      maxHP: 1000,
+      baseHP: 1000,
+      baseAtk: 1000,
+      baseSpeed: 1000,
+      baseDefense: 1000,
     },
     platformerStats: { 
-      speed: 8,
+      speed: 7,
       jumpPower: -11,            
-      maxFallSpeed: 500,           
+      maxFallSpeed: 400,           
       airControlMultiplier: 0.95,  
       groundControlMultiplier: 1.0
     },
@@ -87,7 +105,7 @@ export const CHARACTERS = {
       baseAtk: 26,
       baseSpeed: 20,
       baseDefense: 29,
-      },
+    },
     platformerStats: { 
       speed: 8,
       jumpPower: -11,            
@@ -131,12 +149,12 @@ export const CHARACTERS = {
 
   NOVA: {
     name: 'NOVA',
-  stats: {
+    stats: {
       maxHP: 125,
       baseHP: 125, 
       baseAtk: 27,
       baseSpeed: 24,
-      baseDefense:23,
+      baseDefense: 23,
     },
     platformerStats: { 
       speed: 8,
@@ -203,8 +221,7 @@ export const CHARACTERS = {
     },
     sprites: getCharacterSpritePaths('Doug')
   }
-}
-
+};
 
 export function getCharacter(characterName) {
   return CHARACTERS[characterName];
@@ -232,8 +249,25 @@ export function getCharacterStats(characterName) {
 export const rainbowCat = {
   name: "Rainbow Cat",
   sprites: {
-    idle: "rainbowCatPlatformer",
-    jump: "rainbowCatPlatformer", 
-    walk: "rainbowCatWalk"
+    sheet: "rainbowCat"
   }
+};
+
+// RAINBOW CAT / CATNIP FRAME MAPPING (1x12 grid)
+// 0: STAND
+// 1-8: WALK
+// 9-11: JUMP
+export const RAINBOW_CAT_FRAMES = {
+  idle: 0,
+  walk0: 1,
+  walk1: 2,
+  walk2: 3,
+  walk3: 4,
+  walk4: 5,
+  walk5: 6,
+  walk6: 7,
+  walk7: 8,
+  jumpStart: 9,
+  jumpRising: 10,
+  jumpFalling: 11
 };
