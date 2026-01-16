@@ -46,13 +46,13 @@ export const SPRITE_FRAMES = {
 
 
 export const SPRITE_SCALES = {
-  select: 1.2,
+  select: 1.1,
   walk: 0.65,
   jump: 0.65,
   idle: 0.65,
   standRegular: 1.0,
   standMad: 1.0,
-  menu: 0.6,
+  menu: 0.5,
   sitLookForwardRegular: 1.0,
   sitLookForwardMad: 1.0,
   sitLookBackRegular: 1.0,
@@ -75,11 +75,11 @@ export const CHARACTERS = {
   NONA: {
     name: 'NONA',
     stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 30,
-      baseSpeed: 30,
-      baseDefense: 30,
+      maxHP: 1200, // TESTING
+      baseHP: 1200,
+      baseAtk: 3000,
+      baseSpeed: 3000,
+      baseDefense: 3000,
     },
     platformerStats: { 
       speed: 8,

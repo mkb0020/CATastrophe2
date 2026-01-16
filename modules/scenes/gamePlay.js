@@ -47,6 +47,28 @@ function createUnifiedLevel(levelId, data) {
   console.log('💙 Starting Lives:', startLives);
   console.log('💰 Starting Score:', startScore); 
 
+  // DEBUG LOGGING - runs every 3 seconds
+  let logTimer = 0;
+  onUpdate(() => {
+    logTimer += dt();
+    if (logTimer >= 3) {
+      console.log('=== OBJECTS IN SCENE ===', {
+        rats: get("rat")?.length || 0,
+        cucumbers: get("cucumber")?.length || 0,
+        lasers: get("laser")?.length || 0,
+        cups: get("cup")?.length || 0,
+        totalObjects: get("*")?.length || 0
+      });
+      
+      if (window.debugCounts) {
+        console.log('=== UPDATE COUNTS (last 3s) ===', window.debugCounts);
+        window.debugCounts = { rats: 0, cucumbers: 0, lasers: 0, player: 0, cups: 0 };
+      }
+      
+      logTimer = 0;
+    }
+  });
+
   onKeyPress("d", () => {
     debug.inspect = !debug.inspect;
     debug.showArea = !debug.showArea;
@@ -86,7 +108,8 @@ function createUnifiedLevel(levelId, data) {
 
   setupPlayerControls(player, getGameActive);
 
-  setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite);  setupCupCollection(player, getScore, setScore);
+  setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite);
+  setupCupCollection(player, getScore, setScore);
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);
   
   setupCucumberSpawner(levelConfig, getGameActive);
@@ -106,16 +129,22 @@ function createUnifiedLevel(levelId, data) {
   
   setupPlayerCamera(player, character, bg, getGameActive);
 
+  let hudUpdateCounter = 0;
   onUpdate(() => {
     if (gameActive) {
-      updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
+      hudUpdateCounter++;
+      // Only update HUD every 5 frames (12 times per second instead of 60)
+      if (hudUpdateCounter % 5 === 0) {
+        if (window.debugCounts) window.debugCounts.hud++;
+        updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
+      }
     }
   });
 
   createVolumeToggle();
 
   onSceneLeave(() => {
-  hideHUD();
+    hideHUD();
   });
 }
 
@@ -150,6 +179,28 @@ export function createLevel5Scene(data) {
   console.log('🎮 LEVEL 5 - FINAL GAUNTLET');
   console.log('❤️ Starting HP:', startHP);
   console.log('💙 Starting Lives:', startLives);
+
+  // DEBUG LOGGING - Level 5
+  let logTimer = 0;
+  onUpdate(() => {
+    logTimer += dt();
+    if (logTimer >= 3) {
+      console.log('=== LEVEL 5 OBJECTS ===', {
+        rats: get("rat")?.length || 0,
+        cucumbers: get("cucumber")?.length || 0,
+        lasers: get("laser")?.length || 0,
+        miniBoss: get("miniBoss")?.length || 0,
+        totalObjects: get("*")?.length || 0
+      });
+      
+      if (window.debugCounts) {
+        console.log('=== UPDATE COUNTS (last 3s) ===', window.debugCounts);
+        window.debugCounts = { rats: 0, cucumbers: 0, lasers: 0, player: 0, cups: 0 };
+      }
+      
+      logTimer = 0;
+    }
+  });
 
   onKeyPress("d", () => {
     debug.inspect = !debug.inspect;
@@ -219,9 +270,14 @@ export function createLevel5Scene(data) {
   setupLevelPause(getGameActive, setGameActive);
   setupPlayerCamera(player, character, bg, getGameActive);
 
+  let hudUpdateCounter = 0;
   onUpdate(() => {
     if (gameActive) {
-      updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
+      hudUpdateCounter++;
+      if (hudUpdateCounter % 5 === 0) {
+        if (window.debugCounts) window.debugCounts.hud++;
+        updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
+      }
     }
   });
 

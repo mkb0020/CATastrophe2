@@ -499,7 +499,7 @@ export function createCharSelectScene() {
 
     const charSprite = card.add([
       sprite(`${charName}Sheet`, { frame: SPRITE_FRAMES.menu }),
-      pos(25, 28),
+      pos(25, 35),
       anchor("center"),
       scale(0.6),
       opacity(0),
@@ -749,7 +749,7 @@ export function createCharSelectScene() {
 
   const previewSprite = add([
     sprite(`${characters[0].name}Sheet`, { frame: SPRITE_FRAMES.select }),
-    pos(500, 340),
+    pos(500, 370),
     anchor("center"),
     scale(SPRITE_SCALES.select),
     z(10),

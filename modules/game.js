@@ -129,7 +129,7 @@ async function loadAssets() {
   // BACKGRUNDS
   loadSprite("startBG", "assets/images/backgrounds/StartBG.png");
   loadSprite("menuBG", "assets/images/backgrounds/MenuBG3.png");
-  loadSprite("SelectBG", "assets/images/backgrounds/Select2.png");
+  loadSprite("SelectBG", "assets/images/backgrounds/Select.png");
   loadSprite("transitionBG", "assets/images/backgrounds/transitionBG.png");
   loadSprite("transitionBG2", "assets/images/backgrounds/transitionBG2.png");
   loadSprite("transitionBG3", "assets/images/backgrounds/transitionBG3.png");
@@ -140,10 +140,9 @@ async function loadAssets() {
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
   loadSprite("battleBG1", "assets/images/backgrounds/BattleBG1.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
-  loadSprite("groundPlatform", "assets/images/backgrounds/platform.png", {
-    sliceX: 3,
-    sliceY: 1
-  });
+  loadSprite("groundPlatform", "assets/images/backgrounds/ground.png");
+  loadSprite("platformONE", "assets/images/backgrounds/platformONE.png");
+
     loadSprite("platform", "assets/images/backgrounds/platform.png", {
     sliceX: 3,
     sliceY: 1

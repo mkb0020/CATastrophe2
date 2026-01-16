@@ -5,6 +5,32 @@ import { setupPauseSystem,createVolumeToggle, stopAllMusic, startLevelMusic, sta
 import { animateGhostPoof } from '../helpers/bossHelpers.js';
 import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
 
+
+//==================================== PERFORMANCE ANALYSIS ====================================
+if (typeof window !== 'undefined') {
+  window.debugCounts = {
+    rats: 0,
+    cucumbers: 0,
+    lasers: 0,
+    player: 0,
+    cups: 0
+  };
+  
+  if (!window.debugLoopStarted) {
+    window.debugLoopStarted = true;
+    setInterval(() => {
+      console.log('=== Updates in last 3 seconds ===', window.debugCounts);
+      console.log('Objects:', {
+        rats: get("rat")?.length || 0,
+        cucumbers: get("cucumber")?.length || 0,
+        lasers: get("laser")?.length || 0
+      });
+      window.debugCounts = { rats: 0, cucumbers: 0, lasers: 0, player: 0, cups: 0 };
+    }, 3000);
+  }
+}
+
+//==================================== TANSITION ANIMATION - TO GAME OVER ====================================
 function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {
   console.log('☠️ No lives remaining - GAME OVER');
   console.log('☠️ Playing blood drip animation...');
@@ -51,61 +77,11 @@ function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, charact
 }
 
 
-export function updatePlayerAnim(player, character) {
-  let newState;
-  const grounded = player.isGrounded();
 
-  if (!grounded) {
-    if (player.vel.y < -100) {
-      newState = 'jumpRising';
-    } else if (player.vel.y > 100) {
-      newState = 'jumpFalling';
-    } else {
-      newState = 'jumpRising';
-    }
-  } else if (player.isMoving) {
-    newState = 'walk';
-  } else {
-    newState = 'idle';
-  }
-
-  if (newState !== player.curState) {
-    player.curState = newState;
-    
-    const spriteSheet = player.rainbowActive ? "rainbowCatSheet" : `${character.name}Sheet`;
-    const frames = player.rainbowActive ? RAINBOW_CAT_FRAMES : SPRITE_FRAMES;
-    
-    if (newState === 'walk') {
-      player.use(sprite(spriteSheet));
-      player.play("walk");
-      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.walk : -SPRITE_SCALES.walk;
-      player.scale = vec2(currentScale, SPRITE_SCALES.walk);
-    } else if (newState === 'jumpRising') {
-      player.use(sprite(spriteSheet, { frame: frames.jumpRising }));
-      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
-      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
-    } else if (newState === 'jumpFalling') {
-      player.use(sprite(spriteSheet, { frame: frames.jumpFalling }));
-      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
-      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
-    } else {
-      player.use(sprite(spriteSheet, { frame: frames.idle }));
-      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.idle : -SPRITE_SCALES.idle;
-      player.scale = vec2(currentScale, SPRITE_SCALES.idle);
-      if (player.curAnim()) player.stop();
-    }
-  }
-  
-  player.flipX = !player.facingRight;
-}
-
-
-
+//==================================== LEVEL SETUP ====================================
 export function setupLevelMusic(levelConfig) {
   startLevelMusic(levelConfig.levelMusic);
 }
-
-
 
 function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSolidPlatform = false) {
   const segmentWidth = 25;
@@ -151,20 +127,20 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
 }
 
 function createSpriteGround(x, y, width, height) {
-  const segmentWidth = 25;
+  const segmentWidth = 500; 
   const numSegments = Math.floor(width / segmentWidth);
   
   for (let i = 0; i < numSegments; i++) {
     add([
-      sprite('groundPlatform', { frame: 1 }),
+      sprite('groundPlatform'),
       pos(x + (i * segmentWidth), y),
-      scale(vec2(1, 2)), 
+      scale(vec2(2, 2)), 
       z(-2),
       "groundSprite"
     ]);
   }
   
-  
+ 
   add([
     rect(width, height),
     pos(x, y),
@@ -175,8 +151,6 @@ function createSpriteGround(x, y, width, height) {
     z(2)
   ]);
 }
-
-
 
 export function addLevelEnvironment(levelConfig) {
   const bg = null;
@@ -219,8 +193,6 @@ export function addLevelEnvironment(levelConfig) {
   return { bg };
 }
 
-
-
 export function setupOneWayPlatforms(player) {
   const hitboxHeight = player.area.height || 60;
   const hitboxOffsetY = player.area.offset?.y || 0;
@@ -249,52 +221,6 @@ export function setupOneWayPlatforms(player) {
     }
   });
 }
-
-
-
-export function addVictoryArea(levelConfig) {
-  const catTower = add([
-    sprite('catTower'),
-    pos(levelConfig.length - 750, 150),
-    scale(1),
-    z(0),
-    "catTower"
-  ]);
-
-    const arrow = add([
-      sprite('arrow'),
-      pos(levelConfig.length - 660, 375),
-      anchor("center"),
-      scale(0.7),
-      rotate(25),
-      z(13),
-      "arrow"
-    ]);
-
-  const victoryPlatform = add([
-    rect(5, 5),
-    pos(levelConfig.length - 530, 295),
-    area(),
-    body({ isStatic: true }),
-    color(Color.fromHex(Colors.DarkDarkGray)),
-    z(13),
-    "victoryPlatform"
-  ]);
-
-  const helperPlatform = add([
-    rect(130, 5),
-    pos(levelConfig.length - 640, 295),
-    area(),
-    body({ isStatic: true }),
-    color(Colors.DarkDarkGray),
-    opacity(1),
-    z(12),
-    "helperPlatform"
-  ]);
-
-  return { catTower, arrow, victoryPlatform, helperPlatform };
-}
-
 
 export function setupSequentialPlatforms(levelConfig) {
   if (!levelConfig.sequentialPlatforms?.enabled) return;
@@ -353,6 +279,202 @@ export function setupSequentialPlatformActivation(player, sequentialPlatforms) {
   });
 }
 
+export function addVictoryArea(levelConfig) {
+  const catTower = add([
+    sprite('catTower'),
+    pos(levelConfig.length - 750, 150),
+    scale(1),
+    z(0),
+    "catTower"
+  ]);
+
+    const arrow = add([
+      sprite('arrow'),
+      pos(levelConfig.length - 660, 375),
+      anchor("center"),
+      scale(0.7),
+      rotate(25),
+      z(13),
+      "arrow"
+    ]);
+
+  const victoryPlatform = add([
+    rect(5, 5),
+    pos(levelConfig.length - 530, 295),
+    area(),
+    body({ isStatic: true }),
+    color(Color.fromHex(Colors.DarkDarkGray)),
+    z(13),
+    "victoryPlatform"
+  ]);
+
+  const helperPlatform = add([
+    rect(130, 5),
+    pos(levelConfig.length - 640, 295),
+    area(),
+    body({ isStatic: true }),
+    color(Colors.DarkDarkGray),
+    opacity(1),
+    z(12),
+    "helperPlatform"
+  ]);
+
+  return { catTower, arrow, victoryPlatform, helperPlatform };
+}
+
+export function setupVictoryCollision(player, levelName, nextBoss, character, gameStateGetter, gameStateSetter, scoreGetter, levelConfig, bossSpriteName) {
+  player.onCollide("victoryPlatform", async (platform) => {
+    if (player.vel.y >= 0 && gameStateGetter()) {
+      console.log('🏆 VICTORY!');
+      console.log('🏆 Calling boss with data:', {
+          level: levelName,
+          score: scoreGetter(),
+          character: character.name,
+          startHP: player.hp,
+        });
+      gameStateSetter(false);
+      stopAllMusic();
+      if (nextBoss === "observerBoss" || nextBoss === "observer") {
+        wait(0.5, () => {
+          go("levelComplete", {
+            level: levelName,
+            score: scoreGetter(), 
+            nextLevel: nextBoss,
+            character: character, 
+            startHP: player.hp  
+          });
+        });
+        return;
+      }
+      
+      const music = get("music");
+      music.forEach(m => m.paused = true);
+      
+      player.vel.x = 0;
+      player.vel.y = 0;
+      const prefix = character.name;
+      player.use(sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.idle })); 
+  
+      
+      const arrows = get("arrow");
+      arrows.forEach(a => destroy(a));
+      
+      await wait(0.3);
+      
+      const bossStartY = -200; 
+      const bossEndY = 110; 
+      const bossX = levelConfig.length - 380;
+      
+      const boss = add([
+        sprite(bossSpriteName),
+        pos(bossX, bossStartY),
+        scale(0.8),
+        z(11),
+        "bossIntro"
+      ]);
+      
+      const dropDuration = 0.6;
+      const startTime = time();
+      
+      boss.onUpdate(() => {
+        const elapsed = time() - startTime;
+        const t = Math.min(elapsed / dropDuration, 1);
+        
+        const eased = t * t;
+        boss.pos.y = bossStartY + (bossEndY - bossStartY) * eased;
+      });
+      
+      await wait(dropDuration);
+      
+      shake(30);
+      play('bossLand', { volume: 0.3 });
+      
+      await wait(0.2);
+      
+  const exclamationBubble = add([
+    sprite('bubbles', { frame: BUBBLE_FRAMES.exclamation }),
+    pos(bossX - 45, 65),
+    scale(1.8),
+    z(15),
+    "bubble"
+  ]);
+      
+      await wait(0.7);
+      
+  play('meow02', { volume: 0.3 });
+  const questionBubble = add([
+    sprite('bubbles', { frame: BUBBLE_FRAMES.question }),
+    pos(levelConfig.length - 540, 130),
+    scale(1.8),
+    z(12),
+    "bubble"
+  ]);
+      
+      await wait(1.0);
+      
+      const levelShift = add([
+          sprite('levelShiftStart'),
+          pos(0,0), 
+          scale(10,10), 
+          opacity(1),
+          fixed(), 
+          z(100),
+          "transition"
+        ]);
+        
+      levelShift.play("glitch");
+      
+      await wait(2);
+      
+      go(nextBoss, {
+        level: levelName,
+        score: scoreGetter(),
+        character: character,
+        startHP: player.hp, 
+      });
+    }
+  });
+}
+
+export function setupFallDetection(
+  player,
+  gameStateGetter,
+  gameStateSetter,
+  levelName,
+  scoreGetter,
+  livesGetter,
+  livesSetter,
+  characterGetter,
+  startingScore = 0  
+) {
+  player.onUpdate(() => {
+    if (player.pos.y > SCREEN_H + 100 && gameStateGetter()) {
+      gameStateSetter(false);
+
+      const currentLives = livesGetter();
+      const character = characterGetter?.();
+
+      if (currentLives > 0) {
+        go("youDied", {
+          score: scoreGetter(),
+          level: levelName,
+          lives: currentLives,
+          character,
+          reason: "Fell into the abyss",
+          startingScore  
+        });
+      } else {
+        playBloodDripAnimation(
+          gameStateSetter,
+          scoreGetter,
+          levelName,
+          character
+        );
+      }
+    }
+  });
+}
+//==================================== CUPS ====================================
 export function addCups(levelConfig) {
   if (!levelConfig.cups.enabled) return new Set();
   
@@ -423,6 +545,8 @@ export function setupCupCollection(player, scoreGetter, scoreSetter) {
       play("collectCup", { volume: 0.3 });
       
       cup.onUpdate(() => {
+          if (window.debugCounts) window.debugCounts.cups++; // ADD THIS
+
         cup.fallSpeed += 600 * dt();
         cup.pos.y += cup.fallSpeed * dt();
         cup.angle += cup.rotationSpeed * dt();
@@ -435,6 +559,7 @@ export function setupCupCollection(player, scoreGetter, scoreSetter) {
   });
 }
 
+//==================================== SPECIAL ITEMS ====================================
 export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
   const isInNoStuffZone = (platform) => { // noStuffZone CHECKER
     if (!levelConfig.noStuffZones) return false;
@@ -638,8 +763,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
   });
 }
 
-
-
+//==================================== PLAYER  ====================================
 export function createPlayer(levelConfig, character, startHP) {
   const prefix = character.name;
   
@@ -706,7 +830,6 @@ export function createPlayer(levelConfig, character, startHP) {
   return player;
 }
 
-
 export function setupPlayerControls(player, gameStateGetter) {
   const hitboxWidth = 80;
   const hitboxHeight = 40;
@@ -770,6 +893,76 @@ export function setupPlayerControls(player, gameStateGetter) {
   });
 }
 
+export function updatePlayerAnim(player, character) {
+  let newState;
+  const grounded = player.isGrounded();
+
+  if (!grounded) {
+    if (player.vel.y < -100) {
+      newState = 'jumpRising';
+    } else if (player.vel.y > 100) {
+      newState = 'jumpFalling';
+    } else {
+      newState = 'jumpRising';
+    }
+  } else if (player.isMoving) {
+    newState = 'walk';
+  } else {
+    newState = 'idle';
+  }
+
+  if (newState !== player.curState) {
+    player.curState = newState;
+    
+    const spriteSheet = player.rainbowActive ? "rainbowCatSheet" : `${character.name}Sheet`;
+    const frames = player.rainbowActive ? RAINBOW_CAT_FRAMES : SPRITE_FRAMES;
+    
+    if (newState === 'walk') {
+      player.use(sprite(spriteSheet));
+      player.play("walk");
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.walk : -SPRITE_SCALES.walk;
+      player.scale = vec2(currentScale, SPRITE_SCALES.walk);
+    } else if (newState === 'jumpRising') {
+      player.use(sprite(spriteSheet, { frame: frames.jumpRising }));
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
+      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
+    } else if (newState === 'jumpFalling') {
+      player.use(sprite(spriteSheet, { frame: frames.jumpFalling }));
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
+      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
+    } else {
+      player.use(sprite(spriteSheet, { frame: frames.idle }));
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.idle : -SPRITE_SCALES.idle;
+      player.scale = vec2(currentScale, SPRITE_SCALES.idle);
+      if (player.curAnim()) player.stop();
+    }
+  }
+  
+  player.flipX = !player.facingRight;
+}
+//==================================== PAUSE ====================================
+export function setupLevelPause(gameActiveGetter, gameActiveSetter, onQuitCallback = null) {
+  return setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallback);
+}
+//==================================== CAMERA ====================================
+export function setupPlayerCamera(player, character, bg, gameStateGetter) {
+  const bgElement = document.querySelector('.parallax-bg');
+
+  player.onUpdate(() => {
+  if (window.debugCounts) window.debugCounts.player++; 
+    if (gameStateGetter()) {
+      setCamPos(player.pos.x, SCREEN_H / 2);
+      
+      if (bgElement) {
+        bgElement.style.transform = `translateX(${-player.pos.x * 0.5}px)`;
+      }
+      
+      updatePlayerAnim(player, character);
+    }
+  });
+  }
+
+//==================================== HUD ====================================
 export function createUnifiedHUD(player, showDebug = true) {
   const hudElement = document.getElementById('hudStats');
   if (hudElement) {
@@ -831,7 +1024,6 @@ export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
   }
 }
 
-
 export function hideHUD() {
   const hudElement = document.getElementById('hudStats');
   if (hudElement) {
@@ -843,122 +1035,6 @@ export function hideHUD() {
     debugElement.style.display = 'none';
   }
 }
-
-export function setupVictoryCollision(player, levelName, nextBoss, character, gameStateGetter, gameStateSetter, scoreGetter, levelConfig, bossSpriteName) {
-  player.onCollide("victoryPlatform", async (platform) => {
-    if (player.vel.y >= 0 && gameStateGetter()) {
-      console.log('🏆 VICTORY!');
-      console.log('🏆 Calling boss with data:', {
-          level: levelName,
-          score: scoreGetter(),
-          character: character.name,
-          startHP: player.hp,
-        });
-      gameStateSetter(false);
-      stopAllMusic();
-      if (nextBoss === "observerBoss" || nextBoss === "observer") {
-        wait(0.5, () => {
-          go("levelComplete", {
-            level: levelName,
-            score: scoreGetter(), 
-            nextLevel: nextBoss,
-            character: character, 
-            startHP: player.hp  
-          });
-        });
-        return;
-      }
-      
-      const music = get("music");
-      music.forEach(m => m.paused = true);
-      
-      player.vel.x = 0;
-      player.vel.y = 0;
-      const prefix = character.name;
-      player.use(sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.idle })); 
-  
-      
-      const arrows = get("arrow");
-      arrows.forEach(a => destroy(a));
-      
-      await wait(0.3);
-      
-      const bossStartY = -200; 
-      const bossEndY = 110; 
-      const bossX = levelConfig.length - 380;
-      
-      const boss = add([
-        sprite(bossSpriteName),
-        pos(bossX, bossStartY),
-        scale(0.8),
-        z(11),
-        "bossIntro"
-      ]);
-      
-      const dropDuration = 0.6;
-      const startTime = time();
-      
-      boss.onUpdate(() => {
-        const elapsed = time() - startTime;
-        const t = Math.min(elapsed / dropDuration, 1);
-        
-        const eased = t * t;
-        boss.pos.y = bossStartY + (bossEndY - bossStartY) * eased;
-      });
-      
-      await wait(dropDuration);
-      
-      shake(30);
-      play('bossLand', { volume: 0.3 });
-      
-      await wait(0.2);
-      
-  const exclamationBubble = add([
-    sprite('bubbles', { frame: BUBBLE_FRAMES.exclamation }),
-    pos(bossX - 45, 65),
-    scale(1.8),
-    z(15),
-    "bubble"
-  ]);
-      
-      await wait(0.7);
-      
-  play('meow02', { volume: 0.3 });
-  const questionBubble = add([
-    sprite('bubbles', { frame: BUBBLE_FRAMES.question }),
-    pos(levelConfig.length - 540, 130),
-    scale(1.8),
-    z(12),
-    "bubble"
-  ]);
-      
-      await wait(1.0);
-      
-      const levelShift = add([
-          sprite('levelShiftStart'),
-          pos(0,0), 
-          scale(10,10), 
-          opacity(1),
-          fixed(), 
-          z(100),
-          "transition"
-        ]);
-        
-      levelShift.play("glitch");
-      
-      await wait(2);
-      
-      go(nextBoss, {
-        level: levelName,
-        score: scoreGetter(),
-        character: character,
-        startHP: player.hp, 
-      });
-    }
-  });
-}
-
-
 
 export function setupTimer(
   levelConfig, 
@@ -1001,45 +1077,7 @@ export function setupTimer(
   });
 }
 
-export function setupFallDetection(
-  player,
-  gameStateGetter,
-  gameStateSetter,
-  levelName,
-  scoreGetter,
-  livesGetter,
-  livesSetter,
-  characterGetter,
-  startingScore = 0  
-) {
-  player.onUpdate(() => {
-    if (player.pos.y > SCREEN_H + 100 && gameStateGetter()) {
-      gameStateSetter(false);
-
-      const currentLives = livesGetter();
-      const character = characterGetter?.();
-
-      if (currentLives > 0) {
-        go("youDied", {
-          score: scoreGetter(),
-          level: levelName,
-          lives: currentLives,
-          character,
-          reason: "Fell into the abyss",
-          startingScore  
-        });
-      } else {
-        playBloodDripAnimation(
-          gameStateSetter,
-          scoreGetter,
-          levelName,
-          character
-        );
-      }
-    }
-  });
-}
-
+//==================================== CUCS ====================================
 export function setupCucumberSpawner(levelConfig, gameStateGetter) {
   if (!levelConfig.enemies.cucumbers.enabled) return;
   
@@ -1161,7 +1199,7 @@ export function setupCucumberCollision(
   });
 }
 
-
+//==================================== RATS ====================================
 export function setupRatSpawner(levelConfig, gameStateGetter, player) {
   if (!levelConfig.enemies.rats.enabled) return;
   
@@ -1258,6 +1296,8 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
       ]);
       
       rat.onUpdate(() => {
+          if (window.debugCounts) window.debugCounts.rats++; // ADD THIS
+
         const distFromCam = Math.abs(rat.pos.x - camPos().x);
         if (distFromCam > SCREEN_W * 1.2) {
           return;
@@ -1302,7 +1342,6 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
     }
   });
 }
-
 
 export function setupRatCollision(
   player, 
@@ -1373,8 +1412,7 @@ export function setupRatCollision(
   });
 }
 
-
-
+//==================================== LASERS ====================================
 export function addLaserBeams(levelConfig) {
   if (!levelConfig.enemies.lasers.enabled) return;
   
@@ -1410,6 +1448,8 @@ export function addLaserBeams(levelConfig) {
     ]);
     
     laser.onUpdate(() => {
+        if (window.debugCounts) window.debugCounts.lasers++; // ADD THIS
+
       const camX = camPos().x;
       const distFromCam = Math.abs(laser.baseX - camX);
       laser.nearCamera = distFromCam < SCREEN_W;
@@ -1495,29 +1535,7 @@ export function setupLaserCollision(
     }
   });
 }
-
-export function setupLevelPause(gameActiveGetter, gameActiveSetter, onQuitCallback = null) {
-  return setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallback);
-}
-
-export function setupPlayerCamera(player, character, bg, gameStateGetter) {
-  const bgElement = document.querySelector('.parallax-bg');
-
-  player.onUpdate(() => {
-    if (gameStateGetter()) {
-      setCamPos(player.pos.x, SCREEN_H / 2);
-      
-      if (bgElement) {
-        bgElement.style.transform = `translateX(${-player.pos.x * 0.5}px)`;
-      }
-      
-      updatePlayerAnim(player, character);
-    }
-  });
-  }
-
-
-// ======= MINI BOSS =======
+// ==================================== MINI BOSS ====================================
 export function addMiniBoss(levelConfig, gameStateGetter, player) {
   if (!levelConfig.miniBoss?.enabled) return null;
   
@@ -1681,6 +1699,8 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
     play("throw", { volume: 0.7 });
     
     cucumber.onUpdate(() => {
+        if (window.debugCounts) window.debugCounts.cucumbers++; 
+
       cucumber.vel.y += cucumber.gravity * dt();
       cucumber.pos = cucumber.pos.add(cucumber.vel.x * dt(), cucumber.vel.y * dt());
       cucumber.angle += cucumber.rotationSpeed * dt();
