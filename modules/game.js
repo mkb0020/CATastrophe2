@@ -1,6 +1,6 @@
 import kaplay from "kaplay";
 import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from './config/gameConfig.js';
-import { getCharacterList } from './config/characters.js';
+import { getCharacterList, SPRITE_FRAMES, RAINBOW_CAT_FRAMES } from './config/characters.js';
 import { getLevel } from './config/levels.js';
 import { getBoss } from './config/bosses.js';
 import { createVolumeToggle, stopAllMusic, startMenuMusic } from './helpers/kittyHelpers.js';
@@ -60,19 +60,29 @@ loadFont("science", "assets/fonts/ScienceGothic.ttf");
 async function loadAssets() {
   console.log('📦 Loading game assets...');
   //MUSIC
-  loadSound("menuMusic", "assets/sounds/tracks/MenuTrack.mp3"); 
-  loadSound("finalBossMusic", "assets/sounds/tracks/FnalBossTrack.mp3");
+ // loadSound("menuMusic", "assets/sounds/tracks/MenuTrack.mp3"); 
+ loadSound("menuMusic", "assets/sounds/tracks/mainMenu.wav"); 
+ // loadSound("finalBossMusic", "assets/sounds/tracks/FnalBossTrack.mp3");
+    loadSound("finalBossMusic", "assets/sounds/tracks/finalBoss.wav");
   loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.mp3")
  // loadSound("VictoryTrack", "assets/sounds/tracks/VictoryTrack.mp3");
 //  loadSound("catnipTrack", "assets/sounds/tracks/CatnipTrack.mp3");
-  loadSound("finalVictory", "assets/sounds/tracks/FinalVictory.mp3");
-  loadSound("levelMusic", "assets/sounds/tracks/PlatformerTrack.mp3");
-  loadSound("bossMusic", "assets/sounds/tracks/BossTrack.mp3");
-  loadSound("PlatformerTrack1", "assets/sounds/tracks/PlatformerTrack1.mp3");
-  loadSound("PlatformerTrack2", "assets/sounds/tracks/PlatformerTrack2.mp3");
-  loadSound("PlatformerTrack3", "assets/sounds/tracks/PlatformerTrack3.mp3");
-  loadSound("PlatformerTrack4", "assets/sounds/tracks/PlatformerTrack4.mp3");
-  loadSound("PlatformerTrack5", "assets/sounds/tracks/PlatformerTrack5.mp3");
+  //loadSound("finalVictory", "assets/sounds/tracks/FinalVictory.mp3");
+   loadSound("finalVictory", "assets/sounds/tracks/endCredits.wav");
+  //loadSound("levelMusic", "assets/sounds/tracks/PlatformerTrack.mp3");
+  //loadSound("bossMusic", "assets/sounds/tracks/BossTrack.mp3");
+
+  loadSound("bossMusic", "assets/sounds/tracks/bossBattles.wav");
+  //loadSound("PlatformerTrack1", "assets/sounds/tracks/PlatformerTrack1.mp3");
+ // loadSound("PlatformerTrack2", "assets/sounds/tracks/PlatformerTrack2.mp3");
+ // loadSound("PlatformerTrack3", "assets/sounds/tracks/PlatformerTrack3.mp3");
+ // loadSound("PlatformerTrack4", "assets/sounds/tracks/PlatformerTrack4.mp3");
+ // loadSound("PlatformerTrack5", "assets/sounds/tracks/PlatformerTrack5.mp3");
+   loadSound("PlatformerTrack1", "assets/sounds/tracks/level1.wav");
+  loadSound("PlatformerTrack2", "assets/sounds/tracks/level2.wav");
+  loadSound("PlatformerTrack3", "assets/sounds/tracks/level3.wav");
+  loadSound("PlatformerTrack4", "assets/sounds/tracks/level4.wav");
+  loadSound("PlatformerTrack5", "assets/sounds/tracks/level5.wav");
   //SOUNDS
   loadSound("door", "assets/sounds/fx/doorOpen.mp3");
   loadSound("pour", "assets/sounds/fx/coffeePour.mp3");
@@ -104,6 +114,8 @@ async function loadAssets() {
   loadSound("ratFinishHim", "assets/sounds/fx/rat.mp3");
   loadSound("laserFinishHim", "assets/sounds/fx/laser.mp3");
   loadSound("finalFinishHim", "assets/sounds/fx/finalBoom.mp3");
+  loadSound("finalFinishHim2", "assets/sounds/fx/finalBossEnd.wav");
+
 
 
 
@@ -128,7 +140,7 @@ async function loadAssets() {
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
   loadSprite("battleBG1", "assets/images/backgrounds/BattleBG1.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
-  loadSprite("groundPlatform", "assets/images/backgrounds/platform2.png", {
+  loadSprite("groundPlatform", "assets/images/backgrounds/platform11.png", {
     sliceX: 3,
     sliceY: 1
   });
@@ -276,44 +288,41 @@ async function loadAssets() {
 // SPECIAL MOVE
   loadSprite("whip", "assets/images/animationSprites/whip2.png", { sliceX:5, sliceY:1, anims:{glitch:{from:0,to:4,speed:50}} });
 
-  const characters = getCharacterList();
+const characters = getCharacterList();
+
+for (const char of characters) {
+  const charName = char.name;
   
-  for (const char of characters) {
-    const charName = char.name;
-    
-    loadSprite(`${charName}Sheet`, char.sprites.sheet, {
-      sliceX: 6,
-      sliceY: 3
-    });
-    
-    loadSprite(`${charName}Platformer`, char.sprites.sheet2, {
-      sliceX: 2,
-      sliceY: 1
-    });
-    
-    loadSprite(`${charName}Walk`, char.sprites.walk, {
-      sliceX: 8,
-      sliceY: 1,
-      anims: {
-        walk: { from: 0, to: 7, loop: true, speed: 10 }
+  loadSprite(`${charName}Sheet`, char.sprites.sheet, {
+    sliceX: 28,
+    sliceY: 1,
+    anims: {
+      walk: { 
+        from: SPRITE_FRAMES.walk0, 
+        to: SPRITE_FRAMES.walk7, 
+        loop: true, 
+        speed: 10 
       }
-    });
-  }
+    }
+  });
+}
 
 loadSprite('characterGlow', characters[0].sprites.glow);
 loadSprite('glitchBlue', characters[0].sprites.glitchBlue);
 
-loadSprite("rainbowCatPlatformer", "assets/images/cats/Catnip2.png", {
-  sliceX: 2,
-  sliceY: 1
-});
-loadSprite("rainbowCatWalk", "assets/images/cats/Catnip3.png", {
-  sliceX: 8,
+loadSprite("rainbowCatSheet", "assets/images/cats/RainbowCat.png", {
+  sliceX: 12,
   sliceY: 1,
   anims: {
-    walk: { from: 0, to: 7, loop: true, speed: 10 }
+    walk: { 
+      from: RAINBOW_CAT_FRAMES.walk0, 
+      to: RAINBOW_CAT_FRAMES.walk7, 
+      loop: true, 
+      speed: 10 
+    }
   }
 });
+
   
   console.log('✅ Assets loaded!');
 }
