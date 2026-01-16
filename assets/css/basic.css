@@ -1,0 +1,273 @@
+/* ============================ COLOR PALETTE ============================ */
+:root {
+  /*PRIMARY - PINKS AND BLUES*/
+  --BosonBlue: #170032;
+  --BosonShadow: #05000b61;
+  --BosonShadow2: #0e001dc8;
+  --ProtonPurple: #37025a;
+  --ProtonShadow: rgba(7, 0, 11, 0.311);
+  --ProtonShadow2: rgba(24, 1, 40, 0.758);
+  --VortexViolet: #830cde;
+  --VortexGlow1: rgba(131, 12, 222, 0.2);
+  --VortexGlow2: rgba(131,12,222, 0.5);
+  --VortexGlow3: rgba(95, 12, 158, 0.904);
+  --PlasmaPurple: #A55AFF;
+  --plasmaGlow1: rgba(165,90,255,0.2);
+  --PlasmaGlow2:rgba(165,90,255,0.5);
+  --PlasmaGlow3: rgba(165,90,255,0.8);
+  --EntangledEucalyptus: rgb(235,200,255);
+  --NuclearFuscia:#dc4ce8;
+  --NuclearGlow1: rgba(219, 76, 232, 0.2);
+  --NuclearGlow2: rgba(220,76,232, 0.5);
+  --NuclearGlow3: rgba(220,76,232, 0.6);
+  --ParticlePink: #FFC7FF;
+  --ParticleGlow1: rgba(255,199,255, 0.2);
+  --ParticleGlow2: rgba(255,199,255, 0.5);
+  --ParticleGlow3: rgba(255,199,255, 0.8);
+  --PlanksPink: #ff69b4;
+  --HiggsHotPink: #c71585;
+  --RadiationRed: #730132;
+/*SECONDARY MINT FAM*/
+  --AlphaAqua: #67FEBD;
+  --AlphaGlow1: rgba(103,254,189, 0.2);
+  --AlphaGlow2: rgba(103,254,189, 0.5);
+  --AlphaGlow3: rgba(103,254,189, 0.8);
+  --AquaAura: #00ffff;
+  --AuraGlow1: rgba(0,255,255, 0.2);
+  --AuraGlow2: rgba(0,255,255, 0.5);
+  --AuraGlow3: rgba(0,255,255, 0.8);
+  --AtomicAqua: #9EFF9E;
+  --RadioactiveGreen: #58e84c;
+  --HalfLifeLime: #f3ffe5;
+  --UraniumGreen: #75FB1E;
+/*NEUTERALS*/
+  --White: #FFFFFF; 
+  --Black: #000000;
+  --DarkDarkGray: #2A3439;
+  --DarkCoolGray: #657383;
+  --Gray: #8391A1;
+  --CoolGray: #9090C0;
+  --MutedGray: #C4C3D0;
+  --LightGray: #DBE2E9;
+}
+/* ============================ FONTS ============================ */
+@font-face {
+  font-family: 'GothNerd'; 
+  src: url('../fonts/GothNerd.ttf') format('truetype'); 
+}
+
+@font-face {
+  font-family: 'SpaceLetters'; 
+  src: url('../fonts/SpaceLetters.ttf') format('truetype'); 
+}
+
+@font-face {
+  font-family: 'SpaceLettersBold'; 
+  src: url('../fonts/SpaceLettersBold.ttf') format('truetype'); 
+}
+
+@font-face {
+  font-family: 'SkinnyBoi'; 
+  src: url('../fonts/Narrow.ttf') format('truetype'); 
+}
+
+@font-face {
+  font-family: 'SkinnyBoiBold'; 
+  src: url('..fonts/NarrowBold.ttf') format('truetype'); 
+}
+/* ============================ ANIMATIONS ============================ */
+@keyframes neonPulse {
+  from { 
+    text-shadow: 
+      0 0 10px var(--ParticleGlow2),
+      0 0 20px var(--ParticleGlow3),
+      0 0 30px var(--ParticleGlow3);
+  }
+  to { 
+    text-shadow: 
+      0 0 20px var(--ParticleGlow3),
+      0 0 30px var(--NuclearFuscia),
+      0 0 40px var(--NuclearFuscia);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px var(--NuclearFuscia); }
+  50% { box-shadow: 0 0 40px var(--NuclearFuscia); }
+}
+/* ============================ BASE STYLES ============================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    margin: 0;
+    margin-top: 40px;
+    padding: 0;
+    height: 100%; 
+    color: var(--White);
+}
+
+body {
+    padding: 0;
+    min-height: 100vh; 
+    height: 100%; 
+    color: var(--White);
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+}
+
+.page-content {
+  padding: 20px;
+}
+
+.content-wrapper {
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+.row-container {
+      border-top: 2px solid rgba(137, 6, 224, 0.548);
+      border-bottom: 2px solid rgba(137, 6, 224, 0.555);
+      overflow: hidden;
+    }
+
+
+.hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+      padding-top: 40px;
+    }
+
+
+.hero-content h1 {
+      font-size: 4rem;
+      color: #67FEBD;
+      text-shadow: 0 0 30px #67FEBD;
+      margin: 0 0 20px;
+    }
+
+.hero-content p {
+      font-size: 2.7rem;
+      color: var(--PlanksPink);
+      text-shadow: 0 0 15px #000000;
+    }
+
+.row-container {
+      height: 400px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      margin-bottom: 0px;
+      border-bottom: 3px solid var(--VortexViolet);
+      border-top: 3px solid var(--VortexViolet);
+      margin-top: 10px;
+    }
+
+.row-container2 {
+      min-height: 80vh;
+      display: grid;
+      grid-template-columns: 2fr 2fr;
+      backdrop-filter: blur(2px);
+      margin-top: 0px;
+      border-bottom: 3px solid var(--VortexViolet);
+      border-top: 3px solid var(--VortexViolet);
+    }
+
+.FullWidthImage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      opacity: 0.9;
+      filter: blur(1px) brightness(0.8);
+      z-index: 1;
+    }
+
+.FullWidthImage-text {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+    }
+
+.FullWidthImage-Small {
+      width: 250px;
+      height: auto;
+      border: 4px solid var(--PlanksPink);
+      box-shadow: 0 0 40px rgba(255, 105, 180, 0.8), inset 0 0 30px rgba(255, 105, 180, 0.3);
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+.FullWidthImage-text h2 {
+      font-size: 2.5rem;
+      color: #67FEBD;
+      text-shadow: 0 0 20px #67FEBD;
+      margin: 10px 0;
+    }
+
+.FullWidthImage-text p {
+      font-size: 1rem;
+      color: var(--White);
+      text-shadow: 0 0 15px var(--PlanksPink);
+      margin: 8px 0;
+    }
+
+.FullWidthImage-btn {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 8px 40px;
+      background: linear-gradient(45deg, #830CDE, #DC4CE8);
+      border: 2px solid var(--PlanksPink);
+      border-radius: 50px;
+      color: white;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+      transition: all 0.3s ease;
+    }
+
+.FullWidthImage-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 50px rgba(255, 105, 180, 0.9);
+    }
+
+.row-card {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+footer {
+      padding: 5px;
+      text-align: center;
+      font-size: 0.8rem;
+      background: linear-gradient(135deg, var(--BosonShadow2) 0%, var(--ProtonShadow2) 50%, var(--BosonShadow2) 100%);
+      border-top: 2px solid rgba(137, 6, 224, 0.548);
+      backdrop-filter: blur(50px);
+    }
+
+@media (max-width: 968px) {
+      .row-container { 
+        grid-template-columns: 1fr;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+      
+      .row-container {
+        margin-top: 0px;
+      }
+    
+      .hero-content h1 { font-size: 3rem; }
+      .hero-content p { font-size: 1.4rem; }
+      .FullWidthImage-text h2 { font-size: 2.5rem; }
+      .FullWidthImage-Small { width: 200px; height: auto; margin-bottom: 10px; }
+
+    }

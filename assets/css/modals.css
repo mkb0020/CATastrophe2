@@ -1,0 +1,206 @@
+/* ============================ MODALS ============================ */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.272);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto; 
+}
+
+.modal-content {
+  background: linear-gradient(135deg, var(--BosonBlue), var(--Black));
+  border: 3px solid var(--VortexViolet);
+  box-shadow: 0 0 50px var(--VortexGlow3);
+  border-radius: 20px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.4s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-bottom: 2px dashed var(--PlasmaGlow2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  font-family: 'GothNerd', sans-serif;
+}
+
+.modal-title {
+  font-family: 'GothNerd', sans-serif;
+  font-size: 1.8rem;
+  background: linear-gradient(45deg, var(--AlphaAqua), var(--AquaAura), var(--AlphaAqua));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.modal-close {
+  background: var(--HiggsHotPink);
+  color: var(--ParticlePink);
+  border: 2px solid var(--ParticlePink);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+
+}
+
+.modal-close:hover {
+  background: var(--ParticlePink);
+  color: var(--HiggsHotPink);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 20px var(--ParticleGlow3);
+}
+
+.modal-body {
+  padding: 2rem;
+  line-height: 1.6;
+  font-size: 1.2rem;
+}
+
+.modal-body h3 {
+  color: var(--ParticlePink);
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-family: 'GothNerd', sans-serif;
+}
+
+.modal-body p {
+  margin: 1.2rem 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-body ul {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-body li {
+  margin: 0.5rem 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.mission-text {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(103, 254, 189, 0.1);
+  border: 1px solid var(--AlphaGlow2);
+  border-radius: 12px;
+  color: var(--NuclearFuscia);
+  font-weight: bold;
+}
+
+.btn-quantum-pulse {
+  background: linear-gradient(45deg, var(--VortexViolet), var(--NuclearFuscia));
+  color: var(--White);
+  border: 2px solid var(--ParticlePink);
+  padding: 12px 24px;
+  font-family: 'GothNerd', sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: block;
+  margin: 2rem auto;
+  box-shadow: 0 0 20px var(--VortexGlow2);
+}
+
+.btn-quantum-pulse:hover {
+  background: linear-gradient(45deg, var(--NuclearFuscia), var(--AlphaAqua));
+  transform: scale(1.05);
+  box-shadow: 0 0 40px var(--NuclearGlow3);
+}
+
+blockquote {
+  background: rgba(165, 90, 255, 0.1);
+  border-left: 4px solid var(--PlasmaPurple);
+  padding: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--ParticlePink);
+}
+
+cite {
+  display: block;
+  text-align: right;
+  margin-top: 0.5rem;
+  color: var(--AlphaAqua);
+  font-weight: bold;
+}
+
+h3 {
+  color: var(--NuclearFuscia);
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 2rem;
+  text-shadow: 0 0 10px var(--NuclearGlow2);
+  font-family: 'GothNerd';
+}
+
+
+h5 {
+  color: var(--AlphaAqua);
+  margin: 1.3rem 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-family: 'GothNerd';
+}
+
+h6 {
+  color: var(--ParticlePink);
+  margin: 1.3rem 0 0.5rem 0;
+  font-size: 1.3rem;
+  font-family: 'GothNerd';
+}
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 10px;
+    max-height: 95vh;
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+}

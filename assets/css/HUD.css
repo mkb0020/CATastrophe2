@@ -1,0 +1,146 @@
+   :root {
+      --NuclearFuscia: #dc4ce8;
+      --PlasmaPurple: #A55AFF;
+      --AquaAura: #00ffff;
+      --RadioactiveGreen: #58e84c;
+      --White: #FFFFFF;
+      --BosonShadow: #05000b61;
+      --ProtonShadow: rgba(7, 0, 11, 0.311);
+      --PlasmaGlow2: rgba(165,90,255,0.5);
+      --RadiationRed: #730132;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0015;
+      font-family: 'Orbitron', monospace;
+      color: var(--White);
+    }
+
+
+
+ 
+
+    .hud-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-width: 150px;
+      justify-content: flex-end;
+    }
+
+    
+    .hud-stats {
+      position: fixed;
+      top: 35px;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--PlasmaGlow2);
+      z-index: 999;
+      padding: 5px 0;
+    }
+
+    .hud-stats-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 1rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgb(0, 0, 0);
+      border-radius: 50px;
+      border: 1px solid;
+      font-size: 18px;
+      width: 250px;
+      transition: transform 0.2s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .stat-score {
+      border-color: var(--NuclearFuscia);
+      color: var(--NuclearFuscia);
+    }
+
+    .stat-hp {
+      border-color: var(--PlasmaPurple);
+      color: var(--PlasmaPurple);
+    }
+
+    .stat-hp.low-hp {
+      border-color: var(--RadiationRed);
+      color: var(--RadiationRed);
+      animation: pulse 1s infinite;
+    }
+
+    .stat-lives {
+      border-color: var(--AquaAura);
+      color: var(--AquaAura);
+    }
+
+    .stat-time {
+      border-color: var(--RadioactiveGreen);
+      color: var(--RadioactiveGreen);
+    }
+
+    .stat-time.low-time {
+      border-color: var(--RadiationRed);
+      color: var(--RadiationRed);
+      animation: pulse 1s infinite;
+    }
+
+    .stat-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .stat-text {
+      flex-shrink: 0;
+      text-align: center;
+      min-width: 120px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        opacity: 1;
+        box-shadow: 0 0 10px currentColor;
+      }
+      50% { 
+        opacity: 0.6;
+        box-shadow: 0 0 20px currentColor;
+      }
+    }
+
+
+
+    .debug-info {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      font-family: monospace;
+      font-size: 16px;
+      color: var(--AquaAura);
+      background: rgba(0, 0, 0, 0.8);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--AquaAura);
+      z-index: 1000;
+    }

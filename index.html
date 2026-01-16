@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <link rel="stylesheet" href="/style.css">
+  <!--<link rel="stylesheet" href="/style.css">-->
+  <link rel="stylesheet" href="/assets/css/basic.css">
+  <link rel="stylesheet" href="/assets/css/modals.css">
+  <link rel="stylesheet" href="/assets/css/nav.css">
+  <link rel="stylesheet" href="/assets/css/dreamy.css">
+  <link rel="stylesheet" href="/assets/css/canvas.css">
+  <link rel="stylesheet" href="/assets/css/HUD.css">
   
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <script type="importmap">
@@ -19,26 +25,77 @@
 <body>
 
  <div id="stars"></div>
+<div class="dreamy-overlay"></div>
+
+<div class="content-wrapper">
+  <div class="background-gradient"></div>
+  <!--<div class="waves">
+        <svg id="wave1" viewBox="0 0 3000 600" preserveAspectRatio="none">
+          <path d="M0,350 Q500,150 1000,350 T2000,350 T3000,350 L3000,600 L0,600 Z" fill="#4b0082" opacity="0.9"/>
+        </svg>
+        <svg id="wave2" viewBox="0 0 3000 600" preserveAspectRatio="none">
+          <path d="M0,380 Q500,200 1000,380 T2000,380 T3000,380 L3000,600 L0,600 Z" fill="#c71585" opacity="0.8"/>
+        </svg>
+        <svg id="wave3" viewBox="0 0 3000 600" preserveAspectRatio="none">
+          <path d="M0,400 Q333,200 666,400 T1333,400 T2000,400 T2333,400 T2666,400 T3000,400 L3000,600 L0,600 Z" fill="#ff69b4" opacity="0.75"/>
+        </svg>
+        <svg id="wave4" viewBox="0 0 3000 600" preserveAspectRatio="none">
+          <path d="M0,420 Q750,250 1500,420 T3000,420 L3000,600 L0,600 Z" fill="#db7093" opacity="0.7"/>
+        </svg>
+        <svg id="wave5" viewBox="0 0 3000 600" preserveAspectRatio="none">
+          <path d="M0,300 Q250,150 500,300 T1000,300 T1500,300 T2000,300 T2500,300 T3000,300 L3000,600 L0,600 Z" fill="#ff69b4" opacity="0.5"/>
+        </svg>
+        <svg id="wave6" viewBox="0 0 3000 600" preserveAspectRatio="none">
+          <path d="M0,250 Q600,100 1200,250 T2400,250 L3000,250 L3000,600 L0,600 Z" fill="#e066ff" opacity="0.4"/>
+        </svg>
+  </div>-->
 
   <nav class="navbar">
-    <div class="nav-container">
-      <div class="left-dropdown">
-        <button class="menu-trigger">
-          <img src="/assets/images/Niels2.png" class="home-icon" alt="Menu">
-        </button>
-        <div class="left-menu">
-          <a href="https://mkb0020.onrender.com" class="menu-item">Home</a>
-          <a href="https://mkb0020.github.io/" class="menu-item">Javascript Projects</a>
-          <a href="https://mkb0020.github.io/Toolkit.html" class="menu-item">Schrödinger's Toolbox</a>
-          <a href="https://mkb0020.onrender.com/resume" class="menu-item">Resume</a>
-          <a href="https://mkb0020.onrender.com/contact" class="menu-item">Contact</a>
-          <a href="https://mkb0020.onrender.com/review" class="menu-item">Review CATastrophe 2</a>
-          <a href="https://mkb0020.onrender.com/support" class="menu-item">Report an Issue</a>
-          <a href="https://mkb0020.onrender.com/admin_login" class="menu-item">Admin</a>
-        </div>
-      </div>
+      <div class="nav-container">
+        
+        <div class="left-dropdown"><!-- LEFT DROPDOWN MENU -->
+          <button class="menu-trigger" aria-label="Menu">
+            <img src="/assets/images/Niels2.png" alt="Menu" class="home-icon">
+          </button>
 
-      <a href="/"><div class="logo">♡ mkb0020</div></a>
+          <div class="left-menu">
+            <a href="https://mkb0020.vercel.app/" class="menu-item">Home</a>
+            <a href="https://mkb0020.github.io/" class="menu-item">Javascript Projects</a>
+            <a href="https://mkb0020.github.io/Toolkit.html" class="menu-item">Schrödinger's Toolbox</a>
+            <a href="https://mkb0020.onrender.com/resume" class="menu-item">Resume</a>
+            <!--<a href="https://mkb0020.onrender.com/contact" class="menu-item">Contact</a>-->
+            <a href="https://mkb0020.vercel.app/comments" class="menu-item">Guestbook</a>
+            <a href="https://mkb0020.vercel.app/game-testing" class="menu-item">CATastrophe 2 Feedback</a>
+
+            <div class="social-links">
+              <a href="https://www.youtube.com/@mkb0020" target="_blank" aria-label="YouTube">
+                <img src="/assets/images/icons/youtube-icon.png" alt="YouTube" class="social-icon">
+              </a>
+            
+              <a href="https://www.linkedin.com/in/mkb0020/" target="_blank" aria-label="LinkedIn">
+                <img src="/assets/images/icons/linkedin-icon.png" alt="LinkedIn" class="social-icon">
+              </a>
+
+              <a href="https://mkb0020.github.io/MKLambda.html" target="_blank" aria-label="Github">
+                <img src="/assets/images/icons/music-icon.png" alt="Github" class="social-icon">
+              </a>
+
+              <a href="https://github.com/mkb0020" target="_blank" aria-label="GitHub">
+                <img src="/assets/images/icons/github-icon.png" alt="GitHub" class="social-icon">
+              </a>
+
+              <a href="https://mkb0020.itch.io" target="_blank" aria-label="Itch.io">
+                <img src="/assets/images/icons/itchio-icon.png" alt="Itch.io" class="social-icon">
+              </a>
+            </div>
+          </div>
+        </div>
+
+      
+        <a href="https://mkb0020.github.io">
+              <div class="logo">🐱 CATastrophe2 🐱</div>  <!-- CENTER LOGO -->
+          </a>
+
 
       <div class="help-dropdown">
         <button class="help-icon" id="helpBtn"><div class="question-mark">?</div></button>
@@ -48,6 +105,46 @@
       </div>
     </div>
   </nav>
+
+  <div class="hud-stats">
+    <div class="hud-stats-inner">
+      <div class="stat-item stat-score">
+        <span class="stat-icon">⭐</span>
+        <span id="scoreText">Score: 0</span>
+      </div>
+      
+      <div class="stat-item stat-hp" id="hpStat">
+        <span class="stat-icon">💖</span>
+        <span id="hpText">HP: 0/0</span>
+      </div>
+      
+      <div class="stat-item stat-lives">
+        <span class="stat-icon">🐾</span>
+        <span id="livesText">Lives: 3</span>
+      </div>
+      
+      <div class="stat-item stat-time" id="timeStat">
+        <span class="stat-icon">⏱️</span>
+        <span id="timeText">Time: 90s</span>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="hero-content">
+      <div class="canvas-container">
+        <canvas id="gameCanvas" width="1000" height="480"></canvas>
+      </div>
+</div>
+
+  <div class="debug-info" id="debugInfo">
+    X: 0  Y: 0
+  </div>
+
+
+ 
+</div>
 
   <div id="helpModal" class="modal">
     <div class="modal-content">
@@ -118,14 +215,35 @@
     </div>
   </div>
 
-  <div class="JS-page">
-    <div class="Game-content">
-      <canvas id="gameCanvas"></canvas>
-    </div>
-  </div>
-
-
   <script type="module" src="modules/game.js"></script>   
+
+  <script>
+    // Simulated game state (replace with your actual game values)
+    let gameState = {
+      score: 0,
+      hp: 120,
+      maxHP: 120,
+      lives: 3,
+      timeLeft: 90,
+      playerX: 0,
+      playerY: 0
+    };
+
+    // Get HUD elements
+    const scoreText = document.getElementById('scoreText');
+    const hpText = document.getElementById('hpText');
+    const hpStat = document.getElementById('hpStat');
+    const livesText = document.getElementById('livesText');
+    const timeText = document.getElementById('timeText');
+    const timeStat = document.getElementById('timeStat');
+    const debugInfo = document.getElementById('debugInfo');
+
+
+
+
+
+  </script>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const helpBtn = document.getElementById('helpBtn');
@@ -159,7 +277,12 @@
     });
   </script>
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-  <script src="/modules/utils/KittyCore.js"></script>
+  
+  <script type="module">
+  import { initializeModals } from './modules/helpers/kittyHelpers.js';
+  initializeModals();
+</script>
+
   <script>
         const starsDiv = document.getElementById('stars');
         for (let i = 0; i < 200; i++) {

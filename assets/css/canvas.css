@@ -1,0 +1,192 @@
+.canvas-container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  z-index: 10;
+  margin-top:0px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+canvas {
+  background: transparent;
+  backdrop-filter: blur(2px);
+  border: 3px solid transparent;
+  border-image: linear-gradient(45deg, var(--AquaAura), var(--NuclearFuscia)) 1;
+  border-radius: 10px;
+  box-shadow: 0 10px 60px var(--PlasmaGlow3);
+  width: 1000px !important;
+  height: 480px !important;
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+
+#gameCanvas {
+  aspect-ratio: 1000 / 480;
+  cursor: crosshair;
+}
+
+
+#mobileCanvas {
+  width: 100vw;
+  height: 100vh;
+  cursor: crosshair;
+}
+
+/* ============================ IF USING A CANVAS, DON'T USE trinkets.css ============================ */
+
+/* ============================ RAINBOW BACK TO TOP ============================ */
+#scroll-top {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+            cursor: pointer;
+            width: 35px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+#scroll-top .button-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+#scroll-top img {
+            width: 35px;
+            height: 45px;
+            transition: transform 0.3s ease;
+            animation: hue-shift-slow 8s linear infinite;
+        }
+
+  
+ #scroll-top:hover img {
+            transform: scale(1.5);
+            animation: hue-shift-fast 3s linear infinite;
+        }
+
+
+@keyframes hue-shift-slow {
+            0%   { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+@keyframes hue-shift-fast {
+            0%   { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+ 
+#scroll-top .arrow-overlay {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3.5rem;
+            font-family: 'GothNerd';
+            color: rgb(0,0,0); 
+            pointer-events: none; 
+            user-select: none;
+            z-index: 1001;
+
+        }
+/* ============================ TIP JAR ============================ */
+#kofi-float {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+#kofi-float img {
+            width: 50px; 
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+#kofi-float:hover img {
+            transform: scale(1.1); 
+        }
+
+        
+.hearts {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            pointer-events: none; 
+            overflow: hidden;
+  
+        }
+
+       
+.heart {
+            position: absolute;
+            bottom: 50px;
+            left: 20px;
+            font-size: 20px;
+            animation: float-up 3s infinite ease-in;
+            opacity: 0;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120px) translateX(var(--drift)) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        
+        #kofi-float .hearts .heart {
+            display: none;
+        }
+
+        
+        #kofi-float:hover .hearts .heart {
+            display: block;
+            animation-delay: var(--delay);
+        }
+
+
+@media (max-width: 968px) {
+
+.canvas-container {
+    margin: 0px;
+    margin-bottom: 20px;
+    padding: 0px;
+    margin-top:5px;
+}
+
+#landscapeCanvas {
+  width: 99%;
+  height: auto;
+}
+
+    #kofi-float img {
+            visibility: hidden;
+        }
+
+    #scroll-top img {
+            visibility: hidden;
+        }
+
+}

@@ -140,11 +140,11 @@ async function loadAssets() {
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
   loadSprite("battleBG1", "assets/images/backgrounds/BattleBG1.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
-  loadSprite("groundPlatform", "assets/images/backgrounds/platform11.png", {
+  loadSprite("groundPlatform", "assets/images/backgrounds/platform.png", {
     sliceX: 3,
     sliceY: 1
   });
-    loadSprite("platform", "assets/images/backgrounds/platform11.png", {
+    loadSprite("platform", "assets/images/backgrounds/platform.png", {
     sliceX: 3,
     sliceY: 1
   });
