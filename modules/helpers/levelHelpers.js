@@ -3,7 +3,7 @@ import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from '../config/gameConfig.
 import { spawnEnemy, handlePlayerEnemyCollision, updateEnemies } from '../systems/levelSystem.js';
 import { setupPauseSystem,createVolumeToggle, stopAllMusic, startLevelMusic, startBossMusic, startFinalBossMusic} from '../helpers/kittyHelpers.js';
 import { animateGhostPoof } from '../helpers/bossHelpers.js';
-import { rainbowCat, SPRITE_FRAMES } from '../config/characters.js';
+import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
 
 function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {
   console.log('☠️ No lives remaining - GAME OVER');
@@ -50,12 +50,19 @@ function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, charact
   });
 }
 
+
 export function updatePlayerAnim(player, character) {
   let newState;
   const grounded = player.isGrounded();
 
   if (!grounded) {
-    newState = 'jump';
+    if (player.vel.y < -100) {
+      newState = 'jumpRising';
+    } else if (player.vel.y > 100) {
+      newState = 'jumpFalling';
+    } else {
+      newState = 'jumpRising';
+    }
   } else if (player.isMoving) {
     newState = 'walk';
   } else {
@@ -65,19 +72,34 @@ export function updatePlayerAnim(player, character) {
   if (newState !== player.curState) {
     player.curState = newState;
     
-    const activePrefix = player.rainbowActive ? "rainbowCat" : character.name;
+    const spriteSheet = player.rainbowActive ? "rainbowCatSheet" : `${character.name}Sheet`;
+    const frames = player.rainbowActive ? RAINBOW_CAT_FRAMES : SPRITE_FRAMES;
     
     if (newState === 'walk') {
-      player.use(sprite(`${activePrefix}Walk`));
+      player.use(sprite(spriteSheet));
       player.play("walk");
-    } else if (newState === 'jump') {
-      player.use(sprite(`${activePrefix}Platformer`, { frame: SPRITE_FRAMES.jump }));
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.walk : -SPRITE_SCALES.walk;
+      player.scale = vec2(currentScale, SPRITE_SCALES.walk);
+    } else if (newState === 'jumpRising') {
+      player.use(sprite(spriteSheet, { frame: frames.jumpRising }));
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
+      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
+    } else if (newState === 'jumpFalling') {
+      player.use(sprite(spriteSheet, { frame: frames.jumpFalling }));
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
+      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
     } else {
-      player.use(sprite(`${activePrefix}Platformer`, { frame: SPRITE_FRAMES.idle }));
+      player.use(sprite(spriteSheet, { frame: frames.idle }));
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.idle : -SPRITE_SCALES.idle;
+      player.scale = vec2(currentScale, SPRITE_SCALES.idle);
       if (player.curAnim()) player.stop();
     }
   }
+  
+  player.flipX = !player.facingRight;
 }
+
+
 
 export function setupLevelMusic(levelConfig) {
   startLevelMusic(levelConfig.levelMusic);
@@ -89,32 +111,29 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
   const segmentWidth = 25;
   const numMiddleSegments = Math.floor(width / segmentWidth) - 2;
   
-
   add([
     sprite('platform', { frame: 0 }),
     pos(x, y),
-    scale(1, height / 20), 
-    z(1),
+    scale(vec2(1, 2)), 
+    z(-2),
     isHintPlatform ? "hintPlatformSprite" : "platformSprite"
   ]);
-  
   
   for (let i = 0; i < numMiddleSegments; i++) {
     add([
       sprite('platform', { frame: 1 }),
       pos(x + segmentWidth + (i * segmentWidth), y),
-      scale(1, height / 20),
-      z(1),
+      scale(vec2(1, 2)),
+      z(-2),
       isHintPlatform ? "hintPlatformSprite" : "platformSprite"
     ]);
   }
   
-
   add([
     sprite('platform', { frame: 2 }),
     pos(x + width - segmentWidth, y),
-    scale(1, height / 20),
-    z(1),
+    scale(vec2(1, 2)),
+    z(-2),
     isHintPlatform ? "hintPlatformSprite" : "platformSprite"
   ]);
   
@@ -125,7 +144,7 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
     body({ isStatic: true }),
     opacity(0),
     isSolidPlatform ? "platform" : "oneWayPlatform",
-    z(2)
+    z(-1)
   ]);
   
   return collisionLayer;
@@ -139,8 +158,8 @@ function createSpriteGround(x, y, width, height) {
     add([
       sprite('groundPlatform', { frame: 1 }),
       pos(x + (i * segmentWidth), y),
-      scale(1, height / 20), 
-      z(1),
+      scale(vec2(1, 2)), 
+      z(-2),
       "groundSprite"
     ]);
   }
@@ -164,7 +183,7 @@ export function addLevelEnvironment(levelConfig) {
     sprite(levelConfig.background, { anim: "idle" }),
     pos(-500, 0),
     scale(2, 2),
-    z(-1),
+    z(-4),
     "background"
   ]);
 
@@ -172,7 +191,7 @@ export function addLevelEnvironment(levelConfig) {
     sprite('yeet'),
     pos(-960, 265),
     scale(1.9),
-    z(2),
+    z(0),
   ]);
 
   
@@ -206,7 +225,7 @@ export function addLevelEnvironment(levelConfig) {
     pos(-1000, 0),
     color(0, 0, 0),
     opacity(0.4),
-    z(0)
+    z(-3)
   ]);
 
   return { bg };
@@ -274,7 +293,17 @@ export function setupOneWayPlatforms(player) {
     const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
     const platformTop = platform.pos.y - platform.height / 2;
     
-    if (player.vel.y > 0 && playerBottom < platformTop + 10) {
+    const hitboxWidth = player.area.width || 80;
+    const offsetX = player.facingRight ? 1 : -1; 
+    const playerLeft = player.pos.x + offsetX - (hitboxWidth / 2);
+    const playerRight = player.pos.x + offsetX + (hitboxWidth / 2);
+    
+    const platformLeft = platform.pos.x;
+    const platformRight = platform.pos.x + platform.width;
+    
+    const horizontalOverlap = playerRight > platformLeft && playerLeft < platformRight;
+    
+    if (player.vel.y > 0 && playerBottom < platformTop + 10 && horizontalOverlap) {
       player.pos.y = platformTop - (hitboxHeight / 2) - hitboxOffsetY;
       player.vel.y = 0;
       
@@ -287,10 +316,19 @@ export function setupOneWayPlatforms(player) {
   player.onUpdate(() => {
     const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
     
+    const hitboxWidth = player.area.width || 80;
+    const offsetX = player.facingRight ? 1 : -1;
+    const playerLeft = player.pos.x + offsetX - (hitboxWidth / 2);
+    const playerRight = player.pos.x + offsetX + (hitboxWidth / 2);
+    
     get("oneWayPlatform").forEach(platform => {
       const platformTop = platform.pos.y - platform.height / 2;
+      const platformLeft = platform.pos.x;
+      const platformRight = platform.pos.x + platform.width;
       
-      if (player.vel.y < 0 || playerBottom > platformTop + 20) {
+      const horizontalOverlap = playerRight > platformLeft && playerLeft < platformRight;
+      
+      if (player.vel.y < 0 || playerBottom > platformTop + 20 || !horizontalOverlap) {
         if (platform.has("body")) {
           platform.unuse("body");
         }
@@ -300,64 +338,14 @@ export function setupOneWayPlatforms(player) {
 }
 
 
-export function addUIBackgrounds() {
-  add([
-    rect(200, 36, { radius: 50 }),
-    pos(130, 15),
-    fixed(),
-    color(Color.fromHex("#000000")),
-    opacity(1),
-    outline(2, Color.fromHex(Colors.NuclearFuscia)),
-    z(99)
-  ]);
 
-  add([
-    rect(200, 36, { radius: 50 }),
-    pos(350, 15),
-    fixed(),
-    color(Color.fromHex("#000000")),
-    opacity(1),
-    outline(2, Color.fromHex(Colors.PlasmaPurple)),
-    z(99)
-  ]);
-
-  add([
-    rect(200, 36, { radius: 50 }),
-    pos(570, 15),
-    fixed(),
-    color(Color.fromHex("#000000")),
-    opacity(1),
-    outline(2, Color.fromHex(Colors.MintBlue)),
-    z(99)
-  ]);
-
-  add([
-    rect(200, 36, { radius: 50 }),
-    pos(790, 15),
-    fixed(),
-    color(Color.fromHex("#000000")),
-    opacity(1),
-    outline(2, Color.fromHex(Colors.RadioactiveGreen)),
-    z(99)
-  ]);
-
-  add([
-    rect(100, 36, { radius: 50 }),
-    pos(10, 15),
-    fixed(),
-    color(Color.fromHex("#000000")),
-    opacity(1),
-    outline(2, Color.fromHex(Colors.LightGray)),
-    z(99)
-  ]);
-}
 
 export function addVictoryArea(levelConfig) {
   const catTower = add([
     sprite('catTower'),
     pos(levelConfig.length - 750, 150),
     scale(1),
-    z(1),
+    z(0),
     "catTower"
   ]);
 
@@ -752,21 +740,15 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
 export function createPlayer(levelConfig, character, startHP) {
   const prefix = character.name;
   
-  const originalWidth = 150;
-  const originalHeight = 108;
   const targetWidth = 128;
   const targetHeight = 92;
-  const scaleX = targetWidth / originalWidth;
-  const scaleY = targetHeight / originalHeight;
-  const hitboxWidth = 100;
+  const hitboxWidth = 60;
   const hitboxHeight = 40;
-  // const offsetX = -(targetWidth / 2) + (hitboxWidth / 2) + 95;
-  const offsetX = 6;
+  const offsetX = 1;
   const offsetY = 0;
 
-
   const player = add([
-    sprite(`${prefix}Platformer`, { frame: SPRITE_FRAMES.idle }),
+    sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.idle }),
     pos(levelConfig.playerSpawn.x, levelConfig.playerSpawn.y - 50),
     area({ 
       width: hitboxWidth,
@@ -776,7 +758,7 @@ export function createPlayer(levelConfig, character, startHP) {
     body({
       gravityScale: 1
     }),
-    scale(vec2(scaleX, scaleY)),
+    scale(SPRITE_SCALES.idle), 
     anchor("center"),
     {
       speed: character.platformerStats.speed * 50,
@@ -793,16 +775,42 @@ export function createPlayer(levelConfig, character, startHP) {
       invulnerableTime: 0,
       catnipActive: false,
       rainbowActive: false,
+      characterName: character.name,
       curState: 'idle'
     },
     "player"
   ]);
+
+  // DEBUG: HITBOX VISUALIZER (optional - can remove)
+  //const debugHitbox = add([
+  //  rect(hitboxWidth, hitboxHeight),
+  //  pos(0, 0),
+  //  color(255, 0, 0),
+ //   opacity(0.5), // Set to 0.3 to see hitbox
+ //   outline(2, rgb(255, 0, 0)),
+  //  anchor("center"),
+ //   z(1000),
+ //   "debugHitbox"
+ // ]);
+
+ // player.onUpdate(() => {
+ //   const currentOffsetX = player.facingRight ? offsetX : -offsetX;
+ //   debugHitbox.pos = vec2(
+ //     player.pos.x + currentOffsetX,
+ //     player.pos.y + offsetY
+ //   );
+  //});
 
   return player;
 }
 
 
 export function setupPlayerControls(player, gameStateGetter) {
+  const hitboxWidth = 60;
+  const hitboxHeight = 40;
+  const baseOffsetX = 1;
+  const offsetY = 0;
+
   onKeyDown("left", () => {
     if (gameStateGetter()) {
       const controlMultiplier = player.isGrounded() 
@@ -814,6 +822,7 @@ export function setupPlayerControls(player, gameStateGetter) {
       player.isMoving = true;
       player.facingRight = false;
       player.flipX = true;
+      player.area.offset = vec2(-baseOffsetX, offsetY);
     }
   });
 
@@ -828,6 +837,7 @@ export function setupPlayerControls(player, gameStateGetter) {
       player.isMoving = true;
       player.facingRight = true;
       player.flipX = false;
+      player.area.offset = vec2(baseOffsetX, offsetY);
     }
   });
 
@@ -837,7 +847,17 @@ export function setupPlayerControls(player, gameStateGetter) {
 
   onKeyPress("space", () => {
     if (gameStateGetter() && player.isGrounded()) {
-      player.jump(player.playerJumpForce);
+      const spriteSheet = player.rainbowActive ? "rainbowCatSheet" : `${player.characterName}Sheet`;
+      const frames = player.rainbowActive ? RAINBOW_CAT_FRAMES : SPRITE_FRAMES;
+      
+      player.use(sprite(spriteSheet, { frame: frames.jumpStart }));
+      player.curState = 'jumpStart';
+      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
+      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
+      
+      wait(0.05, () => {
+        player.jump(player.playerJumpForce);
+      });
     }
   });
   
@@ -848,86 +868,77 @@ export function setupPlayerControls(player, gameStateGetter) {
   });
 }
 
-
 export function createUnifiedHUD(player, showDebug = true) {
-
-  const scoreText = add([
-    text(`Score: 0`, { size: 22, font: "science" }),
-    pos(230, 35),
-    anchor("center"),
-    fixed(),
-    z(100),
-    color(Color.fromHex(Colors.White)),
-    "scoreText"
-  ]);
-
-  const hpText = add([
-    text(`HP: ${player.hp}/${player.maxHP}`, { size: 22, font: "science" }),
-    pos(450, 35),
-    anchor("center"),
-    fixed(),
-    z(100),
-    color(Color.fromHex(Colors.White)),
-    "hpText"
-  ]);
-
-  const livesText = add([
-    text(`Lives: 3`, { size: 22, font: "science" }),
-    pos(670, 35),
-    anchor("center"),
-    fixed(),
-    z(100),
-    color(Color.fromHex(Colors.White)),
-    "livesText"
-  ]);
-
-  const clock = add([
-    sprite('clock'),
-    pos(840, 32),
-    anchor("center"),
-    fixed(),
-    scale(0.24),
-    z(101),
-    "clock"
-  ]);
-
-  const timerText = add([
-    text(`: 0s`, { size: 22, font: "science" }),
-    pos(905, 35),
-    anchor("center"),
-    fixed(),
-    z(100),
-    color(Color.fromHex(Colors.White)),
-    "timerText"
-  ]);
-
-  let debugText = null;
-    if (showDebug) {
-      debugText = add([
-        text(`X: 0  Y: 0`, { size: 30, font: "monospace" }),
-        pos(10, 80),
-        fixed(),
-        z(100),
-        color(Color.fromHex("#00FFFF")),
-        "debugText"
-      ]);
+  const hudElement = document.getElementById('hudStats');
+  if (hudElement) {
+    hudElement.classList.add('active');
+  }
+  
+  if (showDebug) {
+    const debugElement = document.getElementById('debugInfo');
+    if (debugElement) {
+      debugElement.style.display = 'block';
     }
-
-  return { scoreText, hpText, livesText, timerText, clock, debugText };
+  }
+  
+  return {};
 }
 
 export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
-  hudElements.scoreText.text = `Score: ${score}`;
-  hudElements.hpText.text = `HP: ${player.hp}/${player.maxHP}`;
-  hudElements.livesText.text = `Lives: ${lives}`;
-  hudElements.timerText.text = `: ${timeLeft}s`;
-  
-  if (timeLeft < 10) {
-    hudElements.timerText.color = Color.fromHex(Colors.RadiationRed);
+  const scoreText = document.getElementById('scoreText');
+  if (scoreText) {
+    scoreText.textContent = `Score: ${score}`;
   }
+  
+  const hpText = document.getElementById('hpText');
+  const hpStat = document.getElementById('hpStat');
+  if (hpText) {
+    hpText.textContent = `HP: ${player.hp}/${player.maxHP}`;
+  }
+  
+  if (hpStat) {
+    if (player.hp <= player.maxHP * 0.25) {
+      hpStat.classList.add('low-hp');
+    } else {
+      hpStat.classList.remove('low-hp');
+    }
+  }
+  
+  const livesText = document.getElementById('livesText');
+  if (livesText) {
+    livesText.textContent = `Lives: ${lives}`;
+  }
+  
+  const timeText = document.getElementById('timeText');
+  const timeStat = document.getElementById('timeStat');
+  if (timeText) {
+    timeText.textContent = `Time: ${timeLeft}s`;
+  }
+  
+  if (timeStat) {
+    if (timeLeft <= 10) {
+      timeStat.classList.add('low-time');
+    } else {
+      timeStat.classList.remove('low-time');
+    }
+  }
+  
+  const debugInfo = document.getElementById('debugInfo');
+  if (debugInfo && debugInfo.style.display !== 'none') {
+    debugInfo.textContent = `X: ${Math.round(player.pos.x)}  Y: ${Math.round(player.pos.y)}`;
+  }
+}
 
-  if (hudElements.debugText) {
-    hudElements.debugText.text = `X: ${Math.round(player.pos.x)}  Y: ${Math.round(player.pos.y)}`;
+
+export function hideHUD() {
+  const hudElement = document.getElementById('hudStats');
+  if (hudElement) {
+    hudElement.classList.remove('active');
+  }
+  
+  const debugElement = document.getElementById('debugInfo');
+  if (debugElement) {
+    debugElement.style.display = 'none';
   }
 }
 
@@ -962,7 +973,8 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
       player.vel.x = 0;
       player.vel.y = 0;
       const prefix = character.name;
-      player.use(sprite(`${prefix}Platformer`, { frame: SPRITE_FRAMES.idle })); 
+      player.use(sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.idle })); 
+  
       
       const arrows = get("arrow");
       arrows.forEach(a => destroy(a));
@@ -995,7 +1007,7 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
       await wait(dropDuration);
       
       shake(30);
-      play('bossLand');
+      play('bossLand', { volume: 0.3 });
       
       await wait(0.2);
       
@@ -1009,7 +1021,7 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
       
       await wait(0.7);
       
-  play('meow02');
+  play('meow02', { volume: 0.3 });
   const questionBubble = add([
     sprite('bubbles', { frame: BUBBLE_FRAMES.question }),
     pos(levelConfig.length - 540, 130),
@@ -1567,7 +1579,6 @@ export function setupPlayerCamera(player, character, bg, gameStateGetter) {
 
 
 // ======= MINI BOSS =======
-
 export function addMiniBoss(levelConfig, gameStateGetter, player) {
   if (!levelConfig.miniBoss?.enabled) return null;
   

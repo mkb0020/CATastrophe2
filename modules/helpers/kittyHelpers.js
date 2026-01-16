@@ -235,7 +235,7 @@ export function startMenuMusic() {
     
     if (!window.menuMusic || window.menuMusic.paused) {
         window.menuMusic = play("menuMusic", {
-            volume: window.isMuted ? 0 : 0.5,
+            volume: window.isMuted ? 0 : 0.7,
             loop: true
         });
         console.log('🎵 Menu music started');
@@ -246,7 +246,7 @@ export function startLevelMusic(Track) {
     stopAllMusic(); 
     
     window.levelMusic = play(Track, { 
-        volume: window.isMuted ? 0 : 0.4, 
+        volume: window.isMuted ? 0 : 0.7, 
         loop: true 
     });
     console.log(`🎵 Level music started: ${Track}`);
@@ -263,7 +263,7 @@ export function startBossMusic() {
     stopAllMusic();
     
     window.bossMusic = play("bossMusic", { 
-        volume: window.isMuted ? 0 : 0.4, 
+        volume: window.isMuted ? 0 : 0.7, 
         loop: true 
     });
     console.log('🎵 Boss music started');
@@ -280,7 +280,7 @@ export function startFinalBossMusic() {
     stopAllMusic(); 
     
     window.finalBossMusic = play("finalBossMusic", { 
-        volume: window.isMuted ? 0 : 0.5, 
+        volume: window.isMuted ? 0 : 0.7, 
         loop: true 
     });
     console.log('🎵 👁 FINAL BOSS MUSIC STARTED! 👁');
@@ -297,7 +297,7 @@ export function startGameOverMusic() {
     stopAllMusic(); 
     
     window.gameOverMusic = play("GameOverTrack", { 
-        volume: window.isMuted ? 0 : 0.4, 
+        volume: window.isMuted ? 0 : 0.3, 
         loop: true 
     });
     console.log('🎵 Game Over music started');
@@ -314,7 +314,7 @@ export function startVictoryMusic() {
     stopAllMusic(); 
     
     window.victoryMusic = play("VictoryTrack", { 
-        volume: window.isMuted ? 0 : 0.5, 
+        volume: window.isMuted ? 0 : 0.6, 
         loop: false 
     });
     console.log('🎵 Victory music started');
@@ -331,7 +331,7 @@ export function startFinalVictoryMusic() {
     stopAllMusic();
     
     window.levelMusic = play("finalVictory", { 
-        volume: window.isMuted ? 0 : 0.4, 
+        volume: window.isMuted ? 0 : 0.8, 
         loop: false 
     });
     console.log('🎵 Final Victory music started');

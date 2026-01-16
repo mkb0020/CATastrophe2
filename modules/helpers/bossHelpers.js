@@ -23,9 +23,9 @@ export function addBattleSprites(character, bossConfig) {
   const prefix = character.name; 
   const playerGlow = add([
     sprite("characterGlow"),
-    pos(260, 240),
+    pos(260, 235),
     anchor("center"),
-    scale(1.05),
+    scale(1.3),
     opacity(1),
     z(0),
     "playerGlow"
@@ -33,9 +33,9 @@ export function addBattleSprites(character, bossConfig) {
 
   const playerSprite = add([
     sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.battle }),
-    pos(260, 240),
+    pos(245, 265),
     anchor("center"),
-    scale(1),
+    scale(1.1),
     opacity(1),
     z(1),
     "playerSprite"
@@ -1475,7 +1475,6 @@ export function animatePoisonAttack(boss, hero) {
 
 
 // ========================= FINISH HIM =========================
-
 // =================== CAT ARROW ===================
   export function animateCatArrow(hero, boss) {
     const lock = add([ // LOCK ON
@@ -1743,6 +1742,7 @@ export function animatePoisonAttack(boss, hero) {
   export function animateFelineFission(boss) {
       shake(30);
       play("finalFinishHim");
+      play("finalFinishHim2");
       const startPos = boss.pos.sub(vec2(250, -90));
       const mushroom = add([
           sprite("mushroom", { anim: "burst" }),
