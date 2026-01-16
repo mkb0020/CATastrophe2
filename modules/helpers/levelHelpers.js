@@ -116,7 +116,7 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
     pos(x, y),
     scale(vec2(1, 2)), 
     z(-2),
-    isHintPlatform ? "hintPlatformSprite" : "platformSprite"
+    "platformSprite"
   ]);
   
   for (let i = 0; i < numMiddleSegments; i++) {
@@ -125,7 +125,7 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
       pos(x + segmentWidth + (i * segmentWidth), y),
       scale(vec2(1, 2)),
       z(-2),
-      isHintPlatform ? "hintPlatformSprite" : "platformSprite"
+      "platformSprite"
     ]);
   }
   
@@ -134,7 +134,7 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
     pos(x + width - segmentWidth, y),
     scale(vec2(1, 2)),
     z(-2),
-    isHintPlatform ? "hintPlatformSprite" : "platformSprite"
+    "platformSprite"
   ]);
   
   const collisionLayer = add([
@@ -196,22 +196,16 @@ export function addLevelEnvironment(levelConfig) {
 
   
   levelConfig.platforms.forEach((platform, index) => {
-    const isHintPlatform = levelConfig.hintPlatforms?.includes(index);
     const isSolidPlatform = levelConfig.solidPlatforms?.includes(index);
     
-    const collisionLayer = createSpritePlatform(
+    createSpritePlatform(
       platform.x, 
       platform.y, 
       platform.width, 
       platform.height,
-      isHintPlatform,
+      false,
       isSolidPlatform
     );
-    
-    
-    if (isHintPlatform) {
-      collisionLayer.isHintPlatform = true;
-    }
   });
 
  
@@ -233,110 +227,34 @@ export function addLevelEnvironment(levelConfig) {
 
 
 
-export function setupHintPlatforms(player) {
-  const activatedPlatforms = new Set();
-  
-  player.onGround((platform) => {
-    if (platform.is("oneWayPlatform") && platform.baseLayer && !activatedPlatforms.has(platform)) {
-      activatedPlatforms.add(platform);
-      
-     
-      tween(
-        platform.baseLayer.color, 
-        rgb(117,251,30), 
-        0.3, 
-        (val) => platform.baseLayer.color = val,
-        easings.easeOutQuad
-      );
-      
-     
-      tween(
-        platform.topLayer.color, 
-        rgb(88,232,76),
-        0.3, 
-        (val) => platform.topLayer.color = val,
-        easings.easeOutQuad
-      ).then(() => {
-        platform.baseLayer.glowing = true;
-        platform.topLayer.glowing = true;
-      });
-      
-      
-      play("powerUp", { volume: 0.3, speed: 1.5 }); // PLACEHOLDER
-    }
-  });
-  
-  
-  onUpdate(() => {
-    get("hintPlatformBase").forEach(base => {
-      if (base.glowing) {
-        const pulse = Math.sin(time() * 3) * 0.1 + 0.9;
-        base.color = rgb(218 * pulse, 165 * pulse, 32 * pulse);
-      }
-    });
-    
-    get("hintPlatformTop").forEach(top => {
-      if (top.glowing) {
-        const pulse = Math.sin(time() * 3) * 0.1 + 0.9;
-        top.color = rgb(255 * pulse, 215 * pulse, 0);
-      }
-    });
-  });
-}
-
-
 export function setupOneWayPlatforms(player) {
-  const hitboxHeight = player.area.height || 60;    
+  const hitboxHeight = player.area.height || 60;
   const hitboxOffsetY = player.area.offset?.y || 0;
+  const hitboxWidth = player.area.width || 80;
   
   player.onCollide("oneWayPlatform", (platform) => {
     const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
     const platformTop = platform.pos.y - platform.height / 2;
-    
-    const hitboxWidth = player.area.width || 80;
-    const offsetX = player.facingRight ? 1 : -1; 
+    const offsetX = player.facingRight ? 1 : -1;
     const playerLeft = player.pos.x + offsetX - (hitboxWidth / 2);
     const playerRight = player.pos.x + offsetX + (hitboxWidth / 2);
-    
     const platformLeft = platform.pos.x;
     const platformRight = platform.pos.x + platform.width;
-    
     const horizontalOverlap = playerRight > platformLeft && playerLeft < platformRight;
-    
-    if (player.vel.y > 0 && playerBottom < platformTop + 10 && horizontalOverlap) {
+        if (player.vel.y > 0 && playerBottom < platformTop + 10 && horizontalOverlap) {
       player.pos.y = platformTop - (hitboxHeight / 2) - hitboxOffsetY;
       player.vel.y = 0;
       
       if (!platform.has("body")) {
         platform.use(body({ isStatic: true }));
       }
+    } else if (player.vel.y < 0 || !horizontalOverlap) {
+      if (platform.has("body")) {
+        platform.unuse("body");
+      }
     }
   });
-  
-  player.onUpdate(() => {
-    const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
-    
-    const hitboxWidth = player.area.width || 80;
-    const offsetX = player.facingRight ? 1 : -1;
-    const playerLeft = player.pos.x + offsetX - (hitboxWidth / 2);
-    const playerRight = player.pos.x + offsetX + (hitboxWidth / 2);
-    
-    get("oneWayPlatform").forEach(platform => {
-      const platformTop = platform.pos.y - platform.height / 2;
-      const platformLeft = platform.pos.x;
-      const platformRight = platform.pos.x + platform.width;
-      
-      const horizontalOverlap = playerRight > platformLeft && playerLeft < platformRight;
-      
-      if (player.vel.y < 0 || playerBottom > platformTop + 20 || !horizontalOverlap) {
-        if (platform.has("body")) {
-          platform.unuse("body");
-        }
-      }
-    });
-  });
 }
-
 
 
 
@@ -349,24 +267,15 @@ export function addVictoryArea(levelConfig) {
     "catTower"
   ]);
 
-  const arrow = add([
-    sprite('arrow'),
-    pos(levelConfig.length - 660, 375),
-    anchor("center"),
-    scale(0.7),
-    rotate(25),
-    z(13),
-    "arrow"
-  ]);
-
-  let pulseTime = 0;
-
-      arrow.onUpdate(() => {
-        pulseTime += dt();
-
-        const pulseScale = 0.7 + Math.sin(pulseTime * 6) * 0.04; 
-        arrow.scale = vec2(pulseScale);
-        });
+    const arrow = add([
+      sprite('arrow'),
+      pos(levelConfig.length - 660, 375),
+      anchor("center"),
+      scale(0.7),
+      rotate(25),
+      z(13),
+      "arrow"
+    ]);
 
   const victoryPlatform = add([
     rect(5, 5),
@@ -781,26 +690,25 @@ export function createPlayer(levelConfig, character, startHP) {
     "player"
   ]);
 
-  // DEBUG: HITBOX VISUALIZER (optional - can remove)
-  //const debugHitbox = add([
-  //  rect(hitboxWidth, hitboxHeight),
-  //  pos(0, 0),
-  //  color(255, 0, 0),
- //   opacity(0.5), // Set to 0.3 to see hitbox
- //   outline(2, rgb(255, 0, 0)),
-  //  anchor("center"),
- //   z(1000),
- //   "debugHitbox"
- // ]);
+// DEBUG: HITBOX VISUALIZER
+//   const debugHitbox = add([
+//   rect(hitboxWidth, hitboxHeight),
+//   pos(0, 0),
+//   color(255, 0, 0),
+//   opacity(0.5), 
+//   outline(2, rgb(255, 0, 0)),
+//   anchor("center"),
+//   z(1000),
+//  "debugHitbox"
+//  ]);
 
- // player.onUpdate(() => {
- //   const currentOffsetX = player.facingRight ? offsetX : -offsetX;
- //   debugHitbox.pos = vec2(
- //     player.pos.x + currentOffsetX,
- //     player.pos.y + offsetY
- //   );
-  //});
-
+//   player.onUpdate(() => {
+//   const currentOffsetX = player.facingRight ? offsetX : -offsetX;
+//   debugHitbox.pos = vec2(
+//    player.pos.x + currentOffsetX,
+//    player.pos.y + offsetY
+//    );
+//    });
   return player;
 }
 

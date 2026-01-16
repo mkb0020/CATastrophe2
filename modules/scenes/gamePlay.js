@@ -25,7 +25,6 @@ import {
   setupPlayerCamera,
   setupLevelPause, 
   setupOneWayPlatforms,
-  setupHintPlatforms,
   setupSequentialPlatforms,
   setupSequentialPlatformActivation,
   addMiniBoss,
@@ -66,7 +65,6 @@ function createUnifiedLevel(levelId, data) {
 
   const player = createPlayer(levelConfig, character, startHP);
   setupOneWayPlatforms(player);
-  setupHintPlatforms(player);
 
   const sequentialPlatforms = setupSequentialPlatforms(levelConfig);
   setupSequentialPlatformActivation(player, sequentialPlatforms);

@@ -48,7 +48,7 @@
     }
 
     .hud-stats-inner {
-      max-width: 1000px;
+      max-width: 1300px;
       margin: 0 auto;
       display: flex;
       justify-content: space-around;
@@ -61,50 +61,81 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 6px 16px;
-      background: rgb(0, 0, 0);
+      gap: 10px;
+      padding: 5px 5px;
+      /*background: rgba(0, 0, 0, 0.233);
       border-radius: 50px;
-      border: 1px solid;
-      font-size: 18px;
-      width: 250px;
+      border: 1px solid;*/
+      font-size: 1.1rem;
+      font-family: 'GothNerd';
+      min-width: 150px;
       transition: transform 0.2s ease;
     }
 
-    .stat-item:hover {
-      transform: translateY(-2px);
-    }
+  .stat-divider{
+    font-size: 1.5rem;
+    text-shadow: 10px 20px 20px var(--AlphaAqua);
+    color: var(--AlphaAqua);
+  }
+
+
+    .stat-title{
+
+        font-size: 1.6rem;
+        background: linear-gradient(45deg, var(--AlphaAqua), var(--NuclearFuscia), var(--PlanksPink));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: 'SpaceLettersBold', sans-serif;
+        z-index: 900;
+        flex-shrink: 0;
+        width: 320px;
+        border: 1px solid rgba(0,0,0,0);
+          }
+
 
     .stat-score {
-      border-color: var(--NuclearFuscia);
-      color: var(--NuclearFuscia);
+      border-color: var(--PlanksGlow3);
+      color: var(--White);
+      width: 150px;
+      text-transform: uppercase;
     }
 
     .stat-hp {
-      border-color: var(--PlasmaPurple);
-      color: var(--PlasmaPurple);
+      border-color: var(--RadioactiveGlow3);
+      color: var(--White);
+      width: 150px;
+      text-transform: uppercase;
     }
 
     .stat-hp.low-hp {
-      border-color: var(--RadiationRed);
+      border-color: var(--RadioactiveGlow3);
       color: var(--RadiationRed);
       animation: pulse 1s infinite;
+      width: 150px;
+      text-transform: uppercase;
     }
 
     .stat-lives {
-      border-color: var(--AquaAura);
-      color: var(--AquaAura);
+      border-color: var(--AlphaGlow2);
+      color: var(--White);
+      width: 150px;
+      text-transform: uppercase;
     }
 
     .stat-time {
-      border-color: var(--RadioactiveGreen);
-      color: var(--RadioactiveGreen);
+      border-color: var(--PlasmaGlow2);
+      color: var(--White);
+      width: 150px;
+      text-transform: uppercase;
     }
 
     .stat-time.low-time {
-      border-color: var(--RadiationRed);
+      border-color: var(--PlasmaGlow2);
       color: var(--RadiationRed);
       animation: pulse 1s infinite;
+      width: 150px;
+      text-transform: uppercase;
     }
 
     .stat-icon {
@@ -131,16 +162,46 @@
 
 
 
-    .debug-info {
+ .debug-toggle {
       position: fixed;
       bottom: 10px;
       left: 10px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .debug-toggle:hover {
+
+      transform: scale(1.1);
+    }
+
+    .debug-toggle img {
+      width: 50px;
+      height: 50px;
+      transition: filter 0.3s ease;
+    }
+
+ 
+
+    .debug-info {
+      position: fixed;
+      bottom: 60px;
+      left: 10px;
       font-family: monospace;
-      font-size: 16px;
+      font-size: 14px;
       color: var(--AquaAura);
-      background: rgba(0, 0, 0, 0.8);
-      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 12px 16px;
       border-radius: 8px;
-      border: 1px solid var(--AquaAura);
+      border: 2px solid var(--AquaAura);
       z-index: 1000;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }

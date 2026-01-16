@@ -90,13 +90,41 @@
             </div>
           </div>
         </div>
+<div class="hud-stats-inner">
 
-      
+        <div class="stat-item stat-score">
+        <span id="scoreText">Score: 0</span>
+      </div>
+
+            <div class="stat-divider" id="hpStat">
+                |
+            </div>
+
+            <div class="stat-item stat-hp" id="hpStat">
+        <span id="hpText">HP: 0/0</span>
+      </div>
+            <div class="stat-divider" id="hpStat">
+                |
+            </div>
+      <div class="stat-item stat-title">
         <a href="https://mkb0020.github.io">
-              <div class="logo">🐱 CATastrophe2 🐱</div>  <!-- CENTER LOGO -->
+              🐱 CATastrophe2 🐱  <!-- CENTER LOGO -->
           </a>
+      </div>
+            <div class="stat-divider" id="hpStat">
+                |
+            </div>
+            <div class="stat-item stat-lives">
+        <span id="livesText">Lives: 3</span>
+      </div>
+                  <div class="stat-divider" id="hpStat">
+                |
+            </div>
+      <div class="stat-item stat-time" id="timeStat">
+        <span id="timeText">Time: 90s</span>
+      </div>
 
-
+</div>
       <div class="help-dropdown">
         <button class="help-icon" id="helpBtn"><div class="question-mark">?</div></button>
         <div class="dropdown-menu">
@@ -106,7 +134,7 @@
     </div>
   </nav>
 
-  <div class="hud-stats">
+<!--  <div class="hud-stats">
     <div class="hud-stats-inner">
       <div class="stat-item stat-score">
         <span class="stat-icon">⭐</span>
@@ -128,7 +156,7 @@
         <span id="timeText">Time: 90s</span>
       </div>
     </div>
-  </div>
+  </div>-->
 
 
 
@@ -138,7 +166,11 @@
       </div>
 </div>
 
-  <div class="debug-info" id="debugInfo">
+  <div class="debug-toggle" id="debugToggle" title="Toggle Debug Info">
+    <img src="assets/images/settings.png" alt="Settings">
+  </div>
+
+  <div class="debug-info" id="debugInfo" style="display: none;">
     X: 0  Y: 0
   </div>
 
@@ -218,7 +250,6 @@
   <script type="module" src="modules/game.js"></script>   
 
   <script>
-    // Simulated game state (replace with your actual game values)
     let gameState = {
       score: 0,
       hp: 120,
@@ -228,18 +259,30 @@
       playerX: 0,
       playerY: 0
     };
-
-    // Get HUD elements
     const scoreText = document.getElementById('scoreText');
     const hpText = document.getElementById('hpText');
     const hpStat = document.getElementById('hpStat');
     const livesText = document.getElementById('livesText');
     const timeText = document.getElementById('timeText');
     const timeStat = document.getElementById('timeStat');
+
+    const debugToggle = document.getElementById('debugToggle');
     const debugInfo = document.getElementById('debugInfo');
+    let debugVisible = false;
 
-
-
+    debugToggle.addEventListener('click', () => {
+      debugVisible = !debugVisible;
+      debugInfo.style.display = debugVisible ? 'block' : 'none';
+      
+      // Add active state to button
+      if (debugVisible) {
+        debugToggle.style.background = 'var(--AquaAura)';
+        debugToggle.style.boxShadow = '0 0 20px var(--AquaAura)';
+      } else {
+        debugToggle.style.background = 'rgba(0, 0, 0, 0.8)';
+        debugToggle.style.boxShadow = 'none';
+      }
+    });
 
 
   </script>

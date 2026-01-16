@@ -40,7 +40,6 @@ canvas {
 }
 
 /* ============================ IF USING A CANVAS, DON'T USE trinkets.css ============================ */
-
 /* ============================ RAINBOW BACK TO TOP ============================ */
 #scroll-top {
             position: fixed;
@@ -171,7 +170,7 @@ canvas {
 
 .canvas-container {
     margin: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     padding: 0px;
     margin-top:5px;
 }
@@ -189,4 +188,19 @@ canvas {
             visibility: hidden;
         }
 
+}
+
+/* ========= GREEN PULSING ARROW ======= */
+@keyframes arrow-pulse {
+  0%, 100% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(0.74);
+  }
+}
+
+.victory-arrow {
+  animation: arrow-pulse 0.167s ease-in-out infinite;
+  transform-origin: center;
 }

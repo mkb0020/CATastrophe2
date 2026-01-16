@@ -25,6 +25,7 @@
   --ParticleGlow2: rgba(255,199,255, 0.5);
   --ParticleGlow3: rgba(255,199,255, 0.8);
   --PlanksPink: #ff69b4;
+  --PlanksGlow3: #ff69b4bc;
   --HiggsHotPink: #c71585;
   --RadiationRed: #730132;
 /*SECONDARY MINT FAM*/
@@ -38,6 +39,7 @@
   --AuraGlow3: rgba(0,255,255, 0.8);
   --AtomicAqua: #9EFF9E;
   --RadioactiveGreen: #58e84c;
+  --RadioactiveGlow3: #59e84cc0;
   --HalfLifeLime: #f3ffe5;
   --UraniumGreen: #75FB1E;
 /*NEUTERALS*/
@@ -113,6 +115,7 @@ body {
     color: var(--White);
     background-repeat: no-repeat; 
     background-attachment: fixed;
+    overflow: hidden;
 }
 
 .page-content {
@@ -138,7 +141,7 @@ body {
       z-index: 2;
       text-align: center;
       font-family: 'Orbitron', monospace;
-      padding-top: 40px;
+      padding-top: 30px;
     }
 
 

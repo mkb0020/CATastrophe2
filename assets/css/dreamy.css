@@ -10,7 +10,9 @@
     .background-gradient {
       position: fixed;
       inset: 0;
-      background: linear-gradient(to bottom, #37025A 5%, #8a2be2 5%, var(--HiggsHotPink) 10%, var(--PlanksPink) 20%, var(--PlanksPink) 100%);
+      /*background: linear-gradient(to bottom, #37025A 5%, #8a2be2 5%, var(--HiggsHotPink) 10%, var(--PlanksPink) 20%, var(--PlanksPink) 100%);*/
+      background: linear-gradient(to bottom, #37025A 50%, #8a2be2 70%, var(--HiggsHotPink) 85%, var(--HiggsHotPink) 97%, var(--HiggsHotPink) 100%);
+
       opacity: 0.85;
       z-index: -2;
     }
@@ -58,12 +60,12 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -1;
+      z-index: 2;
     }
 
     .star {
       position: absolute;
-      background: white;
+      background: var(--ParticlePink);
       border-radius: 50%;
       animation: twinkle 4s infinite;
     }
@@ -73,20 +75,4 @@
       50% { opacity: 1; }
     }
 
-    #stars {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: -10;
-        }
-.star {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #fff;
-            animation: twinkle 4s infinite;
-        }
-@keyframes twinkle {
-            0%,100% { opacity: 0.4; transform: scale(1); }
-            50%     { opacity: 1; transform: scale(1.4); }
-        }
+
