@@ -360,7 +360,7 @@ export function createCharSelectScene() {
       
       wait(2.2, () => {
         cafeSprite.frame = 1; // DOOR OPENS
-        play("door", { volume: 0.8 });
+        play("door", { volume: 0.5 });
         wait(0.3, () => {
           tween(
             MID_SCALE,
@@ -386,7 +386,7 @@ export function createCharSelectScene() {
           cafeSprite.opacity = 0;
           
           fadeInUI();
-          shopMusic = play("shop", { volume: 0.4, loop: true });
+          shopMusic = play("shop", { volume: 0.3, loop: true });
           
           wait(0.8, () => {
             animationComplete = true;
@@ -1014,7 +1014,7 @@ function playPourAnimation(onComplete) {
   ]);
 
   tween(pourSprite.opacity, 1, 0.3, (val) => pourSprite.opacity = val, easings.easeOutQuad);
-  play("pour", { volume: 0.8 });
+  play("pour", { volume: 0.3 });
   wait(0.3, () => {
     let frameTime = 0;
     const FRAME_DURATION = 1.2 / 18; 

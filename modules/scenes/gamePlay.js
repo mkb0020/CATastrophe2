@@ -4,7 +4,6 @@ import { getLevel } from '../config/levels.js';
 import { 
   setupLevelMusic,
   addLevelEnvironment,
-  addUIBackgrounds,
   addVictoryArea,
   addCups,
   addSpecialItems,
@@ -31,7 +30,8 @@ import {
   setupSequentialPlatformActivation,
   addMiniBoss,
   setupMiniBossReflect,
-  spawnRewardItems
+  spawnRewardItems,
+  hideHUD
 } from '../helpers/levelHelpers.js';
 import { createVolumeToggle } from '../helpers/kittyHelpers.js';
 
@@ -57,7 +57,6 @@ function createUnifiedLevel(levelId, data) {
   setupLevelMusic(levelConfig);
 
   const { bg } = addLevelEnvironment(levelConfig);
-  addUIBackgrounds();
   addVictoryArea(levelConfig);
   
   addCups(levelConfig);
@@ -116,6 +115,10 @@ function createUnifiedLevel(levelId, data) {
   });
 
   createVolumeToggle();
+
+  onSceneLeave(() => {
+  hideHUD();
+  });
 }
 
 
@@ -159,7 +162,6 @@ export function createLevel5Scene(data) {
   setupLevelMusic(levelConfig);
 
   const { bg } = addLevelEnvironment(levelConfig);
-  addUIBackgrounds();
   addVictoryArea(levelConfig);
   
   addCups(levelConfig);
@@ -226,4 +228,8 @@ export function createLevel5Scene(data) {
   });
 
   createVolumeToggle();
+
+  onSceneLeave(() => {
+    hideHUD();
+  });
 }
