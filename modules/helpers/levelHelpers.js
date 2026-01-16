@@ -1,6 +1,6 @@
 // levelHelpers.js
 import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from '../config/gameConfig.js';
-import { spawnEnemy, handlePlayerEnemyCollision, updateEnemies } from '../systems/levelSystem.js';
+//import { spawnEnemy, handlePlayerEnemyCollision, updateEnemies } from '../systems/levelSystem.js';
 import { setupPauseSystem,createVolumeToggle, stopAllMusic, startLevelMusic, startBossMusic, startFinalBossMusic} from '../helpers/kittyHelpers.js';
 import { animateGhostPoof } from '../helpers/bossHelpers.js';
 import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
@@ -179,13 +179,7 @@ function createSpriteGround(x, y, width, height) {
 
 
 export function addLevelEnvironment(levelConfig) {
-  const bg = add([
-    sprite(levelConfig.background, { anim: "idle" }),
-    pos(-500, 0),
-    scale(2, 2),
-    z(-4),
-    "background"
-  ]);
+  const bg = null;
 
   const yeet = add([
     sprite('yeet'),
@@ -651,9 +645,9 @@ export function createPlayer(levelConfig, character, startHP) {
   
   const targetWidth = 128;
   const targetHeight = 92;
-  const hitboxWidth = 60;
+  const hitboxWidth = 80;
   const hitboxHeight = 40;
-  const offsetX = 1;
+  const offsetX = 5;
   const offsetY = 0;
 
   const player = add([
@@ -694,8 +688,8 @@ export function createPlayer(levelConfig, character, startHP) {
 //   const debugHitbox = add([
 //   rect(hitboxWidth, hitboxHeight),
 //   pos(0, 0),
-//   color(255, 0, 0),
-//   opacity(0.5), 
+ //  color(255, 0, 0),
+//  opacity(0.5), 
 //   outline(2, rgb(255, 0, 0)),
 //   anchor("center"),
 //   z(1000),
@@ -703,20 +697,20 @@ export function createPlayer(levelConfig, character, startHP) {
 //  ]);
 
 //   player.onUpdate(() => {
-//   const currentOffsetX = player.facingRight ? offsetX : -offsetX;
+ //  const currentOffsetX = player.facingRight ? offsetX : -offsetX;
 //   debugHitbox.pos = vec2(
-//    player.pos.x + currentOffsetX,
-//    player.pos.y + offsetY
+ //   player.pos.x + currentOffsetX,
+//   player.pos.y + offsetY
 //    );
-//    });
+ //   });
   return player;
 }
 
 
 export function setupPlayerControls(player, gameStateGetter) {
-  const hitboxWidth = 60;
+  const hitboxWidth = 80;
   const hitboxHeight = 40;
-  const baseOffsetX = 1;
+  const baseOffsetX = 5;
   const offsetY = 0;
 
   onKeyDown("left", () => {
@@ -1059,22 +1053,21 @@ export function setupCucumberSpawner(levelConfig, gameStateGetter) {
   loop(spawnRate, () => {
     if (gameStateGetter()) {
       const camX = camPos().x;
+      const camLeft = camX - SCREEN_W / 2;
+      const camRight = camX + SCREEN_W / 2;
       
       const activeZones = zones.filter(zone => 
-        zone.end > camX - SCREEN_W/2 && 
-        zone.start < camX + SCREEN_W
+        zone.end > camLeft - 100 && 
+        zone.start < camRight + 100
       );
       
-      if (activeZones.length === 0) return; 
+      if (activeZones.length === 0) return;
       
       const zone = choose(activeZones);
       
-      const spawnX = Math.max(
-        camX - SCREEN_W/2,
-        Math.min(
-          camX + SCREEN_W/2,
-          rand(zone.start, zone.end)
-        )
+      const spawnX = rand(
+        Math.max(zone.start, camLeft),
+        Math.min(zone.end, camRight)
       );
       
       const spawnY = -50;
@@ -1089,13 +1082,22 @@ export function setupCucumberSpawner(levelConfig, gameStateGetter) {
         {
           fallSpeed: rand(3, 6),
           rotationSpeed: rand(2, 5),
-          damage: levelConfig.enemies.cucumbers.damage
+          damage: levelConfig.enemies.cucumbers.damage,
+          isActive: true
         },
         z(3),
         "cucumber"
       ]);
       
       cucumber.onUpdate(() => {
+        const distFromCam = Math.abs(cucumber.pos.x - camPos().x);
+        
+        if (distFromCam > SCREEN_W * 0.75) {
+          cucumber.isActive = false;
+          return;
+        }
+        
+        cucumber.isActive = true;
         cucumber.pos.y += cucumber.fallSpeed;
         cucumber.angle += cucumber.rotationSpeed;
         
@@ -1170,6 +1172,24 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
     zones.push({ start: 0, end: levelConfig.length });
   }
   
+  const groundMap = new Map();
+  const gridSize = 50; 
+  
+  for (let x = 0; x < levelConfig.length; x += gridSize) {
+    const hasGround = levelConfig.GroundSegments.some(segment => 
+      x >= segment.x && 
+      x <= segment.x + segment.width &&
+      segment.y >= 380 && 
+      segment.y <= 450
+    );
+    groundMap.set(Math.floor(x / gridSize), hasGround);
+  }
+  
+  const hasGroundAt = (x) => {
+    const gridX = Math.floor(x / gridSize);
+    return groundMap.get(gridX) || false;
+  };
+  
   loop(spawnRate, () => {
     if (gameStateGetter()) {
       const camX = camPos().x;
@@ -1207,14 +1227,7 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
       const spawnX = rand(spawnArea.start, spawnArea.end);
       const spawnY = 390;
       
-      const hasGroundAtSpawn = levelConfig.GroundSegments.some(segment => 
-        spawnX >= segment.x && 
-        spawnX <= segment.x + segment.width &&
-        segment.y >= spawnY - 10 && 
-        segment.y <= spawnY + 60
-      );
-      
-      if (!hasGroundAtSpawn) {
+      if (!hasGroundAt(spawnX)) {
         console.warn(`Rat spawn aborted at x:${spawnX} - no ground detected!`);
         return;
       }
@@ -1233,17 +1246,24 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
           patrolZone: zone,
           groundCheckDistance: 50,
           baseY: spawnY,
-          bobTimer: 0,
+          bobTimer: rand(0, 100), 
           bobSpeed: rand(8, 12),
-          bobAmount: rand(2, 4)
+          bobAmount: rand(2, 4),
+          leftBoundary: zone.start + 50,
+          rightBoundary: zone.end - 50,
+          hasGroundAt: hasGroundAt 
         },
         z(3),
         "rat"
       ]);
       
       rat.onUpdate(() => {
+        const distFromCam = Math.abs(rat.pos.x - camPos().x);
+        if (distFromCam > SCREEN_W * 1.2) {
+          return;
+        }
+     
         rat.move(rat.speed * rat.direction, 0);
-        
         rat.flipX = rat.direction === 1;
         
         rat.bobTimer += dt() * rat.bobSpeed;
@@ -1253,28 +1273,25 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
           rat.yVelocity += 1600 * dt();
           rat.pos.y += rat.yVelocity * dt();
         } else {
-          rat.baseY = 390;
           rat.pos.y = rat.baseY + bobOffset;
           rat.yVelocity = 0;
         }
         
-        if (rat.direction === -1 && rat.pos.x <= rat.patrolZone.start + 50) {
+        if (rat.direction === -1 && rat.pos.x <= rat.leftBoundary) {
           rat.direction = 1;
-        }
-        if (rat.direction === 1 && rat.pos.x >= rat.patrolZone.end - 50) {
+        } else if (rat.direction === 1 && rat.pos.x >= rat.rightBoundary) {
           rat.direction = -1;
         }
         
-        const checkX = rat.pos.x + (rat.direction * rat.groundCheckDistance);
-        const hasGroundAhead = levelConfig.GroundSegments.some(segment => 
-          checkX >= segment.x && 
-          checkX <= segment.x + segment.width &&
-          segment.y >= rat.baseY - 10 && 
-          segment.y <= rat.baseY + 60
-        );
+        const distFromLeft = rat.pos.x - rat.leftBoundary;
+        const distFromRight = rat.rightBoundary - rat.pos.x;
+        const nearEdge = Math.min(distFromLeft, distFromRight) < 100;
         
-        if (!hasGroundAhead && rat.pos.y >= 380) {
-          rat.direction *= -1;
+        if (nearEdge) {
+          const checkX = rat.pos.x + (rat.direction * rat.groundCheckDistance);
+          if (!rat.hasGroundAt(checkX)) {
+            rat.direction *= -1;
+          }
         }
         
         if (rat.pos.x < camPos().x - SCREEN_W - 200 || 
@@ -1385,12 +1402,24 @@ export function addLaserBeams(levelConfig) {
         scanDirection: 1,
         scanSpeed: 100,
         cycleTimer: 0,
-        cycleDuration: 4
+        cycleDuration: 4,
+        baseX: x, 
+        nearCamera: false
       },
       "laser"
     ]);
     
     laser.onUpdate(() => {
+      const camX = camPos().x;
+      const distFromCam = Math.abs(laser.baseX - camX);
+      laser.nearCamera = distFromCam < SCREEN_W;
+      
+      if (!laser.nearCamera) {
+        laser.isActive = false;
+        laser.opacity = 0;
+        return;
+      }
+      
       laser.cycleTimer += dt();
       
       if (laser.cycleTimer < 2) {
@@ -1401,7 +1430,7 @@ export function addLaserBeams(levelConfig) {
         if (laser.scanPos > 50 || laser.scanPos < -50) {
           laser.scanDirection *= -1;
         }
-        laser.pos.x = x + laser.scanPos;
+        laser.pos.x = laser.baseX + laser.scanPos;
         
       } else {
         laser.isActive = false;
@@ -1472,18 +1501,20 @@ export function setupLevelPause(gameActiveGetter, gameActiveSetter, onQuitCallba
 }
 
 export function setupPlayerCamera(player, character, bg, gameStateGetter) {
+  const bgElement = document.querySelector('.parallax-bg');
+
   player.onUpdate(() => {
     if (gameStateGetter()) {
       setCamPos(player.pos.x, SCREEN_H / 2);
       
-      if (bg) {
-        bg.pos.x = -500 + (player.pos.x * 0.5);
+      if (bgElement) {
+        bgElement.style.transform = `translateX(${-player.pos.x * 0.5}px)`;
       }
       
       updatePlayerAnim(player, character);
     }
   });
-}
+  }
 
 
 // ======= MINI BOSS =======
@@ -1524,6 +1555,10 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
   
   // MINI BOSS INTRO
   miniBoss.onUpdate(() => {
+    const distFromCam = Math.abs(miniBoss.pos.x - camPos().x);
+    if (distFromCam > SCREEN_W * 1.5) {
+      return; 
+    }
     const onPlatform = player.pos.y < 400;
     
     if (!miniBoss.introPlayed && player.pos.x > boss.x - 800 && onPlatform) {

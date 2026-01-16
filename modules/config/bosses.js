@@ -1,50 +1,50 @@
-// bosses.js - UPDATED BOSS NAMES AND ORDER
+// bosses.js - TESTING BOSS STATS
 export const BOSSES = {
-  BossCup: { // BOSS 1
+  BossCup: { 
     name: "LARGE HADRON CUP (LHC)",  
-    maxHP: 105,
-    atk: 21,
-    speed: 20,
-    defense: 24,
+    maxHP: 120,
+    atk: 29,
+    speed: 29,
+    defense: 29,
     sprite: 'bossCup',
     glowSprite: 'CupGlow',
     background: 'battleBG1', 
     introMessage: ["A LARGE HADRON CUP WANTS TO FIGHT! CLICK ON A MOVE TO BEGIN."],
     nextState: 'Transition2',
     moves: {
-      "STEAM BURN": { dmg: 20, uses: 99 },
+      "STEAM BURN": { dmg: 24, uses: 99 },
       "ESPRESSO EMBER": { dmg: 26, speedBoost: true, uses: 3 },
-      "REFILL": { heal: 22, uses: 2 }
+      "REFILL": { heal: 25, uses: 2 }
     },
     finishHim: 'CatCrossbow',
   },
 
-  BossCucumber: { // BOSS 2 
+  BossCucumber: { 
     name: "UNSTABLE CUCUMBER", 
-    maxHP: 115,
-    atk: 27,
-    speed: 21,
-    defense: 28,
+    maxHP: 125,
+    atk: 30,
+    speed: 29,
+    defense: 33,
     sprite: 'bossCucumber',
     glowSprite: 'CucumberGlow',
     background: 'battleBG1',
     introMessage: ["AN UNSTABLE CUCUMBER WANTS TO FIGHT! IT'S GETTING WEIRD IN HERE."],
     nextState: 'Transition3',
     moves: {
-      "CUCUMBER CRUNCH": { dmg: 24, uses: 99 },
-      "CUCUMBER CANNON": { dmg: 27, uses: 3 },
+      "CUCUMBER CRUNCH": { dmg: 28, uses: 99 },
+      "CUCUMBER CANNON": { dmg: 28, uses: 3 },
       "GOURD GUARD": { defenseBoost: true, duration: 2, uses: 1 },
-      "PICKLE": { heal: 25, uses: 2 }
+      "PICKLE": { heal: 30, uses: 2 }
     },
     finishHim: 'BrassToeBeans',
   },
 
-  BossRatKing: { // BOSS 3 -BIG ATTACKS
+  BossRatKing: { 
     name: "RADIOACTIVE RAT KING", 
-    maxHP: 120,
-    atk: 28,
-    speed: 27,
-    defense: 20,
+    maxHP: 115,
+    atk: 33,
+    speed: 26,
+    defense: 27,
     sprite: 'bossRat',
     glowSprite: 'RatGlow',
     background: 'battleBG1', 
@@ -52,33 +52,33 @@ export const BOSSES = {
     nextState: 'Transition4',
     moves: {
       "BITE": { dmg: 25, uses: 99 }, 
-      "RODENT RAGE": { dmg: 23, speedBoost: true, uses: 3 },
-      "MOUSE MISSILES": { dmg: 24, uses: 3 }, 
-      "SCURRY": { heal: 20, uses: 1 }
+      "RODENT RAGE": { dmg: 25, speedBoost: true, uses: 3 },
+      "MOUSE MISSILES": { dmg: 26, uses: 3 }, 
+      "SCURRY": { heal: 30, uses: 1 }
     },
     finishHim: 'PURRcisionRifle',
   },
 
-  BossLaserPointer: { // BOSS 4 - FAST
+  BossLaserPointer: { 
     name: "GAMMA LASER POINTER", 
-    maxHP: 125,
-    atk: 26,
-    speed: 29, 
-    defense: 27,
+    maxHP: 135,
+    atk: 30,
+    speed: 32, 
+    defense: 28,
     sprite: 'bossLaserPointer',
     glowSprite: 'laserPointerGlow',
     background: 'battleBG1', 
     introMessage: ["FINALLY CAUGHT THE GAMMA LASER POINTER!! TIME TO FINISH HIM OFF!"],
     nextState: 'Transition5',
     moves: {
-      "ZAP": { dmg: 24, speedBoost: true, uses: 99 }, 
+      "ZAP": { dmg: 21, speedBoost: true, uses: 99 }, 
       "FLASH": { dmg: 23, speedBoost: true, uses: 4 },
-      "LASER BEAM": { dmg: 24, uses: 3 }
+      "LASER BEAM": { dmg: 25, uses: 3 }
     },
     finishHim: 'MeowlotovCocktail',
   },
 
-  observerBoss: { // BOSS 5 - FINAL BOSS, TANKIEST
+  observerBoss: { 
     name: "OBSERVER", 
     maxHP: 130,
     atk: 28,
@@ -90,10 +90,10 @@ export const BOSSES = {
     introMessage: ["THE OBSERVER WANTS TO OPEN THE BOX!"],    
     nextState: 'Transition7',
     moves: {
-      "POISON": { dmg: 22, uses: 99 },
-      "SUPERPOSITION SLAM": { dmg: 23, speedBoost: true, uses: 4 },
-      "HYDROGEN HAMMER": { dmg: 26, uses: 3 }, 
-      "QUANTUM RECOVER": { heal: 23, uses: 2 }
+      "SUPERPOSITION SLAMPOISON": { dmg: 21, uses: 99 },
+      "POISON": { dmg: 22, speedBoost: true, uses: 4 },
+      "HYDROGEN HAMMER": { dmg: 24, uses: 3 }, 
+      "QUANTUM RECOVER": { heal: 25, uses: 3 }
     },
     finishHim: 'FelineFission',
   }

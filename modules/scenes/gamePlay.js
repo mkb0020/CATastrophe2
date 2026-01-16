@@ -1,5 +1,5 @@
 // gamePlay.js
-import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
+//import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getLevel } from '../config/levels.js';
 import { 
   setupLevelMusic,

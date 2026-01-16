@@ -75,24 +75,24 @@ export const CHARACTERS = {
   NONA: {
     name: 'NONA',
     stats: {
-      maxHP: 1000,
-      baseHP: 1000,
-      baseAtk: 1000,
-      baseSpeed: 1000,
-      baseDefense: 1000,
+      maxHP: 120,
+      baseHP: 120,
+      baseAtk: 30,
+      baseSpeed: 30,
+      baseDefense: 30,
     },
     platformerStats: { 
-      speed: 7,
-      jumpPower: -11,            
-      maxFallSpeed: 400,           
+      speed: 8,
+      jumpPower: -12,            
+      maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
       groundControlMultiplier: 1.0
     },
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
       "ZOOMIES": { dmg: 26, speedBoost: true, uses: 3 },
-      "CATNIP CLAW": { dmg: 30, uses: 2 },
-      "MAKE BISCUITS": { heal: 30, uses: 3 }
+      "CATNIP CLAW": { dmg: 32, uses: 2 },
+      "MAKE BISCUITS": { heal: 30, uses: 99 } // FOR TESTING
     },
     sprites: getCharacterSpritePaths('Nona')   
   },
@@ -100,10 +100,35 @@ export const CHARACTERS = {
   GATO: {
     name: 'GATO',
     stats: {
-      maxHP: 130,
-      baseHP: 130,
-      baseAtk: 26,
-      baseSpeed: 20,
+      maxHP: 125,
+      baseHP: 125,
+      baseAtk: 29,
+      baseSpeed: 29,
+      baseDefense: 31,
+    },
+    platformerStats: { 
+      speed: 8,
+      jumpPower: -11,            
+      maxFallSpeed: 500,           
+      airControlMultiplier: 0.95,  
+      groundControlMultiplier: 1.0
+    },
+    moves: {
+      "SCRATCH": { dmg: 22, uses: 99 },
+      "ZOOMIES": { dmg: 26, speedBoost: true, uses: 3 },
+      "CATNIP CLAW": { dmg: 32, uses: 2 },
+      "MAKE BISCUITS": { heal: 30, uses: 3 }
+    },
+    sprites: getCharacterSpritePaths('Gato')
+  },
+  
+  NIELS: {
+    name: 'NIELS',
+    stats: {
+      maxHP: 115,
+      baseHP: 115,
+      baseAtk: 31,
+      baseSpeed: 31,
       baseDefense: 29,
     },
     platformerStats: { 
@@ -116,32 +141,7 @@ export const CHARACTERS = {
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
       "ZOOMIES": { dmg: 26, speedBoost: true, uses: 3 },
-      "CATNIP CLAW": { dmg: 30, uses: 2 },
-      "MAKE BISCUITS": { heal: 30, uses: 3 }
-    },
-    sprites: getCharacterSpritePaths('Gato')
-  },
-  
-  NIELS: {
-    name: 'NIELS',
-    stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 28,
-      baseSpeed: 23,
-      baseDefense: 23,
-    },
-    platformerStats: { 
-      speed: 8,
-      jumpPower: -11,            
-      maxFallSpeed: 500,           
-      airControlMultiplier: 0.95,  
-      groundControlMultiplier: 1.0
-    },
-    moves: {
-      "SCRATCH": { dmg: 22, uses: 99 },
-      "ZOOMIES": { dmg: 26, speedBoost: true, uses: 3 },
-      "CATNIP CLAW": { dmg: 30, uses: 2 },
+      "CATNIP CLAW": { dmg: 32, uses: 2 },
       "MAKE BISCUITS": { heal: 30, uses: 3 }
     },
     sprites: getCharacterSpritePaths('Niels')
@@ -150,11 +150,11 @@ export const CHARACTERS = {
   NOVA: {
     name: 'NOVA',
     stats: {
-      maxHP: 125,
-      baseHP: 125, 
-      baseAtk: 27,
-      baseSpeed: 24,
-      baseDefense: 23,
+      maxHP: 120,
+      baseHP: 120, 
+      baseAtk: 30,
+      baseSpeed: 31,
+      baseDefense: 29,
     },
     platformerStats: { 
       speed: 8,
@@ -166,7 +166,7 @@ export const CHARACTERS = {
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
       "ZOOMIES": { dmg: 26, speedBoost: true, uses: 3 },
-      "CATNIP CLAW": { dmg: 30, uses: 2 },
+      "CATNIP CLAW": { dmg: 32, uses: 2 },
       "MAKE BISCUITS": { heal: 30, uses: 3 }
     },
     sprites: getCharacterSpritePaths('Nova')
@@ -175,11 +175,11 @@ export const CHARACTERS = {
   AUBIE: {
     name: 'AUBIE',
     stats: {
-      maxHP: 130,
-      baseHP: 130,
-      baseAtk: 27,
-      baseSpeed: 20,
-      baseDefense: 28,
+      maxHP: 125,
+      baseHP: 125,
+      baseAtk: 29,
+      baseSpeed: 29,
+      baseDefense: 31,
     },
     platformerStats: { 
       speed: 8,
@@ -191,7 +191,7 @@ export const CHARACTERS = {
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
       "ZOOMIES": { dmg: 26, speedBoost: true, uses: 3 },
-      "CATNIP CLAW": { dmg: 30, uses: 2 },
+      "CATNIP CLAW": { dmg: 32, uses: 2 },
       "MAKE BISCUITS": { heal: 30, uses: 3 }
     },
     sprites: getCharacterSpritePaths('Aubie')
@@ -200,11 +200,11 @@ export const CHARACTERS = {
   DOUG: {
     name: 'DOUG',
     stats: {
-      maxHP: 120,
-      baseHP: 120,
-      baseAtk: 25,
-      baseSpeed: 27,
-      baseDefense: 27,
+      maxHP: 115,
+      baseHP: 115,
+      baseAtk: 31,
+      baseSpeed: 29,
+      baseDefense: 31,
     },
     platformerStats: { 
       speed: 8,
@@ -216,7 +216,7 @@ export const CHARACTERS = {
     moves: {
       "SCRATCH": { dmg: 22, uses: 99 },
       "ZOOMIES": { dmg: 26, speedBoost: true, uses: 3 },
-      "CATNIP CLAW": { dmg: 30, uses: 2 },
+      "CATNIP CLAW": { dmg: 32, uses: 2 },
       "MAKE BISCUITS": { heal: 30, uses: 3 }
     },
     sprites: getCharacterSpritePaths('Doug')
@@ -254,20 +254,20 @@ export const rainbowCat = {
 };
 
 // RAINBOW CAT / CATNIP FRAME MAPPING (1x12 grid)
-// 0: STAND
 // 1-8: WALK
 // 9-11: JUMP
+// 12: IDLE
 export const RAINBOW_CAT_FRAMES = {
-  idle: 0,
-  walk0: 1,
-  walk1: 2,
-  walk2: 3,
-  walk3: 4,
-  walk4: 5,
-  walk5: 6,
-  walk6: 7,
-  walk7: 8,
-  jumpStart: 9,
-  jumpRising: 10,
-  jumpFalling: 11
+  walk0: 0,
+  walk1: 1,
+  walk2: 2,
+  walk3: 3,
+  walk4: 4,
+  walk5: 5,
+  walk6: 6,
+  walk7: 7,
+  jumpStart: 8,
+  jumpRising: 9,
+  jumpFalling: 10,
+  idle: 11
 };

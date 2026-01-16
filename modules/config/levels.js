@@ -14,50 +14,50 @@ export const BUBBLE_FRAMES = {
   bonusHP: 10, 
 };
 
-export const LEVELS = {
+export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
   level1: { 
     id: 'level1',
     name: 'Level 1',
-    timeLimit: 90,
-    length:  17000, 
+    timeLimit: 9000,
+    length:  20000, 
     playerSpawn: { x: 300, y: 200 }, 
     GroundSegments: [
-      { x: -1000, y: 440, width: 6000, height: 50 },
-      { x: 6300, y: 440, width: 1300, height: 50 },
-      { x: 9000, y: 440, width: 2000, height: 50 },
-      { x: 12000, y: 440, width: 5000, height: 50 },
+      { x: -1000, y: 440, width: 23000, height: 50 },
+      //{ x: 6300, y: 440, width: 1300, height: 50 },
+      //{ x: 9000, y: 440, width: 2000, height: 50 },
+      //{ x: 12000, y: 440, width: 5000, height: 50 },
     ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
     platforms: [
-        { x: 1500, y: 310, width: 200, height: 20 },
-        { x: 1950, y: 270, width: 200, height: 20 },
-        { x: 2400, y: 340, width: 200, height: 20 },
-        { x: 2850, y: 260, width: 200, height: 20 },
-        { x: 3300, y: 300, width: 200, height: 20 },
+        { x: 1500, y: 310, width: 225, height: 20 }, // 1500 - 4000
+        { x: 2050, y: 270, width: 225, height: 20 },
+        { x: 2600, y: 340, width: 225, height: 20 },
+        { x: 3150, y: 260, width: 225, height: 20 },
+        { x: 3700, y: 300, width: 225, height: 20 },
 
-        { x: 4500, y: 280, width: 200, height: 20 },
-        { x: 4950, y: 330, width: 200, height: 20 },
-        { x: 5400, y: 260, width: 200, height: 20 },
-        { x: 5850, y: 340, width: 200, height: 20 },
-        { x: 6300, y: 300, width: 200, height: 20 },
+        { x: 5000, y: 280, width: 225, height: 20 }, // 5000 - 7500
+        { x: 5550, y: 330, width: 225, height: 20 },
+        { x: 6100, y: 260, width: 225, height: 20 },
+        { x: 6650, y: 340, width: 225, height: 20 },
+        { x: 7200, y: 300, width: 225, height: 20 },
 
-        { x: 7500, y: 320, width: 200, height: 20 },
-        { x: 7950, y: 260, width: 200, height: 20 },
-        { x: 8400, y: 350, width: 200, height: 20 },
-        { x: 8850, y: 260, width: 200, height: 20 },
-        { x: 9300, y: 300, width: 200, height: 20 },
+        { x: 8500, y: 320, width: 225, height: 20 }, // 8500 - 11000
+        { x: 9050, y: 260, width: 225, height: 20 },
+        { x: 9600, y: 350, width: 225, height: 20 },
+        { x: 10150, y: 260, width: 225, height: 20 },
+        { x: 10700, y: 300, width: 225, height: 20 },
 
-        { x: 10500, y: 290, width: 200, height: 20 },
-        { x: 10950, y: 340, width: 200, height: 20 },
-        { x: 11400, y: 270, width: 200, height: 20 },
-        { x: 11850, y: 350, width: 200, height: 20 },
-        { x: 12300, y: 310, width: 200, height: 20 },
+        { x: 12000, y: 290, width: 225, height: 20 }, // 12000 - 14500
+        { x: 12550, y: 340, width: 225, height: 20 },
+        { x: 13100, y: 270, width: 225, height: 20 },
+        { x: 13650, y: 350, width: 225, height: 20 },
+        { x: 14200, y: 310, width: 225, height: 20 },
 
-        { x: 13500, y: 330, width: 200, height: 20 },
-        { x: 13950, y: 280, width: 200, height: 20 },
-        { x: 14400, y: 350, width: 200, height: 20 },
-        { x: 14850, y: 260, width: 200, height: 20 },
-        { x: 15300, y: 290, width: 200, height: 20 },
+        { x: 15500, y: 330, width: 225, height: 20 },   // 15500 - 18000
+        { x: 16050, y: 280, width: 225, height: 20 },
+        { x: 16600, y: 350, width: 225, height: 20 },
+        { x: 17150, y: 260, width: 225, height: 20 },
+        { x: 17700, y: 290, width: 225, height: 20 },
 
   ],
     noStuffZones: [{ start: 16000, end: 17000},], 
@@ -84,47 +84,48 @@ export const LEVELS = {
     id: 'level2',
     name: 'Level 2',
     timeLimit: 90,
-    length:  17000,  
+    length:  20000,    
     playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
-        { x: -1000, y: 440, width: 3300, height: 50 },
-        { x: 3200, y: 440, width: 1600, height: 50 },
-        { x: 6300, y: 440, width: 2000, height: 50 },
-        { x: 9000, y: 440, width: 2000, height: 50 },
-        { x: 12000, y: 440, width: 5000, height: 50 },
+        { x: -1000, y: 440, width: 23000, height: 50 },
+        //{ x: -1000, y: 440, width: 3300, height: 50 },
+        //{ x: 3200, y: 440, width: 1600, height: 50 },
+       // { x: 6300, y: 440, width: 2000, height: 50 },
+        //{ x: 9000, y: 440, width: 2000, height: 50 },
+       // { x: 12000, y: 440, width: 5000, height: 50 },
     ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
     hintPlatforms: [18],
     platforms: [
-        { x: 1500, y: 370, width: 175, height: 20 },
-        { x: 1956.25, y: 330, width: 175, height: 20 },
-        { x: 2412.5, y: 300, width: 175, height: 20 },
-        { x: 2868.75, y: 270, width: 175, height: 20 },
-        { x: 3325, y: 350, width: 175, height: 20 },
+        { x: 1500, y: 370, width: 200, height: 20 },
+        { x: 2050, y: 330, width: 200, height: 20 },
+        { x: 2600, y: 300, width: 200, height: 20 },
+        { x: 3150, y: 270, width: 200, height: 20 },
+        { x: 3700, y: 350, width: 200, height: 20 },
 
-        { x: 4500, y: 360, width: 175, height: 20 },
-        { x: 4956.25, y: 330, width: 175, height: 20 },
-        { x: 5412.5, y: 290, width: 175, height: 20 },
-        { x: 5868.75, y: 260, width: 175, height: 20 },
-        { x: 6325, y: 350, width: 175, height: 20 },
+        { x: 5000, y: 360, width: 200, height: 20 },
+        { x: 5550, y: 330, width: 200, height: 20 },
+        { x: 6100, y: 290, width: 200, height: 20 },
+        { x: 6650, y: 260, width: 200, height: 20 },
+        { x: 7200, y: 350, width: 200, height: 20 },
 
-        { x: 7500, y: 330, width: 175, height: 20 },
-        { x: 7956.25, y: 310, width: 175, height: 20 },
-        { x: 8412.5, y: 280, width: 175, height: 20 },
-        { x: 8868.75, y: 240, width: 175, height: 20 },
-        { x: 9325, y: 350, width: 175, height: 20 },
+        { x: 8500, y: 330, width: 200, height: 20 },
+        { x: 9050, y: 310, width: 200, height: 20 },
+        { x: 9600, y: 280, width: 200, height: 20 },
+        { x: 10150, y: 240, width: 200, height: 20 },
+        { x: 10700, y: 350, width: 200, height: 20 },
 
-        { x: 10500, y: 320, width: 175, height: 20 },
-        { x: 10956.25, y: 280, width: 175, height: 20 },
-        { x: 11412.5, y: 260, width: 175, height: 20 },
-        { x: 11868.75, y: 230, width: 175, height: 20 }, // EGG
-        { x: 12325, y: 340, width: 175, height: 20 },
+        { x: 12000, y: 320, width: 200, height: 20 },
+        { x: 12550, y: 280, width: 200, height: 20 },
+        { x: 13100, y: 260, width: 200, height: 20 },
+        { x: 13650, y: 230, width: 200, height: 20 }, // EGG
+        { x: 14200, y: 340, width: 200, height: 20 },
 
-        { x: 13500, y: 300, width: 175, height: 20 },
-        { x: 13956.25, y: 280, width: 175, height: 20 },
-        { x: 14412.5, y: 250, width: 175, height: 20 },
-        { x: 14868.75, y: 220, width: 175, height: 20 }, // MILK
-        { x: 15325, y: 360, width: 175, height: 20 },
+        { x: 15500, y: 300, width: 200, height: 20 },
+        { x: 16050, y: 280, width: 200, height: 20 },
+        { x: 16600, y: 250, width: 200, height: 20 },
+        { x: 17150, y: 220, width: 200, height: 20 }, // MILK
+        { x: 17700, y: 360, width: 200, height: 20 },
 
 
 
@@ -170,43 +171,44 @@ export const LEVELS = {
     id: 'level3',
     name: 'Level 3',
     timeLimit: 90,
-    length:  17000,
+    length:  20000,  
     playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
-      {x: -1000, y: 440, width: 3000, height: 50},
-      {x: 3200, y: 440, width: 1600, height: 50},
-      {x: 6300, y: 440, width: 2000, height: 50},
-      {x: 9700, y: 440, width: 700, height: 50},
-      {x: 12700, y: 440, width: 1200, height: 50},
-      {x: 15400, y: 440, width: 5000, height: 50}
+      { x: -1000, y: 440, width: 23000, height: 50 },
+      //{x: -1000, y: 440, width: 3000, height: 50},
+      //{x: 3200, y: 440, width: 1600, height: 50},
+      //{x: 6300, y: 440, width: 2000, height: 50},
+      //{x: 9700, y: 440, width: 700, height: 50},
+     // {x: 12700, y: 440, width: 1200, height: 50},
+     // {x: 15400, y: 440, width: 5000, height: 50}
 
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
     hintPlatforms: [23, 24, 25, 26],
     platforms: [
         {x: 1500, y: 380, width: 175, height: 20}, // G1
-        {x: 1956.25, y: 300, width: 175, height: 20},
-        {x: 2412.5, y: 250, width: 175, height: 20},
-        {x: 2868.75, y: 300, width: 175, height: 20},
-        {x: 3325, y: 180, width: 175, height: 20}, // CATNIP
+        {x: 2050, y: 300, width: 175, height: 20},
+        {x: 2600, y: 250, width: 175, height: 20},
+        {x: 3150, y: 300, width: 175, height: 20},
+        {x: 3700, y: 180, width: 175, height: 20}, // CATNIP
 
-        {x: 4500, y: 300, width: 175, height: 20}, // G2
-        {x: 4956.25, y: 400, width: 175, height: 20},
-        {x: 5412.5, y: 250, width: 175, height: 20},
-        {x: 5868.75, y: 210, width: 175, height: 20},
-        {x: 6325, y: 350, width: 175, height: 20},
+        {x: 5000, y: 300, width: 175, height: 20}, // G2
+        {x: 5550, y: 400, width: 175, height: 20},
+        {x: 6100, y: 250, width: 175, height: 20},
+        {x: 6650, y: 210, width: 175, height: 20},
+        {x: 7200, y: 350, width: 175, height: 20},
 
-        {x: 7500, y: 320, width: 175, height: 20}, // G3
-        {x: 7956.25, y: 380, width: 175, height: 20},
-        {x: 8412.5, y: 290, width: 175, height: 20},
-        {x: 8868.75, y: 220, width: 175, height: 20},
-        {x: 9325, y: 350, width: 175, height: 20},
+        {x: 8500, y: 320, width: 175, height: 20}, // G3
+        {x: 9050, y: 380, width: 175, height: 20},
+        {x: 9600, y: 290, width: 175, height: 20},
+        {x: 10150, y: 220, width: 175, height: 20},
+        {x: 10700, y: 350, width: 175, height: 20},
 
-        {x: 10500, y: 280, width: 175, height: 20}, // G4
-        {x: 10956.25, y: 420, width: 175, height: 20},
-        {x: 11412.5, y: 260, width: 175, height: 20},
-        {x: 11868.75, y: 170, width: 175, height: 20},
-        {x: 12325, y: 280, width: 175, height: 20},
+        {x: 12000, y: 280, width: 175, height: 20}, // G4
+        {x: 12550, y: 420, width: 175, height: 20},
+        {x: 13100, y: 260, width: 175, height: 20},
+        {x: 13650, y: 170, width: 175, height: 20},
+        {x: 14200, y: 280, width: 175, height: 20},
 
         {x: 13500, y: 350, width: 175, height: 20}, // G5
         {x: 14600, y: 450, width: 175, height: 20}, // LOWER-LEVEL
@@ -267,16 +269,17 @@ export const LEVELS = {
     id: 'level4',
     name: 'Level 4',
     timeLimit: 90,
-    length:  17000,
+    length:  20000,  
     playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
-      {x: 0, y: 440, width: 1300, height: 50},
-      {x: 3700, y: 440, width: 700, height: 50},
-      {x: 6200, y: 440, width: 1100, height: 50},
-      {x: 8500, y: 440, width: 500, height: 50},
-      {x: 9800, y: 440, width: 900, height: 50},
-      {x: 12750, y: 440, width: 800, height: 50},
-      {x: 15800, y: 440, width: 2000, height: 50},
+      { x: -1000, y: 440, width: 23000, height: 50 },
+      //{x: 0, y: 440, width: 1300, height: 50},
+      //{x: 3700, y: 440, width: 700, height: 50},
+     // {x: 6200, y: 440, width: 1100, height: 50},
+     // {x: 8500, y: 440, width: 500, height: 50},
+      //{x: 9800, y: 440, width: 900, height: 50},
+     // {x: 12750, y: 440, width: 800, height: 50},
+     // {x: 15800, y: 440, width: 2000, height: 50},
 
     ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
@@ -287,39 +290,39 @@ export const LEVELS = {
     },
       platforms: [
       {x: 1500, y: 380, width: 150, height: 20}, // GAUNTLET 1
-      {x: 1962, y: 350, width: 150, height: 20},
-      {x: 2424, y: 390, width: 150, height: 20},
-      {x: 2886, y: 350, width: 150, height: 20},
-      {x: 3348, y: 380, width: 150, height: 20},
+      {x: 2050, y: 350, width: 150, height: 20},
+      {x: 2600, y: 390, width: 150, height: 20},
+      {x: 3150, y: 350, width: 150, height: 20},
+      {x: 3700, y: 380, width: 150, height: 20},
 
-      {x: 4500, y: 360, width: 150, height: 20}, // GAUNTLET 2
-      {x: 4962, y: 250, width: 150, height: 20},
-      {x: 5424, y: 190, width: 150, height: 20}, // CATNIP
-      {x: 5886, y: 350, width: 150, height: 20},
-      {x: 6348, y: 270, width: 150, height: 20},
+      {x: 5000, y: 360, width: 150, height: 20}, // GAUNTLET 2
+      {x: 5550, y: 250, width: 150, height: 20},
+      {x: 6100, y: 190, width: 150, height: 20}, // CATNIP
+      {x: 6650, y: 350, width: 150, height: 20},
+      {x: 7200, y: 270, width: 150, height: 20},
 
-      {x: 7500, y: 280, width: 150, height: 20}, // GAUNTLET 3
-      {x: 7962, y: 410, width: 150, height: 20},
-      {x: 8424, y: 380, width: 150, height: 20},
-      {x: 8886, y: 290, width: 150, height: 20},
-      {x: 9348, y: 350, width: 150, height: 20},
+      {x: 8500, y: 280, width: 150, height: 20}, // GAUNTLET 3
+      {x: 9050, y: 410, width: 150, height: 20},
+      {x: 9600, y: 380, width: 150, height: 20},
+      {x: 10150, y: 290, width: 150, height: 20},
+      {x: 10700, y: 350, width: 150, height: 20},
 
-      {x: 10500, y: 300, width: 175, height: 20}, // GAUNTLET 4
-      {x: 10962, y: 180, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
-      {x: 11424, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
-      {x: 11886, y: 80, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
-      {x: 12348, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
+      {x: 12000, y: 300, width: 175, height: 20}, // GAUNTLET 4
+      {x: 12550, y: 180, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
+      {x: 13100, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
+      {x: 13650, y: 80, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
+      {x: 14200, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
 
-      {x: 10962, y: 440, width: 100, height: 20}, // HARD LOWER PATH TO EGG
+      {x: 13100, y: 440, width: 100, height: 20}, // HARD LOWER PATH TO EGG
       {x: 11424, y: 430, width: 100, height: 20}, // HARD LOWER PATH TO EGG
-      {x: 11886, y: 460, width: 100, height: 20}, // HARD LOWER PATH TO EGG
-      {x: 12348, y: 450, width: 100, height: 20}, // EGG
+      {x: 13650, y: 460, width: 100, height: 20}, // HARD LOWER PATH TO EGG
+      {x: 14200, y: 450, width: 100, height: 20}, // EGG
 
-      {x: 13500, y: 370, width: 150, height: 20}, // GAUNTLET 5
-      {x: 13962, y: 250, width: 150, height: 20},
-      {x: 14424, y: 200, width: 150, height: 20},
-      {x: 14886, y: 260, width: 150, height: 20},
-      {x: 15348, y: 370, width: 150, height: 20}
+      {x: 15500, y: 370, width: 150, height: 20}, // GAUNTLET 5
+      {x: 16050, y: 250, width: 150, height: 20},
+      {x: 16600, y: 200, width: 150, height: 20},
+      {x: 17150, y: 260, width: 150, height: 20},
+      {x: 17700, y: 370, width: 150, height: 20}
     ],
     noStuffZones: [  { start: 5300, end: 5600 },{ start: 10962, end: 12600 }], // CATNIP AND EGG
     cups: { enabled: true, count: 15 },
@@ -369,47 +372,48 @@ export const LEVELS = {
     id: 'level5',
     name: 'Level 5',
     timeLimit: 90,
-    length:  17000, 
+    length:  20000,   
     playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
-      {x: 0, y: 440, width: 1200, height: 50},
-      {x: 2650, y: 440, width: 1300, height: 50},
-      {x: 4225, y: 440, width: 500, height: 50},
-      {x: 6500, y: 440, width: 1000, height: 50},
-      {x: 9700, y: 440, width: 600, height: 50},
-      {x: 12700, y: 440, width: 600, height: 50},
-      {x: 13310, y: 470, width: 2400, height: 50},
-      {x: 15720, y: 440, width: 1000, height: 50}
+      { x: -1000, y: 440, width: 23000, height: 50 },
+      //{x: 0, y: 440, width: 1200, height: 50},
+      //{x: 2650, y: 440, width: 1300, height: 50},
+     // {x: 4225, y: 440, width: 500, height: 50},
+      //{x: 6500, y: 440, width: 1000, height: 50},
+     // {x: 9700, y: 440, width: 600, height: 50},
+     // {x: 12700, y: 440, width: 600, height: 50},
+     // {x: 13310, y: 470, width: 2400, height: 50},
+      //{x: 15720, y: 440, width: 1000, height: 50}
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE
     hintPlatforms: [20], 
     solidPlatforms: [20],
     platforms: [
       {x: 1500, y: 380, width: 125, height: 20}, // GAUNTLET 1
-      {x: 1962, y: 320, width: 125, height: 20},
-      {x: 2424, y: 250, width: 125, height: 20},
-      {x: 2886, y: 210, width: 125, height: 20},
-      {x: 3348, y: 150, width: 125, height: 20},
+      {x: 2050, y: 320, width: 125, height: 20},
+      {x: 2600, y: 250, width: 125, height: 20},
+      {x: 3150, y: 210, width: 125, height: 20},
+      {x: 3700, y: 150, width: 125, height: 20},
 
-      {x: 4500, y: 350, width: 125, height: 20}, // GAUNTLET 2
-      {x: 4962, y: 390, width: 125, height: 20},
-      {x: 5424, y: 430, width: 125, height: 20},
-      {x: 5886, y: 450, width: 125, height: 20},
-      {x: 6348, y: 370, width: 125, height: 20},
+      {x: 5000, y: 350, width: 125, height: 20}, // GAUNTLET 2
+      {x: 5550, y: 390, width: 125, height: 20},
+      {x: 6100, y: 430, width: 125, height: 20},
+      {x: 6650, y: 450, width: 125, height: 20},
+      {x: 7200, y: 370, width: 125, height: 20},
 
-      {x: 7500, y: 360, width: 125, height: 20}, // GAUNTLET 3
-      {x: 7962, y: 310, width: 125, height: 20},
-      {x: 8424, y: 260, width: 125, height: 20},
-      {x: 8886, y: 190, width: 125, height: 20},
-      {x: 9348, y: 370, width: 125, height: 20},
+      {x: 8500, y: 360, width: 125, height: 20}, // GAUNTLET 3
+      {x: 9050, y: 310, width: 125, height: 20},
+      {x: 9600, y: 260, width: 125, height: 20},
+      {x: 10150, y: 190, width: 125, height: 20},
+      {x: 10700, y: 370, width: 125, height: 20},
 
-      {x: 10500, y: 300, width: 125, height: 20}, // GAUNTLET 4
-      {x: 10962, y: 430, width: 125, height: 20},
-      {x: 11424, y: 360, width: 125, height: 20},
-      {x: 11886, y: 280, width: 125, height: 20},
-      {x: 12348, y: 460, width: 125, height: 20},
+      {x: 12000, y: 300, width: 125, height: 20}, // GAUNTLET 4
+      {x: 12550, y: 430, width: 125, height: 20},
+      {x: 13100, y: 360, width: 125, height: 20},
+      {x: 13650, y: 280, width: 125, height: 20},
+      {x: 14200, y: 460, width: 125, height: 20},
 
-      {x: 13500, y: 330, width: 1000, height: 20}, // LONG PLATFORM THAT LEADS UP TO MINI BOSS
+      {x: 15500, y: 330, width: 1000, height: 20}, // LONG PLATFORM THAT LEADS UP TO MINI BOSS
 
     ],
     noStuffZones: [  

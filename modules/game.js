@@ -34,7 +34,7 @@ const k = kaplay({
   width: SCREEN_W,
   height: SCREEN_H,
   letterbox: true,
-  background: [11, 11, 27],
+  background: [11, 11, 27, 0],
   global: false, 
   canvas: document.getElementById("gameCanvas"),
   debug: true, 
@@ -149,13 +149,13 @@ async function loadAssets() {
     sliceY: 1
   });
 
-  loadSprite("levelBG", "assets/images/backgrounds/levelBG.png", {
-    sliceX: 1,  
-    sliceY: 1,   
-    anims: {
-      idle: { from: 0, to: 0} 
-    }
-  });
+  //loadSprite("levelBG", "assets/images/backgrounds/levelBG.png", {
+    //sliceX: 1,  
+   // sliceY: 1,   
+   // anims: {
+   //   idle: { from: 0, to: 0} 
+   // }
+ // });
 
     loadSprite("l5BG", "assets/images/backgrounds/Level5BG.png", {
     sliceX: 1,  

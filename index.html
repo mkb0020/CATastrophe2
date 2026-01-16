@@ -162,6 +162,7 @@
 
 <div class="hero-content">
       <div class="canvas-container">
+        <div class="parallax-bg"></div>
         <canvas id="gameCanvas" width="1000" height="480"></canvas>
       </div>
 </div>
@@ -274,7 +275,6 @@
       debugVisible = !debugVisible;
       debugInfo.style.display = debugVisible ? 'block' : 'none';
       
-      // Add active state to button
       if (debugVisible) {
         debugToggle.style.background = 'var(--AquaAura)';
         debugToggle.style.boxShadow = '0 0 20px var(--AquaAura)';
