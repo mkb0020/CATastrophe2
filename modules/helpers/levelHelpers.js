@@ -1,36 +1,38 @@
 // levelHelpers.js
 import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from '../config/gameConfig.js';
-//import { spawnEnemy, handlePlayerEnemyCollision, updateEnemies } from '../systems/levelSystem.js';
 import { setupPauseSystem,createVolumeToggle, stopAllMusic, startLevelMusic, startBossMusic, startFinalBossMusic} from '../helpers/kittyHelpers.js';
 import { animateGhostPoof } from '../helpers/bossHelpers.js';
 import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
 
 
 //==================================== PERFORMANCE ANALYSIS ====================================
-if (typeof window !== 'undefined') {
-  window.debugCounts = {
-    rats: 0,
-    cucumbers: 0,
-    lasers: 0,
-    player: 0,
-    cups: 0
-  };
+//if (typeof window !== 'undefined') {
+//  window.debugCounts = {
+ //   rats: 0,
+ //   cucumbers: 0,
+ //   lasers: 0,
+ //   player: 0,
+ //   cups: 0
+//  };
   
-  if (!window.debugLoopStarted) {
-    window.debugLoopStarted = true;
-    setInterval(() => {
-      console.log('=== Updates in last 3 seconds ===', window.debugCounts);
-      console.log('Objects:', {
-        rats: get("rat")?.length || 0,
-        cucumbers: get("cucumber")?.length || 0,
-        lasers: get("laser")?.length || 0
-      });
-      window.debugCounts = { rats: 0, cucumbers: 0, lasers: 0, player: 0, cups: 0 };
-    }, 3000);
-  }
-}
+//  if (!window.debugLoopStarted) {
+//    window.debugLoopStarted = true;
+//    setInterval(() => {
+ //     console.log('=== Updates in last 3 seconds ===', window.debugCounts);
+ //     console.log('Objects:', {
+ //       rats: get("rat")?.length || 0,
+ //       cucumbers: get("cucumber")?.length || 0,
+ //       lasers: get("laser")?.length || 0
+ //     });
+ //     window.debugCounts = { rats: 0, cucumbers: 0, lasers: 0, player: 0, cups: 0 };
+ //   }, 3000);
+ // }
+//}
 
 //==================================== TANSITION ANIMATION - TO GAME OVER ====================================
+
+
+
 function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {
   console.log('☠️ No lives remaining - GAME OVER');
   console.log('☠️ Playing blood drip animation...');
@@ -84,34 +86,16 @@ export function setupLevelMusic(levelConfig) {
 }
 
 function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSolidPlatform = false) {
-  const segmentWidth = 25;
-  const numMiddleSegments = Math.floor(width / segmentWidth) - 2;
-  
+  const spriteWidth = 70;
+  const scaleX = width / spriteWidth;
+  const scaleY = 2; 
   add([
-    sprite('platform', { frame: 0 }),
-    pos(x, y),
-    scale(vec2(1, 2)), 
-    z(-2),
-    "platformSprite"
-  ]);
-  
-  for (let i = 0; i < numMiddleSegments; i++) {
-    add([
-      sprite('platform', { frame: 1 }),
-      pos(x + segmentWidth + (i * segmentWidth), y),
-      scale(vec2(1, 2)),
+      sprite('platform'),
+      pos(x, y),
+    scale(vec2(scaleX, scaleY)), 
       z(-2),
       "platformSprite"
     ]);
-  }
-  
-  add([
-    sprite('platform', { frame: 2 }),
-    pos(x + width - segmentWidth, y),
-    scale(vec2(1, 2)),
-    z(-2),
-    "platformSprite"
-  ]);
   
   const collisionLayer = add([
     rect(width, height),
@@ -481,7 +465,7 @@ export function addCups(levelConfig) {
   const totalCups = levelConfig.cups.count;
   const platforms = levelConfig.platforms;
   
-  const isInNoStuffZone = (platform) => { // noStuffZone CHECKER
+  const isInNoStuffZone = (platform) => {
     if (!levelConfig.noStuffZones) return false;
     const platformCenter = platform.x + (platform.width / 2);
     return levelConfig.noStuffZones.some(zone => 
@@ -490,45 +474,55 @@ export function addCups(levelConfig) {
   };
   
   const platformsWithCups = new Set();
-  
   const eligibleIndices = platforms
     .map((platform, i) => ({ platform, index: i }))
     .filter(({ platform }) => !isInNoStuffZone(platform))
     .map(({ index }) => index);
   
-
   const shuffledIndices = eligibleIndices.sort(() => Math.random() - 0.5);
-  
   let cupsPlaced = 0;
   
-
+  const cupData = [];
+  
   for (let idx of shuffledIndices) {
     if (cupsPlaced >= totalCups) break;
     
     const platform = platforms[idx];
-    
     const x = platform.x + (platform.width / 2);
     const y = platform.y - 61;
     
-    add([
-      sprite('cup'),
-      pos(x, y),
-      area({ width: 40, height: 60 }),
-      anchor("center"),
-      scale(0.8),
-      rotate(0),
-      {
-        hasBeenKnocked: false,
-        rotationSpeed: 0,
-        fallSpeed: 0,
-        points: 10  
-      },
-      "cup"
-    ]);
-    
+    cupData.push({ x, y, spawned: false });
     cupsPlaced++;
     platformsWithCups.add(idx);
   }
+  
+  onUpdate(() => {
+    const camX = camPos().x;
+    const spawnDistance = SCREEN_W * 1.5; 
+    
+    cupData.forEach(cup => {
+      const distFromCam = Math.abs(cup.x - camX);
+      
+      if (!cup.spawned && distFromCam < spawnDistance) {
+        cup.spawned = true;
+        add([
+          sprite('cup'),
+          pos(cup.x, cup.y),
+          area({ width: 40, height: 60 }),
+          anchor("center"),
+          scale(0.8),
+          rotate(0),
+          {
+            hasBeenKnocked: false,
+            rotationSpeed: 0,
+            fallSpeed: 0,
+            points: 10
+          },
+          "cup"
+        ]);
+      }
+    });
+  });
   
   return platformsWithCups;
 }
@@ -545,7 +539,7 @@ export function setupCupCollection(player, scoreGetter, scoreSetter) {
       play("collectCup", { volume: 0.3 });
       
       cup.onUpdate(() => {
-          if (window.debugCounts) window.debugCounts.cups++; // ADD THIS
+         //if (window.debugCounts) window.debugCounts.cups++; 
 
         cup.fallSpeed += 600 * dt();
         cup.pos.y += cup.fallSpeed * dt();
@@ -769,8 +763,8 @@ export function createPlayer(levelConfig, character, startHP) {
   
   const targetWidth = 128;
   const targetHeight = 92;
-  const hitboxWidth = 80;
-  const hitboxHeight = 40;
+  const hitboxWidth = 90;
+  const hitboxHeight = 90;
   const offsetX = 5;
   const offsetY = 0;
 
@@ -831,66 +825,62 @@ export function createPlayer(levelConfig, character, startHP) {
 }
 
 export function setupPlayerControls(player, gameStateGetter) {
-  const hitboxWidth = 80;
-  const hitboxHeight = 40;
+  const hitboxWidth = 90;
+  const hitboxHeight = 90;
   const baseOffsetX = 5;
   const offsetY = 0;
-
-  onKeyDown("left", () => {
-    if (gameStateGetter()) {
-      const controlMultiplier = player.isGrounded() 
-        ? player.groundControl 
-        : player.airControl;
-      
-      const moveSpeed = player.speed * controlMultiplier;
-      player.move(-moveSpeed, 0);
-      player.isMoving = true;
-      player.facingRight = false;
-      player.flipX = true;
-      player.area.offset = vec2(-baseOffsetX, offsetY);
-    }
-  });
-
-  onKeyDown("right", () => {
-    if (gameStateGetter()) {
-      const controlMultiplier = player.isGrounded() 
-        ? player.groundControl 
-        : player.airControl;
-      
-      const moveSpeed = player.speed * controlMultiplier;
-      player.move(moveSpeed, 0);
-      player.isMoving = true;
-      player.facingRight = true;
-      player.flipX = false;
-      player.area.offset = vec2(baseOffsetX, offsetY);
-    }
-  });
-
-  onKeyRelease(["left", "right"], () => { 
-    player.isMoving = false; 
-  });
+  
+  let jumpPressed = false;
 
   onKeyPress("space", () => {
-    if (gameStateGetter() && player.isGrounded()) {
-      const spriteSheet = player.rainbowActive ? "rainbowCatSheet" : `${player.characterName}Sheet`;
-      const frames = player.rainbowActive ? RAINBOW_CAT_FRAMES : SPRITE_FRAMES;
-      
-      player.use(sprite(spriteSheet, { frame: frames.jumpStart }));
-      player.curState = 'jumpStart';
-      const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
-      player.scale = vec2(currentScale, SPRITE_SCALES.jump);
-      
-      wait(0.05, () => {
-        player.jump(player.playerJumpForce);
-      });
-    }
+    jumpPressed = true;
   });
   
-  player.onUpdate(() => {
-    if (player.vel.y > player.maxFallSpeed) {
-      player.vel.y = player.maxFallSpeed;
-    }
+  onKeyRelease("space", () => {
+    jumpPressed = false;
   });
+
+player.onUpdate(() => {
+  if (!gameStateGetter()) return;
+  
+  const controlMultiplier = player.isGrounded() 
+    ? player.groundControl 
+    : player.airControl;
+  
+  if (isKeyDown("left")) {
+    const moveSpeed = player.speed * controlMultiplier;
+    player.move(-moveSpeed, 0);
+    player.isMoving = true;
+    player.facingRight = false;
+    player.flipX = true;
+    player.area.offset = vec2(-baseOffsetX, offsetY);
+  } else if (isKeyDown("right")) {
+    const moveSpeed = player.speed * controlMultiplier;
+    player.move(moveSpeed, 0);
+    player.isMoving = true;
+    player.facingRight = true;
+    player.flipX = false;
+    player.area.offset = vec2(baseOffsetX, offsetY);
+  } else {
+    player.isMoving = false;
+  }
+  
+  if (isKeyDown("space") && player.isGrounded()) {
+    const spriteSheet = player.rainbowActive ? "rainbowCatSheet" : `${player.characterName}Sheet`;
+    const frames = player.rainbowActive ? RAINBOW_CAT_FRAMES : SPRITE_FRAMES;
+    
+    player.use(sprite(spriteSheet, { frame: frames.jumpStart }));
+    player.curState = 'jumpStart';
+    const currentScale = player.scale.x > 0 ? SPRITE_SCALES.jump : -SPRITE_SCALES.jump;
+    player.scale = vec2(currentScale, SPRITE_SCALES.jump);
+    
+    player.jump(player.playerJumpForce); 
+  }
+  
+  if (player.vel.y > player.maxFallSpeed) {
+    player.vel.y = player.maxFallSpeed;
+  }
+});
 }
 
 export function updatePlayerAnim(player, character) {
@@ -949,7 +939,7 @@ export function setupPlayerCamera(player, character, bg, gameStateGetter) {
   const bgElement = document.querySelector('.parallax-bg');
 
   player.onUpdate(() => {
-  if (window.debugCounts) window.debugCounts.player++; 
+  //if (window.debugCounts) window.debugCounts.player++; 
     if (gameStateGetter()) {
       setCamPos(player.pos.x, SCREEN_H / 2);
       
@@ -1296,7 +1286,7 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
       ]);
       
       rat.onUpdate(() => {
-          if (window.debugCounts) window.debugCounts.rats++; // ADD THIS
+          //if (window.debugCounts) window.debugCounts.rats++; 
 
         const distFromCam = Math.abs(rat.pos.x - camPos().x);
         if (distFromCam > SCREEN_W * 1.2) {
@@ -1448,7 +1438,7 @@ export function addLaserBeams(levelConfig) {
     ]);
     
     laser.onUpdate(() => {
-        if (window.debugCounts) window.debugCounts.lasers++; // ADD THIS
+       // if (window.debugCounts) window.debugCounts.lasers++; 
 
       const camX = camPos().x;
       const distFromCam = Math.abs(laser.baseX - camX);
@@ -1699,7 +1689,7 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
     play("throw", { volume: 0.7 });
     
     cucumber.onUpdate(() => {
-        if (window.debugCounts) window.debugCounts.cucumbers++; 
+       // if (window.debugCounts) window.debugCounts.cucumbers++; 
 
       cucumber.vel.y += cucumber.gravity * dt();
       cucumber.pos = cucumber.pos.add(cucumber.vel.x * dt(), cucumber.vel.y * dt());
@@ -1720,7 +1710,7 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
   return miniBoss;
 }
 
-export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
+export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) { // NEEDS TO BE MORE FORGIVING
   if (!miniBoss) return;
   
   player.onCollide("miniBossCucumber", (cucumber) => {

@@ -19,41 +19,43 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
     id: 'level1',
     name: 'Level 1',
     timeLimit: 9000,
-    length:  20000, 
+    length:  21000, 
     playerSpawn: { x: 300, y: 200 }, 
     GroundSegments: [
-      { x: -1000, y: 440, width: 23000, height: 50 },
-      //{ x: 6300, y: 440, width: 1300, height: 50 },
-      //{ x: 9000, y: 440, width: 2000, height: 50 },
-      //{ x: 12000, y: 440, width: 5000, height: 50 },
+      { x: -1000, y: 440, width: 3000, height: 50 },
+      { x: 3200, y: 440, width: 2000, height: 50 },
+      { x: 7000, y: 440, width: 2000, height: 50 },
+      { x: 10700, y: 440, width: 1500, height: 50 },
+      { x: 14200, y: 440, width: 2000, height: 50 },
+      { x: 17500, y: 440, width: 3000, height: 50 }
     ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY - CAN I REMOVE THIS WITHOUT BREAKING ANYTHING?
     platforms: [
-        { x: 1500, y: 310, width: 225, height: 20 }, // 1500 - 4000
+        { x: 1500, y: 310, width: 225, height: 20 }, // GAUNTLET 1
         { x: 2050, y: 270, width: 225, height: 20 },
         { x: 2600, y: 340, width: 225, height: 20 },
         { x: 3150, y: 260, width: 225, height: 20 },
         { x: 3700, y: 300, width: 225, height: 20 },
 
-        { x: 5000, y: 280, width: 225, height: 20 }, // 5000 - 7500
+        { x: 5000, y: 280, width: 225, height: 20 }, // GAUNTLET 2
         { x: 5550, y: 330, width: 225, height: 20 },
         { x: 6100, y: 260, width: 225, height: 20 },
         { x: 6650, y: 340, width: 225, height: 20 },
         { x: 7200, y: 300, width: 225, height: 20 },
 
-        { x: 8500, y: 320, width: 225, height: 20 }, // 8500 - 11000
+        { x: 8500, y: 320, width: 225, height: 20 }, // GAUNTLET 3
         { x: 9050, y: 260, width: 225, height: 20 },
         { x: 9600, y: 350, width: 225, height: 20 },
         { x: 10150, y: 260, width: 225, height: 20 },
         { x: 10700, y: 300, width: 225, height: 20 },
 
-        { x: 12000, y: 290, width: 225, height: 20 }, // 12000 - 14500
+        { x: 12000, y: 290, width: 225, height: 20 }, // GAUNTLET 4
         { x: 12550, y: 340, width: 225, height: 20 },
         { x: 13100, y: 270, width: 225, height: 20 },
         { x: 13650, y: 350, width: 225, height: 20 },
         { x: 14200, y: 310, width: 225, height: 20 },
 
-        { x: 15500, y: 330, width: 225, height: 20 },   // 15500 - 18000
+        { x: 15500, y: 330, width: 225, height: 20 },   // GAUNTLET 5
         { x: 16050, y: 280, width: 225, height: 20 },
         { x: 16600, y: 350, width: 225, height: 20 },
         { x: 17150, y: 260, width: 225, height: 20 },
@@ -84,53 +86,47 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
     id: 'level2',
     name: 'Level 2',
     timeLimit: 90,
-    length:  20000,    
-    playerSpawn: { x: 300, y: 200 },
+    length:  21000,    
+    playerSpawn: { x: 20300, y: 200 },
     GroundSegments: [
-        { x: -1000, y: 440, width: 23000, height: 50 },
-        //{ x: -1000, y: 440, width: 3300, height: 50 },
-        //{ x: 3200, y: 440, width: 1600, height: 50 },
-       // { x: 6300, y: 440, width: 2000, height: 50 },
-        //{ x: 9000, y: 440, width: 2000, height: 50 },
-       // { x: 12000, y: 440, width: 5000, height: 50 },
+      { x: -1000, y: 440, width: 3000, height: 50 },
+      { x: 3200, y: 440, width: 2000, height: 50 },
+      { x: 7000, y: 440, width: 2000, height: 50 },
+      { x: 10700, y: 440, width: 1500, height: 50 },
+      { x: 14200, y: 440, width: 2000, height: 50 },
+      { x: 17500, y: 440, width: 3000, height: 50 }
+
     ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
-    hintPlatforms: [18],
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY - CAN I REMOVE THIS WITHOUT BREAKING ANYTHING?
+    hintPlatforms: [18], // NO LONGER IN USE - CAN I REMOVE THIS
     platforms: [
-        { x: 1500, y: 370, width: 200, height: 20 },
-        { x: 2050, y: 330, width: 200, height: 20 },
-        { x: 2600, y: 300, width: 200, height: 20 },
-        { x: 3150, y: 270, width: 200, height: 20 },
-        { x: 3700, y: 350, width: 200, height: 20 },
-
-        { x: 5000, y: 360, width: 200, height: 20 },
-        { x: 5550, y: 330, width: 200, height: 20 },
-        { x: 6100, y: 290, width: 200, height: 20 },
-        { x: 6650, y: 260, width: 200, height: 20 },
-        { x: 7200, y: 350, width: 200, height: 20 },
-
-        { x: 8500, y: 330, width: 200, height: 20 },
-        { x: 9050, y: 310, width: 200, height: 20 },
-        { x: 9600, y: 280, width: 200, height: 20 },
-        { x: 10150, y: 240, width: 200, height: 20 },
-        { x: 10700, y: 350, width: 200, height: 20 },
-
-        { x: 12000, y: 320, width: 200, height: 20 },
-        { x: 12550, y: 280, width: 200, height: 20 },
-        { x: 13100, y: 260, width: 200, height: 20 },
-        { x: 13650, y: 230, width: 200, height: 20 }, // EGG
-        { x: 14200, y: 340, width: 200, height: 20 },
-
-        { x: 15500, y: 300, width: 200, height: 20 },
-        { x: 16050, y: 280, width: 200, height: 20 },
-        { x: 16600, y: 250, width: 200, height: 20 },
-        { x: 17150, y: 220, width: 200, height: 20 }, // MILK
-        { x: 17700, y: 360, width: 200, height: 20 },
-
-
-
-  ],
-    noStuffZones: [{ start: 11800, end: 12200}, { start: 14800, end: 15200}], // BONUS HP AND MILK BOTTLE
+          { x: 1500, y: 370, width: 200, height: 20 }, // GAUNTLET 1
+          { x: 2050, y: 330, width: 200, height: 20 },
+          { x: 2600, y: 300, width: 200, height: 20 },
+          { x: 3150, y: 270, width: 200, height: 20 },
+          { x: 3700, y: 350, width: 200, height: 20 },
+          { x: 5000, y: 360, width: 200, height: 20 }, // GAUNTLET 2
+          { x: 5550, y: 330, width: 200, height: 20 },
+          { x: 6100, y: 290, width: 200, height: 20 },
+          { x: 6650, y: 260, width: 200, height: 20 },
+          { x: 7200, y: 350, width: 200, height: 20 },
+          { x: 8500, y: 330, width: 200, height: 20 }, // GAUNTLET 3
+          { x: 9050, y: 310, width: 200, height: 20 },
+          { x: 9600, y: 280, width: 200, height: 20 },
+          { x: 10150, y: 240, width: 200, height: 20 },
+          { x: 10700, y: 350, width: 200, height: 20 },
+          { x: 12000, y: 320, width: 200, height: 20 }, // GAUNTLET 4
+          { x: 12550, y: 280, width: 200, height: 20 },
+          { x: 13100, y: 260, width: 200, height: 20 },
+          { x: 13650, y: 230, width: 200, height: 20 }, // EGG
+          { x: 14200, y: 340, width: 200, height: 20 },
+          { x: 15500, y: 300, width: 200, height: 20 }, // GAUNTLET 5
+          { x: 16050, y: 280, width: 200, height: 20 },
+          { x: 16600, y: 250, width: 200, height: 20 },
+          { x: 17150, y: 220, width: 200, height: 20 }, // MILK
+          { x: 17700, y: 360, width: 200, height: 20 }
+        ],
+    noStuffZones: [{ start: 13550, end: 13950 }, { start: 17100, end: 17400 }], // BONUS HP AND MILK BOTTLE
     cups: { enabled: true, count: 15 },
     enemies: {
     cucumbers: { 
@@ -138,21 +134,20 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
           spawnRate: 2500,
           damage: 5,
           spawnZones: [
-            { start: 3900, end: 4000 },  
-            { start: 6900, end: 7000 },
-            { start: 9900, end: 10000 },
-            { start: 12900, end: 13000 },
-            { start: 15800, end: 15900 },
-          ]
+            { start: 4300, end: 4700  },  
+            { start: 7800, end: 8200  },
+            { start: 11300, end: 11700  },
+            { start: 14800, end: 15200  }
+             ]
         },
       rats: { enabled: false },
 
       lasers: { enabled: false }
     },
     bonusHPZone: [
-      { x: 11900, y: 150 }, 
+      { x: 13740, y: 170 }, 
     ],
-    milkBottlePosition: { x: 14900, y: 150 },
+    milkBottlePosition: { x: 17250, y: 160 },
     items: {
       fishBones: { enabled: true, count: 2 },
       tunaCan: { enabled: true, count: 1 },
@@ -160,7 +155,7 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: false },
       bonusHP: { enabled: true, count: 1 } // EASY
     },
-    background: 'levelBG',
+    background: 'levelBG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
     levelMusic: 'PlatformerTrack2',
     nextBoss: 'cucumberBoss',
     bossSprite: "bossCucumber", 
@@ -171,55 +166,48 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
     id: 'level3',
     name: 'Level 3',
     timeLimit: 90,
-    length:  20000,  
+    length:  21000,  
     playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
-      { x: -1000, y: 440, width: 23000, height: 50 },
-      //{x: -1000, y: 440, width: 3000, height: 50},
-      //{x: 3200, y: 440, width: 1600, height: 50},
-      //{x: 6300, y: 440, width: 2000, height: 50},
-      //{x: 9700, y: 440, width: 700, height: 50},
-     // {x: 12700, y: 440, width: 1200, height: 50},
-     // {x: 15400, y: 440, width: 5000, height: 50}
-
+      { x: -1100, y: 440, width: 2500, height: 50 },
+      { x: 3600, y: 440, width: 1500, height: 50 },
+      { x: 7100, y: 440, width: 2000, height: 50 },
+      { x: 10600, y: 440, width: 1500, height: 50 },
+      { x: 14300, y: 440, width: 2500, height: 50 },
+      { x: 18000, y: 440, width: 3000, height: 50 }
 ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
-    hintPlatforms: [23, 24, 25, 26],
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY - CAN I REMOVE THIS WITHOUT BREAKING ANYTHING?
+    hintPlatforms: [23, 24, 25, 26], // NO LONGER IN USE - CAN I REMOVE THIS
     platforms: [
-        {x: 1500, y: 380, width: 175, height: 20}, // G1
-        {x: 2050, y: 300, width: 175, height: 20},
-        {x: 2600, y: 250, width: 175, height: 20},
-        {x: 3150, y: 300, width: 175, height: 20},
-        {x: 3700, y: 180, width: 175, height: 20}, // CATNIP
-
-        {x: 5000, y: 300, width: 175, height: 20}, // G2
-        {x: 5550, y: 400, width: 175, height: 20},
-        {x: 6100, y: 250, width: 175, height: 20},
-        {x: 6650, y: 210, width: 175, height: 20},
-        {x: 7200, y: 350, width: 175, height: 20},
-
-        {x: 8500, y: 320, width: 175, height: 20}, // G3
-        {x: 9050, y: 380, width: 175, height: 20},
-        {x: 9600, y: 290, width: 175, height: 20},
-        {x: 10150, y: 220, width: 175, height: 20},
-        {x: 10700, y: 350, width: 175, height: 20},
-
-        {x: 12000, y: 280, width: 175, height: 20}, // G4
-        {x: 12550, y: 420, width: 175, height: 20},
-        {x: 13100, y: 260, width: 175, height: 20},
-        {x: 13650, y: 170, width: 175, height: 20},
-        {x: 14200, y: 280, width: 175, height: 20},
-
-        {x: 13500, y: 350, width: 175, height: 20}, // G5
-        {x: 14600, y: 450, width: 175, height: 20}, // LOWER-LEVEL
-        {x: 15050, y: 440, width: 175, height: 20}, // LOWER-LEVEL
-
-        {x: 13800, y: 210, width: 175, height: 20}, // STAIRS
-        {x: 14212, y: 140, width: 175, height: 20}, // STAIRS
-        {x: 14570, y: -10, width: 610, height: 20}, // SECRET
-        {x: 15400, y: 120, width: 100, height: 20} // EGG
-    ],
-    noStuffZones: [{ start: 3200, end: 3800}, { start: 14000, end: 15600},], 
+        { x: 1500, y: 380, width: 190, height: 20 },  // GAUNTLET 1
+        { x: 2050, y: 300, width: 190, height: 20 },
+        { x: 2600, y: 250, width: 190, height: 20 },
+        { x: 3150, y: 300, width: 190, height: 20 },
+        { x: 3700, y: 200, width: 190, height: 20 }, // CATNIP
+        { x: 5000, y: 300, width: 190, height: 20 }, // GAUNTLET 2
+        { x: 5550, y: 350, width: 190, height: 20 },
+        { x: 6100, y: 270, width: 190, height: 20 },
+        { x: 6650, y: 210, width: 190, height: 20 },
+        { x: 7200, y: 350, width: 190, height: 20 },
+        { x: 8500, y: 320, width: 190, height: 20 }, // GAUNTLET 3
+        { x: 9050, y: 380, width: 190, height: 20 },
+        { x: 9600, y: 290, width: 190, height: 20 },
+        { x: 10150, y: 220, width: 190, height: 20 },
+        { x: 10700, y: 350, width: 190, height: 20 },
+        { x: 12000, y: 280, width: 190, height: 20 }, // GAUNTLET 4
+        { x: 12550, y: 420, width: 190, height: 20 },
+        { x: 13100, y: 380, width: 190, height: 20 },
+        { x: 13650, y: 310, width: 190, height: 20 },
+        { x: 14200, y: 280, width: 190, height: 20 },
+        { x: 15500, y: 350, width: 190, height: 20 },  // GAUNTLET 5
+        { x: 17150, y: 450, width: 190, height: 20 }, // LOWER LEVEL = NO EGG
+        { x: 17700, y: 440, width: 190, height: 20 }, // LOWER LEVEL = NO EGG
+        { x: 16050, y: 210, width: 190, height: 20 }, // STAIRWAY
+        { x: 16600, y: 140, width: 190, height: 20 }, // STAIRWAY
+        { x: 16900, y: -10, width: 610, height: 20 }, // SECRET PLATFORM
+        { x: 17650, y: 110, width: 100, height: 20 } // EGG
+      ],
+    noStuffZones: [{ start: 3650, end: 3900 }, { start: 15400, end: 18000 },], 
     cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { 
@@ -227,30 +215,29 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
         spawnRate: 2200,
         damage: 5,
         spawnZones: [
-          { start: 4000, end: 4050 },   
-          { start: 6900, end: 7000 }, 
-          { start: 9900, end: 10000 }
+          { start: 7800, end: 8200  },   
+          { start: 11300, end: 11700  }
         ]
       },
     rats: { 
       enabled: true,
       spawnRate: 8000,
       spawnZones: [
-        { start: 700, end: 1500 },   
-        { start: 6800, end: 8300 },  
+        { start: 800, end: 1300  },   
+        { start: 4200, end: 4800  },  
         { start: 9900, end: 10400 }, 
-        { start: 13000, end: 13700 },
-        { start: 15700, end: 16000 },
+        { start: 10800, end: 11800  },
+        { start: 18200, end: 18600  },
 
       ]
     },
       lasers: { enabled: false }
     },  
     bonusHPZone: [
-      { x: 15465, y: 50 }, 
+      { x: 17700, y: 50 }, 
     ],
     catnipZones: [
-      { x: 3400, y: 95 },
+      { x: 3770, y: 95 },
     ],
     items: {
       fishBones: { enabled: true, count: 1 },
@@ -259,8 +246,8 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: true, count: 1 },
       bonusHP: { enabled: true, count: 1 }
     },
-    background: 'levelBG',
-    levelMusic: 'PlatformerTrack3',
+    background: 'levelBG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
+    levelMusic: 'PlatformerTrack3', 
     nextBoss: 'bossRatKing',
     bossSprite: "bossRat", 
   },
@@ -269,62 +256,54 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
     id: 'level4',
     name: 'Level 4',
     timeLimit: 90,
-    length:  20000,  
+    length:  21000,  
     playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
-      { x: -1000, y: 440, width: 23000, height: 50 },
-      //{x: 0, y: 440, width: 1300, height: 50},
-      //{x: 3700, y: 440, width: 700, height: 50},
-     // {x: 6200, y: 440, width: 1100, height: 50},
-     // {x: 8500, y: 440, width: 500, height: 50},
-      //{x: 9800, y: 440, width: 900, height: 50},
-     // {x: 12750, y: 440, width: 800, height: 50},
-     // {x: 15800, y: 440, width: 2000, height: 50},
-
+        { x: -1000, y: 440, width: 2500, height: 50 },
+        { x: 3600, y: 440, width: 1500, height: 50 },
+        { x: 7100, y: 440, width: 1500, height: 50 },
+        { x: 10950, y: 440, width: 1000, height: 50 },
+        { x: 14600, y: 440, width: 1000, height: 50 },
+        { x: 18000, y: 440, width: 3000, height: 50 }
     ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
-    hintPlatforms: [20, 21, 22, 23], 
+    hintPlatforms: [20, 21, 22, 23],  // NO LONGER IN USE - CAN I REMOVE THIS
     sequentialPlatforms: {
       enabled: true,
-      platformIds: [20, 21, 22, 23] 
+      platformIds: [20, 21, 22, 23]  // NOT WORKING
     },
-      platforms: [
-      {x: 1500, y: 380, width: 150, height: 20}, // GAUNTLET 1
-      {x: 2050, y: 350, width: 150, height: 20},
-      {x: 2600, y: 390, width: 150, height: 20},
-      {x: 3150, y: 350, width: 150, height: 20},
-      {x: 3700, y: 380, width: 150, height: 20},
-
-      {x: 5000, y: 360, width: 150, height: 20}, // GAUNTLET 2
-      {x: 5550, y: 250, width: 150, height: 20},
-      {x: 6100, y: 190, width: 150, height: 20}, // CATNIP
-      {x: 6650, y: 350, width: 150, height: 20},
-      {x: 7200, y: 270, width: 150, height: 20},
-
-      {x: 8500, y: 280, width: 150, height: 20}, // GAUNTLET 3
-      {x: 9050, y: 410, width: 150, height: 20},
-      {x: 9600, y: 380, width: 150, height: 20},
-      {x: 10150, y: 290, width: 150, height: 20},
-      {x: 10700, y: 350, width: 150, height: 20},
-
-      {x: 12000, y: 300, width: 175, height: 20}, // GAUNTLET 4
-      {x: 12550, y: 180, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
-      {x: 13100, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
-      {x: 13650, y: 80, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
-      {x: 14200, y: 90, width: 175, height: 20}, // EASY UPPER PARALLEL PATH
-
-      {x: 13100, y: 440, width: 100, height: 20}, // HARD LOWER PATH TO EGG
-      {x: 11424, y: 430, width: 100, height: 20}, // HARD LOWER PATH TO EGG
-      {x: 13650, y: 460, width: 100, height: 20}, // HARD LOWER PATH TO EGG
-      {x: 14200, y: 450, width: 100, height: 20}, // EGG
-
-      {x: 15500, y: 370, width: 150, height: 20}, // GAUNTLET 5
-      {x: 16050, y: 250, width: 150, height: 20},
-      {x: 16600, y: 200, width: 150, height: 20},
-      {x: 17150, y: 260, width: 150, height: 20},
-      {x: 17700, y: 370, width: 150, height: 20}
+    platforms: [
+      { x: 1500, y: 380, width: 180, height: 20 }, // GAUNTLET 1
+      { x: 2050, y: 350, width: 180, height: 20 },
+      { x: 2600, y: 390, width: 180, height: 20 },
+      { x: 3150, y: 350, width: 180, height: 20 },
+      { x: 3700, y: 380, width: 180, height: 20 },
+      { x: 5000, y: 360, width: 180, height: 20 }, // GAUNTLET 2
+      { x: 5550, y: 250, width: 180, height: 20 },
+      { x: 6100, y: 190, width: 180, height: 20 }, // CATNIP
+      { x: 6650, y: 350, width: 180, height: 20 },
+      { x: 7200, y: 270, width: 180, height: 20 },
+      { x: 8500, y: 280, width: 180, height: 20 }, // GAUNTLET 3
+      { x: 9050, y: 410, width: 180, height: 20 },
+      { x: 9600, y: 380, width: 180, height: 20 },
+      { x: 10150, y: 290, width: 180, height: 20 },
+      { x: 10700, y: 350, width: 180, height: 20 }, // GAUNTLET 4
+      { x: 12000, y: 300, width: 180, height: 20 }, // STAIRS UP TO EASY PLATFORMS
+      { x: 12550, y: 180, width: 180, height: 20 }, // STAIRS UP TO EASY PLATFORMS
+      { x: 13100, y: 90, width: 180, height: 20 }, // EASY = NO EGG
+      { x: 13650, y: 80, width: 180, height: 20 },  // EASY = NO EGG
+      { x: 14200, y: 90, width: 180, height: 20 },  // EASY = NO EGG
+      { x: 12400, y: 440, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
+      { x: 13100, y: 430, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
+      { x: 13650, y: 460, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
+      { x: 14200, y: 450, width: 150, height: 20 }, // EGG
+      { x: 15500, y: 370, width: 180, height: 20 }, // GAUNTLET 5
+      { x: 16050, y: 250, width: 180, height: 20 },
+      { x: 16600, y: 200, width: 180, height: 20 },
+      { x: 17150, y: 260, width: 180, height: 20 },
+      { x: 17700, y: 370, width: 180, height: 20 }
     ],
-    noStuffZones: [  { start: 5300, end: 5600 },{ start: 10962, end: 12600 }], // CATNIP AND EGG
+    noStuffZones: [  { start: 6000, end: 6300  },{ start: 12000, end: 14500  }], // CATNIP AND EGG
     cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { 
@@ -332,28 +311,28 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
         spawnRate: 2100,
         damage: 5,
         spawnZones: [
-          { start: 4000, end: 4100 },
-          { start: 10050, end: 10100 }
+          { start: 4300, end: 4700 },
+          { start: 14800, end: 15200 }
         ]
       },
     rats: { 
       enabled: true,
       spawnRate: 3500,
       spawnZones: [
-        { start: 8600, end: 9000 },
-        { start: 10000, end: 10700 },
-        { start: 12900, end: 13500 }
+        { start: 800, end: 1300  },
+        { start: 7700, end: 8200  },
+        { start: 11100, end: 11800  }
       ]
     },
     lasers: { 
       enabled: true,
-      positions: [2650, 7000, 15800]}
+      positions: [1800, 7900, 11300, 18100]}
     },
     bonusHPZone: [
-      { x: 12375, y: 320 }, 
+      { x: 14200, y: 320 }, 
     ],  
     catnipZones: [
-      { x: 5450, y: 100 }, 
+      { x: 6150, y: 100 }, 
     ],
     items: {
       fishBones: { enabled: true, count: 1 },
@@ -362,7 +341,7 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: true, count: 1 },
       bonusHP: { enabled: true, count: 1 }
     },
-    background: 'levelBG',
+    background: 'levelBG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
     levelMusic: 'PlatformerTrack4',
     nextBoss: 'laserPointerBoss',
     bossSprite: 'bossLaserPointer'
@@ -372,53 +351,47 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
     id: 'level5',
     name: 'Level 5',
     timeLimit: 90,
-    length:  20000,   
+    length:  21000,   
     playerSpawn: { x: 300, y: 200 },
     GroundSegments: [
-      { x: -1000, y: 440, width: 23000, height: 50 },
-      //{x: 0, y: 440, width: 1200, height: 50},
-      //{x: 2650, y: 440, width: 1300, height: 50},
-     // {x: 4225, y: 440, width: 500, height: 50},
-      //{x: 6500, y: 440, width: 1000, height: 50},
-     // {x: 9700, y: 440, width: 600, height: 50},
-     // {x: 12700, y: 440, width: 600, height: 50},
-     // {x: 13310, y: 470, width: 2400, height: 50},
-      //{x: 15720, y: 440, width: 1000, height: 50}
+      { x: -1000, y: 440, width: 500, height: 50 },
+      { x: -800, y: 440, width: 2000, height: 50 }, // INTENTIONALLY OVELAPPING
+      { x: 4150, y: 440, width: 500, height: 50 },
+      { x: 7650, y: 440, width: 500, height: 50 },
+      { x: 10890, y: 440, width: 1000, height: 50 },
+      { x: 14650, y: 440, width: 1500, height: 50 },
+      { x: 16150, y: 460, width: 1500, height: 50 },
+      { x: 17680, y: 440, width: 3000, height: 50 }
+
 ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE
-    hintPlatforms: [20], 
+    hintPlatforms: [20],  // NO LONGER IN USE - CAN I REMOVE THIS
     solidPlatforms: [20],
     platforms: [
-      {x: 1500, y: 380, width: 125, height: 20}, // GAUNTLET 1
-      {x: 2050, y: 320, width: 125, height: 20},
-      {x: 2600, y: 250, width: 125, height: 20},
-      {x: 3150, y: 210, width: 125, height: 20},
-      {x: 3700, y: 150, width: 125, height: 20},
-
-      {x: 5000, y: 350, width: 125, height: 20}, // GAUNTLET 2
-      {x: 5550, y: 390, width: 125, height: 20},
-      {x: 6100, y: 430, width: 125, height: 20},
-      {x: 6650, y: 450, width: 125, height: 20},
-      {x: 7200, y: 370, width: 125, height: 20},
-
-      {x: 8500, y: 360, width: 125, height: 20}, // GAUNTLET 3
-      {x: 9050, y: 310, width: 125, height: 20},
-      {x: 9600, y: 260, width: 125, height: 20},
-      {x: 10150, y: 190, width: 125, height: 20},
-      {x: 10700, y: 370, width: 125, height: 20},
-
-      {x: 12000, y: 300, width: 125, height: 20}, // GAUNTLET 4
-      {x: 12550, y: 430, width: 125, height: 20},
-      {x: 13100, y: 360, width: 125, height: 20},
-      {x: 13650, y: 280, width: 125, height: 20},
-      {x: 14200, y: 460, width: 125, height: 20},
-
-      {x: 15500, y: 330, width: 1000, height: 20}, // LONG PLATFORM THAT LEADS UP TO MINI BOSS
-
-    ],
+      { x: 1500, y: 380, width: 175, height: 20 }, // GAUNTLET 1
+      { x: 2050, y: 320, width: 175, height: 20 },
+      { x: 2600, y: 250, width: 175, height: 20 },
+      { x: 3150, y: 210, width: 175, height: 20 },
+      { x: 3700, y: 150, width: 175, height: 20 },
+      { x: 5000, y: 350, width: 175, height: 20 }, // GAUNTLET 2
+      { x: 5550, y: 390, width: 175, height: 20 },
+      { x: 6100, y: 430, width: 175, height: 20 },
+      { x: 6650, y: 450, width: 175, height: 20 },
+      { x: 7200, y: 370, width: 175, height: 20 },
+      { x: 8500, y: 360, width: 175, height: 20 }, // GAUNTLET 3
+      { x: 9050, y: 310, width: 175, height: 20 },
+      { x: 9600, y: 260, width: 175, height: 20 },
+      { x: 10150, y: 190, width: 175, height: 20 },
+      { x: 10700, y: 370, width: 175, height: 20 },
+      { x: 12000, y: 300, width: 175, height: 20 },  // GAUNTLET 4
+      { x: 12550, y: 430, width: 175, height: 20 },
+      { x: 13100, y: 360, width: 175, height: 20 },
+      { x: 13650, y: 280, width: 175, height: 20 },
+      { x: 14200, y: 460, width: 175, height: 20 },
+      { x: 16400, y: 330, width: 1000, height: 20 } // LONG PLATFORM THAT LEADS UP TO MINI BOSS
+        ],
     noStuffZones: [  
-      { start: 3250, end: 3548 }, 
-      { start: 13500, end: 16000 }
+      { start: 16100, end: 17900  },
     ], 
     cups: { enabled: true, count: 15 },
     enemies: {
@@ -427,8 +400,8 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
           spawnRate: 2000,
           damage: 5,
           spawnZones: [
-            { start: 7000, end: 7100 }, 
-            { start: 9900, end: 10600 }
+            { start: 7850, end: 8860  }, 
+            { start: 8820, end: 4600  }
           ]
         },
     rats: { 
@@ -450,7 +423,7 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
     },
     miniBoss: {
       enabled: true,
-      x: 14300, 
+      x: 16900, 
       y: 270,
       hp: 3,
       throwInterval: 2.5,
@@ -458,18 +431,17 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
     },
 
     rewardItems: [
-      { type: 'egg', x: 14300, y: 260 },
-      { type: 'milk', x: 14350, y: 260 }
+      { type: 'egg', x: 17000, y: 260 },
+      { type: 'milk', x: 17050, y: 260 }
     ],
-    catnipZones: [{ x: 3400, y: 100 }],
     items: {
       fishBones: { enabled: true, count: 2 },
       tunaCan: { enabled: true, count: 3 },
       milkBottle: { enabled: true, count: 1 },
-      catnip: { enabled: true, count: 1 },
+      catnip: { enabled: false },
       bonusHP: { enabled: true, count: 1 }
     },
-    background: 'l5BG',
+    background: 'l5BG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
     levelMusic: 'PlatformerTrack5',
     nextBoss: 'observerBoss',
     bossSprite: 'observer'

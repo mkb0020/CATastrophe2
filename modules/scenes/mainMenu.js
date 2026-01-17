@@ -13,6 +13,7 @@ export function createStartScene(){
 
 
 
+
   const clickText = add([
     text("CLICK TO START", { 
       size: 70, 

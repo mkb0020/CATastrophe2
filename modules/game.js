@@ -141,27 +141,11 @@ async function loadAssets() {
   loadSprite("battleBG1", "assets/images/backgrounds/BattleBG1.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
   loadSprite("groundPlatform", "assets/images/backgrounds/ground.png");
-  loadSprite("platformONE", "assets/images/backgrounds/platformONE.png");
+  loadSprite("platform", "assets/images/backgrounds/platform.png");
 
-    loadSprite("platform", "assets/images/backgrounds/platform.png", {
-    sliceX: 3,
+  loadSprite("window", "assets/images/items/window.png", {
+    sliceX: 2,
     sliceY: 1
-  });
-
-  //loadSprite("levelBG", "assets/images/backgrounds/levelBG.png", {
-    //sliceX: 1,  
-   // sliceY: 1,   
-   // anims: {
-   //   idle: { from: 0, to: 0} 
-   // }
- // });
-
-    loadSprite("l5BG", "assets/images/backgrounds/Level5BG.png", {
-    sliceX: 1,  
-    sliceY: 1,   
-    anims: {
-      idle: { from: 0, to: 0} 
-    }
   });
   
   // ENEMIES
