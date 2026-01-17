@@ -14,11 +14,11 @@ export const BUBBLE_FRAMES = {
   bonusHP: 10, 
 };
 
-export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
+export const LEVELS = {  
   level1: { 
     id: 'level1',
     name: 'Level 1',
-    timeLimit: 9000,
+    timeLimit: 90,
     length:  21000, 
     playerSpawn: { x: 300, y: 200 }, 
     GroundSegments: [
@@ -27,9 +27,9 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       { x: 7000, y: 440, width: 2000, height: 50 },
       { x: 10700, y: 440, width: 1500, height: 50 },
       { x: 14200, y: 440, width: 2000, height: 50 },
-      { x: 17500, y: 440, width: 3000, height: 50 }
+      { x: 17500, y: 440, width: 3500, height: 50 }
     ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY - CAN I REMOVE THIS WITHOUT BREAKING ANYTHING?
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     platforms: [
         { x: 1500, y: 310, width: 225, height: 20 }, // GAUNTLET 1
         { x: 2050, y: 270, width: 225, height: 20 },
@@ -76,6 +76,12 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: false },
       bonusHP: { enabled: false }
     },
+    challengeDoorIN: [ // NEED TO ADJUST
+    { x: 1600, y: 220, roomId: 'room1' }
+    ],
+    challengeDoorOUT: [  // NEED TO ADJUST
+    { x: 5000, y: 150, roomId: 'room1' }
+    ],
     background: 'levelBG',
     levelMusic: 'PlatformerTrack1',
     nextBoss: 'cupBoss',
@@ -94,11 +100,11 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       { x: 7000, y: 440, width: 2000, height: 50 },
       { x: 10700, y: 440, width: 1500, height: 50 },
       { x: 14200, y: 440, width: 2000, height: 50 },
-      { x: 17500, y: 440, width: 3000, height: 50 }
+      { x: 17500, y: 440, width: 3500, height: 50 }
 
     ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY - CAN I REMOVE THIS WITHOUT BREAKING ANYTHING?
-    hintPlatforms: [18], // NO LONGER IN USE - CAN I REMOVE THIS
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
+    hintPlatforms: [18], // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     platforms: [
           { x: 1500, y: 370, width: 200, height: 20 }, // GAUNTLET 1
           { x: 2050, y: 330, width: 200, height: 20 },
@@ -155,7 +161,13 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: false },
       bonusHP: { enabled: true, count: 1 } // EASY
     },
-    background: 'levelBG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
+    challengeDoorIN: [ // NEED TO ADJUST
+    { x: 7900, y: 380, roomId: 'room2' }
+    ],
+    challengeDoorOUT: [ // NEED TO ADJUST
+    { x: 14400, y: 380, roomId: 'room2' }
+    ],
+    background: 'levelBG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack2',
     nextBoss: 'cucumberBoss',
     bossSprite: "bossCucumber", 
@@ -176,8 +188,8 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       { x: 14300, y: 440, width: 2500, height: 50 },
       { x: 18000, y: 440, width: 3000, height: 50 }
 ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY - CAN I REMOVE THIS WITHOUT BREAKING ANYTHING?
-    hintPlatforms: [23, 24, 25, 26], // NO LONGER IN USE - CAN I REMOVE THIS
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
+    hintPlatforms: [23, 24, 25, 26], // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     platforms: [
         { x: 1500, y: 380, width: 190, height: 20 },  // GAUNTLET 1
         { x: 2050, y: 300, width: 190, height: 20 },
@@ -246,7 +258,13 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: true, count: 1 },
       bonusHP: { enabled: true, count: 1 }
     },
-    background: 'levelBG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
+    challengeDoorIN: [ // NEED TO ADJUST
+    { x: 4400, y: 380, roomId: 'room3' }
+    ],
+    challengeDoorOUT: [ // NEED TO ADJUST
+    { x: 7200, y: 380, roomId: 'room3' }
+    ],
+    background: 'levelBG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack3', 
     nextBoss: 'bossRatKing',
     bossSprite: "bossRat", 
@@ -264,10 +282,10 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
         { x: 7100, y: 440, width: 1500, height: 50 },
         { x: 10950, y: 440, width: 1000, height: 50 },
         { x: 14600, y: 440, width: 1000, height: 50 },
-        { x: 18000, y: 440, width: 3000, height: 50 }
+        { x: 18000, y: 440, width: 3500, height: 50 }
     ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE CURRENTLY BUT KEEPING TO PREVENT BREAKING SOMETHING ELSE
-    hintPlatforms: [20, 21, 22, 23],  // NO LONGER IN USE - CAN I REMOVE THIS
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
+    hintPlatforms: [20, 21, 22, 23],  // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     sequentialPlatforms: {
       enabled: true,
       platformIds: [20, 21, 22, 23]  // NOT WORKING
@@ -341,7 +359,13 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: true, count: 1 },
       bonusHP: { enabled: true, count: 1 }
     },
-    background: 'levelBG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
+    challengeDoorIN: [  // NEED TO ADJUST
+    { x: 16600, y: 380, roomId: 'room4' }
+    ],
+    challengeDoorOUT: [  // NEED TO ADJUST
+    { x: 18500, y: 380, roomId: 'room4' }
+    ],
+    background: 'levelBG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack4',
     nextBoss: 'laserPointerBoss',
     bossSprite: 'bossLaserPointer'
@@ -361,11 +385,11 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       { x: 10890, y: 440, width: 1000, height: 50 },
       { x: 14650, y: 440, width: 1500, height: 50 },
       { x: 16150, y: 460, width: 1500, height: 50 },
-      { x: 17680, y: 440, width: 3000, height: 50 }
+      { x: 17680, y: 440, width: 3500, height: 50 }
 
 ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NOT IN USE
-    hintPlatforms: [20],  // NO LONGER IN USE - CAN I REMOVE THIS
+    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
+    hintPlatforms: [20],  // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     solidPlatforms: [20],
     platforms: [
       { x: 1500, y: 380, width: 175, height: 20 }, // GAUNTLET 1
@@ -441,7 +465,13 @@ export const LEVELS = {  // TESTING NEW LEVEL LENGTHS
       catnip: { enabled: false },
       bonusHP: { enabled: true, count: 1 }
     },
-    background: 'l5BG', // CAN I REMOVE THIS SINCE THE BG IS NOW IN CSS?
+    challengeDoorIN: [  // NEED TO ADJUST
+    { x: 6075, y: 380, roomId: 'room5' }
+    ],
+    challengeDoorOUT: [  // NEED TO ADJUST
+    { x: 6600, y: 380, roomId: 'room5' }
+    ],
+    background: 'l5BG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack5',
     nextBoss: 'observerBoss',
     bossSprite: 'observer'

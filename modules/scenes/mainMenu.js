@@ -121,30 +121,30 @@ export function createMainMenuScene() {
     z(2)
   ]);
 
-  const testPanel = add([
-    rect(600, 150, { radius: 30 }),
-    pos(center().x - 300, 150),
-    color(17, 12, 30),
-    outline(6),
-    opacity(0.8),
-    z(1)
-  ]);
+  //const testPanel = add([
+ //   rect(600, 150, { radius: 30 }),
+ //   pos(center().x - 300, 150),
+ //   color(17, 12, 30),
+ //   outline(6),
+ //   opacity(0.8),
+ //   z(1)
+ // ]);
 
-  add([
-    text("TEST VERSION", { size: 60, font: "orbitronBold" }),
-    pos(center().x, 230),
-    anchor("center"),
-    color(rgb(255,199,255)),
-    z(5)
-  ]);
+//  add([
+//    text("TEST VERSION", { size: 60, font: "orbitronBold" }),
+//    pos(center().x, 230),
+//    anchor("center"),
+//    color(rgb(255,199,255)),
+//   z(5)
+//  ]);
 
-  add([
-    text("TEST VERSION", { size: 60, font: "orbitronBold" }),
-    pos(center().x + 3, 233),
-    anchor("center"),
-    color(rgb(115,1,50)),
-    z(4)
-  ]);
+ // add([
+//    text("TEST VERSION", { size: 60, font: "orbitronBold" }),
+ //   pos(center().x + 3, 233),
+//    anchor("center"),
+//    color(rgb(115,1,50)),
+//    z(4)
+//  ]);
 
   const playBtn = add([
     rect(300, 56, { radius: 53 }),

@@ -3,7 +3,8 @@
   position: fixed;
   top: 0;
   width: 100vw;
-  background: linear-gradient(135deg, var(--BosonShadow) 0%, var(--ProtonShadow) 50%, var(--BosonShadow) 100%);
+  /*background: linear-gradient(135deg, var(--BosonShadow) 0%, var(--ProtonShadow) 50%, var(--BosonShadow) 100%);*/
+  background: transparent;
   backdrop-filter: blur(50px);
   border-bottom: 1px solid var(--PlasmaGlow2);
   box-shadow: 0 0 30px var(--PlasmaGlow2);

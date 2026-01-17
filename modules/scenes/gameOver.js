@@ -240,7 +240,7 @@ export function createYouDiedScene(data) {
   }
   
   stopAllMusic();
-  play("gameOverSound", { volume: 0.2 });
+  play("gameOverSound", { volume: 0.1 });
   
   add([
     sprite('menuBG'),

@@ -70,7 +70,7 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
 
   const catSprite = add([
     sprite(`${character.name}Sheet`, { frame: initialFrame }),
-    pos(SCREEN_W / 2, SCREEN_H / 2 - 35),
+    pos(SCREEN_W / 2, SCREEN_H / 2-5),
     anchor('center'),
     scale(initialScale * 1.2),
     z(2),

@@ -1,5 +1,4 @@
 // gamePlay.js
-//import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getLevel } from '../config/levels.js';
 import { 
   setupLevelMusic,
@@ -32,6 +31,15 @@ import {
   spawnRewardItems,
   hideHUD
 } from '../helpers/levelHelpers.js';
+import { 
+  addDoorsToLevel, 
+  setupDoorInteraction 
+} from '../helpers/roomHelper.js';
+import { 
+  applyUpgradesToPlayer,
+  getUpgrades 
+} from '../helpers/upgradeHelper.js';
+import { getRoom } from '../config/challengeRoom.js';
 import { createVolumeToggle } from '../helpers/kittyHelpers.js';
 
 
@@ -39,15 +47,20 @@ function createUnifiedLevel(levelId, data) {
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startLives = data?.lives ?? 3;
-  const startScore = data?.score ?? 0;  
+  const startScore = data?.score ?? 0;
+  
+  const spawnX = data?.returnX;
+  const spawnY = data?.returnY;
   
   const levelConfig = getLevel(levelId);
   console.log(`🎮 ${levelConfig.name.toUpperCase()} INITIATED`);
   console.log('❤️ Starting HP:', startHP);
   console.log('💙 Starting Lives:', startLives);
-  console.log('💰 Starting Score:', startScore); 
+  console.log('💰 Starting Score:', startScore);
+  
+  const currentUpgrades = getUpgrades();
+  console.log('📊 Current Upgrades:', currentUpgrades);
 
-  // DEBUG LOGGING - runs every 3 seconds
   let logTimer = 0;
   onUpdate(() => {
     logTimer += dt();
@@ -86,6 +99,14 @@ function createUnifiedLevel(levelId, data) {
   addLaserBeams(levelConfig);
 
   const player = createPlayer(levelConfig, character, startHP);
+  
+  applyUpgradesToPlayer(player);
+  
+  if (spawnX !== undefined && spawnY !== undefined) {
+    player.pos = vec2(spawnX, spawnY);
+    console.log(`🚪 Spawning at challenge room exit: (${spawnX}, ${spawnY})`);
+  }
+  
   setupOneWayPlatforms(player);
 
   const sequentialPlatforms = setupSequentialPlatforms(levelConfig);
@@ -107,6 +128,16 @@ function createUnifiedLevel(levelId, data) {
   const getCharacter = () => character;
 
   setupPlayerControls(player, getGameActive);
+
+  const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
+  
+  if (doorsIn.length > 0) {
+    setupDoorInteraction(player, doorsIn, levelConfig, levelId, {
+      character,
+      lives,
+      score
+    });
+  }
 
   setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite);
   setupCupCollection(player, getScore, setScore);
@@ -133,7 +164,6 @@ function createUnifiedLevel(levelId, data) {
   onUpdate(() => {
     if (gameActive) {
       hudUpdateCounter++;
-      // Only update HUD every 5 frames (12 times per second instead of 60)
       if (hudUpdateCounter % 5 === 0) {
         if (window.debugCounts) window.debugCounts.hud++;
         updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
@@ -175,12 +205,16 @@ export function createLevel5Scene(data) {
   const startLives = data?.lives || 3;
   const startScore = data?.score ?? 0;
   
+  const spawnX = data?.returnX;
+  const spawnY = data?.returnY;
+  
   const levelConfig = getLevel('level5');
   console.log('🎮 LEVEL 5 - FINAL GAUNTLET');
   console.log('❤️ Starting HP:', startHP);
   console.log('💙 Starting Lives:', startLives);
-
-  // DEBUG LOGGING - Level 5
+  
+  const currentUpgrades = getUpgrades();
+  console.log('📊 Current Upgrades:', currentUpgrades);
   let logTimer = 0;
   onUpdate(() => {
     logTimer += dt();
@@ -207,7 +241,7 @@ export function createLevel5Scene(data) {
     debug.showArea = !debug.showArea;
   });
 
-  setGravity(1500);
+   setGravity(1500);
   setupLevelMusic(levelConfig);
 
   const { bg } = addLevelEnvironment(levelConfig);
@@ -218,6 +252,14 @@ export function createLevel5Scene(data) {
   addLaserBeams(levelConfig);
   
   const player = createPlayer(levelConfig, character, startHP);
+  
+  applyUpgradesToPlayer(player);
+  
+  if (spawnX !== undefined && spawnY !== undefined) {
+    player.pos = vec2(spawnX, spawnY);
+    console.log(`🚪 Spawning at challenge room exit: (${spawnX}, ${spawnY})`);
+  }
+  
   setupOneWayPlatforms(player);
 
   const miniBoss = addMiniBoss(levelConfig, () => gameActive, player);
@@ -238,6 +280,17 @@ export function createLevel5Scene(data) {
   const getCharacter = () => character;
 
   setupPlayerControls(player, getGameActive);
+  
+  const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
+  
+  if (doorsIn.length > 0) {
+    setupDoorInteraction(player, doorsIn, levelConfig, 'level5', {
+      character,
+      lives,
+      score
+    });
+  }
+  
   setupCupCollection(player, getScore, setScore);
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);
   
@@ -286,4 +339,5 @@ export function createLevel5Scene(data) {
   onSceneLeave(() => {
     hideHUD();
   });
+
 }

@@ -24,6 +24,8 @@ import {
   //createCreditsScene  
 } from './scenes/gameOver.js';
 import { initDebugTools } from './helpers/debugTools.js';
+import { createChallengeRoomScene } from './scenes/challengeRoomScene.js';
+
 
 
 
@@ -83,6 +85,7 @@ async function loadAssets() {
   loadSound("PlatformerTrack3", "assets/sounds/tracks/level3.wav");
   loadSound("PlatformerTrack4", "assets/sounds/tracks/level4.wav");
   loadSound("PlatformerTrack5", "assets/sounds/tracks/level5.wav");
+   loadSound("challengeRoom", "assets/sounds/tracks/challengeRoom.wav");
   //SOUNDS
   loadSound("door", "assets/sounds/fx/doorOpen.mp3");
   loadSound("pour", "assets/sounds/fx/coffeePour.mp3");
@@ -144,7 +147,7 @@ async function loadAssets() {
   loadSprite("platform", "assets/images/backgrounds/platform.png");
 
   loadSprite("window", "assets/images/items/window.png", {
-    sliceX: 2,
+    sliceX: 2, // FRAME 1 IS WINDOW SHUT.  FRAM 2 IS WINDOW OPEN.  EACH FRAME IS 200x150 SO NO SCALING SHOULD BE NEEDED
     sliceY: 1
   });
   
@@ -184,8 +187,8 @@ async function loadAssets() {
   loadSprite("catnip", "assets/images/items/Catnip.png");
   loadSprite("yeet", "assets/images/items/yeet.png");
   loadSprite("pawsed", "assets/images/items/pawsed.png");
- // loadSprite("nekoState", "assets/images/animationSprites/nekoState.png", { sliceX:8, sliceY:1, anims:{pulse:{from:0,to:7, loop: false, speed:7}} });
- // loadSprite("nekoNA", "assets/images/animationSprites/nekoNA.png", { sliceX:33, sliceY:1, anims:{pulse:{from:0,to:32, loop: false, speed:7}} });
+  loadSprite("statsUpgrade", "assets/images/animationSprites/statsUpgrade.png", { sliceX:8, sliceY:1, anims:{pulse:{from:0,to:7, loop: true, speed:5}} });
+  loadSprite("moveUpgrade", "assets/images/animationSprites/moveUpgrade.png", { sliceX:33, sliceY:1, anims:{pulse:{from:0,to:32, loop: true, speed:5}} });
   // SCENES
   loadSprite("drip2", "assets/images/animationSprites/Drip2.png", { 
     sliceX: 17, 
@@ -339,6 +342,10 @@ function registerScenes() {
   scene("level5", (data) => {
       createLevel5Scene(data);
     });
+
+  // CHALLENGE ROOMS
+  scene("challengeRoom", createChallengeRoomScene);
+
 
   // BOSS BATTLES
   scene("laserPointerBoss", (data) => createLaserPointerBossScene(data));

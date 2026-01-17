@@ -110,7 +110,7 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
   return collisionLayer;
 }
 
-function createSpriteGround(x, y, width, height) {
+export function createSpriteGround(x, y, width, height) {
   const segmentWidth = 500; 
   const numSegments = Math.floor(width / segmentWidth);
   
@@ -167,8 +167,8 @@ export function addLevelEnvironment(levelConfig) {
 
 
   add([
-    rect(20000, 480),
-    pos(-1000, 0),
+    rect(25000, 480),
+    pos(-1500, 0),
     color(0, 0, 0),
     opacity(0.4),
     z(-3)

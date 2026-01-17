@@ -3,9 +3,9 @@ export const ROOMS = {
   room1: { 
     id: 'room1',
     name: 'Room 1',
-    length:  7000, 
-    playerSpawn: { x: 150, y: 150 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
-    playerExit: { x: 6800, y: 250 }, // WHERE THE EXIT WINDOW IS - MAY NEED TO ADJUST
+    length:  7100, 
+    playerSpawn: { x: 100, y: 100 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
+    playerExit: { x: 6700, y: 220 }, // WHERE THE EXIT WINDOW IS 
     GroundSegments: [
         { x: 0, y: 350, width: 500, height: 50 },  // HIGHER GROUND SO PLAYER HAS TO DROP INTO THE CHALLENGE!
         { x: 6150, y: 350, width: 1000, height: 50 },
@@ -22,29 +22,25 @@ export const ROOMS = {
             { x: 5200, y: 390, width: 200, height: 20 },
             { x: 5700, y: 360, width: 200, height: 20 },
 
-            { x: 6800, y: 250, width: 1000, height: 50 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM  - MAY NEED TO ADJUST
+            { x: 6645, y: 220, width: 100, height: 20 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM 
 
   ],
-    itemLocation: { x: 6500, y: 300 }, // MAY NEED TO ADJUST
+    itemLocation: { x: 6325, y: 250 }, 
     items: {
-      newMove: { enabled: true, count: 1 }, // YOU HAVE TO COLLECT 3 OF THESE TO UNLOCK THE NEW MOVE - THEY'RE IN LEVELS 1, 3, AND 5
+      newMove: { enabled: true, count: 1 }, // FRAGMENT 1/3
       statsUpgrade: { enabled: false },
     },
-    roomMusic: play("menuMusic", {  // PLACEHOLDER
-                volume: window.isMuted ? 0 : 0.7, 
-                loop: true 
-                }), 
     nextState: 'level1',
   },
 
   room2: { 
     id: 'room2',
     name: 'Room 2',
-    length:  7000, 
-    playerSpawn: { x: 150, y: 150 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
-    playerExit: { x: 6800, y: 250 }, // WHERE THE EXIT WINDOW IS - MAY NEED TO ADJUST
+    length:  7100, 
+    playerSpawn: { x: 100, y: 100 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
+    playerExit: { x: 6700, y: 220 }, // WHERE THE EXIT WINDOW IS 
     GroundSegments: [
-        { x: 0, y: 350, width: 500, height: 50 },  // HIGHER GROUND SO PLAYER HAS TO DROP INTO THE CHALLENGE!
+        { x: 0, y: 350, width: 500, height: 50 }, 
         { x: 6150, y: 350, width: 1000, height: 50 },
     ],
     platforms: [
@@ -59,28 +55,22 @@ export const ROOMS = {
         { x: 5200, y: 370, width: 185, height: 20 },
         { x: 5700, y: 380, width: 185, height: 20 },
 
-        { x: 6800, y: 250, width: 1000, height: 50 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM  - MAY NEED TO ADJUST
-
-
+        { x: 6645, y: 220, width: 100, height: 20 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM 
   ],
-    itemLocation: { x: 6500, y: 300 }, // MAY NEED TO ADJUST
+    itemLocation: { x: 6325, y: 250 },
     items: {
       newMove: { enabled: false },
       statsUpgrade: { enabled: true, count: 1 },
     },
-    roomMusic: play("menuMusic", {  // PLACEHOLDER
-                volume: window.isMuted ? 0 : 0.7, 
-                loop: true 
-                }), 
     nextState: 'level2',
   },
 
   room3: { 
     id: 'room3',
     name: 'room 3',
-    length:  7000, 
-    playerSpawn: { x: 150, y: 150 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
-    playerExit: { x: 6800, y: 250 }, // WHERE THE EXIT WINDOW IS - MAY NEED TO ADJUST
+    length:  7100, 
+    playerSpawn: { x: 100, y: 100 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
+    playerExit: { x: 6700, y: 220 }, // WHERE THE EXIT WINDOW IS 
     GroundSegments: [
         { x: 0, y: 350, width: 500, height: 50 },  // HIGHER GROUND SO PLAYER HAS TO DROP INTO THE CHALLENGE!
         { x: 6150, y: 350, width: 1000, height: 50 },
@@ -97,28 +87,22 @@ export const ROOMS = {
         { x: 5200, y: 450, width: 165, height: 20 },
         { x: 5700, y: 400, width: 165, height: 20 },
         
-        { x: 6800, y: 250, width: 1000, height: 50 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM  - MAY NEED TO ADJUST
-
-
+        { x: 6645, y: 220, width: 100, height: 20 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM 
   ],
-    itemLocation: { x: 6500, y: 300 }, // MAY NEED TO ADJUST
+    itemLocation: { x: 6325, y: 250 },
     items: {
-      newMove: { enabled: true, count: 1 }, // YOU HAVE TO COLLECT 3 OF THESE TO UNLOCK THE NEW MOVE - THEY'RE IN LEVELS 1, 3, AND 5
+      newMove: { enabled: true, count: 1 }, // FRAGMENT 2/3
       statsUpgrade: { enabled: false },
     },
-    roomMusic: play("menuMusic", {  // PLACEHOLDER
-                volume: window.isMuted ? 0 : 0.7, 
-                loop: true 
-                }), 
     nextState: 'level3',
   },
 
   room4: {
     id: 'room4',
     name: 'room 4',
-    length:  7000, 
-    playerSpawn: { x: 150, y: 150 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
-    playerExit: { x: 6800, y: 250 }, // WHERE THE EXIT WINDOW IS - MAY NEED TO ADJUST
+    length:  7100, 
+    playerSpawn: { x: 100, y: 100 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
+    playerExit: { x: 6700, y: 220 }, // WHERE THE EXIT WINDOW IS 
     GroundSegments: [
         { x: 0, y: 350, width: 500, height: 50 },  // HIGHER GROUND SO PLAYER HAS TO DROP INTO THE CHALLENGE!
         { x: 6150, y: 350, width: 1000, height: 50 },
@@ -135,30 +119,24 @@ export const ROOMS = {
             { x: 5200, y: 450, width: 135, height: 20 },
             { x: 5700, y: 400, width: 135, height: 20 },
 
-
-            { x: 6800, y: 250, width: 1000, height: 50 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM  - MAY NEED TO ADJUST
-
+            { x: 6645, y: 220, width: 100, height: 20 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM 
   ],
-    itemLocation: { x: 6500, y: 300 }, // MAY NEED TO ADJUST
+    itemLocation: { x: 6325, y: 250 },
     items: {
       newMove: { enabled: false },
       statsUpgrade: { enabled: true, count: 1 },
     },
-    roomMusic: play("menuMusic", {  // PLACEHOLDER
-                volume: window.isMuted ? 0 : 0.7, 
-                loop: true 
-                }), 
     nextState: 'level4',
   },
 
   room5: {
     id: 'room5',
     name: 'room 5',
-    length:  7000, 
-    playerSpawn: { x: 150, y: 150 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
-    playerExit: { x: 6800, y: 250 }, // WHERE THE EXIT WINDOW IS - MAY NEED TO ADJUST
+    length:  7100, 
+    playerSpawn: { x: 100, y: 100 }, // WHERE PLAYER HOPS OUT OF THE WINDOW
+    playerExit: { x: 6700, y: 220 }, // WHERE THE EXIT WINDOW IS 
     GroundSegments: [
-        { x: 0, y: 350, width: 500, height: 50 },  // HIGHER GROUND SO PLAYER HAS TO DROP INTO THE CHALLENGE!
+        { x: 0, y: 350, width: 500, height: 50 },  
         { x: 6150, y: 350, width: 1000, height: 50 },
     ],
     platforms: [
@@ -173,19 +151,15 @@ export const ROOMS = {
         { x: 5200, y: 470, width: 120, height: 20 },
         { x: 5700, y: 440, width: 120, height: 20 },
 
-        { x: 6800, y: 250, width: 1000, height: 50 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM  - MAY NEED TO ADJUST
+        { x: 6645, y: 220, width: 100, height: 20 } // WINDOW SILL TO EXIT BACK TO THE LEVEL - NOT CRUMBLING PLATFORM 
 
 
   ],
-    itemLocation: { x: 6500, y: 300 }, // MAY NEED TO ADJUST
+    itemLocation: { x: 6325, y: 250 },
     items: {
-      newMove: { enabled: true, count: 1 }, // YOU HAVE TO COLLECT 3 OF THESE TO UNLOCK THE NEW MOVE - THEY'RE IN LEVELS 1, 3, AND 5
+      newMove: { enabled: true, count: 1 }, // FRAGMENT 3/3 
       statsUpgrade: { enabled: false },
     },
-    roomMusic: play("menuMusic", {  // PLACEHOLDER
-                volume: window.isMuted ? 0 : 0.7, 
-                loop: true 
-                }), 
     nextState: 'level5',
 
   }

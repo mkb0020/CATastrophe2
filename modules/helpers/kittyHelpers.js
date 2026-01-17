@@ -293,11 +293,28 @@ export function startFinalBossMusic() {
     });
 }
 
+export function startChallenegeMusic() {
+    stopAllMusic(); 
+    
+    window.challengeRoom = play("challengeRoom", { 
+        volume: window.isMuted ? 0 : 0.8, 
+        loop: true 
+    });
+    console.log('🎵 👁 CHALLENGE ROOM MUSIC STARTED! 👁');
+
+    onSceneLeave(() => { 
+        if (window.challengeRoom) {
+            window.challengeRoom.stop();
+            window.challengeRoom = null;
+        }
+    });
+}
+
 export function startGameOverMusic() {
     stopAllMusic(); 
     
     window.gameOverMusic = play("GameOverTrack", { 
-        volume: window.isMuted ? 0 : 0.3, 
+        volume: window.isMuted ? 0 : 0.2, 
         loop: true 
     });
     console.log('🎵 Game Over music started');
