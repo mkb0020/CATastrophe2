@@ -85,7 +85,9 @@ async function loadAssets() {
   loadSound("PlatformerTrack3", "assets/sounds/tracks/level3.wav");
   loadSound("PlatformerTrack4", "assets/sounds/tracks/level4.wav");
   loadSound("PlatformerTrack5", "assets/sounds/tracks/level5.wav");
-   loadSound("challengeRoom", "assets/sounds/tracks/challengeRoom.wav");
+  loadSound("challengeRoom", "assets/sounds/tracks/challengeRoom.wav");
+  loadSound("transformation", "assets/sounds/fx/finalBossEnd.wav"); // PLACEHOLDER
+
   //SOUNDS
   loadSound("door", "assets/sounds/fx/doorOpen.mp3");
   loadSound("pour", "assets/sounds/fx/coffeePour.mp3");
@@ -230,6 +232,27 @@ async function loadAssets() {
     sliceX: 18, 
     sliceY: 1, 
     anims: { fade: { from: 0, to: 17 } } 
+});
+
+
+  loadSprite("transformBubbles", "assets/images/animationSprites/bubbles.png", { 
+    sliceX: 7, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 6, loop: true} } 
+});
+
+  loadSprite("transformRainbow", "assets/images/animationSprites/rainbow.png", { 
+    sliceX: 7, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 6, loop: true}} 
+});
+
+
+
+  loadSprite("newMove", "assets/images/animationSprites/transform.png", { 
+    sliceX: 64, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 63 } }
 });
 
   // BATTLE ANIMATIONS

@@ -2,9 +2,8 @@
 import { getCharacterList } from '../config/characters.js';
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 
-// ============================================================================
-// IMAGE LOADER
-// ============================================================================
+// =============================== IMAGE LOADER =============================================
+
 export class ImageLoader {
     constructor(baseUrl = '/static/') {
         this.baseUrl = baseUrl;
@@ -195,9 +194,8 @@ export async function preloadInitialAssets() {
     console.log('✅ Initial assets loaded!');
 }
 
-// ============================================================================
-// AUDIO CONTROLS
-// ============================================================================
+// =================================== AUDIO CONTROLS =========================================
+
 export function stopAllMusic() {
     if (window.menuMusic) {
         window.menuMusic.stop();
@@ -410,9 +408,8 @@ export function createVolumeToggle() {
     return { volumeBtn, volumeIcon };
 }
 
-// ============================================================================
-// PAUSE SYSTEM
-// ============================================================================
+// ============================== PAUSE SYSTEM ==============================================
+
 export function createPauseButton(onPauseCallback) {
     const pauseBtn = add([
         rect(24, 24, { radius: 10 }),
@@ -699,9 +696,44 @@ export function addPauseToLevel(gameActiveGetter, gameActiveSetter) {
     return setupPauseSystem(gameActiveGetter, gameActiveSetter);
 }
 
-// ============================================================================
-// DOM MODAL STUFF
-// ============================================================================
+
+
+// ================================== DOM MODAL STUFF ==========================================
+
+export function openHowToPlayModal() {
+    const modal = document.getElementById('howToPlayModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+export function closeHowToPlayModal() {
+    const modal = document.getElementById('howToPlayModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+export function openAboutCatsModal() {
+    const modal = document.getElementById('aboutCatsModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+export function closeAboutCatsModal() {
+    const modal = document.getElementById('aboutCatsModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+
+  
 export function initializeModals() {
     document.addEventListener('DOMContentLoaded', () => {
         const helpBtn = document.getElementById('helpBtn');
@@ -714,6 +746,12 @@ export function initializeModals() {
         const closeGuideBottom = document.getElementById('closeGuideBottom');
         const openGuideBtn = document.getElementById('openGuideBtn');
         const floatingBackToTop = document.getElementById('floatingBackToTop');
+
+
+        const howToPlayModal = document.getElementById('howToPlayModal');
+        const closeHow = document.getElementById('closeHow');
+        const aboutCatsModal = document.getElementById('aboutCatsModal');
+        const closeCatsModal = document.getElementById('closeCats');
 
         const showBackToTop = () => {
             if (floatingBackToTop) {
@@ -866,5 +904,35 @@ export function initializeModals() {
                 e.stopPropagation();
             });
         }
+
+
+        
+
     });
+
+const closeHow = document.getElementById('closeHow');
+const closeCatsModal = document.getElementById('closeCatsModal');
+const howToPlayModal = document.getElementById('howToPlayModal');
+const aboutCatsModal = document.getElementById('aboutCatsModal');
+
+if (closeHow) {
+    closeHow.onclick = () => closeHowToPlayModal();
+}
+
+if (closeCatsModal) {
+    closeCatsModal.onclick = () => closeAboutCatsModal();
+}
+
+if (howToPlayModal) {
+    howToPlayModal.onclick = (e) => {
+        if (e.target.id === 'howToPlayModal') closeHowToPlayModal();
+    };
+}
+
+if (aboutCatsModal) {
+    aboutCatsModal.onclick = (e) => {
+        if (e.target.id === 'aboutCatsModal') closeAboutCatsModal();
+    };
+}
+
 }

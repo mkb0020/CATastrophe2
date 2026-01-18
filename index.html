@@ -23,33 +23,34 @@
 </head>
 
 <body>
-
+<!-- ======================= BACKGROUND =======================-->
  <div id="stars"></div>
 <div class="dreamy-overlay"></div>
 
 <div class="content-wrapper">
   <div class="background-gradient"></div>
   <div class="waves">
-       <!-- <svg id="wave1" viewBox="0 0 3000 600" preserveAspectRatio="none">
+       <svg id="wave1" viewBox="0 0 3000 600" preserveAspectRatio="none">
           <path d="M0,350 Q500,150 1000,350 T2000,350 T3000,350 L3000,600 L0,600 Z" fill="#4b0082" opacity="0.9"/>
         </svg>
         <svg id="wave2" viewBox="0 0 3000 600" preserveAspectRatio="none">
           <path d="M0,380 Q500,200 1000,380 T2000,380 T3000,380 L3000,600 L0,600 Z" fill="#c71585" opacity="0.8"/>
         </svg>
-        <svg id="wave3" viewBox="0 0 3000 600" preserveAspectRatio="none">
+        <!--<svg id="wave3" viewBox="0 0 3000 600" preserveAspectRatio="none">
           <path d="M0,400 Q333,200 666,400 T1333,400 T2000,400 T2333,400 T2666,400 T3000,400 L3000,600 L0,600 Z" fill="#ff69b4" opacity="0.75"/>
         </svg>
         <svg id="wave4" viewBox="0 0 3000 600" preserveAspectRatio="none">
           <path d="M0,420 Q750,250 1500,420 T3000,420 L3000,600 L0,600 Z" fill="#db7093" opacity="0.7"/>
-        </svg>
+        </svg>--->
         <svg id="wave5" viewBox="0 0 3000 600" preserveAspectRatio="none">
           <path d="M0,300 Q250,150 500,300 T1000,300 T1500,300 T2000,300 T2500,300 T3000,300 L3000,600 L0,600 Z" fill="#ff69b4" opacity="0.5"/>
         </svg>
-        <svg id="wave6" viewBox="0 0 3000 600" preserveAspectRatio="none">
+        <!--<svg id="wave6" viewBox="0 0 3000 600" preserveAspectRatio="none">
           <path d="M0,250 Q600,100 1200,250 T2400,250 L3000,250 L3000,600 L0,600 Z" fill="#e066ff" opacity="0.4"/>
         </svg>-->
   </div>
 
+<!-- ======================= NAV =======================-->
   <nav class="navbar">
       <div class="nav-container">
         
@@ -134,8 +135,7 @@
     </div>
   </nav>
 
-
-
+<!-- ======================= CANVAS =======================-->
 
 <div class="hero-content">
       <div class="canvas-container">
@@ -151,10 +151,10 @@
   <div class="debug-info" id="debugInfo" style="display: none;">
     X: 0  Y: 0
   </div>
-
-
- 
 </div>
+
+
+<!-- ======================= MODAlS =======================-->
 
   <div id="helpModal" class="modal">
     <div class="modal-content">
@@ -224,6 +224,180 @@
       </div>
     </div>
   </div>
+
+  <div id="howToPlayModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">HOW TO PLAY</h1>
+        <button class="modal-close" id="closeHow">X</button>
+      </div>
+      <div class="modal-body">
+        <h3>PLACEHOLDER</h3>
+      </div>
+    </div>
+  </div>
+
+
+<div id="aboutCatsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">MEET THE CATS</h1>
+        <button class="modal-close" id="closeCatsModal">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="cat-grid">
+          <div class="cat-card">
+            <div class="cat-card-inner">
+              <div class="cat-card-front">
+                <img src="/path/to/nona.png" alt="Nona">
+                <h3>NONA</h3>
+              </div>
+              <div class="cat-card-back">
+                <h3>NONA</h3>
+                <p>PLACEHOLDER ♥</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-card">
+            <div class="cat-card-inner">
+              <div class="cat-card-front">
+                <img src="/path/to/gato.png" alt="Gato">
+                <h3>GATO</h3>
+              </div>
+              <div class="cat-card-back">
+                <h3>GATO</h3>
+                <p>PLACEHOLDER</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-card">
+            <div class="cat-card-inner">
+              <div class="cat-card-front">
+                <img src="/path/to/nova.png" alt="Nova">
+                <h3>NOVA</h3>
+              </div>
+              <div class="cat-card-back">
+                <h3>NOVA</h3>
+                <p>PLACEHOLDER</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-card">
+            <div class="cat-card-inner">
+              <div class="cat-card-front">
+                <img src="/path/to/niels.png" alt="Niels">
+                <h3>NIELS</h3>
+              </div>
+              <div class="cat-card-back">
+                <h3>NIELS</h3>
+                <p>PLACEHOLDER</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-card">
+            <div class="cat-card-inner">
+              <div class="cat-card-front">
+                <img src="/path/to/aubie.png" alt="Aubie">
+                <h3>AUBIE</h3>
+              </div>
+              <div class="cat-card-back">
+                <h3>AUBIE</h3>
+                <p>PLACEHOLDER. War Eagle! 🦅</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-card">
+            <div class="cat-card-inner">
+              <div class="cat-card-front">
+                <img src="/path/to/doug.png" alt="Doug">
+                <h3>DOUG</h3>
+              </div>
+              <div class="cat-card-back">
+                <h3>DOUG</h3>
+                <p>PLACEHOLDER</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="helpModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">🐱 CATastrophe 2</h1>
+        <button class="modal-close" id="closeModal">X</button>
+      </div>
+      <div class="modal-body">
+        <blockquote>
+          <p><em>"Nature has no reverence towards life. Nature treats life as though it were the most valueless thing in the world....<br>
+          Nature does not act by purposes."</em><br>
+          <cite>— Erwin Schrödinger</cite></p>
+        </blockquote>         
+            <h3> Welcome to Schrödinger's Cat Café! </h3>
+            <p>
+                The café is in a state of quantum catastrophe — simultaneously fine and <em>very much not fine</em>. </p>
+                <p>The vibe is off. And the sass levels are dangerously high. </p>
+                <p><strong>Your mission:</strong> Stretch your toe beans, sharpen those claws. Grab the catnip. And help the cats collapse the wavefunction in the right direction and save the café from becoming... unalive. </p>
+            <h5>🎮 How to Play</h5>
+            <ul>
+                <li><strong>Move Left / Right:</strong> Arrow Keys</li>
+                <li><strong>Jump:</strong> SPACE</li>
+                <li><strong>Pause & Audio Controls:</strong> Top‑left corner</li>
+            </ul>
+            <p>
+                Your goal in each level is simple: platform your way through the café, cause maximum cup‑related destruction, avoid (or stomp!) enemies, and reach the Cat Tower to finish the level.
+            </p>
+            <h5>Platformer Levels</h5>
+            <h6> Items </h6>
+            <ul>
+                <li><strong>Knock Cups Off Platforms:</strong> Just run into them — gravity does the rest!</li>
+                <li><strong>Fish Bones:</strong> Extra points for your trouble.</li>
+                <li><strong>Tuna Cans:</strong> Restores HP. Delicious and nutritious.</li>
+                <li><strong>Milk Bottles:</strong> Grants an extra life. Calcium bonus!</li>
+                <li><strong>Catnip:</strong> activate <em>zoomies</em> </li>
+            </ul>
+            <h6> Enemies </h6>
+            <ul>
+                <li><strong>Falling Cucumbers:</strong> The ancient feline nemesis. Avoid at all costs.</li>
+                <li><strong>Lasers:</strong> They’re not for chasing — dodge them!</li>
+                <li><strong>Rats:</strong> You can stomp these squeaky foes for extra points.</li>
+            </ul>
+            <p>
+               <!--Defeat <strong>7 rats</strong> and you’ll earn a quantum upgrade:  
+                <strong>+5 points</strong> to one stat of your choice — <em>Attack</em>, <em>Defense</em>, or <em>Speed</em>.-->
+            </p>
+            <h6>Level Completion</h6>
+            <p>
+                Reach the <strong>Cat Tower</strong> at the end of each level and leap onto it to finish.  
+            </p>
+            <h5>⚔️ Boss Battles ⚔️</h5>
+            <p>
+                When you reach a boss, the game shifts into a turn‑based showdown.  
+                Choose your move, then the boss retaliates. Your <strong>Speed</strong> stat determines who acts first — because even in quantum combat, fast paws win fights.
+            </p>
+            <ul>
+                <li>Reduce the boss’s HP to <strong>0</strong> to win the battle.</li>
+                <li>Stay strategic — your stats matter!</li>
+            </ul>
+            <!--<h5>🔮 Secrets & Collectibles</h5>
+            <ul>
+                <li><strong>The Three Neko States:</strong> Collect all three to unlock a special thing!</li>
+            </ul>-->
+
+        <p class="mission-text"><strong>Good luck, brave cat warrior!</strong><br>
+        The fate of Schrödinger's Cat Café is now in your <em>toe beans</em>! 🐾</p>
+      </div>
+    </div>
+  </div>
+
+<!-- ======================= SCRIPTS =======================-->
 
   <script type="module" src="modules/game.js"></script>   
 

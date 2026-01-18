@@ -175,6 +175,12 @@ const player = {
         animateBiscuits(attackerSprite);
         animateHeal(attackerSprite, attackerGlow);
         break;
+
+      case "WHISKER WHIP":
+        animateWhiskerWhip(attackerSprite, targetSprite);
+        animateAttack(attackerSprite, attackerGlow, isPlayer);
+        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        break;
       
       // LASER POINTER BOSS MOVES
 

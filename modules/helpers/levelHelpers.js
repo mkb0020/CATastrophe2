@@ -29,10 +29,7 @@ import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '..
  // }
 //}
 
-//==================================== TANSITION ANIMATION - TO GAME OVER ====================================
-
-
-
+//==================================== TRANSITION ANIMATION - TO GAME OVER ====================================
 function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {
   console.log('☠️ No lives remaining - GAME OVER');
   console.log('☠️ Playing blood drip animation...');
@@ -170,7 +167,7 @@ export function addLevelEnvironment(levelConfig) {
     rect(25000, 480),
     pos(-1500, 0),
     color(0, 0, 0),
-    opacity(0.4),
+    opacity(0.2),
     z(-3)
   ]);
 

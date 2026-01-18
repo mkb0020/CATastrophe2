@@ -140,73 +140,73 @@ export function createChallengeRoomScene(data) {
     "exitWindow"
   ]);
   
-  // ==================== SPECIAL ITEM ====================
+// ==================== SPECIAL ITEM ====================
   let itemCollected = false;
-  let itemSprite, itemAnim, animFrames;
+  
+  // Determine sprite and animation based on item type
+  let itemSprite, maxFrame;
+  
   if (roomConfig.items.newMove.enabled) {
+    // Move fragment - progressive animation based on how many fragments collected
     const currentFragments = getUpgrades().newMoveFragments;
     itemSprite = 'moveUpgrade';
-    itemAnim = 'pulse';
     
-    if (currentFragments === 0) { // CURRENTLY NOT WORKING CORRECTLY - PLAYING ALL 33 FRAMES
-      animFrames = { from: 0, to: 12 };
+    // Progressive frames: fragment 1 = 0-12, fragment 2 = 0-23, fragment 3 = 0-32
+    if (currentFragments === 0) {
+      maxFrame = 12;
     } else if (currentFragments === 1) {
-      animFrames = { from: 0, to: 23 };
+      maxFrame = 23;
     } else {
-      animFrames = { from: 0, to: 32 };
+      maxFrame = 32;
     }
     
-    console.log(`✨ Move fragment ${currentFragments + 1} - animating frames ${animFrames.from}-${animFrames.to}`);
+    console.log(`✨ Move fragment ${currentFragments + 1} - animating frames 0-${maxFrame}`);
     
   } else if (roomConfig.items.statsUpgrade.enabled) {
+    // Stat upgrade - full simple animation
     itemSprite = 'statsUpgrade';
-    itemAnim = 'pulse';
-    animFrames = { from: 0, to: 7 };
+    maxFrame = 7;
     
     console.log('✨ Stat upgrade - animating frames 0-7');
   }
   
   const specialItem = add([
-    sprite(itemSprite, { 
-      anim: itemAnim,
-      animSpeed: 5
-    }),
+    sprite(itemSprite, { frame: 0 }), // Start at frame 0, NO auto animation
     pos(roomConfig.itemLocation.x, roomConfig.itemLocation.y),
-    area({ width: 50, height: 50 }),
+    area({ width: 80, height: 80 }),
     anchor("center"),
-    scale(0.6),
+    scale(0),
     z(10),
     {
-      animFrames: animFrames
+      currentFrame: 0,
+      maxFrame: maxFrame,
+      frameTimer: 0
     },
     "specialItem"
   ]);
   
-  if (itemSprite === 'moveUpgrade') {
-    let frameIndex = animFrames.from;
-    let frameTimer = 0;
-    const frameDelay = 1 / 5; 
+  // Manually control frame animation
+  specialItem.onUpdate(() => {
+    specialItem.frameTimer += dt();
+    const frameDelay = 1 / 7; // 7 fps
     
-    specialItem.onUpdate(() => {
-      frameTimer += dt();
-      if (frameTimer >= frameDelay) {
-        frameTimer = 0;
-        frameIndex++;
-        if (frameIndex > animFrames.to) {
-          frameIndex = animFrames.from;
-        }
-        specialItem.frame = frameIndex;
+    if (specialItem.frameTimer >= frameDelay) {
+      specialItem.frameTimer = 0;
+      specialItem.currentFrame++;
+      
+      if (specialItem.currentFrame > specialItem.maxFrame) {
+        specialItem.currentFrame = 0; // Loop back to start
       }
-    });
-  } else {
-    specialItem.play('pulse');
-  }
+      
+      specialItem.frame = specialItem.currentFrame;
+    }
+  });
   
   tween(0, 1.5, 0.5, (val) => {
     specialItem.scale = vec2(val, val);
   }, easings.easeOutBack);
   
-  const glow = add([ // NEED TO MAKE THIS GO AWAY AFTER ITEM IS COLLECTED
+  const glow = add([
     circle(60),
     pos(roomConfig.itemLocation.x, roomConfig.itemLocation.y),
     color(255, 215, 0),
@@ -247,16 +247,21 @@ export function createChallengeRoomScene(data) {
   // ==================== CRUMBLING PLATFORM LOGIC ====================
   setupCrumblingPlatformCollisions(player, crumblingPlatforms);
   
-  // ==================== ITEM COLLECTION ====================
+// ==================== ITEM COLLECTION ====================
   player.onCollide("specialItem", (item) => {
     if (!itemCollected) {
       itemCollected = true;
       destroy(item);
       
+      // NEW: Destroy the glow too!
+      if (glow && glow.exists()) {
+        destroy(glow);
+      }
+      
       play("happyMeow", { volume: 0.4 });
       
       if (roomConfig.items.newMove.enabled) {
-        openMoveSelectionModal(() => {
+        openMoveSelectionModal(character, () => {
           openExitWindow();
         });
       } else if (roomConfig.items.statsUpgrade.enabled) {
@@ -265,14 +270,15 @@ export function createChallengeRoomScene(data) {
           openExitWindow();
         });
       }
-      
       markRoomCompleted(roomConfig.id);
     }
   });
   
-  function openExitWindow() {
+function openExitWindow() {
     exitWindow.isOpen = true;
-    exitWindow.use(sprite('window', { frame: 1 })); 
+    exitWindow.use(sprite('window', { frame: 1 }));
+    
+    console.log('🚪 Exit window opened!');
     
     const exitPrompt = add([
       text("Press UP to exit", { size: 20 }),
@@ -304,14 +310,16 @@ export function createChallengeRoomScene(data) {
     onKeyPress("up", () => {
       if (exitWindow.playerNearby && exitWindow.isOpen) {
         console.log('🚪 Exiting challenge room...');
+        
         returnData.startHP = player.hp;
         returnData.lives = lives;
         returnData.score = score;
+        
         returnToLevel(returnScene, returnData);
       }
     });
   }
-  
+
   // ==================== FALL DETECTION ====================
   setupFallDetection(
     player,
@@ -470,7 +478,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
         platform.hasCrumbled = true;
         
         if (platform.linkedSprite && platform.linkedSprite.exists()) {
-          //play("ratKill", { volume: 0.3 });
+          //play("ratKill", { volume: 0.3 }); // PLACEHOLDER
           
           const fallSpeed = 200;
           const rotateSpeed = 360;

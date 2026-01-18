@@ -75,7 +75,7 @@ export const CHARACTERS = {
   NONA: {
     name: 'NONA',
     stats: {
-      maxHP: 1200, // TESTING
+      maxHP: 1200, //FOR TESTING
       baseHP: 1200,
       baseAtk: 3000,
       baseSpeed: 3000,

@@ -1,10 +1,88 @@
 // mainMenu.js
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
-import { createVolumeToggle, stopAllMusic, startMenuMusic } from '../helpers/kittyHelpers.js';
+
+import { createVolumeToggle, stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal } from '../helpers/kittyHelpers.js';
+
 
 
 export function createStartScene(){
+  
+  // TESTING ANIMATION FOR UNLOCKING NEW MOVE
+   const transformationBg = add([
+        sprite("transformRainbow", { anim: "fade" }),
+        pos(SCREEN_W / 2, SCREEN_H / 2),
+        scale(20),
+        anchor("center"),
+        z(1000),
+        fixed(),
+        opacity(0)
+      ]);
+  
+      const transformationBubbles = add([
+        sprite("transformBubbles", { anim: "fade" }),
+        pos(SCREEN_W / 2, SCREEN_H / 2),
+        scale(20),
+        anchor("center"),
+        z(1001),
+        fixed(),
+        opacity(0)
+      ]);
+  
+      const transformationAnimation = add([
+        sprite("newMove", { anim: "fade" }),
+        pos(SCREEN_W / 2, SCREEN_H / 2),
+        scale(10),
+        anchor("center"),
+        z(1002),
+        fixed(),
+        opacity(0)
+      ]);
+      
+      shake(50);
+      tween(transformationBg.opacity, 1, 0.3, (val) => transformationBg.opacity = val);
+      transformationBg.play("fade", { loop: true, speed: 15 });
+      wait(0.3, () =>  {
+        tween(transformationBubbles.opacity, 0.3, 0.3, (val) => transformationBubbles.opacity = val);
+        transformationBubbles.play("fade", { loop: true, speed: 8 });
+      });
+       wait(0.5, () =>  {
+        tween(transformationAnimation.opacity, 1, 0.3, (val) => transformationAnimation.opacity = val);
+        transformationAnimation.play("fade", { loop: false, speed: 10 });
+       });
+      wait(1.0, () => shake(50));
+      wait(3.0, () => shake(50));
+      wait(5.0, () => shake(50));
+      wait(7.0, () => shake(50));
+      wait(8.0, () => shake(90));
+      
+      wait(8, () => {
+        const whiteFlash = add([
+          rect(SCREEN_W, SCREEN_H),
+          pos(0, 0),
+          color(255, 255, 255),
+          opacity(0),
+          z(1001),
+          fixed()
+        ]);
+        
+        tween(whiteFlash.opacity, 1, 0.2, (val) => whiteFlash.opacity = val, easings.easeInQuad);
+        
+        wait(0.2, () => {
+          destroy(transformationBg);
+          destroy(transformationBubbles);
+          destroy(transformationAnimation);
+          
+          wait(0.5, () => {
+
+            
+            tween(whiteFlash.opacity, 0, 0.5, (val) => whiteFlash.opacity = val, easings.easeOutQuad)
+              .then(() => destroy(whiteFlash));
+          });
+        });
+      });
+  
+  
   add([
     sprite('startBG'),
     pos(0, 0),
@@ -148,7 +226,7 @@ export function createMainMenuScene() {
 
   const playBtn = add([
     rect(300, 56, { radius: 53 }),
-    pos(center().x, 360),              
+    pos(center().x, 300),              
     anchor("center"),                
     color(rgb(0,0,0)),
     outline(5, rgb(88,232,76)),
@@ -219,75 +297,215 @@ export function createMainMenuScene() {
   playBtn.onClick(() => go("charSelect"));
 
  
-  const backBtn = add([
+  //const backBtn = add([
+  //  rect(300, 56, { radius: 30 }),
+//    pos(center().x, 430),
+//    anchor("center"),                  
+//    color(rgb(0, 0, 0)),
+//    outline(5, rgb(144,144,192)),
+//    area(),
+//    scale(1),
+//    z(1),
+//    "backBtn"
+//  ]);
+
+//    const backGlow = backBtn.add([
+//    rect(302, 58, { radius: 58 }),
+//    anchor("center"),                  
+//    color(rgb(101,115,131)),
+//    opacity(0.3),
+//    pos(0, 0),
+//    z(1),
+//    "playGlow"
+//  ]);
+
+ //   const backShine = backBtn.add([
+ //     rect(290, 45, { radius: 58 }),
+ //     anchor("center"),                 
+ //     color(rgb(219,226,233)),
+ //     opacity(0.3),
+ //     pos(-5, -5),
+ //     z(2),
+ //     "playShine"
+ //   ]);
+
+//  backBtn.add([
+ //   text("<- BACK", { size: 34, font: "science" }),
+//    pos(0, 0),
+//    anchor("center"),
+//    color(rgb(255, 255, 255)),
+//    z(3)
+//  ]);
+
+//  backBtn.add([
+//    text("<- BACK", { size: 34, font: "science" }),
+//    pos(2, 2),
+//    anchor("center"),
+//    color(rgb(0,0,0)),
+//    z(2)
+ // ]);
+
+//  backBtn.onHoverUpdate(() => {
+ //   backBtn.scale = vec2(1.1);
+//    backBtn.color = rgb(144,144,192);
+//    backGlow.scale = vec2(1.05);
+//    backShine.scale = vec2(1.05);
+//    backGlow.opacity = 1;
+//    backShine.opacity = 0.4;
+//  });
+
+ // backBtn.onHoverEnd(() => {
+ //   backBtn.scale = vec2(1);
+ //   backBtn.color = rgb(0, 0, 0);
+//    backGlow.scale = vec2(1);
+ //   backShine.scale = vec2(1);
+ //   backGlow.opacity = 0.3;
+ //   backShine.opacity = 0.3;
+ // });
+
+//backBtn.onClick(() => {
+//    window.location.href = '/';
+//  });
+
+  // HOW TO PLAY BUTTON
+  
+  const howToPlayBtn = add([
     rect(300, 56, { radius: 30 }),
-    pos(center().x, 430),
-    anchor("center"),                  
+    pos(center().x, 370),
+    anchor("center"),
     color(rgb(0, 0, 0)),
     outline(5, rgb(144,144,192)),
     area(),
     scale(1),
     z(1),
-    "backBtn"
+    "howToPlayBtn"
   ]);
 
-    const backGlow = backBtn.add([
+  const howToPlayGlow = howToPlayBtn.add([
     rect(302, 58, { radius: 58 }),
-    anchor("center"),                  
-    color(rgb(101,115,131)),
+    anchor("center"),
+    color(rgb(144,144,192)),
     opacity(0.3),
     pos(0, 0),
     z(1),
-    "playGlow"
   ]);
 
-    const backShine = backBtn.add([
-      rect(290, 45, { radius: 58 }),
-      anchor("center"),                 
-      color(rgb(219,226,233)),
-      opacity(0.3),
-      pos(-5, -5),
-      z(2),
-      "playShine"
-    ]);
+  const howToPlayShine = howToPlayBtn.add([
+    rect(290, 45, { radius: 58 }),
+    anchor("center"),
+    color(rgb(144,144,192)),
+    opacity(0.3),
+    pos(-5, -5),
+    z(2),
+  ]);
 
-  backBtn.add([
-    text("<- BACK", { size: 34, font: "science" }),
+  howToPlayBtn.add([
+    text("HOW TO PLAY", { size: 28, font: "science" }),
     pos(0, 0),
     anchor("center"),
     color(rgb(255, 255, 255)),
     z(3)
   ]);
 
-  backBtn.add([
-    text("<- BACK", { size: 34, font: "science" }),
+  howToPlayBtn.add([
+    text("HOW TO PLAY", { size: 28, font: "science" }),
     pos(2, 2),
     anchor("center"),
-    color(rgb(0,0,0)),
+    color(rgb(0, 0, 0)),
     z(2)
   ]);
 
-  backBtn.onHoverUpdate(() => {
-    backBtn.scale = vec2(1.1);
-    backBtn.color = rgb(144,144,192);
-    backGlow.scale = vec2(1.05);
-    backShine.scale = vec2(1.05);
-    backGlow.opacity = 1;
-    backShine.opacity = 0.4;
+  howToPlayBtn.onHoverUpdate(() => {
+    howToPlayBtn.scale = vec2(1.1);
+    howToPlayBtn.color = rgb(144,144,192);
+    howToPlayGlow.scale = vec2(1.05);
+    howToPlayShine.scale = vec2(1.05);
+    howToPlayGlow.opacity = 1;
+    howToPlayShine.opacity = 0.4;
   });
 
-  backBtn.onHoverEnd(() => {
-    backBtn.scale = vec2(1);
-    backBtn.color = rgb(0, 0, 0);
-    backGlow.scale = vec2(1);
-    backShine.scale = vec2(1);
-    backGlow.opacity = 0.3;
-    backShine.opacity = 0.3;
+  howToPlayBtn.onHoverEnd(() => {
+    howToPlayBtn.scale = vec2(1);
+    howToPlayBtn.color = rgb(0, 0, 0);
+    howToPlayGlow.scale = vec2(1);
+    howToPlayShine.scale = vec2(1);
+    howToPlayGlow.opacity = 0.3;
+    howToPlayShine.opacity = 0.3;
   });
 
-  backBtn.onClick(() => {
-    window.location.href = '/';
+howToPlayBtn.onClick(() => {
+    openHowToPlayModal();
+});
+  // ABOUT THE CATS BUTTON
+  const aboutCatsBtn = add([ // NEED TO FIX COLORS AND SPACING
+    rect(300, 56, { radius: 30 }),
+    pos(center().x, 440),
+    anchor("center"),
+    color(rgb(0, 0, 0)),
+    outline(5, rgb(220, 76, 232)),
+    area(),
+    scale(1),
+    z(1),
+    "aboutCatsBtn"
+  ]);
+
+  const aboutCatsGlow = aboutCatsBtn.add([
+    rect(302, 58, { radius: 58 }),
+    anchor("center"),
+    color(rgb(255, 199, 255)),
+    opacity(0.3),
+    pos(0, 0),
+    z(1),
+  ]);
+
+  const aboutCatsShine = aboutCatsBtn.add([
+    rect(290, 45, { radius: 58 }),
+    anchor("center"),
+    color(rgb(255, 199, 255)),
+    opacity(0.3),
+    pos(-5, -5),
+    z(2),
+  ]);
+
+  aboutCatsBtn.add([
+    text("ABOUT THE CATS", { size: 24, font: "science" }),
+    pos(0, 0),
+    anchor("center"),
+    color(rgb(255, 255, 255)),
+    z(3)
+  ]);
+
+  aboutCatsBtn.add([
+    text("ABOUT THE CATS", { size: 24, font: "science" }),
+    pos(2, 2),
+    anchor("center"),
+    color(rgb(0, 0, 0)),
+    z(2)
+  ]);
+
+  aboutCatsBtn.onHoverUpdate(() => {
+    aboutCatsBtn.scale = vec2(1.1);
+    aboutCatsBtn.color = rgb(220, 76, 232);
+    aboutCatsGlow.scale = vec2(1.05);
+    aboutCatsShine.scale = vec2(1.05);
+    aboutCatsGlow.opacity = 1;
+    aboutCatsShine.opacity = 0.4;
   });
+
+  aboutCatsBtn.onHoverEnd(() => {
+    aboutCatsBtn.scale = vec2(1);
+    aboutCatsBtn.color = rgb(0, 0, 0);
+    aboutCatsGlow.scale = vec2(1);
+    aboutCatsShine.scale = vec2(1);
+    aboutCatsGlow.opacity = 0.3;
+    aboutCatsShine.opacity = 0.3;
+  });
+
+aboutCatsBtn.onClick(() => {
+    openAboutCatsModal();
+});
+
+
 
   createVolumeToggle();
 }

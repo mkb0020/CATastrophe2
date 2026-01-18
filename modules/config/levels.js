@@ -20,46 +20,46 @@ export const LEVELS = {
     name: 'Level 1',
     timeLimit: 90,
     length:  21000, 
-    playerSpawn: { x: 300, y: 200 }, 
+    playerSpawn: { x: 14200, y: 200 },  // FOR TESTING
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
-      { x: 3200, y: 440, width: 2000, height: 50 },
-      { x: 7000, y: 440, width: 2000, height: 50 },
+      { x: 3300, y: 440, width: 2000, height: 50 },
+      { x: 7400, y: 440, width: 2000, height: 50 },
       { x: 10700, y: 440, width: 1500, height: 50 },
       { x: 14200, y: 440, width: 2000, height: 50 },
       { x: 17500, y: 440, width: 3500, height: 50 }
     ],
     groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     platforms: [
-        { x: 1500, y: 310, width: 225, height: 20 }, // GAUNTLET 1
-        { x: 2050, y: 270, width: 225, height: 20 },
-        { x: 2600, y: 340, width: 225, height: 20 },
-        { x: 3150, y: 260, width: 225, height: 20 },
-        { x: 3700, y: 300, width: 225, height: 20 },
+        { x: 1500, y: 310, width: 250, height: 20 }, // GAUNTLET 1
+        { x: 2050, y: 270, width: 250, height: 20 },
+        { x: 2600, y: 340, width: 250, height: 20 },
+        { x: 3150, y: 260, width: 250, height: 20 },
+        { x: 3700, y: 300, width: 250, height: 20 },
 
-        { x: 5000, y: 280, width: 225, height: 20 }, // GAUNTLET 2
-        { x: 5550, y: 330, width: 225, height: 20 },
-        { x: 6100, y: 260, width: 225, height: 20 },
-        { x: 6650, y: 340, width: 225, height: 20 },
-        { x: 7200, y: 300, width: 225, height: 20 },
+        { x: 5000, y: 280, width: 250, height: 20 }, // GAUNTLET 2
+        { x: 5550, y: 330, width: 250, height: 20 },
+        { x: 6100, y: 260, width: 250, height: 20 },
+        { x: 6650, y: 340, width: 250, height: 20 },
+        { x: 7200, y: 300, width: 250, height: 20 },
 
-        { x: 8500, y: 320, width: 225, height: 20 }, // GAUNTLET 3
-        { x: 9050, y: 260, width: 225, height: 20 },
-        { x: 9600, y: 350, width: 225, height: 20 },
-        { x: 10150, y: 260, width: 225, height: 20 },
-        { x: 10700, y: 300, width: 225, height: 20 },
+        { x: 8500, y: 320, width: 250, height: 20 }, // GAUNTLET 3
+        { x: 9050, y: 260, width: 250, height: 20 },
+        { x: 9600, y: 350, width: 250, height: 20 },
+        { x: 10150, y: 260, width: 250, height: 20 },
+        { x: 10700, y: 300, width: 250, height: 20 },
 
-        { x: 12000, y: 290, width: 225, height: 20 }, // GAUNTLET 4
-        { x: 12550, y: 340, width: 225, height: 20 },
-        { x: 13100, y: 270, width: 225, height: 20 },
-        { x: 13650, y: 350, width: 225, height: 20 },
-        { x: 14200, y: 310, width: 225, height: 20 },
+        { x: 12000, y: 290, width: 250, height: 20 }, // GAUNTLET 4
+        { x: 12550, y: 340, width: 250, height: 20 },
+        { x: 13100, y: 270, width: 250, height: 20 },
+        { x: 13650, y: 350, width: 250, height: 20 },
+        { x: 14200, y: 310, width: 250, height: 20 },
 
-        { x: 15500, y: 330, width: 225, height: 20 },   // GAUNTLET 5
-        { x: 16050, y: 280, width: 225, height: 20 },
-        { x: 16600, y: 350, width: 225, height: 20 },
-        { x: 17150, y: 260, width: 225, height: 20 },
-        { x: 17700, y: 290, width: 225, height: 20 },
+        { x: 15500, y: 330, width: 250, height: 20 },   // GAUNTLET 5
+        { x: 16050, y: 280, width: 250, height: 20 },
+        { x: 16600, y: 350, width: 250, height: 20 },
+        { x: 17150, y: 260, width: 250, height: 20 },
+        { x: 17700, y: 290, width: 250, height: 20 },
 
   ],
     noStuffZones: [{ start: 16000, end: 17000},], 
@@ -77,10 +77,10 @@ export const LEVELS = {
       bonusHP: { enabled: false }
     },
     challengeDoorIN: [ // NEED TO ADJUST
-    { x: 1600, y: 220, roomId: 'room1' }
+    { x: 14400, y: 250, roomId: 'room1' }
     ],
     challengeDoorOUT: [  // NEED TO ADJUST
-    { x: 5000, y: 150, roomId: 'room1' }
+    { x: 15000, y: 70, roomId: 'room1' }
     ],
     background: 'levelBG',
     levelMusic: 'PlatformerTrack1',
@@ -93,7 +93,7 @@ export const LEVELS = {
     name: 'Level 2',
     timeLimit: 90,
     length:  21000,    
-    playerSpawn: { x: 20300, y: 200 },
+    playerSpawn: { x: 20400, y: 200 },
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 3200, y: 440, width: 2000, height: 50 },
@@ -162,10 +162,10 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 } // EASY
     },
     challengeDoorIN: [ // NEED TO ADJUST
-    { x: 7900, y: 380, roomId: 'room2' }
+    { x: 14400, y: 380, roomId: 'room2' }
     ],
     challengeDoorOUT: [ // NEED TO ADJUST
-    { x: 14400, y: 380, roomId: 'room2' }
+    { x: 15000, y: 100, roomId: 'room2' }
     ],
     background: 'levelBG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack2',
@@ -179,7 +179,7 @@ export const LEVELS = {
     name: 'Level 3',
     timeLimit: 90,
     length:  21000,  
-    playerSpawn: { x: 300, y: 200 },
+    playerSpawn: { x: 14200, y: 200 },
     GroundSegments: [
       { x: -1100, y: 440, width: 2500, height: 50 },
       { x: 3600, y: 440, width: 1500, height: 50 },
@@ -259,10 +259,10 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [ // NEED TO ADJUST
-    { x: 4400, y: 380, roomId: 'room3' }
+    { x: 14400, y: 380, roomId: 'room3' }
     ],
     challengeDoorOUT: [ // NEED TO ADJUST
-    { x: 7200, y: 380, roomId: 'room3' }
+    { x: 15000, y: 100, roomId: 'room3' }
     ],
     background: 'levelBG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack3', 
@@ -275,7 +275,7 @@ export const LEVELS = {
     name: 'Level 4',
     timeLimit: 90,
     length:  21000,  
-    playerSpawn: { x: 300, y: 200 },
+    playerSpawn: { x: 20400, y: 200 },
     GroundSegments: [
         { x: -1000, y: 440, width: 2500, height: 50 },
         { x: 3600, y: 440, width: 1500, height: 50 },
@@ -291,35 +291,35 @@ export const LEVELS = {
       platformIds: [20, 21, 22, 23]  // NOT WORKING
     },
     platforms: [
-      { x: 1500, y: 380, width: 180, height: 20 }, // GAUNTLET 1
-      { x: 2050, y: 350, width: 180, height: 20 },
-      { x: 2600, y: 390, width: 180, height: 20 },
-      { x: 3150, y: 350, width: 180, height: 20 },
-      { x: 3700, y: 380, width: 180, height: 20 },
-      { x: 5000, y: 360, width: 180, height: 20 }, // GAUNTLET 2
-      { x: 5550, y: 250, width: 180, height: 20 },
-      { x: 6100, y: 190, width: 180, height: 20 }, // CATNIP
-      { x: 6650, y: 350, width: 180, height: 20 },
-      { x: 7200, y: 270, width: 180, height: 20 },
-      { x: 8500, y: 280, width: 180, height: 20 }, // GAUNTLET 3
-      { x: 9050, y: 410, width: 180, height: 20 },
-      { x: 9600, y: 380, width: 180, height: 20 },
-      { x: 10150, y: 290, width: 180, height: 20 },
-      { x: 10700, y: 350, width: 180, height: 20 }, // GAUNTLET 4
-      { x: 12000, y: 300, width: 180, height: 20 }, // STAIRS UP TO EASY PLATFORMS
-      { x: 12550, y: 180, width: 180, height: 20 }, // STAIRS UP TO EASY PLATFORMS
-      { x: 13100, y: 90, width: 180, height: 20 }, // EASY = NO EGG
-      { x: 13650, y: 80, width: 180, height: 20 },  // EASY = NO EGG
-      { x: 14200, y: 90, width: 180, height: 20 },  // EASY = NO EGG
+      { x: 1500, y: 380, width: 200, height: 20 }, // GAUNTLET 1
+      { x: 2050, y: 350, width: 200, height: 20 },
+      { x: 2600, y: 390, width: 200, height: 20 },
+      { x: 3150, y: 350, width: 200, height: 20 },
+      { x: 3700, y: 380, width: 200, height: 20 },
+      { x: 5000, y: 360, width: 200, height: 20 }, // GAUNTLET 2
+      { x: 5550, y: 250, width: 200, height: 20 },
+      { x: 6100, y: 190, width: 200, height: 20 }, // CATNIP
+      { x: 6650, y: 350, width: 200, height: 20 },
+      { x: 7200, y: 270, width: 200, height: 20 },
+      { x: 8500, y: 280, width: 200, height: 20 }, // GAUNTLET 3
+      { x: 9050, y: 410, width: 200, height: 20 },
+      { x: 9600, y: 380, width: 200, height: 20 },
+      { x: 10150, y: 290, width: 200, height: 20 },
+      { x: 10700, y: 350, width: 200, height: 20 }, // GAUNTLET 4
+      { x: 12000, y: 300, width: 200, height: 20 }, // STAIRS UP TO EASY PLATFORMS
+      { x: 12550, y: 180, width: 200, height: 20 }, // STAIRS UP TO EASY PLATFORMS
+      { x: 13100, y: 90, width: 200, height: 20 }, // EASY = NO EGG
+      { x: 13650, y: 80, width: 200, height: 20 },  // EASY = NO EGG
+      { x: 14200, y: 90, width: 200, height: 20 },  // EASY = NO EGG
       { x: 12400, y: 440, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
       { x: 13100, y: 430, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
       { x: 13650, y: 460, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
       { x: 14200, y: 450, width: 150, height: 20 }, // EGG
-      { x: 15500, y: 370, width: 180, height: 20 }, // GAUNTLET 5
-      { x: 16050, y: 250, width: 180, height: 20 },
-      { x: 16600, y: 200, width: 180, height: 20 },
-      { x: 17150, y: 260, width: 180, height: 20 },
-      { x: 17700, y: 370, width: 180, height: 20 }
+      { x: 15500, y: 370, width: 200, height: 20 }, // GAUNTLET 5
+      { x: 16050, y: 250, width: 200, height: 20 },
+      { x: 16600, y: 200, width: 200, height: 20 },
+      { x: 17150, y: 260, width: 200, height: 20 },
+      { x: 17700, y: 370, width: 200, height: 20 }
     ],
     noStuffZones: [  { start: 6000, end: 6300  },{ start: 12000, end: 14500  }], // CATNIP AND EGG
     cups: { enabled: true, count: 15 },
@@ -360,10 +360,10 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [  // NEED TO ADJUST
-    { x: 16600, y: 380, roomId: 'room4' }
+    { x: 14400, y: 380, roomId: 'room4' }
     ],
     challengeDoorOUT: [  // NEED TO ADJUST
-    { x: 18500, y: 380, roomId: 'room4' }
+    { x: 15000, y: 100, roomId: 'room4' }
     ],
     background: 'levelBG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack4',
@@ -376,7 +376,7 @@ export const LEVELS = {
     name: 'Level 5',
     timeLimit: 90,
     length:  21000,   
-    playerSpawn: { x: 300, y: 200 },
+    playerSpawn: { x: 14200, y: 200 },
     GroundSegments: [
       { x: -1000, y: 440, width: 500, height: 50 },
       { x: -800, y: 440, width: 2000, height: 50 }, // INTENTIONALLY OVELAPPING
@@ -392,26 +392,26 @@ export const LEVELS = {
     hintPlatforms: [20],  // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     solidPlatforms: [20],
     platforms: [
-      { x: 1500, y: 380, width: 175, height: 20 }, // GAUNTLET 1
-      { x: 2050, y: 320, width: 175, height: 20 },
-      { x: 2600, y: 250, width: 175, height: 20 },
-      { x: 3150, y: 210, width: 175, height: 20 },
-      { x: 3700, y: 150, width: 175, height: 20 },
-      { x: 5000, y: 350, width: 175, height: 20 }, // GAUNTLET 2
-      { x: 5550, y: 390, width: 175, height: 20 },
-      { x: 6100, y: 430, width: 175, height: 20 },
-      { x: 6650, y: 450, width: 175, height: 20 },
-      { x: 7200, y: 370, width: 175, height: 20 },
-      { x: 8500, y: 360, width: 175, height: 20 }, // GAUNTLET 3
-      { x: 9050, y: 310, width: 175, height: 20 },
-      { x: 9600, y: 260, width: 175, height: 20 },
-      { x: 10150, y: 190, width: 175, height: 20 },
-      { x: 10700, y: 370, width: 175, height: 20 },
-      { x: 12000, y: 300, width: 175, height: 20 },  // GAUNTLET 4
-      { x: 12550, y: 430, width: 175, height: 20 },
-      { x: 13100, y: 360, width: 175, height: 20 },
-      { x: 13650, y: 280, width: 175, height: 20 },
-      { x: 14200, y: 460, width: 175, height: 20 },
+      { x: 1500, y: 380, width: 200, height: 20 }, // GAUNTLET 1
+      { x: 2050, y: 320, width: 200, height: 20 },
+      { x: 2600, y: 250, width: 200, height: 20 },
+      { x: 3150, y: 210, width: 200, height: 20 },
+      { x: 3700, y: 150, width: 200, height: 20 },
+      { x: 5000, y: 350, width: 200, height: 20 }, // GAUNTLET 2
+      { x: 5550, y: 390, width: 200, height: 20 },
+      { x: 6100, y: 430, width: 200, height: 20 },
+      { x: 6650, y: 450, width: 200, height: 20 },
+      { x: 7200, y: 370, width: 200, height: 20 },
+      { x: 8500, y: 360, width: 200, height: 20 }, // GAUNTLET 3
+      { x: 9050, y: 310, width: 200, height: 20 },
+      { x: 9600, y: 260, width: 200, height: 20 },
+      { x: 10150, y: 190, width: 200, height: 20 },
+      { x: 10700, y: 370, width: 200, height: 20 },
+      { x: 12000, y: 300, width: 200, height: 20 },  // GAUNTLET 4
+      { x: 12550, y: 430, width: 200, height: 20 },
+      { x: 13100, y: 360, width: 200, height: 20 },
+      { x: 13650, y: 280, width: 200, height: 20 },
+      { x: 14200, y: 460, width: 200, height: 20 },
       { x: 16400, y: 330, width: 1000, height: 20 } // LONG PLATFORM THAT LEADS UP TO MINI BOSS
         ],
     noStuffZones: [  
@@ -466,10 +466,10 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [  // NEED TO ADJUST
-    { x: 6075, y: 380, roomId: 'room5' }
+    { x: 14300, y: 380, roomId: 'room5' }
     ],
     challengeDoorOUT: [  // NEED TO ADJUST
-    { x: 6600, y: 380, roomId: 'room5' }
+    { x: 15000, y: 100, roomId: 'room5' }
     ],
     background: 'l5BG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack5',
