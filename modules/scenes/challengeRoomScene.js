@@ -20,7 +20,7 @@ import {
   applyUpgradesToPlayer
 } from '../helpers/upgradeHelper.js';
 import { returnToLevel } from '../helpers/roomHelper.js';
-import { createVolumeToggle, startChallenegeMusic, stopAllMusic } from '../helpers/kittyHelpers.js';
+import { startChallenegeMusic, stopAllMusic } from '../helpers/kittyHelpers.js';
 
 export function createChallengeRoomScene(data) {
   console.log('🎮 CHALLENGE ROOM SCENE');
@@ -100,14 +100,6 @@ export function createChallengeRoomScene(data) {
   ]);
 
   // ==================== ENTRANCE WINDOW ====================
-// add([
-//    rect(240, 190),
-//    pos(roomConfig.playerSpawn.x-30, roomConfig.playerSpawn.y - 70),
-//    color(0, 0, 0),
-//    opacity(0.1),
-//    z(-2)
-//  ]);
-
   add([
     sprite('window', { frame: 1 }), 
     pos(roomConfig.playerSpawn.x-10, roomConfig.playerSpawn.y - 50),
@@ -117,15 +109,6 @@ export function createChallengeRoomScene(data) {
   ]);
   
   // ==================== EXIT WINDOW ====================
- //add([
- //   rect(280, 230),
- //   pos(roomConfig.playerExit.x-30, roomConfig.playerExit.y-70),
- //   color(0, 0, 0),
- //   opacity(0.1),
-//    anchor("center"),
-//    z(-2)
-//  ]);
-
   const exitWindow = add([
     sprite('window', { frame: 0 }),
     pos(roomConfig.playerExit.x, roomConfig.playerExit.y - 50),
@@ -142,17 +125,12 @@ export function createChallengeRoomScene(data) {
   
 // ==================== SPECIAL ITEM ====================
   let itemCollected = false;
-  
-  // Determine sprite and animation based on item type
-  let itemSprite, maxFrame;
+    let itemSprite, maxFrame;
   
   if (roomConfig.items.newMove.enabled) {
-    // Move fragment - progressive animation based on how many fragments collected
     const currentFragments = getUpgrades().newMoveFragments;
     itemSprite = 'moveUpgrade';
-    
-    // Progressive frames: fragment 1 = 0-12, fragment 2 = 0-23, fragment 3 = 0-32
-    if (currentFragments === 0) {
+        if (currentFragments === 0) {
       maxFrame = 12;
     } else if (currentFragments === 1) {
       maxFrame = 23;
@@ -163,7 +141,6 @@ export function createChallengeRoomScene(data) {
     console.log(`✨ Move fragment ${currentFragments + 1} - animating frames 0-${maxFrame}`);
     
   } else if (roomConfig.items.statsUpgrade.enabled) {
-    // Stat upgrade - full simple animation
     itemSprite = 'statsUpgrade';
     maxFrame = 7;
     
@@ -171,7 +148,7 @@ export function createChallengeRoomScene(data) {
   }
   
   const specialItem = add([
-    sprite(itemSprite, { frame: 0 }), // Start at frame 0, NO auto animation
+    sprite(itemSprite, { frame: 0 }), 
     pos(roomConfig.itemLocation.x, roomConfig.itemLocation.y),
     area({ width: 80, height: 80 }),
     anchor("center"),
@@ -185,7 +162,6 @@ export function createChallengeRoomScene(data) {
     "specialItem"
   ]);
   
-  // Manually control frame animation
   specialItem.onUpdate(() => {
     specialItem.frameTimer += dt();
     const frameDelay = 1 / 7; // 7 fps
@@ -195,7 +171,7 @@ export function createChallengeRoomScene(data) {
       specialItem.currentFrame++;
       
       if (specialItem.currentFrame > specialItem.maxFrame) {
-        specialItem.currentFrame = 0; // Loop back to start
+        specialItem.currentFrame = 0; 
       }
       
       specialItem.frame = specialItem.currentFrame;
@@ -253,7 +229,6 @@ export function createChallengeRoomScene(data) {
       itemCollected = true;
       destroy(item);
       
-      // NEW: Destroy the glow too!
       if (glow && glow.exists()) {
         destroy(glow);
       }
@@ -349,8 +324,6 @@ function openExitWindow() {
   // ==================== CAMERA ====================
   setupChallengeRoomCamera(player, roomConfig, getGameActive, character);
   
-  // ==================== VOLUME TOGGLE ====================
-  createVolumeToggle();
   
   // ==================== CLEANUP ====================
     onSceneLeave(() => {

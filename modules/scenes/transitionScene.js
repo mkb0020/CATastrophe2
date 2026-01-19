@@ -1,7 +1,7 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getTransition } from '../config/transitions.js';
 import { SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
-import { createVolumeToggle, stopAllMusic, startMenuMusic, startFinalVictoryMusic } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, startMenuMusic, startFinalVictoryMusic, stopAtmosphere, fadeMusicOut } from '../helpers/kittyHelpers.js';
 
 export function createTransitionScene(transitionKey, character, startHP, lives = 3, score = 0) {
     console.log('🎬 RAW PARAMS:', { transitionKey, character, startHP, lives, score });
@@ -209,7 +209,6 @@ function handleNext() {
   onKeyPress('enter', handleNext);
   onClick(handleNext);
 
-  createVolumeToggle();
 }
 
 // TRANSITION 6: OBSERVER REVEAL
@@ -311,16 +310,12 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
     });
   });
   
-  createVolumeToggle();
 }
 
 // TRANSITION 7: POST-NUCLEAR VICTORY + CREDITS
 function createTransition7Cinematic(character, startHP) {
   console.log('🎬 Starting Transition7 - Post Nuclear Cinematic + Credits');
   console.log('🎵 Starting FinalVictoryTrack (50 seconds)');
-  stopAllMusic();
-  startFinalVictoryMusic();
-  
   const bg = add([
     sprite("transitionBG7"),
     pos(0, 0),
@@ -382,7 +377,7 @@ function createTransition7Cinematic(character, startHP) {
         destroy(whiteScreen);
         tween(bg.opacity, 0.7, 2.0, (o) => bg.opacity = o, easings.easeOutQuad);
 
-        wait(11, () => {  
+        wait(7, () => {  
           tween(bg.opacity, 0, 1.5, (o) => bg.opacity = o)
             .then(() => destroy(bg));
         });
@@ -392,7 +387,7 @@ function createTransition7Cinematic(character, startHP) {
 
   const charSprite = add([
     sprite(`${character.name}Sheet`, { frame: SPRITE_FRAMES.sitLookForwardRegular }),
-    pos(330, 215),
+    pos(330, 260),
     scale(1),
     z(10),
     opacity(0)
@@ -454,7 +449,7 @@ function createTransition7Cinematic(character, startHP) {
 
   let msgIdx = 0;
 
-  wait(2, () => {
+  wait(1.8, () => {
     tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
     wait(0.7, () => {
       tween(transitionText.opacity, 1, 0.8, (o) => {
@@ -464,7 +459,7 @@ function createTransition7Cinematic(character, startHP) {
       });
     });
 
-    wait(2.8, () => {
+    wait(2.4, () => {
       msgIdx = 1;
       transitionText.text = messages[1];
       shadowText.text = messages[1];
@@ -478,7 +473,7 @@ function createTransition7Cinematic(character, startHP) {
         shadowText2.opacity = o; 
       });
 
-      wait(2.8, () => {
+      wait(2.4, () => {
         msgIdx = 2;
         transitionText.text = messages[2];
         shadowText.text = messages[2];
@@ -492,7 +487,7 @@ function createTransition7Cinematic(character, startHP) {
           shadowText2.opacity = o; 
         });
 
-        wait(2.8, () => {
+        wait(2.5, () => {
           tween(charSprite.opacity, 0, 1.0, (o) => charSprite.opacity = o);
           tween(transitionText.opacity, 0, 1.0, (o) => {
             transitionText.opacity = o;
@@ -505,7 +500,8 @@ function createTransition7Cinematic(character, startHP) {
             destroy(shadowText2);
           });
 
-          wait(0.9, () => startCreditsSequence(character));
+          wait(0.8, () => 
+            startCreditsSequence(character));
         });
       });
     });
@@ -537,10 +533,11 @@ function createTransition7Cinematic(character, startHP) {
     });
   });
 
-  createVolumeToggle();
 }
 
 function startCreditsSequence(character) {
+  stopAllMusic();
+  startFinalVictoryMusic();
   const cafeBG = add([
     sprite("cafe"),
     pos(0, 0),
@@ -566,7 +563,7 @@ function startCreditsSequence(character) {
     opacity(0),
     z(7)
   ]);
-  wait(3, () => {tween(panel.opacity, 0.9, 2, (o) => panel.opacity = o);});
+  wait(2.5, () => {tween(panel.opacity, 0.9, 1.5, (o) => panel.opacity = o);});
 
   let allCreditObjects = [];
 
@@ -597,6 +594,7 @@ function startCreditsSequence(character) {
     });
   }
 
+  // "YOU DID IT!" 
   wait(3.5, () => {
     const youDidIt = add([
       text("YOU DID IT!", { size: 65, font: "science", }),
@@ -608,13 +606,13 @@ function startCreditsSequence(character) {
     ]);
     allCreditObjects.push(youDidIt);
 
-    tween(youDidIt.opacity, 1, 3.5, (o) => youDidIt.opacity = o, easings.easeOutQuad);
+    tween(youDidIt.opacity, 1, 2.5, (o) => youDidIt.opacity = o, easings.easeOutQuad);
   });
 
-  wait(6, () => {
+  wait(8, () => {
     const youDidIt = allCreditObjects.find(obj => obj.text === "YOU DID IT!");
     if (youDidIt) {
-      tween(youDidIt.opacity, 0, 2, (o) => youDidIt.opacity = o).then(() => {
+      tween(youDidIt.opacity, 0, 1.5, (o) => youDidIt.opacity = o).then(() => {
         destroy(youDidIt);
         allCreditObjects = allCreditObjects.filter(obj => obj !== youDidIt);
       });
@@ -625,24 +623,26 @@ function startCreditsSequence(character) {
       `Starring: ${character.name}`,
       "Special thanks:",
       "The cats at Schrödinger's Cat Café"
-    ], 120, 80, 1.6);
+    ], 120, 80, 1.2);
 
-    wait(8, () => {
-      allCreditObjects.forEach(obj => tween(obj.opacity, 0, 1.0, (o) => obj.opacity = o));
+    // 20s INTO CREDITS
+    wait(12, () => {
+      allCreditObjects.forEach(obj => tween(obj.opacity, 0, 1.2, (o) => obj.opacity = o));
 
-      wait(1, () => {
+      wait(1.5, () => {
         clearCredits();
 
         fadeInLines([
           "Code, concept, story",
           "character-design, music:",
           "By MK"
-        ], 150, 70, 1.6);
+        ], 150, 70, 1.4);
 
-        wait(8, () => {
-          allCreditObjects.forEach(obj => tween(obj.opacity, 0, 1.0, (o) => obj.opacity = o));
+        // 32s INTO CREDITS
+        wait(12, () => {
+          allCreditObjects.forEach(obj => tween(obj.opacity, 0, 1.2, (o) => obj.opacity = o));
 
-          wait(1.2, () => {
+          wait(1.5, () => {
             clearCredits();
             fadeInLines([
               "Chief Debugging Officer:",
@@ -651,21 +651,50 @@ function startCreditsSequence(character) {
               "ChatGPT",
               "Director of Chaos Department:",
               "GROK"
-            ], 90, 55, 1.5);
+            ], 90, 55, 1.2);
 
-            wait(10, () => {
-              allCreditObjects.forEach(obj => {
-                tween(obj.opacity, 0, 2.0, (o) => obj.opacity = o);
-              });
+            // 45s INTO CREDITS
+            wait(13, () => {
+              allCreditObjects.forEach(obj => tween(obj.opacity, 0, 1.2, (o) => obj.opacity = o));
 
-              tween(panel.opacity, 0, 2.5, (o) => panel.opacity = o);
-              tween(cafeBG.opacity, 0, 4.0, (o) => cafeBG.opacity = o, easings.easeInQuad);
-              tween(darkOverlay.opacity, 0.9, 4.0, (o) => darkOverlay.opacity = o, easings.easeInQuad);
- 
-              wait(5, () => {
-                stopAllMusic();
-                startMenuMusic();
-                go("menu");
+              wait(1.5, () => {
+                clearCredits();
+                fadeInLines([
+                  "Dedicated to:",
+                  "Nona"
+                ], 100, 50, 1.3);
+
+                const nonaImage = add([
+                  sprite("realNona"),
+                  pos(width() / 2, 285),
+                  anchor("center"),
+                  opacity(0),
+                  scale(0.9),
+                  z(8)
+                ]);
+                allCreditObjects.push(nonaImage);
+
+                wait(2.5, () => {
+                  tween(nonaImage.opacity, 1, 1.5, (o) => nonaImage.opacity = o, easings.easeOutQuad);
+                });
+
+                // FADE OUT STARTS AT  ~62s, ENDS AT ~79s (1:19)
+                wait(15, () => {
+                  fadeMusicOut(6); // TAKES 6s TO FADE OUT
+                  allCreditObjects.forEach(obj => {
+                    tween(obj.opacity, 0, 4.5, (o) => obj.opacity = o);
+                  });
+
+                  tween(panel.opacity, 0, 5, (o) => panel.opacity = o);
+                  tween(cafeBG.opacity, 0, 6, (o) => cafeBG.opacity = o, easings.easeInQuad);
+                  tween(darkOverlay.opacity, 0.9, 6.5, (o) => darkOverlay.opacity = o, easings.easeInQuad);
+     
+                  wait(8, () => {
+                    stopAtmosphere();
+                    startMenuMusic();
+                    go("menu");
+                  });
+                });
               });
             });
           });

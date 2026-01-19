@@ -1,95 +1,14 @@
 // mainMenu.js
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
-
-import { createVolumeToggle, stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal } from '../helpers/kittyHelpers.js';
-
-
+import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
 
 export function createStartScene(){
-  
-  // TESTING ANIMATION FOR UNLOCKING NEW MOVE
-   const transformationBg = add([
-        sprite("transformRainbow", { anim: "fade" }),
-        pos(SCREEN_W / 2, SCREEN_H / 2),
-        scale(20),
-        anchor("center"),
-        z(1000),
-        fixed(),
-        opacity(0)
-      ]);
-  
-      const transformationBubbles = add([
-        sprite("transformBubbles", { anim: "fade" }),
-        pos(SCREEN_W / 2, SCREEN_H / 2),
-        scale(20),
-        anchor("center"),
-        z(1001),
-        fixed(),
-        opacity(0)
-      ]);
-  
-      const transformationAnimation = add([
-        sprite("newMove", { anim: "fade" }),
-        pos(SCREEN_W / 2, SCREEN_H / 2),
-        scale(10),
-        anchor("center"),
-        z(1002),
-        fixed(),
-        opacity(0)
-      ]);
-      
-      shake(50);
-      tween(transformationBg.opacity, 1, 0.3, (val) => transformationBg.opacity = val);
-      transformationBg.play("fade", { loop: true, speed: 15 });
-      wait(0.3, () =>  {
-        tween(transformationBubbles.opacity, 0.3, 0.3, (val) => transformationBubbles.opacity = val);
-        transformationBubbles.play("fade", { loop: true, speed: 8 });
-      });
-       wait(0.5, () =>  {
-        tween(transformationAnimation.opacity, 1, 0.3, (val) => transformationAnimation.opacity = val);
-        transformationAnimation.play("fade", { loop: false, speed: 10 });
-       });
-      wait(1.0, () => shake(50));
-      wait(3.0, () => shake(50));
-      wait(5.0, () => shake(50));
-      wait(7.0, () => shake(50));
-      wait(8.0, () => shake(90));
-      
-      wait(8, () => {
-        const whiteFlash = add([
-          rect(SCREEN_W, SCREEN_H),
-          pos(0, 0),
-          color(255, 255, 255),
-          opacity(0),
-          z(1001),
-          fixed()
-        ]);
-        
-        tween(whiteFlash.opacity, 1, 0.2, (val) => whiteFlash.opacity = val, easings.easeInQuad);
-        
-        wait(0.2, () => {
-          destroy(transformationBg);
-          destroy(transformationBubbles);
-          destroy(transformationAnimation);
-          
-          wait(0.5, () => {
-
-            
-            tween(whiteFlash.opacity, 0, 0.5, (val) => whiteFlash.opacity = val, easings.easeOutQuad)
-              .then(() => destroy(whiteFlash));
-          });
-        });
-      });
-  
-  
   add([
     sprite('startBG'),
     pos(0, 0),
     z(0)
   ]);
-
-
 
 
   const clickText = add([
@@ -127,16 +46,19 @@ export function createStartScene(){
   });
 
   onClick(() => {
+    stopAtmosphere();
     startMenuMusic();
         go("menu");
   });
 
   onKeyPress("space", () => {
+    stopAtmosphere();
     startMenuMusic();
     go("menu");
   });
 
   onKeyPress("enter", () => {
+    stopAtmosphere();
     startMenuMusic();
     go("menu");
   });
@@ -225,8 +147,8 @@ export function createMainMenuScene() {
 //  ]);
 
   const playBtn = add([
-    rect(300, 56, { radius: 53 }),
-    pos(center().x, 300),              
+    rect(300, 46, { radius: 53 }),
+    pos(center().x, 320),              
     anchor("center"),                
     color(rgb(0,0,0)),
     outline(5, rgb(88,232,76)),
@@ -238,7 +160,7 @@ export function createMainMenuScene() {
   ]);
 
     const playGlow = playBtn.add([
-    rect(303, 60, { radius: 58 }),
+    rect(303, 50, { radius: 58 }),
     anchor("center"),                 
     color(rgb(88,232,76)),
     opacity(0.15),
@@ -248,7 +170,7 @@ export function createMainMenuScene() {
   ]);
 
     const playShine = playBtn.add([
-      rect(290, 45, { radius: 58 }),
+      rect(290, 35, { radius: 58 }),
       anchor("center"),                 
       color(rgb(158,255,158)),
       opacity(0.2),
@@ -258,16 +180,16 @@ export function createMainMenuScene() {
     ]);
 
   playBtn.add([
-    text("PLAY", { size: 36, font: "science" }),
-    pos(0, 0),                        
+    text("PLAY", { size: 32, font: "science" }),
+    pos(0, 1),                        
     anchor("center"),
     color(rgb(255, 255, 255)),
     z(3)
   ]);
 
   playBtn.add([
-    text("PLAY", { size: 36, font: "science" }),
-    pos(2, 2),
+    text("PLAY", { size: 32, font: "science" }),
+    pos(2, 3),
     anchor("center"),
     color(rgb(0, 0, 0)),
     z(2)
@@ -370,8 +292,8 @@ export function createMainMenuScene() {
   // HOW TO PLAY BUTTON
   
   const howToPlayBtn = add([
-    rect(300, 56, { radius: 30 }),
-    pos(center().x, 370),
+    rect(300, 46, { radius: 30 }),
+    pos(center().x, 380),
     anchor("center"),
     color(rgb(0, 0, 0)),
     outline(5, rgb(144,144,192)),
@@ -382,7 +304,7 @@ export function createMainMenuScene() {
   ]);
 
   const howToPlayGlow = howToPlayBtn.add([
-    rect(302, 58, { radius: 58 }),
+    rect(302, 48, { radius: 58 }),
     anchor("center"),
     color(rgb(144,144,192)),
     opacity(0.3),
@@ -391,7 +313,7 @@ export function createMainMenuScene() {
   ]);
 
   const howToPlayShine = howToPlayBtn.add([
-    rect(290, 45, { radius: 58 }),
+    rect(290, 35, { radius: 58 }),
     anchor("center"),
     color(rgb(144,144,192)),
     opacity(0.3),
@@ -400,16 +322,16 @@ export function createMainMenuScene() {
   ]);
 
   howToPlayBtn.add([
-    text("HOW TO PLAY", { size: 28, font: "science" }),
-    pos(0, 0),
+    text("HOW TO PLAY", { size: 27, font: "science" }),
+    pos(0, 1),
     anchor("center"),
     color(rgb(255, 255, 255)),
     z(3)
   ]);
 
   howToPlayBtn.add([
-    text("HOW TO PLAY", { size: 28, font: "science" }),
-    pos(2, 2),
+    text("HOW TO PLAY", { size: 27, font: "science" }),
+    pos(2, 3),
     anchor("center"),
     color(rgb(0, 0, 0)),
     z(2)
@@ -438,11 +360,11 @@ howToPlayBtn.onClick(() => {
 });
   // ABOUT THE CATS BUTTON
   const aboutCatsBtn = add([ // NEED TO FIX COLORS AND SPACING
-    rect(300, 56, { radius: 30 }),
+    rect(300, 46, { radius: 30 }),
     pos(center().x, 440),
     anchor("center"),
     color(rgb(0, 0, 0)),
-    outline(5, rgb(220, 76, 232)),
+    outline(5, rgb(144,144,192)),
     area(),
     scale(1),
     z(1),
@@ -450,34 +372,34 @@ howToPlayBtn.onClick(() => {
   ]);
 
   const aboutCatsGlow = aboutCatsBtn.add([
-    rect(302, 58, { radius: 58 }),
+    rect(302, 48, { radius: 58 }),
     anchor("center"),
-    color(rgb(255, 199, 255)),
+    color(rgb(144,144,192)),
     opacity(0.3),
     pos(0, 0),
     z(1),
   ]);
 
   const aboutCatsShine = aboutCatsBtn.add([
-    rect(290, 45, { radius: 58 }),
+    rect(290, 35, { radius: 58 }),
     anchor("center"),
-    color(rgb(255, 199, 255)),
+    color(rgb(144,144,192)),
     opacity(0.3),
     pos(-5, -5),
     z(2),
   ]);
 
   aboutCatsBtn.add([
-    text("ABOUT THE CATS", { size: 24, font: "science" }),
-    pos(0, 0),
+    text("MEET THE CATS", { size: 23, font: "science" }),
+    pos(0, 1),
     anchor("center"),
     color(rgb(255, 255, 255)),
     z(3)
   ]);
 
   aboutCatsBtn.add([
-    text("ABOUT THE CATS", { size: 24, font: "science" }),
-    pos(2, 2),
+    text("MEET THE CATS", { size: 23, font: "science" }),
+    pos(2, 3),
     anchor("center"),
     color(rgb(0, 0, 0)),
     z(2)
@@ -485,7 +407,7 @@ howToPlayBtn.onClick(() => {
 
   aboutCatsBtn.onHoverUpdate(() => {
     aboutCatsBtn.scale = vec2(1.1);
-    aboutCatsBtn.color = rgb(220, 76, 232);
+    aboutCatsBtn.color = rgb(144,144,192);
     aboutCatsGlow.scale = vec2(1.05);
     aboutCatsShine.scale = vec2(1.05);
     aboutCatsGlow.opacity = 1;
@@ -505,12 +427,7 @@ aboutCatsBtn.onClick(() => {
     openAboutCatsModal();
 });
 
-
-
-  createVolumeToggle();
 }
-
-
 
 export function createCharSelectScene() {
   let selectedIndex = null;
@@ -1207,7 +1124,6 @@ export function createCharSelectScene() {
     }
   });
   
-  createVolumeToggle();
 }
 
 function playPourAnimation(onComplete) {

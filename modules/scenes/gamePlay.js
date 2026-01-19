@@ -40,7 +40,6 @@ import {
   getUpgrades 
 } from '../helpers/upgradeHelper.js';
 import { getRoom } from '../config/challengeRoom.js';
-import { createVolumeToggle } from '../helpers/kittyHelpers.js';
 
 
 function createUnifiedLevel(levelId, data) {
@@ -171,7 +170,6 @@ function createUnifiedLevel(levelId, data) {
     }
   });
 
-  createVolumeToggle();
 
   onSceneLeave(() => {
     hideHUD();
@@ -334,7 +332,6 @@ export function createLevel5Scene(data) {
     }
   });
 
-  createVolumeToggle();
 
   onSceneLeave(() => {
     hideHUD();

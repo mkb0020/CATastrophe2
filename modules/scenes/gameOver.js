@@ -1,6 +1,6 @@
 // gameOver.js
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
-import { createVolumeToggle, stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../helpers/kittyHelpers.js';
 import{getCharacterStats} from '../config/characters.js'; 
 
 export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
@@ -198,7 +198,6 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     }, easings.easeOutQuad);
   });
 
-  createVolumeToggle();
 }
 
 function restartLevel(levelName, character, remainingLives) {
@@ -414,7 +413,6 @@ export function createYouDiedScene(data) {
     quitBtn.color = rgb(0, 0, 0);
   });
 
-  createVolumeToggle();
 }
 
 export function createVictoryScene(data) {
@@ -545,7 +543,6 @@ export function createVictoryScene(data) {
     });
   });
 
-  createVolumeToggle();
 
   onClick(() => {
     returnToMenu();
@@ -696,7 +693,6 @@ export function createLevelCompleteScene(data) {
   });
 
 
-  createVolumeToggle();
 }
 
 
@@ -722,6 +718,7 @@ export function createBossDefeatedScene(data) {
     rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(11, 11, 27),
+    opacity(0.8),
     z(0)
   ]);
 
@@ -808,7 +805,6 @@ export function createBossDefeatedScene(data) {
     z(2)
   ]);
 
-  createVolumeToggle();
 
   onClick(() => {
       console.log('🚀 BEFORE go() - values are:', { nextLevel, playerHP, lives, score });

@@ -2,7 +2,7 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getBoss, initializeBoss, chooseBossMove } from '../config/bosses.js';
 import { calculateDamage } from '../systems/battleSystem.js';
-import { createVolumeToggle, stopAllMusic, startBossMusic, startFinalBossMusic } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, startBossMusic, startFinalBossMusic } from '../helpers/kittyHelpers.js';
 import {
   addBossBackground,
   addBattleSprites,
@@ -52,6 +52,8 @@ import {
   animateBurn,
   animateFlash
 } from '../helpers/bossHelpers.js';
+import { applyUpgradesToBossPlayer } from '../helpers/upgradeHelper.js';
+
 
 export function createBossBattleScene(bossId, character, startHP, startScore = 0) {
     console.log('🎮 Boss Battle Starting:', {
@@ -98,9 +100,6 @@ export function createBossBattleScene(bossId, character, startHP, startScore = 0
     startFinalBossMusic();
   }
 
-
-
-
   const bossConfig = getBoss(bossId);
   const boss = initializeBoss(bossId);
   
@@ -117,6 +116,8 @@ const player = {
   defenseBuffTurns: 0,
   lives: character.lives !== undefined ? character.lives : 3 
 };
+
+applyUpgradesToBossPlayer(player);
 
   // BATTLE STATE
   let battleLog = bossConfig.introMessage[0];
@@ -676,7 +677,16 @@ function checkBattleEnd() {
           wait(0.5, () => {
             playFinishHimMove(finishHimMove);
             
-            let victoryDelay = 3;               
+            let victoryDelay = 1.2;   
+            if (finishHimMove === 'CatCrossbow') {
+              victoryDelay = 3.2;  
+            }   
+            if (finishHimMove === 'PURRcisionRifle') {
+              victoryDelay = 2.8;  
+            }  
+            if (finishHimMove === 'MeowlotovCocktail') {
+              victoryDelay = 2.2;  
+            }          
             if (finishHimMove === 'FelineFission') {
               victoryDelay = 6; 
             } 
@@ -687,9 +697,9 @@ function checkBattleEnd() {
                   go("transition", "Transition7", character, player.hp, player.lives, startScore);
               } else {
                 animateDefeat(bossSprite, bossGlow, false);
-                updateLog(`FLAWLESS VICTORY! THE ${boss.name} HAS BEEN DEFEATED!`);
+                updateLog(`PURRRRRFECT VICTORY! THE ${boss.name} HAS BEEN DEFEATED!`);
                 
-                wait(3, () => {
+                wait(1.5, () => {
                   if (bossId === 'BossLaserPointer') {
                     go("bossDefeated", {
                       level: "laserPointerBoss",
@@ -831,7 +841,6 @@ function checkBattleEnd() {
   // INITIALIZE
   updateHPBars(player, boss, playerHPBar, playerHPText, bossHPBar, bossHPText);
   updateMoveButtons(moveButtons, player);
-  createVolumeToggle();
 }
 
 export function createLaserPointerBossScene(data) {
