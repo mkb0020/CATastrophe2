@@ -144,17 +144,29 @@ export function addLevelEnvironment(levelConfig) {
   ]);
 
   
-  levelConfig.platforms.forEach((platform, index) => {
+levelConfig.platforms.forEach((platform, index) => {
     const isSolidPlatform = levelConfig.solidPlatforms?.includes(index);
     
-    createSpritePlatform(
-      platform.x, 
-      platform.y, 
-      platform.width, 
-      platform.height,
-      false,
-      isSolidPlatform
-    );
+    if (platform.isRect) {
+      add([
+        rect(platform.width, platform.height),
+        pos(platform.x, platform.y),
+        area(),
+        body({ isStatic: true }),
+        color(131, 12, 222), 
+        "oneWayPlatform",
+        z(-1)
+      ]);
+    } else {
+      createSpritePlatform(
+        platform.x, 
+        platform.y, 
+        platform.width, 
+        platform.height,
+        false,
+        isSolidPlatform
+      );
+    } 
   });
 
  

@@ -179,17 +179,15 @@ export const LEVELS = {
     name: 'Level 3',
     timeLimit: 90,
     length:  21000,  
-    playerSpawn: { x: 20400, y: 200 },
+    playerSpawn: { x: 14400, y: 200 },
     GroundSegments: [
       { x: -1100, y: 440, width: 2500, height: 50 },
       { x: 3600, y: 440, width: 1500, height: 50 },
       { x: 7100, y: 440, width: 2000, height: 50 },
       { x: 10600, y: 440, width: 1500, height: 50 },
       { x: 14300, y: 440, width: 2500, height: 50 },
-      { x: 18000, y: 440, width: 3000, height: 50 }
+      { x: 18150, y: 440, width: 3000, height: 50 }
 ],
-    groundPlatform: { x: -1000, y: 440, width: 13000, height: 50 }, // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
-    hintPlatforms: [23, 24, 25, 26], // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     platforms: [
         { x: 1500, y: 380, width: 190, height: 20 },  // GAUNTLET 1
         { x: 2050, y: 300, width: 190, height: 20 },
@@ -211,13 +209,13 @@ export const LEVELS = {
         { x: 13100, y: 380, width: 190, height: 20 },
         { x: 13650, y: 310, width: 190, height: 20 },
         { x: 14200, y: 280, width: 190, height: 20 },
-        { x: 15500, y: 350, width: 190, height: 20 },  // GAUNTLET 5
-        { x: 17150, y: 450, width: 190, height: 20 }, // LOWER LEVEL = NO EGG
-        { x: 17700, y: 440, width: 190, height: 20 }, // LOWER LEVEL = NO EGG
+        { x: 15550, y: 350, width: 190, height: 20 },  // GAUNTLET 5
+        { x: 17150, y: 390, width: 190, height: 20 }, // LOWER LEVEL = NO EGG
+        { x: 17700, y: 400, width: 190, height: 20 }, // LOWER LEVEL = NO EGG
         { x: 16050, y: 210, width: 190, height: 20 }, // STAIRWAY
         { x: 16600, y: 140, width: 190, height: 20 }, // STAIRWAY
-        { x: 16900, y: -10, width: 610, height: 20 }, // SECRET PLATFORM
-        { x: 17650, y: 110, width: 100, height: 20 } // EGG
+        { x: 16950, y: -15, width: 610, height: 20, isRect: true } , // SECRET PLATFORM
+        { x: 17750, y: 100, width: 100, height: 20 } // EGG
       ],
     noStuffZones: [{ start: 3650, end: 3900 }, { start: 15400, end: 18000 },], 
     cups: { enabled: true, count: 15 },
@@ -246,7 +244,7 @@ export const LEVELS = {
       lasers: { enabled: false }
     },  
     bonusHPZone: [
-      { x: 17700, y: 50 }, 
+      { x: 17750, y: 60 }, 
     ],
     catnipZones: [
       { x: 3770, y: 95 },
@@ -264,7 +262,6 @@ export const LEVELS = {
     challengeDoorOUT: [ // NEED TO ADJUST
     { x: 15000, y: 100, roomId: 'room3' }
     ],
-    background: 'levelBG', // NEED TO FIGURE OUT IF I CAN REMOVE THIS WITHOUT BREAKING ANYTHING ELSE
     levelMusic: 'PlatformerTrack3', 
     nextBoss: 'bossRatKing',
     bossSprite: "bossRat", 
