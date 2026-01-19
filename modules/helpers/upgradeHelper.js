@@ -63,27 +63,27 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   tween(overlay.opacity, 0.7, 0.3, (val) => overlay.opacity = val);
   
   const panel = add([
-    rect(600, 400, { radius: 20 }),
+    rect(700, 400, { radius: 20 }),
     pos(SCREEN_W / 2, SCREEN_H / 2),
     anchor("center"),
     color(17, 12, 30),
-    outline(4, rgb(144, 144, 192)),
+    outline(4, rgb(0, 255, 255)),
     z(501),
     fixed()
   ]);
   
   add([
-    text("STAT UPGRADE!", { size: 40, font: "science" }),
+    text("THAT WAS SUPURRRRR!!", { size: 40, font: "science" }),
     pos(SCREEN_W / 2, SCREEN_H / 2 - 150),
     anchor("center"),
-    color(88, 232, 76),
+    color(103, 254, 189),
     z(502),
     fixed(),
     "modalElement"
   ]);
   
   add([
-    text(`Choose where to allocate ${statPoints} stat point${statPoints > 1 ? 's' : ''}`, { size: 20, font: "science" }),
+    text(`You can meow select a stat to increase by${statPoints} point${statPoints > 1 ? 's' : ''}`, { size: 20, font: "science" }),
     pos(SCREEN_W / 2, SCREEN_H / 2 - 100),
     anchor("center"),
     color(219, 226, 233),
@@ -96,11 +96,11 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   let tempStats = { attack: 0, defense: 0, speed: 0 };
   
   const attackBtn = add([
-    rect(180, 60, { radius: 10 }),
+    rect(180, 65, { radius: 20 }),
     pos(SCREEN_W / 2 - 200, SCREEN_H / 2 - 20),
     anchor("center"),
-    color(101, 115, 131),
-    outline(3, rgb(255, 100, 100)),
+    color(42, 52, 57),
+    outline(2, rgb(144, 144, 192)),
     area(),
     z(502),
     fixed(),
@@ -109,7 +109,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   
   const attackText = add([
     text(`ATTACK\n+${tempStats.attack}`, { size: 24, font: "science", align: "center" }),
-    pos(SCREEN_W / 2 - 200, SCREEN_H / 2 - 20),
+    pos(SCREEN_W / 2 - 200, SCREEN_H / 2 - 17),
     anchor("center"),
     color(255, 255, 255),
     z(503),
@@ -118,11 +118,11 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   ]);
   
   const defenseBtn = add([
-    rect(180, 60, { radius: 10 }),
+    rect(180, 65, { radius: 20 }),
     pos(SCREEN_W / 2, SCREEN_H / 2 - 20),
     anchor("center"),
-    color(101, 115, 131),
-    outline(3, rgb(100, 100, 255)),
+    color(42, 52, 57),
+    outline(2, rgb(144, 144, 192)),
     area(),
     z(502),
     fixed(),
@@ -131,7 +131,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   
   const defenseText = add([
     text(`DEFENSE\n+${tempStats.defense}`, { size: 24, font: "science", align: "center" }),
-    pos(SCREEN_W / 2, SCREEN_H / 2 - 20),
+    pos(SCREEN_W / 2, SCREEN_H / 2 - 17),
     anchor("center"),
     color(255, 255, 255),
     z(503),
@@ -140,11 +140,11 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   ]);
   
   const speedBtn = add([
-    rect(180, 60, { radius: 10 }),
+    rect(180, 65, { radius: 20 }),
     pos(SCREEN_W / 2 + 200, SCREEN_H / 2 - 20),
     anchor("center"),
-    color(101, 115, 131),
-    outline(3, rgb(255, 255, 100)),
+    color(42, 52, 57),
+    outline(2, rgb(144, 144, 192)),
     area(),
     z(502),
     fixed(),
@@ -153,7 +153,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   
   const speedText = add([
     text(`SPEED\n+${tempStats.speed}`, { size: 24, font: "science", align: "center" }),
-    pos(SCREEN_W / 2 + 200, SCREEN_H / 2 - 20),
+    pos(SCREEN_W / 2 + 200, SCREEN_H / 2 - 17),
     anchor("center"),
     color(255, 255, 255),
     z(503),
@@ -165,7 +165,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
     text(`Points Remaining: ${remainingPoints}`, { size: 22, font: "science" }),
     pos(SCREEN_W / 2, SCREEN_H / 2 + 60),
     anchor("center"),
-    color(144, 144, 192),
+    color(219, 226, 233),
     z(502),
     fixed(),
     "modalElement"
@@ -200,7 +200,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
       remainingPoints--;
       attackText.text = `ATTACK\n+${tempStats.attack}`;
       pointsText.text = `Points Remaining: ${remainingPoints}`;
-      play("collectCup", { volume: 0.2 });
+      play("collectCup", { volume: 0.2 }); // PLACEHOLDER
       
       if (remainingPoints === 0) {
         confirmBtn.opacity = 1;
@@ -214,7 +214,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
       remainingPoints--;
       defenseText.text = `DEFENSE\n+${tempStats.defense}`;
       pointsText.text = `Points Remaining: ${remainingPoints}`;
-      play("collectCup", { volume: 0.2 });
+      play("collectCup", { volume: 0.2 }); // PLACEHOLDER
       
       if (remainingPoints === 0) {
         confirmBtn.opacity = 1;
@@ -228,7 +228,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
       remainingPoints--;
       speedText.text = `SPEED\n+${tempStats.speed}`;
       pointsText.text = `Points Remaining: ${remainingPoints}`;
-      play("collectCup", { volume: 0.2 });
+      play("collectCup", { volume: 0.2 }); // PLACEHOLDER
       
       if (remainingPoints === 0) {
         confirmBtn.opacity = 1;
@@ -261,7 +261,7 @@ export function openStatUpgradeModal(statPoints, onComplete) {
   });
   
   confirmBtn.onHover(() => {
-    if (remainingPoints === 0) confirmBtn.color = rgb(144, 144, 192);
+    if (remainingPoints === 0) confirmBtn.color = rgb(88, 232, 76);
   });
   
   confirmBtn.onHoverEnd(() => {
@@ -485,7 +485,7 @@ function createMoveSwapUI(character, fragmentsAfterCollection, onComplete) {
   
 
     add([
-      text("NEW MOVE UNLOCKED!", { size: 44, font: "science" }),
+      text("NEW PAW-SIBILITY UNLOCKED!", { size: 44, font: "science" }),
       pos(SCREEN_W / 2, SCREEN_H / 2 - 150),
       anchor("center"),
       color(103, 254, 189),
@@ -520,7 +520,7 @@ function createMoveSwapUI(character, fragmentsAfterCollection, onComplete) {
     ]);
     
     add([
-      text("Choose a move to replace:", { size: 25, font: "science" }),
+      text("You can meow replace a battle move with this new attack! ", { size: 25, font: "science" }),
       pos(SCREEN_W / 2, SCREEN_H / 2 - 30),
       anchor("center"),
       color(219, 226, 233),
@@ -537,7 +537,7 @@ function createMoveSwapUI(character, fragmentsAfterCollection, onComplete) {
     
     moveNames.forEach((moveName, i) => {
       const move = character.moves[moveName];
-      const xPos = (SCREEN_W / 2 - 200) + (i * 170);
+      const xPos = (SCREEN_W / 2 - 200) + (i * 180);
       
       const btn = add([
         rect(160, 70, { radius: 10 }),

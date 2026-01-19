@@ -1427,8 +1427,8 @@ export function addLaserBeams(levelConfig) {
   
   positions.forEach(x => {
     const laser = add([
-      rect(3, 390),
-      pos(x, 50),
+      rect(3, 440),
+      pos(x, 0),
       area(),
       color(255, 0, 0),
       opacity(0.7),
