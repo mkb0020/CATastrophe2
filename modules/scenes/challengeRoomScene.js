@@ -46,7 +46,9 @@ export function createChallengeRoomScene(data) {
   const character = returnData.character;
   const startHP = returnData.startHP;
   const startLives = returnData.lives;
-  const startScore = returnData.score;
+  const startScore = returnData.score || 0; // FIX NEEDED - CHARACTER IS ENTERING WITH SCORE = 0 EVEN IF THEY HAVE A SCORE GOING IN
+  
+  console.log(`📊 Starting score: ${startScore}`);
   
   if (isRoomCompleted(roomConfig.id)) {
     console.log('✅ Room already completed! Returning to level...');
@@ -285,6 +287,7 @@ function openExitWindow() {
     onKeyPress("up", () => {
       if (exitWindow.playerNearby && exitWindow.isOpen) {
         console.log('🚪 Exiting challenge room...');
+        console.log(`📊 Returning with score: ${score}`);
         
         returnData.startHP = player.hp;
         returnData.lives = lives;
@@ -412,7 +415,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
       }
       
       if (!platform.isBeingSteppedOn) {
-        console.log('👣 Starting crumble timer!');
+        console.log('💣 Starting crumble timer!');
         platform.isBeingSteppedOn = true;
         startCrumble(platform);
       }
@@ -501,10 +504,6 @@ function createSolidPlatform(x, y, width, height) {
     z(-1)
   ]);
 }
-
-
-
-
 
 function setupChallengeRoomCamera(player, roomConfig, gameStateGetter, character) {
   const bgElement = document.querySelector('.parallax-bg');

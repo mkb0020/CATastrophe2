@@ -130,11 +130,11 @@ function createUnifiedLevel(levelId, data) {
 
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
   
+
   if (doorsIn.length > 0) {
     setupDoorInteraction(player, doorsIn, levelConfig, levelId, {
       character,
       lives,
-      score
     });
   }
 
