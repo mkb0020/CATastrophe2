@@ -3,8 +3,7 @@ import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from './config/gameConfig.j
 import { getCharacterList, SPRITE_FRAMES, RAINBOW_CAT_FRAMES } from './config/characters.js';
 import { getLevel } from './config/levels.js';
 import { getBoss } from './config/bosses.js';
-import { createVolumeToggle, stopAllMusic, startMenuMusic } from './helpers/kittyHelpers.js';
-// IMPORT SCENES
+import { stopAllMusic, startMenuMusic } from './helpers/kittyHelpers.js';
 import { createStartScene, createMainMenuScene, createCharSelectScene } from './scenes/mainMenu.js';
 import { createTransitionScene } from './scenes/transitionScene.js';
 import { createLevel1Scene, createLevel2Scene, createLevel3Scene, createLevel4Scene, createLevel5Scene } from './scenes/gamePlay.js';
@@ -21,17 +20,13 @@ import {
   createLevelCompleteScene,
   createBossDefeatedScene,
   createGameOverScene,
-  //createCreditsScene  
 } from './scenes/gameOver.js';
 import { initDebugTools } from './helpers/debugTools.js';
 import { createChallengeRoomScene } from './scenes/challengeRoomScene.js';
 
-
-
-
 console.log('🎮 CATastrophe 2 - Kaplay Edition Loading...');
 
-// INITIALIZE KAPLAY
+// ======================================== INITIALIZE KAPLAY ========================================
 const k = kaplay({
   width: SCREEN_W,
   height: SCREEN_H,
@@ -46,9 +41,7 @@ window.k = k;
 Object.assign(window, k);
 
 console.log('✅ Kaplay initialized!');
-
 initDebugTools(k);
-
 
 loadFont("narrow", "assets/fonts/PTSansNarrow-Regular.ttf");
 loadFont("narrowBold", "assets/fonts/PTSansNarrow-Bold.ttf");
@@ -56,39 +49,22 @@ loadFont("orbitron", "assets/fonts/Orbitron-Regular.ttf");
 loadFont("orbitronBold", "assets/fonts/Orbitron-Bold.ttf");
 loadFont("science", "assets/fonts/ScienceGothic.ttf");
 
-/**
- * LOAD ALL GAME ASSETS
- */
+// ======================================== LOAD  GAME ASSETS ========================================
 async function loadAssets() {
   console.log('📦 Loading game assets...');
-  //MUSIC
- // loadSound("menuMusic", "assets/sounds/tracks/MenuTrack.mp3"); 
+  //MUSIC 
  loadSound("menuMusic", "assets/sounds/tracks/mainMenu.wav"); 
- // loadSound("finalBossMusic", "assets/sounds/tracks/FnalBossTrack.mp3");
-    loadSound("finalBossMusic", "assets/sounds/tracks/finalBoss.wav");
+  loadSound("finalBossMusic", "assets/sounds/tracks/finalBoss.wav");
   loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.mp3")
- // loadSound("VictoryTrack", "assets/sounds/tracks/VictoryTrack.mp3");
-//  loadSound("catnipTrack", "assets/sounds/tracks/CatnipTrack.mp3");
-  //loadSound("finalVictory", "assets/sounds/tracks/FinalVictory.mp3");
-   loadSound("finalVictory", "assets/sounds/tracks/endCredits.wav");
-  //loadSound("levelMusic", "assets/sounds/tracks/PlatformerTrack.mp3");
-  //loadSound("bossMusic", "assets/sounds/tracks/BossTrack.mp3");
-
+  loadSound("finalVictory", "assets/sounds/tracks/endCredits.wav");
   loadSound("bossMusic", "assets/sounds/tracks/bossBattles.wav");
-  //loadSound("PlatformerTrack1", "assets/sounds/tracks/PlatformerTrack1.mp3");
- // loadSound("PlatformerTrack2", "assets/sounds/tracks/PlatformerTrack2.mp3");
- // loadSound("PlatformerTrack3", "assets/sounds/tracks/PlatformerTrack3.mp3");
- // loadSound("PlatformerTrack4", "assets/sounds/tracks/PlatformerTrack4.mp3");
- // loadSound("PlatformerTrack5", "assets/sounds/tracks/PlatformerTrack5.mp3");
-   loadSound("PlatformerTrack1", "assets/sounds/tracks/level1.wav");
+  loadSound("PlatformerTrack1", "assets/sounds/tracks/level1.wav");
   loadSound("PlatformerTrack2", "assets/sounds/tracks/level2.wav");
   loadSound("PlatformerTrack3", "assets/sounds/tracks/level3.wav");
   loadSound("PlatformerTrack4", "assets/sounds/tracks/level4.wav");
   loadSound("PlatformerTrack5", "assets/sounds/tracks/level5.wav");
   loadSound("challengeRoom", "assets/sounds/tracks/challengeRoom.wav");
-  loadSound("transformation", "assets/sounds/fx/finalBossEnd.wav"); // PLACEHOLDER
-
-  //SOUNDS
+  //FX SOUNDS
   loadSound("door", "assets/sounds/fx/doorOpen.mp3");
   loadSound("pour", "assets/sounds/fx/coffeePour.mp3");
   loadSound("shop", "assets/sounds/fx/coffeeShop.mp3");
@@ -107,7 +83,7 @@ async function loadAssets() {
   loadSound("miniBossDie", "assets/sounds/fx/miniBossDie.mp3");
   loadSound("throw", "assets/sounds/fx/throw.mp3");
   loadSound("reflect", "assets/sounds/fx/reflect.mp3");
-
+  loadSound("newMove", "assets/sounds/fx/newMove.wav");
 // MEOWS
   loadSound("happyMeow", "assets/sounds/fx/meow06.mp3");
   loadSound("meow00", "assets/sounds/fx/meow00.mp3");
@@ -120,17 +96,15 @@ async function loadAssets() {
   loadSound("laserFinishHim", "assets/sounds/fx/laser.mp3");
   loadSound("finalFinishHim", "assets/sounds/fx/finalBoom.mp3");
   loadSound("finalFinishHim2", "assets/sounds/fx/finalBossEnd.wav");
+  loadSound("atmosphere", "assets/sounds/fx/atmosphere.wav");
 
 
-
-
+// ======================================== SPRITES ========================================
+  loadSprite("realNona", "assets/images/realNona.png");
   loadSprite("bubbles", "assets/images/items/bubbles.png", {
     sliceX: 11,
     sliceY: 1
   });
-
-
-
   // BACKGRUNDS
   loadSprite("startBG", "assets/images/backgrounds/StartBG.png");
   loadSprite("menuBG", "assets/images/backgrounds/MenuBG3.png");
@@ -147,25 +121,20 @@ async function loadAssets() {
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
   loadSprite("groundPlatform", "assets/images/backgrounds/ground.png");
   loadSprite("platform", "assets/images/backgrounds/platform.png");
-
   loadSprite("window", "assets/images/items/window.png", {
     sliceX: 2, // FRAME 1 IS WINDOW SHUT.  FRAM 2 IS WINDOW OPEN.  EACH FRAME IS 200x150 SO NO SCALING SHOULD BE NEEDED
     sliceY: 1
   });
-  
   // ENEMIES
   loadSprite("cup", "assets/images/enemies/Cup.png");
   loadSprite("littleCucumber", "assets/images/animationSprites/LittleCucumber.png");
   loadSprite("smallRat", "assets/images/animationSprites/SmallRat.png");
   loadSprite("smallRat2", "assets/images/enemies/SmallRat2.png");
   loadSprite("ghostRat", "assets/images/animationSprites/GhostRat.png");
-  //loadSprite("miniBossRat", "assets/images/enemies/BigRat.png");
   loadSprite("miniBossRat", "assets/images/animationSprites/bigRatAnimate.png", {
     sliceX: 7,
     sliceY: 1
   });
-
-
   loadSprite("bossLaserPointer", "assets/images/enemies/BossLaserPointer.png");
   loadSprite("laserPointerGlow", "assets/images/enemies/LaserGlow.png");
   loadSprite("bossCup", "assets/images/enemies/BossCup.png");
@@ -211,7 +180,6 @@ async function loadAssets() {
       glitch: { from: 0, to: 16, loop: false, speed: 50 }
     } 
   });
-
   loadSprite("levelShiftEnd", "assets/images/animationSprites/glitchTransition.png", { 
     sliceX: 55, 
     sliceY: 1, 
@@ -219,42 +187,31 @@ async function loadAssets() {
       glitch: { from: 32, to: 54, loop: false, speed: 50 }
     } 
   });
-
-
   loadSprite("cafeDay", "assets/images/backgrounds/cafeDay.png", { 
     sliceX: 2, 
     sliceY: 1, 
     anims: { fade: { from: 0, to: 1 } } 
 });
-
-
   loadSprite("pour", "assets/images/animationSprites/pour2.png", { 
     sliceX: 18, 
     sliceY: 1, 
     anims: { fade: { from: 0, to: 17 } } 
 });
-
-
   loadSprite("transformBubbles", "assets/images/animationSprites/bubbles.png", { 
     sliceX: 7, 
     sliceY: 1, 
     anims: { fade: { from: 0, to: 6, loop: true} } 
 });
-
   loadSprite("transformRainbow", "assets/images/animationSprites/rainbow.png", { 
     sliceX: 7, 
     sliceY: 1, 
     anims: { fade: { from: 0, to: 6, loop: true}} 
 });
-
-
-
   loadSprite("newMove", "assets/images/animationSprites/transform.png", { 
     sliceX: 64, 
     sliceY: 1, 
     anims: { fade: { from: 0, to: 63 } }
 });
-
   // BATTLE ANIMATIONS
   loadSprite("explosion", "assets/images/animationSprites/redBoom.png", { sliceX:9, sliceY:1, anims:{burst:{from:0,to:8}} });
   loadSprite("smoke", "assets/images/animationSprites/Poof2.png", { sliceX:5, sliceY:1, anims:{puff:{from:0,to:4}} });
@@ -294,14 +251,13 @@ async function loadAssets() {
   loadSprite("BrassToeBeans", "assets/images/animationSprites/BrassToeBeans2.png");
   loadSprite("rifle", "assets/images/animationSprites/PurrcisionRifle2.png");
   loadSprite("CrossBow", "assets/images/animationSprites/CatCrossBow2.png", { sliceX: 2, sliceY: 1, anims: { glitch: { from: 0, to: 1 } }});
-// SPECIAL MOVE
+// UNLOCK MOVE
   loadSprite("whip", "assets/images/animationSprites/whip2.png", { sliceX:5, sliceY:1, anims:{glitch:{from:0,to:4,speed:50}} });
 
+//  ======================================== CHARACTER ANIMATION SPRITES ========================================
 const characters = getCharacterList();
-
 for (const char of characters) {
   const charName = char.name;
-  
   loadSprite(`${charName}Sheet`, char.sprites.sheet, {
     sliceX: 28,
     sliceY: 1,
@@ -318,7 +274,6 @@ for (const char of characters) {
 
 loadSprite('characterGlow', characters[0].sprites.glow);
 loadSprite('glitchBlue', characters[0].sprites.glitchBlue);
-
 loadSprite("rainbowCatSheet", "assets/images/cats/RainbowCat.png", {
   sliceX: 12,
   sliceY: 1,
@@ -332,52 +287,41 @@ loadSprite("rainbowCatSheet", "assets/images/cats/RainbowCat.png", {
   }
 });
 
-  
   console.log('✅ Assets loaded!');
 }
 
-
+//======================================== REGISTER SCENES ========================================
 function registerScenes() {
   console.log('🎬 Registering scenes...');
-
   scene("start", () => createStartScene());
-
   scene("menu", () => createMainMenuScene());
   scene("charSelect", () => createCharSelectScene());
-
 
   scene("level1", (data) => {
     createLevel1Scene(data); 
   });
-
   scene("level2", (data) => {
       createLevel2Scene(data);
     });
-
   scene("level3", (data) => {
       createLevel3Scene(data);
     });
-
   scene("level4", (data) => {
       createLevel4Scene(data);
     });
-
   scene("level5", (data) => {
       createLevel5Scene(data);
     });
 
-  // CHALLENGE ROOMS
   scene("challengeRoom", createChallengeRoomScene);
 
-
-  // BOSS BATTLES
   scene("laserPointerBoss", (data) => createLaserPointerBossScene(data));
   scene("cupBoss", (data) => createCupBossScene(data));
   scene("cucumberBoss", (data) => createCucumberBossScene(data));
   scene("bossRatKing", (data) => createRatKingBossScene(data));
   scene("observerBoss", (data) => createObserverBossScene(data));
   
-  // GAME OVER AND VICTORY
+
   scene("youDied", (data) => createYouDiedScene(data));
   scene("gameOver", (data) => createGameOverScene(data));
   scene("victory", (data) => createVictoryScene(data));
@@ -391,18 +335,12 @@ function registerScenes() {
   console.log('✅ Scenes registered!');
 }
 
-
 async function startGame() {
   console.log('🚀 Starting CATastrophe 2...');
-  
   await loadAssets();
-  
   registerScenes();
-  
-  // START AT MENU
   go("start");
   console.log('✅ Game started! Click to begin...');
 }
-
 
 startGame();
