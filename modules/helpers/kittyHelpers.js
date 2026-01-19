@@ -3,7 +3,6 @@ import { getCharacterList } from '../config/characters.js';
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 
 // =============================== IMAGE LOADER =============================================
-
 export class ImageLoader {
     constructor(baseUrl = '/static/') {
         this.baseUrl = baseUrl;
@@ -195,6 +194,32 @@ export async function preloadInitialAssets() {
 }
 
 // =================================== AUDIO CONTROLS =========================================
+export function fadeMusicOut(duration = 2) {
+    if (window.levelMusic && !window.isMuted) {
+        const currentVolume = window.levelMusic.volume;
+        tween(currentVolume, 0, duration, (v) => {
+            window.levelMusic.volume = v;
+        }, easings.easeInQuad).then(() => {
+            if (window.levelMusic) {
+                window.levelMusic.stop();
+                window.levelMusic = null;
+            }
+        });
+    } else if (window.levelMusic) {
+        window.levelMusic.stop();
+        window.levelMusic = null;
+    }
+    console.log(`🎵 Music fading out over ${duration}s`);
+}
+
+
+export function stopAtmosphere() {
+    if (window.atmosphere) {
+        window.atmosphere.stop();
+        window.atmosphere = null;
+    }
+}
+
 
 export function stopAllMusic() {
     if (window.menuMusic) {
@@ -224,6 +249,15 @@ export function stopAllMusic() {
     if (window.CatnipMusic) {
         window.CatnipMusic.stop();
         window.CatnipMusic = null;
+    }
+    if (window.challengeRoom) {
+        window.challengeRoom.stop();
+        window.challengeRoom = null;
+    }
+
+    if (window.finalFinishHim2) {
+        window.finalFinishHim2.stop();
+        window.finalFinishHim2 = null;
     }
     console.log('🎵 All music stopped');
 }
@@ -359,98 +393,18 @@ export function startFinalVictoryMusic() {
     });
 }
 
-export function createVolumeToggle() {
-    if (window.isMuted === undefined) {
-        window.isMuted = false;
-    }
-
-    const volumeBtn = add([
-        rect(24, 24, { radius: 8 }),
-        pos(25, 20),
-        color(42, 26, 74),
-        opacity(0.8),
-        outline(1, rgb(255, 255, 255)),
-        area(),
-        fixed(),
-        z(150),
-        "volumeBtn"
-    ]);
-
-    const volumeIcon = volumeBtn.add([
-        text(window.isMuted ? "X" : "🎶", { size: 18 }),
-        pos(12, 13),
-        anchor("center"),
-        "volumeIcon"
-    ]);
-
-    volumeBtn.onClick(() => {
-        window.isMuted = !window.isMuted;
-        volumeIcon.text = window.isMuted ? "X" : "🎶";
-        
-        if (window.menuMusic) window.menuMusic.volume = window.isMuted ? 0 : 0.5;
-        if (window.levelMusic) window.levelMusic.volume = window.isMuted ? 0 : 0.4;
-        if (window.bossMusic) window.bossMusic.volume = window.isMuted ? 0 : 0.4;
-        if (window.finalBossMusic) window.finalBossMusic.volume = window.isMuted ? 0 : 0.5;
-        if (window.gameOverMusic) window.gameOverMusic.volume = window.isMuted ? 0 : 0.4;
-        if (window.victoryMusic) window.victoryMusic.volume = window.isMuted ? 0 : 0.5;
-        
-        console.log(`🔇 Volume ${window.isMuted ? 'MUTED' : 'UNMUTED'}`);
+export function startAtmosphere() {
+    
+    window.atmosphere = play("atmosphere", { 
+        volume: window.isMuted ? 0 : 0.05, 
+        loop: true 
     });
-
-    volumeBtn.onHover(() => {
-        volumeBtn.color = rgb(100, 80, 150);
-    });
-
-    volumeBtn.onHoverEnd(() => {
-        volumeBtn.color = rgb(42, 26, 74);
-    });
-
-    return { volumeBtn, volumeIcon };
+    console.log('🎵 ATMOSPHERE BG MUSIC STARTED! 👁');
 }
+
+
 
 // ============================== PAUSE SYSTEM ==============================================
-
-export function createPauseButton(onPauseCallback) {
-    const pauseBtn = add([
-        rect(24, 24, { radius: 10 }),
-        pos(65,20),
-        color(Color.fromHex(Colors.MutedGrey)),
-        outline(1, Color.fromHex(Colors.VortexViolet)),
-        area(),
-        fixed(),
-        z(100),
-        "pauseButton"
-    ]);
-
-    pauseBtn.add([
-        rect(5, 16),
-        pos(6, 4),
-        color(Color.fromHex(Colors.NuclearFuscia)),
-        z(101)
-    ]);
-
-    pauseBtn.add([
-        rect(5, 16),
-        pos(13, 4),
-        color(Color.fromHex(Colors.NuclearFuscia)),
-        z(101)
-    ]);
-
-    pauseBtn.onClick(() => {
-        onPauseCallback();
-    });
-
-    pauseBtn.onHover(() => {
-        pauseBtn.color = Color.fromHex(Colors.VortexViolet);
-    });
-
-    pauseBtn.onHoverEnd(() => {
-        pauseBtn.color = Color.fromHex(Colors.MutedGrey);
-    });
-
-    return pauseBtn;
-}
-
 export function createPauseOverlay(onResumeCallback, onQuitCallback) {
     const overlay = add([
         rect(SCREEN_W, SCREEN_H),
@@ -667,7 +621,6 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
         }
     };
 
-    createPauseButton(pause);
 
     onKeyPress("escape", () => {
         if (isPaused) {
@@ -685,6 +638,12 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
         }
     });
 
+    window.gamePauseSystem = {
+        pause,
+        resume,
+        isPaused: () => isPaused
+    };
+
     return {
         pause,
         resume,
@@ -699,7 +658,6 @@ export function addPauseToLevel(gameActiveGetter, gameActiveSetter) {
 
 
 // ================================== DOM MODAL STUFF ==========================================
-
 export function openHowToPlayModal() {
     const modal = document.getElementById('howToPlayModal');
     if (modal) {

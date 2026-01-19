@@ -1,6 +1,6 @@
 // levelHelpers.js
 import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from '../config/gameConfig.js';
-import { setupPauseSystem,createVolumeToggle, stopAllMusic, startLevelMusic, startBossMusic, startFinalBossMusic} from '../helpers/kittyHelpers.js';
+import { setupPauseSystem, stopAllMusic, startLevelMusic, startBossMusic, startFinalBossMusic} from '../helpers/kittyHelpers.js';
 import { animateGhostPoof } from '../helpers/bossHelpers.js';
 import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
 
@@ -994,7 +994,7 @@ export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
   const timeText = document.getElementById('timeText');
   const timeStat = document.getElementById('timeStat');
   if (timeText) {
-    timeText.textContent = `Time: ${timeLeft}s`;
+    timeText.textContent = `Time: ${timeLeft}`;
   }
   
   if (timeStat) {
@@ -1707,27 +1707,32 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
   return miniBoss;
 }
 
-export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) { // NEEDS TO BE MORE FORGIVING
+export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
   if (!miniBoss) return;
   
   player.onCollide("miniBossCucumber", (cucumber) => {
     const hitboxHeight = player.area.height || 60;
     const hitboxOffsetY = player.area.offset?.y || 0;
     const playerTop = player.pos.y - (hitboxHeight / 2) + hitboxOffsetY;
+    const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
     const cucumberBottom = cucumber.pos.y + 20;
+    const cucumberTop = cucumber.pos.y - 20;
     
     console.log("🥒 Cucumber collision!");
     console.log("Player vel.y:", player.vel.y);
     console.log("Player top:", playerTop, "Cucumber bottom:", cucumberBottom);
     console.log("Already reflected?", cucumber.reflected);
 
+    const verticalOverlap = Math.min(playerBottom, cucumberBottom) - Math.max(playerTop, cucumberTop);
+    const isMovingUp = player.vel.y < 100; // IF NEEDS TO BE MORE FORGIVING ALLOW REFLECTION WHEN MOVING SLOWILY UP - INCREASE THIS: (player.vel.y < 100 )
+    const isInReflectZone = playerTop < cucumberBottom + 50; // IF NEEDS TO BE MORE FORGIVING, INCREASE THE 50
+    const hasVerticalOverlap = verticalOverlap > 0; // ANY OVERLAP COUNTS
 
-    if (!cucumber.reflected && player.vel.y < 0 && playerTop < cucumberBottom + 30) { 
+    if (!cucumber.reflected && isMovingUp && (isInReflectZone || hasVerticalOverlap)) { 
       cucumber.reflected = true;
       cucumber.vel.x = Math.abs(cucumber.vel.x) * 1.5;
       cucumber.vel.y = -300;
       cucumber.rotationSpeed = -720;
-      
       
       play("reflect", { volume: 0.7});
       
@@ -1740,7 +1745,6 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) { // NE
       play("takeHit", { volume: 0.4 });
       destroy(cucumber);
       console.log("💔 Hit by cucumber!");
-
 
       const flashInterval = setInterval(() => {
         player.opacity = player.opacity === 1 ? 0.3 : 1;
@@ -1788,9 +1792,7 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) { // NE
           destroy(defeatBubble);
           animateGhostPoof(miniBoss);
           destroy(miniBoss);
-          
           play("miniBossDie", { volume: 0.7 });
-          
           if (onDefeatCallback) onDefeatCallback();
         });
       }

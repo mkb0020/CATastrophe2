@@ -1,7 +1,7 @@
 // roomHelper.js
 import { SCREEN_W, SCREEN_H } from '../config/gameConfig.js';
 import { getRoom } from '../config/challengeRoom.js';
-import { setupPauseSystem,createVolumeToggle, stopAllMusic, startChallenegeMusic} from '../helpers/kittyHelpers.js';
+import { setupPauseSystem, stopAllMusic, startChallenegeMusic} from '../helpers/kittyHelpers.js';
 
 
 

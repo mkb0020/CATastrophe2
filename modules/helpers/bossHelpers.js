@@ -1,6 +1,6 @@
 // bossHelpers.js - BOSS BATTLE SETUP AND ANIMATIONS
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
-import { createVolumeToggle, stopAllMusic, startBossMusic } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, startBossMusic, startAtmosphere } from '../helpers/kittyHelpers.js';
 import { rainbowCat, SPRITE_FRAMES } from '../config/characters.js';
 
 
@@ -251,8 +251,8 @@ export function addBattleLogPanel(initialMessage) {
   ]);
 
   add([
-    rect(570, 115, { radius: 30 }),
-    pos(25, 355),
+    rect(540, 115, { radius: 30 }),
+    pos(20, 355),
     color(rgb(144,144,192)),
     opacity(1),
     outline(1, rgb(42,52,57)),
@@ -260,15 +260,15 @@ export function addBattleLogPanel(initialMessage) {
   ]);
 
     add([
-    rect(565, 110, { radius: 30 }),
-    pos(25, 355),
+    rect(535, 110, { radius: 30 }),
+    pos(20, 355),
     color(rgb(255,255,255)),
     opacity(0.3),
     z(10)
   ]);
 
   const logText = add([
-    text(initialMessage, { size: 24, font: "narrow", width: 530 }),
+    text(initialMessage, { size: 24, font: "narrow", width: 500 }),
     pos(47, 370),
     color(0, 0, 0),
     z(11),
@@ -280,8 +280,8 @@ export function addBattleLogPanel(initialMessage) {
 
 export function addMoveButtonsPanel() {
   add([
-    rect(370, 115, { radius: 15 }),
-    pos(605, 355),
+    rect(410, 115, { radius: 15 }),
+    pos(570, 355),
     color(rgb(144,144,192)),
     opacity(1),
     outline(1, rgb(42,52,57)),
@@ -290,8 +290,8 @@ export function addMoveButtonsPanel() {
 
 
   add([
-    rect(365, 110, { radius: 15 }),
-    pos(605, 355),
+    rect(405, 110, { radius: 15 }),
+    pos(570, 355),
     color(255,255,255),
     opacity(0.3),
     z(10)
@@ -304,11 +304,11 @@ export function createMoveButtons(player, onMoveClick, gameStateGetter) {
 
   moveNames.forEach((moveName, i) => {
     const moveData = player.moves[moveName];
-    const x = i % 2 === 0 ? 607 : 791;
+    const x = i % 2 === 0 ? 577 : 778;
     const y = i < 2 ? 365 : 415;
     
     const btn = add([
-      rect(182, 45, { radius: 15 }),
+      rect(190, 45, { radius: 15 }),
       pos(x, y),
       color(rgb(144,144,192)),
       area(),
@@ -324,7 +324,7 @@ export function createMoveButtons(player, onMoveClick, gameStateGetter) {
 
     const btnText = btn.add([
       text(`${moveName} (${moveData.uses})`, { size: 24, font: "narrowBold" }),
-      pos(85, 25),
+      pos(95, 25),
       anchor("center"),
       color(0, 0, 0),
       z(12)
@@ -1573,7 +1573,7 @@ export function animatePoisonAttack(boss, hero) {
       crossbow.frame = 0;
       tween(crossbow.opacity, 1, 0.25, (o) => crossbow.opacity = o);
       wait(0.8, () => {
-        play("cupFinishHim");
+        play("cupFinishHim", { volume: 0.5 });
         const dirToTarget = boss.pos.sub(hero.pos).unit();
         
         const spriteWidth = crossbow.width * crossbow.scale.x; // CALCULATE OFFSET TO KEEP HANDLE IN SAME SPOT
@@ -1689,7 +1689,7 @@ export function animatePoisonAttack(boss, hero) {
           z(40),
       ]);
       cocktailLight.play("glitch", { loop: false });
-      play("laserFinishHim");
+      play("laserFinishHim", { volume: 0.5 });
 
       wait(0.6, () => { 
           destroy(cocktailLight);
@@ -1741,8 +1741,10 @@ export function animatePoisonAttack(boss, hero) {
 // =================== FELINE FISSION ===================
   export function animateFelineFission(boss) {
       shake(30);
+      stopAllMusic();
       play("finalFinishHim");
       play("finalFinishHim2");
+      startAtmosphere();
       const startPos = boss.pos.sub(vec2(250, -90));
       const mushroom = add([
           sprite("mushroom", { anim: "burst" }),
@@ -1816,7 +1818,7 @@ export function animatePoisonAttack(boss, hero) {
       ]);
       
       tween(knuckles.opacity, 1, 0.2, (o) => knuckles.opacity = o);
-      play("cucumberFinishHim"); 
+      play("cucumberFinishHim", { volume: 0.5 }); 
 
       wait(0.2, () => {
           tween(knuckles.scale, vec2(2, 2), 0.3, (s) => knuckles.scale = s, easings.easeOutBack);
@@ -1938,10 +1940,10 @@ export function animatePoisonAttack(boss, hero) {
           ]);
           
           wait(0.6, () => {
-              tween(lock.opacity, 0.8, 0.2, (o) => lock.opacity = o);
+              tween(lock.opacity, 1, 0.2, (o) => lock.opacity = o);
               lock.play("glitch", { loop: false, speed: 30 });
           });
-          play("ratFinishHim");
+          play("ratFinishHim", { volume: 0.5 });
           wait(1.8, () => {
               destroy(lock);
               const flashPos = rifle.pos.add(vec2(340, -20)); // MUZZLE FLASH
