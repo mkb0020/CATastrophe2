@@ -27,9 +27,9 @@ export const TRANSITIONS = {
   },
 
   Transition4: { // AFTER RAT KING / BEFORE LEVEL 4 
-    Text1: ["Who would want to be king of the rats anyway?"],
-    Text2: ["What is that fast red dot?"],
-    Text3: ["MUST. CATCH."], 
+    Text1: ["This looks better on me, anyway."],
+    Text2: ["Huh?"],
+    Text3: ["What is that fast red dot?"], 
     sprites: ['king00', 'king01', 'king02'], 
     background: 'transitionBG4', 
     nextState: 'level4',

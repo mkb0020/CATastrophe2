@@ -123,8 +123,8 @@ export const ROOMS = {
   ],
     itemLocation: { x: 6325, y: 250 },
     items: {
-      newMove: { enabled: false },
-      statsUpgrade: { enabled: true, count: 1 },
+      newMove: { enabled: true, count: 1 }, // FRAGMENT 3/3 
+      statsUpgrade: { enabled: false },
     },
     nextState: 'level4',
   },
@@ -157,8 +157,8 @@ export const ROOMS = {
   ],
     itemLocation: { x: 6325, y: 250 },
     items: {
-      newMove: { enabled: true, count: 1 }, // FRAGMENT 3/3 
-      statsUpgrade: { enabled: false },
+      newMove: { enabled: false },
+      statsUpgrade: { enabled: true, count: 1 },
     },
     nextState: 'level5',
 

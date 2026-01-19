@@ -20,7 +20,7 @@ export const LEVELS = {
     name: 'Level 1',
     timeLimit: 90,
     length:  21000, 
-    playerSpawn: { x: 14200, y: 200 },  // FOR TESTING
+    playerSpawn: { x: 20400, y: 200 },  // FOR TESTING
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 3300, y: 440, width: 2000, height: 50 },
@@ -179,7 +179,7 @@ export const LEVELS = {
     name: 'Level 3',
     timeLimit: 90,
     length:  21000,  
-    playerSpawn: { x: 14200, y: 200 },
+    playerSpawn: { x: 20400, y: 200 },
     GroundSegments: [
       { x: -1100, y: 440, width: 2500, height: 50 },
       { x: 3600, y: 440, width: 1500, height: 50 },
@@ -376,7 +376,7 @@ export const LEVELS = {
     name: 'Level 5',
     timeLimit: 90,
     length:  21000,   
-    playerSpawn: { x: 14200, y: 200 },
+    playerSpawn: { x: 20400, y: 200 },
     GroundSegments: [
       { x: -1000, y: 440, width: 500, height: 50 },
       { x: -800, y: 440, width: 2000, height: 50 }, // INTENTIONALLY OVELAPPING
