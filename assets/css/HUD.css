@@ -1,35 +1,8 @@
-   :root {
-      --NuclearFuscia: #dc4ce8;
-      --PlasmaPurple: #A55AFF;
-      --AquaAura: #00ffff;
-      --RadioactiveGreen: #58e84c;
-      --White: #FFFFFF;
-      --BosonShadow: #05000b61;
-      --ProtonShadow: rgba(7, 0, 11, 0.311);
-      --PlasmaGlow2: rgba(165,90,255,0.5);
-      --RadiationRed: #730132;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #0a0015;
-      font-family: 'Orbitron', monospace;
-      color: var(--White);
-    }
-
-
-
- 
 
     .hud-section {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
       min-width: 150px;
       justify-content: flex-end;
     }
@@ -48,39 +21,38 @@
     }
 
     .hud-stats-inner {
-      max-width: 1300px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      gap: 1rem;
-      padding: 0 1rem;
+      gap: 0.1rem;
+      padding: 0 0.1rem;
     }
 
     .stat-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 5px 5px;
+      gap: 3px;
+      padding: 5px 1px;
       /*background: rgba(0, 0, 0, 0.233);
       border-radius: 50px;
       border: 1px solid;*/
       font-size: 1.1rem;
       font-family: 'GothNerd';
-      min-width: 150px;
+      min-width: 170px;
       transition: transform 0.2s ease;
     }
 
   .stat-divider{
     font-size: 1.5rem;
-    text-shadow: 10px 20px 20px var(--AlphaAqua);
-    color: var(--AlphaAqua);
+    text-shadow: 10px 20px 20px var(--PlasmaPurple);
+    color: var(--PlasmaPurple);
   }
 
 
-    .stat-title{
-
+  .stat-title{ /* "CATastrophe2" TEXT */
         font-size: 1.6rem;
         background: linear-gradient(45deg, var(--AlphaAqua), var(--NuclearFuscia), var(--PlanksPink));
         -webkit-background-clip: text;
@@ -89,11 +61,12 @@
         font-family: 'SpaceLettersBold', sans-serif;
         z-index: 900;
         flex-shrink: 0;
-        width: 320px;
+        width: 330px;
         border: 1px solid rgba(0,0,0,0);
+        padding: 0 5px;
           }
 
-
+/* ==================== STATS ==================== */
     .stat-score {
       border-color: var(--PlanksGlow3);
       color: var(--White);
@@ -109,8 +82,7 @@
     }
 
     .stat-hp.low-hp {
-      border-color: var(--RadioactiveGlow3);
-      color: var(--RadiationRed);
+      color: #ff0059;
       animation: pulse 1s infinite;
       width: 150px;
       text-transform: uppercase;
@@ -131,22 +103,22 @@
     }
 
     .stat-time.low-time {
-      border-color: var(--PlasmaGlow2);
-      color: var(--RadiationRed);
+      color: #ff0059;
       animation: pulse 1s infinite;
       width: 150px;
       text-transform: uppercase;
     }
 
     .stat-icon {
-      font-size: 20px;
+      font-size: 19;
       flex-shrink: 0;
     }
 
     .stat-text {
       flex-shrink: 0;
       text-align: center;
-      min-width: 120px;
+      min-width: 140px;
+      max-width: 155px;
     }
 
     @keyframes pulse {
@@ -161,7 +133,94 @@
     }
 
 
+/* ==================== GAME CONTROLS ==================== */
+#game-controls {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
 
+.control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(26, 16, 46, 0.9);
+            border: 2px solid var(--VortexViolet);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+.control-btn:hover {
+            background: var(--PlanksPink);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+.control-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+#volume-btn {
+            color: white;
+        }
+
+#volume-btn.muted {
+    color: #ff6b6b;
+    }
+
+#pause-btn {
+       position: relative;
+      }
+
+.pause-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+        }
+
+.pause-bar {
+            width: 5px;
+            height: 20px;
+            background: var(--VortexViolet);
+            border-radius: 2px;
+        }
+
+.control-btn::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            margin-bottom: 8px;
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            font-size: 12px;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+.control-btn:hover::before {
+            opacity: 1;
+        }
+
+
+/* ==================== DEBUG ==================== */
  .debug-toggle {
       position: fixed;
       bottom: 10px;
