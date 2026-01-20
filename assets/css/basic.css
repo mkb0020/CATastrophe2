@@ -27,6 +27,7 @@
   --PlanksPink: #ff69b4;
   --PlanksGlow3: #ff69b4bc;
   --HiggsHotPink: #c71585;
+  --HiggsGlow1: #c7158626;
   --RadiationRed: #730132;
 /*SECONDARY MINT FAM*/
   --AlphaAqua: #67FEBD;
@@ -39,6 +40,8 @@
   --AuraGlow3: rgba(0,255,255, 0.8);
   --AtomicAqua: #9EFF9E;
   --RadioactiveGreen: #58e84c;
+  --RadioactiveGlow1:rgba(89, 232, 76, 0.363);
+  --RadioactiveGlow2:rgba(89, 232, 76, 0.196);
   --RadioactiveGlow3: #59e84cc0;
   --HalfLifeLime: #f3ffe5;
   --UraniumGreen: #75FB1E;
