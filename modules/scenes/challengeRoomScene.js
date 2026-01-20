@@ -313,17 +313,17 @@ function openExitWindow() {
   );
   
   // ==================== HUD ====================
-  const hudElements = createUnifiedHUD(player);
-  
-  let hudUpdateCounter = 0;
-  onUpdate(() => {
-    if (gameActive) {
-      hudUpdateCounter++;
-      if (hudUpdateCounter % 5 === 0) {
-        updateUnifiedHUD(hudElements, score, 0, player, lives); 
+    const hudElements = createUnifiedHUD(player);
+
+    let hudUpdateCounter = 0;
+    onUpdate(() => {
+      if (gameActive) {
+        hudUpdateCounter++;
+        if (hudUpdateCounter % 5 === 0) {
+          updateUnifiedHUD(hudElements, score, null, player, lives); 
+        }
       }
-    }
-  });
+    });
   
   // ==================== CAMERA ====================
   setupChallengeRoomCamera(player, roomConfig, getGameActive, character);

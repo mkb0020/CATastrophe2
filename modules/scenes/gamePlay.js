@@ -131,14 +131,18 @@ function createUnifiedLevel(levelId, data) {
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
   
 
- if (doorsIn.length > 0) {
-  setupDoorInteraction(player, doorsIn, levelConfig, levelId, () => ({
+if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
+  const doorData = doorsIn.map((doorObj, index) => ({
+    doorObj: doorObj,
+    doorConfig: levelConfig.challengeDoorIN[index]
+  }));
+  
+  setupDoorInteraction(player, doorData, levelConfig, levelId, () => ({
     character: getCharacter(),
     lives: getLives(),
     score: getScore()
   }));
 }
-  
 
   setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite);
   setupCupCollection(player, getScore, setScore);
@@ -282,13 +286,18 @@ export function createLevel5Scene(data, levelId) {
   setupPlayerControls(player, getGameActive);
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
   
-if (doorsIn.length > 0) {
-  setupDoorInteraction(player, doorsIn, levelConfig, levelId, () => ({
-    character: getCharacter(),
-    lives: getLives(),
-    score: getScore()
-  }));
-}
+  if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
+    const doorData = doorsIn.map((doorObj, index) => ({
+      doorObj: doorObj,
+      doorConfig: levelConfig.challengeDoorIN[index]
+    }));
+    
+    setupDoorInteraction(player, doorData, levelConfig, 'level5', () => ({ 
+      character: getCharacter(),
+      lives: getLives(),
+      score: getScore()
+    }));
+  }
   
   setupCupCollection(player, getScore, setScore);
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);
