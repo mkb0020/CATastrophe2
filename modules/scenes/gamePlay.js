@@ -131,12 +131,14 @@ function createUnifiedLevel(levelId, data) {
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
   
 
-  if (doorsIn.length > 0) {
-    setupDoorInteraction(player, doorsIn, levelConfig, levelId, {
-      character,
-      lives,
-    });
-  }
+ if (doorsIn.length > 0) {
+  setupDoorInteraction(player, doorsIn, levelConfig, levelId, () => ({
+    character: getCharacter(),
+    lives: getLives(),
+    score: getScore()
+  }));
+}
+  
 
   setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite);
   setupCupCollection(player, getScore, setScore);
@@ -197,7 +199,7 @@ export function createLevel4Scene(data) {
 }
 
 
-export function createLevel5Scene(data) {
+export function createLevel5Scene(data, levelId) {
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startLives = data?.lives || 3;
@@ -278,16 +280,15 @@ export function createLevel5Scene(data) {
   const getCharacter = () => character;
 
   setupPlayerControls(player, getGameActive);
-  
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
   
-  if (doorsIn.length > 0) {
-    setupDoorInteraction(player, doorsIn, levelConfig, 'level5', {
-      character,
-      lives,
-      score
-    });
-  }
+if (doorsIn.length > 0) {
+  setupDoorInteraction(player, doorsIn, levelConfig, levelId, () => ({
+    character: getCharacter(),
+    lives: getLives(),
+    score: getScore()
+  }));
+}
   
   setupCupCollection(player, getScore, setScore);
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);

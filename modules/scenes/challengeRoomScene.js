@@ -46,7 +46,7 @@ export function createChallengeRoomScene(data) {
   const character = returnData.character;
   const startHP = returnData.startHP;
   const startLives = returnData.lives;
-  const startScore = returnData.score || 0; // FIX NEEDED - CHARACTER IS ENTERING WITH SCORE = 0 EVEN IF THEY HAVE A SCORE GOING IN
+  const startScore = returnData.score || 0; 
   
   console.log(`📊 Starting score: ${startScore}`);
   
@@ -225,32 +225,33 @@ export function createChallengeRoomScene(data) {
   // ==================== CRUMBLING PLATFORM LOGIC ====================
   setupCrumblingPlatformCollisions(player, crumblingPlatforms);
   
+
 // ==================== ITEM COLLECTION ====================
-  player.onCollide("specialItem", (item) => {
-    if (!itemCollected) {
-      itemCollected = true;
-      destroy(item);
-      
-      if (glow && glow.exists()) {
-        destroy(glow);
-      }
-      
-      play("happyMeow", { volume: 0.4 });
-      
-      if (roomConfig.items.newMove.enabled) {
-        openMoveSelectionModal(character, () => {
-          openExitWindow();
-        });
-      } else if (roomConfig.items.statsUpgrade.enabled) {
-        const pointsToAllocate = roomConfig.items.statsUpgrade.count || 1;
-        openStatUpgradeModal(pointsToAllocate, () => {
-          openExitWindow();
-        });
-      }
-      markRoomCompleted(roomConfig.id);
+player.onCollide("specialItem", (item) => {
+  if (!itemCollected) {
+    itemCollected = true;
+    destroy(item);
+    
+    if (glow && glow.exists()) {
+      destroy(glow);
     }
-  });
-  
+    
+    play("happyMeow", { volume: 0.4 });
+    
+    if (roomConfig.items.newMove.enabled) {
+      openMoveSelectionModal(character, () => {
+        openExitWindow();
+      });
+    } else if (roomConfig.items.statsUpgrade.enabled) {
+      const pointsToAllocate = roomConfig.items.statsUpgrade.count || 1;
+      
+      openStatUpgradeModal(pointsToAllocate, character, () => {
+        openExitWindow();
+      });
+    }
+    markRoomCompleted(roomConfig.id);
+  }
+});
 function openExitWindow() {
     exitWindow.isOpen = true;
     exitWindow.use(sprite('window', { frame: 1 }));
@@ -326,7 +327,6 @@ function openExitWindow() {
   
   // ==================== CAMERA ====================
   setupChallengeRoomCamera(player, roomConfig, getGameActive, character);
-  
   
   // ==================== CLEANUP ====================
     onSceneLeave(() => {
