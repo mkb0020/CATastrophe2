@@ -27,66 +27,75 @@ export function createDoor(x, y, roomId, doorType = 'in') {
 }
 
 // ==================== DOOR INTERACTION DETECTION ====================
-export function setupDoorInteraction(player, doorsIn, levelConfig, levelName, currentData) {
-  const promptText = add([
-    text("Press UP to enter", { size: 20 }),
-    pos(0, 0),
-    anchor("center"),
-    color(255, 255, 255),
-    opacity(0),
-    z(100),
-    fixed(),
-    "doorPrompt"
-  ]);
-  
-  player.onUpdate(() => {
-    let nearAnyDoor = false;
+export function setupDoorInteraction(player, doors, levelConfig, levelId, getGameData) {
+  doors.forEach(door => {
+    const doorConfig = door.doorConfig;
+    const doorObj = door.doorObj;
     
-    doorsIn.forEach(door => {
-      const dist = player.pos.dist(door.pos);
-      const isNearby = dist < 120;
+    const prompt = add([
+      text("Press UP to enter", { size: 20 }),
+      pos(0, 0),
+      anchor("center"),
+      color(255, 255, 255),
+      opacity(0),
+      z(100),
+      fixed(),
+      `doorPrompt_${doorConfig.id}`
+    ]);
+    
+    let playerNear = false;
+    
+    player.onUpdate(() => {
+      if (!doorObj.exists()) return;
       
-      if (isNearby && !door.playerNearby) {
-        door.playerNearby = true;
-        door.use(sprite('window', { frame: 1 })); 
-        
-        promptText.pos = vec2(SCREEN_W / 2, SCREEN_H - 100);
-        promptText.opacity = 1;
-        nearAnyDoor = true;
-        
-      } else if (!isNearby && door.playerNearby) {
-        door.playerNearby = false;
-        door.use(sprite('window', { frame: 0 })); 
+      const dist = player.pos.dist(doorObj.pos);
+      const isNear = dist < 100;
+      
+      if (isNear && !playerNear) {
+        playerNear = true;
+        prompt.pos = vec2(player.pos.x, player.pos.y - 80);
+        prompt.opacity = 1;
+      } else if (!isNear && playerNear) {
+        playerNear = false;
+        prompt.opacity = 0;
       }
-      
-      if (isNearby) nearAnyDoor = true;
     });
     
-    if (!nearAnyDoor) {
-      promptText.opacity = 0;
-    }
-  });
-  
-  onKeyPress("up", () => {
-    doorsIn.forEach(door => {
-      if (door.playerNearby) {
-        const roomConfig = getRoom(door.roomId);
+    onKeyPress("up", () => {
+      if (playerNear) {
+        console.log('🚪 Entering door:', doorConfig.id);
+        
+        const gameData = getGameData();
+        const roomConfig = getRoom(doorConfig.targetRoom);
+        
+        if (!roomConfig) {
+          console.error('❌ Room not found:', doorConfig.targetRoom);
+          return;
+        }
         
         const returnData = {
-          character: currentData.character,
+          character: gameData.character,
           startHP: player.hp,
-          lives: currentData.lives,
-          score: currentData.score,
-          returnX: levelConfig.challengeDoorOUT.find(d => d.roomId === door.roomId)?.x || levelConfig.playerSpawn.x,
-          returnY: levelConfig.challengeDoorOUT.find(d => d.roomId === door.roomId)?.y || levelConfig.playerSpawn.y
+          lives: gameData.lives,
+          score: gameData.score,
+          returnX: doorConfig.returnX,  
+          returnY: doorConfig.returnY   
         };
         
-        transitionToRoom(roomConfig, levelName, returnData);
+        console.log('📍 Setting return coordinates:', {
+          returnX: doorConfig.returnX,
+          returnY: doorConfig.returnY
+        });
+        
+   
+        go("challengeRoom", {
+          roomConfig: roomConfig,
+          returnScene: levelId,  
+          returnData: returnData
+        });
       }
     });
   });
-  
-  return promptText;
 }
 
 // ==================== ROOM TRANSITION ====================
@@ -114,25 +123,23 @@ export function transitionToRoom(roomConfig, returnScene, returnData) {
   });
 }
 
-// ==================== RETURN TO LEVEL ==================== // NEEDS FIX - MAKE IT SO YOU DROP FROM CENTER OF WINDOW
+// ==================== RETURN TO LEVEL ==================== 
 export function returnToLevel(returnScene, returnData) {
-  console.log(`🚪 Returning to ${returnScene}`);
-  console.log('📦 Return data:', returnData);
+  console.log('🔙 Returning to level:', returnScene);
+  console.log('📦 Full return data:', returnData);
   
-  const transition = add([
-    rect(SCREEN_W, SCREEN_H),
-    pos(0, 0),
-    color(0, 0, 0),
-    opacity(0),
-    z(200),
-    fixed()
-  ]);
+  const completeData = {
+    character: returnData.character,
+    startHP: returnData.startHP,
+    lives: returnData.lives,
+    score: returnData.score || 0,
+    returnX: returnData.returnX, 
+    returnY: returnData.returnY   
+  };
   
-  tween(transition.opacity, 1, 0.3, (val) => transition.opacity = val, easings.easeInQuad);
+  console.log('✅ Complete data being passed:', completeData);
   
-  wait(0.4, () => {
-    go(returnScene, returnData);
-  });
+  go(returnScene, completeData);
 }
 
 // ==================== ADD DOORS TO LEVEL ====================

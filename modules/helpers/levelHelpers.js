@@ -86,13 +86,14 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
   const spriteWidth = 70;
   const scaleX = width / spriteWidth;
   const scaleY = 2; 
-  add([
-      sprite('platform'),
-      pos(x, y),
+  
+  const spriteLayer = add([
+    sprite('platform'),
+    pos(x, y),
     scale(vec2(scaleX, scaleY)), 
-      z(-2),
-      "platformSprite"
-    ]);
+    z(-2),
+    "platformSprite"
+  ]);
   
   const collisionLayer = add([
     rect(width, height),
@@ -103,6 +104,9 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
     isSolidPlatform ? "platform" : "oneWayPlatform",
     z(-1)
   ]);
+  
+  // Link them together
+  collisionLayer.spriteLayer = spriteLayer;
   
   return collisionLayer;
 }
@@ -222,7 +226,10 @@ export function setupSequentialPlatforms(levelConfig) {
   
   const sequentialPlatforms = [];
   
-  get("platform").forEach(platform => {
+  // Check both "platform" and "oneWayPlatform" tags
+  const allPlatforms = [...get("platform"), ...get("oneWayPlatform")];
+  
+  allPlatforms.forEach(platform => {
     const platformIndex = levelConfig.platforms.findIndex(p => 
       p.x === platform.pos.x && p.y === platform.pos.y
     );
@@ -233,11 +240,13 @@ export function setupSequentialPlatforms(levelConfig) {
       platform.sequenceId = sequenceIndex;
       platform.visible = sequenceIndex === 0; 
       platform.nextInSequence = sequenceIndex < platformIds.length - 1 ? sequenceIndex + 1 : null;
-      platform.opacity = platform.visible ? 1 : 0;
-      sequentialPlatforms.push(platform);
+      platform.opacity = platform.visible ? 0 : 0; 
       
-      if (platform.baseLayer) platform.baseLayer.opacity = platform.visible ? 0.7 : 0;
-      if (platform.topLayer) platform.topLayer.opacity = platform.visible ? 1 : 0;
+      if (platform.spriteLayer) {
+        platform.spriteLayer.opacity = platform.visible ? 1 : 0;
+      }
+      
+      sequentialPlatforms.push(platform);
     }
   });
   
@@ -254,17 +263,17 @@ export function setupSequentialPlatformActivation(player, sequentialPlatforms) {
       if (nextPlatform && !nextPlatform.visible) {
         nextPlatform.visible = true;
         
-        tween(
-          0,
-          1,
-          0.5,
-          (val) => {
-            nextPlatform.opacity = val;
-            if (nextPlatform.baseLayer) nextPlatform.baseLayer.opacity = val * 0.7;
-            if (nextPlatform.topLayer) nextPlatform.topLayer.opacity = val;
-          },
-          easings.easeOutQuad
-        );
+      tween(
+        0,
+        1,
+        0.5,
+        (val) => {
+          if (nextPlatform.spriteLayer) {
+            nextPlatform.spriteLayer.opacity = val;
+          }
+        },
+        easings.easeOutQuad
+      );
         
         play("powerUp", { volume: 0.2, speed: 2 });
       }
