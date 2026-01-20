@@ -19,7 +19,7 @@ export const LEVELS = {
     name: 'Level 1',
     timeLimit: 90,
     length:  18500, 
-    playerSpawn: { x: 18000, y: 200 },  
+    playerSpawn: { x: 300, y: 200 },  
     GroundSegments: [
       { x: -1000, y: 440, width: 2500, height: 50 }, // -1000 - 1500
       { x: 3700, y: 440, width: 1000, height: 50 }, // 3700 - 4700
@@ -76,7 +76,12 @@ export const LEVELS = {
       bonusHP: { enabled: false }
     },
     challengeDoorIN: [ 
-    { x: 12210, y: 150, roomId: 'room1' }
+    { x: 12210, 
+      y: 150, 
+      roomId: 'room1',
+      returnX: 13750,  
+      returnY: 100    
+    }
     ],
     challengeDoorOUT: [  
     { x: 13700, y: 100, roomId: 'room1' }
@@ -163,7 +168,12 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 } // EASY
     },
     challengeDoorIN: [ 
-    { x: 8200, y: 300, roomId: 'room2' }
+    { x: 8200,
+      y: 300, 
+      roomId: 'room2',
+      returnX: 10550,  
+      returnY: 60    
+    }
     ],
     challengeDoorOUT: [ 
     { x: 10500, y: 60, roomId: 'room2' }
@@ -261,7 +271,12 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [ 
-    { x: 14975, y: 120, roomId: 'room3' }
+    { x: 14975, 
+      y: 120, 
+      roomId: 'room3',
+      returnX: 16520,  
+      returnY: 70
+    }    
     ],
     challengeDoorOUT: [ 
     { x: 16470, y: 70, roomId: 'room3' }
@@ -363,7 +378,12 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [  
-    { x: 17500, y: 300, roomId: 'room4' }
+    { x: 17500, 
+      y: 300, 
+      roomId: 'room4',
+      returnX: 19510,
+      returnY: 20
+     }
     ],
     challengeDoorOUT: [
     { x: 19460, y: 20, roomId: 'room4' }
@@ -470,7 +490,12 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 2 }
     },
     challengeDoorIN: [  
-    { x: 4865, y: 300, roomId: 'room5' }
+    { x: 4865, 
+      y: 300, 
+      roomId: 'room5',
+      returnX: 7035,
+      returnY: 80
+     }
     ],
     challengeDoorOUT: [  
     { x: 6985, y: 80, roomId: 'room5' }
