@@ -212,6 +212,26 @@ async function loadAssets() {
     sliceY: 1, 
     anims: { fade: { from: 0, to: 63 } }
 });
+
+
+
+  loadSprite("upgradeBG", "assets/images/animationSprites/upgrade1.png", { // NOT IN GAME YET
+    sliceX: 80, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 79 } }
+});
+  loadSprite("upgrade1", "assets/images/animationSprites/upgrade3.png", { // NOT IN GAME YET
+    sliceX: 8, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 7 } }
+});
+
+  loadSprite("upgrade2", "assets/images/animationSprites/upgrade2.png", { // NOT IN GAME YET
+    sliceX: 21, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 20 } }
+});
+
   // BATTLE ANIMATIONS
   loadSprite("explosion", "assets/images/animationSprites/redBoom.png", { sliceX:9, sliceY:1, anims:{burst:{from:0,to:8}} });
   loadSprite("smoke", "assets/images/animationSprites/Poof2.png", { sliceX:5, sliceY:1, anims:{puff:{from:0,to:4}} });
