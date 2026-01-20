@@ -1,6 +1,6 @@
 // roomHelper.js
 import { SCREEN_W, SCREEN_H } from '../config/gameConfig.js';
-import { getRoom } from '../config/challengeRoom.js';
+import { getRoom, ROOMS } from '../config/challengeRoom.js';
 import { setupPauseSystem, stopAllMusic, startChallenegeMusic} from '../helpers/kittyHelpers.js';
 
 
@@ -28,9 +28,17 @@ export function createDoor(x, y, roomId, doorType = 'in') {
 
 // ==================== DOOR INTERACTION DETECTION ====================
 export function setupDoorInteraction(player, doors, levelConfig, levelId, getGameData) {
-  doors.forEach(door => {
+  console.log('🔧 Setting up door interactions for', doors.length, 'doors');
+  
+  doors.forEach((door, index) => {
     const doorConfig = door.doorConfig;
     const doorObj = door.doorObj;
+    
+    console.log(`🚪 Door ${index}:`, {
+      doorConfig,
+      doorObjExists: doorObj.exists(),
+      doorPos: doorObj.pos
+    });
     
     const prompt = add([
       text("Press UP to enter", { size: 20 }),
@@ -40,10 +48,11 @@ export function setupDoorInteraction(player, doors, levelConfig, levelId, getGam
       opacity(0),
       z(100),
       fixed(),
-      `doorPrompt_${doorConfig.id}`
+      `doorPrompt_${index}`
     ]);
     
     let playerNear = false;
+    let windowOpen = false; 
     
     player.onUpdate(() => {
       if (!doorObj.exists()) return;
@@ -51,25 +60,51 @@ export function setupDoorInteraction(player, doors, levelConfig, levelId, getGam
       const dist = player.pos.dist(doorObj.pos);
       const isNear = dist < 100;
       
+      if (Math.floor(time()) % 2 === 0 && dist < 200) {
+        console.log(`📏 Distance to door ${index}: ${dist.toFixed(0)}`);
+      }
+      
       if (isNear && !playerNear) {
         playerNear = true;
-        prompt.pos = vec2(player.pos.x, player.pos.y - 80);
+        console.log('✅ Player near door!');
+        
+        if (!windowOpen) {
+          windowOpen = true;
+          doorObj.use(sprite('window', { frame: 1 })); 
+          console.log('🪟 Window opened!');
+        }
+        
+        prompt.pos = vec2(doorObj.pos.x, doorObj.pos.y - 80);
         prompt.opacity = 1;
       } else if (!isNear && playerNear) {
         playerNear = false;
+        console.log('❌ Player left door area');
+        
+        if (windowOpen) {
+          windowOpen = false;
+          doorObj.use(sprite('window', { frame: 0 })); 
+          console.log('🪟 Window closed!');
+        }
+        
         prompt.opacity = 0;
       }
     });
     
     onKeyPress("up", () => {
       if (playerNear) {
-        console.log('🚪 Entering door:', doorConfig.id);
+        console.log('🚪 Entering door!');
+        console.log('Door config:', doorConfig);
+        console.log('Target room ID:', doorConfig.roomId);
         
         const gameData = getGameData();
-        const roomConfig = getRoom(doorConfig.targetRoom);
+        
+        const roomConfig = ROOMS[doorConfig.roomId] || getRoom(doorConfig.roomId);
+        
+        console.log('Room config found:', roomConfig);
         
         if (!roomConfig) {
-          console.error('❌ Room not found:', doorConfig.targetRoom);
+          console.error('❌ Room not found:', doorConfig.roomId);
+          console.error('Available rooms:', Object.keys(ROOMS));
           return;
         }
         
@@ -82,12 +117,8 @@ export function setupDoorInteraction(player, doors, levelConfig, levelId, getGam
           returnY: doorConfig.returnY   
         };
         
-        console.log('📍 Setting return coordinates:', {
-          returnX: doorConfig.returnX,
-          returnY: doorConfig.returnY
-        });
+        console.log('📦 Return data:', returnData);
         
-   
         go("challengeRoom", {
           roomConfig: roomConfig,
           returnScene: levelId,  

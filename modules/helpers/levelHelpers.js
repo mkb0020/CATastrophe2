@@ -105,7 +105,6 @@ function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSol
     z(-1)
   ]);
   
-  // Link them together
   collisionLayer.spriteLayer = spriteLayer;
   
   return collisionLayer;
@@ -226,7 +225,6 @@ export function setupSequentialPlatforms(levelConfig) {
   
   const sequentialPlatforms = [];
   
-  // Check both "platform" and "oneWayPlatform" tags
   const allPlatforms = [...get("platform"), ...get("oneWayPlatform")];
   
   allPlatforms.forEach(platform => {
@@ -1015,11 +1013,11 @@ export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
   const timeText = document.getElementById('timeText');
   const timeStat = document.getElementById('timeStat');
   if (timeText) {
-    timeText.textContent = `Time: ${timeLeft}`;
+    timeText.textContent = timeLeft === null ? `Time: --` : `Time: ${timeLeft}`;
   }
   
   if (timeStat) {
-    if (timeLeft <= 10) {
+    if (timeLeft !== null && timeLeft <= 10) {
       timeStat.classList.add('low-time');
     } else {
       timeStat.classList.remove('low-time');
