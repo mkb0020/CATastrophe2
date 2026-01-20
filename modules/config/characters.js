@@ -108,8 +108,8 @@ export const CHARACTERS = {
     },
     platformerStats: { 
       speed: 8,
-      jumpPower: -11,            
-      maxFallSpeed: 500,           
+      jumpPower: -12,            
+      maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
       groundControlMultiplier: 1.0
     },
@@ -133,8 +133,8 @@ export const CHARACTERS = {
     },
     platformerStats: { 
       speed: 8,
-      jumpPower: -11,            
-      maxFallSpeed: 500,           
+      jumpPower: -12,            
+      maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
       groundControlMultiplier: 1.0
     },
@@ -158,8 +158,8 @@ export const CHARACTERS = {
     },
     platformerStats: { 
       speed: 8,
-      jumpPower: -11,            
-      maxFallSpeed: 500,           
+      jumpPower: -12,            
+      maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
       groundControlMultiplier: 1.0
     },
@@ -183,8 +183,8 @@ export const CHARACTERS = {
     },
     platformerStats: { 
       speed: 8,
-      jumpPower: -11,            
-      maxFallSpeed: 500,           
+      jumpPower: -12,            
+      maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
       groundControlMultiplier: 1.0
     },
@@ -208,8 +208,8 @@ export const CHARACTERS = {
     },
     platformerStats: { 
       speed: 8,
-      jumpPower: -11,            
-      maxFallSpeed: 500,           
+      jumpPower: -12,            
+      maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
       groundControlMultiplier: 1.0
     },

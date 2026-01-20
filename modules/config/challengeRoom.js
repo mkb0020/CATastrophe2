@@ -1,4 +1,7 @@
 /// challengeRoom.js 
+import { getCharacter } from '../config/characters.js';
+
+
 export const ROOMS = {  
   room1: { 
     id: 'room1',
