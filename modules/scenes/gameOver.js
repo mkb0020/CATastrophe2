@@ -1,7 +1,7 @@
-// gameOver.js
+// gameOver.js 
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../helpers/kittyHelpers.js';
-import{getCharacterStats} from '../config/characters.js'; 
+import { getCharacterStats } from '../config/characters.js'; 
 
 export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   console.log('☠️ GAME OVER SCENE (NO LIVES LEFT)');
@@ -10,6 +10,9 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   const { score, level, character, reason } = data;
   stopAllMusic(); 
   startGameOverMusic();
+  
+  const gameOverButtons = document.getElementById('gameOverButtons');
+  if (gameOverButtons) gameOverButtons.classList.remove('hidden');
  
   const darkRedOverlay = add([
     rect(SCREEN_W, SCREEN_H),
@@ -133,48 +136,15 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     opacity(0)
   ]);
 
-  
-  const menuBtn = add([
-    rect(280, 50, { radius: 30 }),
-    pos(360, 360),
-    color(0, 0, 0),
-    outline(3, rgb(144,144,192)),
-    area(),
-    z(3),
-    opacity(0),
-    "menuBtn"
-  ]);
-
-  const menuBtnText = menuBtn.add([
-    text("MAIN MENU", { size: 28, font: "science" }),
-    pos(140, 28),
-    anchor("center"),
-    color(255, 255, 255),
-    z(4)
-  ]);
-
-  const menuBtnShadow = menuBtn.add([
-    text("MAIN MENU", { size: 28, font: "science" }),
-    pos(141, 29),
-    anchor("center"),
-    color(0, 255, 255),
-    z(3)
-  ]);
-
-  menuBtn.onClick(() => {
-    stopAllMusic();
-    startMenuMusic();
-    go("menu");
-  });
-
-  menuBtn.onHover(() => {
-    menuBtn.color = rgb(101,115,131);
-  });
-
-  menuBtn.onHoverEnd(() => {
-    menuBtn.color = rgb(0, 0, 0);
-  });
-
+  const menuBtn = document.getElementById('gameOverMenuBtn');
+  if (menuBtn) {
+    menuBtn.onclick = () => {
+      gameOverButtons.classList.add('hidden');
+      stopAllMusic();
+      startMenuMusic();
+      go("menu");
+    };
+  }
   
   wait(0.5, () => {
     tween(0, 1, 1.2, (o) => {
@@ -194,10 +164,12 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
       if (reasonText) reasonText.opacity = o;
       scoreText.opacity = o;
       scoreText2.opacity = o;
-      menuBtn.opacity = o;
     }, easings.easeOutQuad);
   });
 
+  onSceneLeave(() => {
+    if (gameOverButtons) gameOverButtons.classList.add('hidden');
+  });
 }
 
 function restartLevel(levelName, character, remainingLives) {
@@ -224,7 +196,7 @@ function returnToMenu() {
 export function createYouDiedScene(data) {
   console.log('💀 YOU DIED SCENE');
   console.log('📦 Data received:', data);
-  console.log('👤 Character:', data.character);
+  console.log('💤 Character:', data.character);
   
   const { score, level, lives, character, reason, startingScore = 0 } = data;
   
@@ -240,6 +212,9 @@ export function createYouDiedScene(data) {
   
   stopAllMusic();
   play("gameOverSound", { volume: 0.1 });
+  
+  const youDiedButtons = document.getElementById('youDiedButtons');
+  if (youDiedButtons) youDiedButtons.classList.remove('hidden');
   
   add([
     sprite('menuBG'),
@@ -318,101 +293,46 @@ export function createYouDiedScene(data) {
     z(2)
   ]);
 
-  const useLifeBtn = add([
-    rect(280, 45, { radius: 30 }),
-    pos(360, 320),
-    color(17, 12, 30),
-    outline(3, rgb(144,144,192)),
-    area(),
-    z(1),
-    "useLifeBtn"
-  ]);
+  const useLifeBtn = document.getElementById('useLifeBtn');
+  const quitBtn = document.getElementById('quitToMenuBtn');
 
-  useLifeBtn.add([
-    text("USE LIFE", { size: 25, font: "science" }),
-    pos(140, 28),
-    anchor("center"),
-    color(255, 255, 255),
-    z(3)
-  ]);
+  if (useLifeBtn) {
+    useLifeBtn.onclick = () => {
+      console.log(`🎮 You had: ${lives} lives`);
+      const newLives = lives - 1;
+      character.lives = newLives; 
+      console.log(`🎮 Continuing ${level} with ${newLives} lives`);
+      console.log(`💤 Character:`, character);
+      
+      const maxHP = character.stats?.maxHP || 100;
+      const restoredHP = Math.floor(maxHP * 0.5);
+      
+      console.log(`❤️ Restoring HP to ${restoredHP} (50% of ${maxHP})`);
+      console.log(`💰 Restoring score to ${startingScore} (from before level started)`);
+      
+      youDiedButtons.classList.add('hidden');
+      
+      go(level, {
+        character,
+        startHP: restoredHP,
+        lives: newLives,
+        score: startingScore 
+      });
+    };
+  }
 
-  useLifeBtn.add([
-    text("USE LIFE", { size: 25, font: "science" }),
-    pos(141, 29),
-    anchor("center"),
-    color(0, 255, 255),
-    z(2)
-  ]);
+  if (quitBtn) {
+    quitBtn.onclick = () => {
+      youDiedButtons.classList.add('hidden');
+      stopAllMusic();
+      startMenuMusic();
+      go("menu");
+    };
+  }
 
-  useLifeBtn.onClick(() => {
-    console.log(`🎮 You had: ${lives} lives`);
-    const newLives = lives - 1;
-    character.lives = newLives; 
-    console.log(`🎮 Continuing ${level} with ${newLives} lives`);
-    console.log(`👤 Character:`, character);
-    
-    const maxHP = character.stats?.maxHP || 100;
-    const restoredHP = Math.floor(maxHP * 0.5);
-    
-    console.log(`❤️ Restoring HP to ${restoredHP} (50% of ${maxHP})`);
-    console.log(`💰 Restoring score to ${startingScore} (from before level started)`);
-    
-    go(level, {
-      character,
-      startHP: restoredHP,
-      lives: newLives,
-      score: startingScore 
-    });
+  onSceneLeave(() => {
+    if (youDiedButtons) youDiedButtons.classList.add('hidden');
   });
-
-  useLifeBtn.onHover(() => {
-    useLifeBtn.color = rgb(144,144,192);
-  });
-
-  useLifeBtn.onHoverEnd(() => {
-    useLifeBtn.color = Color.fromHex("#000000");
-  });
-
-  const quitBtn = add([
-    rect(280, 45, { radius: 30 }),
-    pos(360, 390),
-    color(0, 0, 0),
-    outline(3, rgb(144,144,192)),
-    area(),
-    z(1),
-    "quitBtn"
-  ]);
-
-  quitBtn.add([
-    text("QUIT TO MENU", { size: 22, font: "science" }),
-    pos(140, 28),
-    anchor("center"),
-    color(255, 255, 255),
-    z(3)
-  ]);
-
-  quitBtn.add([
-    text("QUIT TO MENU", { size: 22, font: "science" }),
-    pos(141, 29),
-    anchor("center"),
-    color(0, 255, 255),
-    z(2)
-  ]);
-
-  quitBtn.onClick(() => {
-    stopAllMusic();
-    startMenuMusic();
-    go("menu");
-  });
-
-  quitBtn.onHover(() => {
-    quitBtn.color = rgb(144,144,192);
-  });
-
-  quitBtn.onHoverEnd(() => {
-    quitBtn.color = rgb(0, 0, 0);
-  });
-
 }
 
 export function createVictoryScene(data) {
@@ -420,7 +340,6 @@ export function createVictoryScene(data) {
   
   stopAllMusic(); 
   play("VictorySound", { volume: 0.6 }); 
-
 
   add([
     rect(SCREEN_W, SCREEN_H),
@@ -437,7 +356,6 @@ export function createVictoryScene(data) {
     z(0)
   ]);
 
-  
   add([
     rect(700, 280, { radius: 10 }),
     pos(150, 100),
@@ -446,7 +364,6 @@ export function createVictoryScene(data) {
     z(1)
   ]);
 
-  
   add([
     text("FLAWLESS VICTORY!", { 
       size: 56, 
@@ -458,7 +375,6 @@ export function createVictoryScene(data) {
     color(38, 243, 130),
     z(2)
   ]);
-
 
   add([
     text("You did it!", { 
@@ -472,7 +388,6 @@ export function createVictoryScene(data) {
     z(2)
   ]);
 
-  
   const charName = character ? character.name : "Hero";
   add([
     text(`${charName} saved Schrödinger's Cat Café!`, { 
@@ -485,7 +400,6 @@ export function createVictoryScene(data) {
     z(2)
   ]);
 
-
   add([
     text("Quantum bliss has been restored!", { 
       size: 18, 
@@ -497,7 +411,6 @@ export function createVictoryScene(data) {
     color(176, 180, 255),
     z(2)
   ]);
-
 
   add([
     text("Click anywhere to return to menu", { 
@@ -543,7 +456,6 @@ export function createVictoryScene(data) {
     });
   });
 
-
   onClick(() => {
     returnToMenu();
   });
@@ -557,8 +469,11 @@ export function createLevelCompleteScene(data) {
   console.log('🎊 LEVEL COMPLETE SCENE');
   console.log('📦 Data received:', data);
   
-  const { level, score, nextLevel, character, startHP  } = data;
-    play("VictorySound", { volume: 0.5 });
+  const { level, score, nextLevel, character, startHP } = data;
+  play("VictorySound", { volume: 0.5 });
+
+  const levelCompleteButton = document.getElementById('levelCompleteButton');
+  if (levelCompleteButton) levelCompleteButton.classList.remove('hidden');
 
   add([
     sprite('menuBG'),
@@ -576,7 +491,6 @@ export function createLevelCompleteScene(data) {
     z(2)
   ]);
 
-
   const titleShadow = add([
     text("LEVEL COMPLETE!", { size: 64, font: "orbitronBold" }),
     pos(center().x, 120),
@@ -593,8 +507,6 @@ export function createLevelCompleteScene(data) {
     color(255, 255, 255),
     z(5)
   ]);
-
-
 
   function spawnConfetti() {
     const colors = ["#4dff4d"];
@@ -636,68 +548,24 @@ export function createLevelCompleteScene(data) {
   wait(0.8, () => tween(0, 1, 0.6, (o) => scoreText.opacity = o));
   wait(1.2, () => tween(0, 1, 0.6, (o) => hpText.opacity = o));
 
-  const continueBtn = add([
-    rect(360, 70, { radius: 35 }),
-    pos(center().x, 380),
-    anchor("center"),
-    color(17, 12, 30),
-    outline(5, Color.fromHex("#58e84c")),
-    area(),
-    z(5),
-    "continueBtn"
-  ]);
+  const continueBtn = document.getElementById('levelContinueBtn');
+  if (continueBtn) {
+    continueBtn.onclick = () => {
+      levelCompleteButton.classList.add('hidden');
+      go(nextLevel, { 
+        character: character,
+        startHP: startHP
+      });
+    };
+  }
 
-  const btnGlow = continueBtn.add([
-    rect(370, 80, { radius: 40 }),
-    color(88, 232, 76),
-    opacity(0),
-    pos(0, 0),
-    anchor("center"),
-    z(1)
-  ]);
-
-  const btnTextShadow = continueBtn.add([
-    text("CONTINUE", { size: 36, font: "science", weight: "bold" }),
-    pos(0, 2),
-    anchor("center"),
-    color(0, 255, 255),
-    opacity(0.7),
-    z(4)
-  ]);
-
-  const btnText = continueBtn.add([
-    text("CONTINUE", { size: 36, font: "science", weight: "bold" }),
-    pos(0, 0),
-    anchor("center"),
-    color(255, 255, 255),
-    z(5)
-  ]);
-
-  continueBtn.onHover(() => {
-    continueBtn.scale = vec2(1.1);
-    btnGlow.opacity = 0.4;
-    btnText.color = Color.fromHex("#58e84c");
+  onSceneLeave(() => {
+    if (levelCompleteButton) levelCompleteButton.classList.add('hidden');
   });
-
-  continueBtn.onHoverEnd(() => {
-    continueBtn.scale = vec2(1);
-    btnGlow.opacity = 0;
-    btnText.color = Color.WHITE;
-  });
-
-  continueBtn.onClick(() => {
-    go(nextLevel, { 
-      character: character,
-      startHP: startHP
-    });
-  });
-
-
 }
 
-
 export function createBossDefeatedScene(data) {
-    console.log('🏆 Boss Defeated Scene received:', data);
+  console.log('🏆 Boss Defeated Scene received:', data);
 
   const { 
     level = "cupBoss", 
@@ -707,9 +575,9 @@ export function createBossDefeatedScene(data) {
     playerHP, 
     lives = 3 
   } = data || {};  
-    console.log('📊 Extracted values:', { score, playerHP, lives });
-    console.log('📊 Character.lives:', character.lives);  
-    console.log('📊 Data.lives:', data.lives);  
+  console.log('📊 Extracted values:', { score, playerHP, lives });
+  console.log('📊 Character.lives:', character.lives);  
+  console.log('📊 Data.lives:', data.lives);  
 
   stopAllMusic();
   play("VictorySound", { volume: 0.6 }); 
@@ -780,10 +648,8 @@ export function createBossDefeatedScene(data) {
     z(2)
   ]);
 
-
-
-    add([
-    text("WAS DEFRATED!", { 
+  add([
+    text("WAS DEFEATED!", { 
       size: 40, 
       font: "science",
       weight: "bold"
@@ -805,13 +671,11 @@ export function createBossDefeatedScene(data) {
     z(2)
   ]);
 
-
   onClick(() => {
-      console.log('🚀 BEFORE go() - values are:', { nextLevel, playerHP, lives, score });
+    console.log('🚀 BEFORE go() - values are:', { nextLevel, playerHP, lives, score });
 
     if (nextLevel.startsWith("Transition")) {
-          console.log('🚀 Calling go with these exact params:', nextLevel, character.name, playerHP, lives, score);
-
+      console.log('🚀 Calling go with these exact params:', nextLevel, character.name, playerHP, lives, score);
       go("transition", nextLevel, character, playerHP, lives, score);  
     }
     else if (nextLevel === "level2") {
@@ -827,5 +691,3 @@ export function createBossDefeatedScene(data) {
     }
   });
 }
-
-

@@ -1,4 +1,4 @@
-// mainMenu.js
+// mainMenu.js - Updated to use HTML/CSS buttons
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
@@ -9,7 +9,6 @@ export function createStartScene(){
     pos(0, 0),
     z(0)
   ]);
-
 
   const clickText = add([
     text("CLICK TO START", { 
@@ -23,7 +22,7 @@ export function createStartScene(){
     opacity(1)
   ]);
 
-    const clickText2 = add([
+  const clickText2 = add([
     text("CLICK TO START", { 
       size: 70, 
       font: "orbitronBold"
@@ -48,7 +47,7 @@ export function createStartScene(){
   onClick(() => {
     stopAtmosphere();
     startMenuMusic();
-        go("menu");
+    go("menu");
   });
 
   onKeyPress("space", () => {
@@ -62,11 +61,12 @@ export function createStartScene(){
     startMenuMusic();
     go("menu");
   });
-
-
 }
 
 export function createMainMenuScene() {
+  const mainMenuButtons = document.getElementById('mainMenuButtons');
+  if (mainMenuButtons) mainMenuButtons.classList.remove('hidden');
+
   const menuBG = add([
     sprite('menuBG'),
     pos(0, 0),
@@ -121,318 +121,37 @@ export function createMainMenuScene() {
     z(2)
   ]);
 
-  //const testPanel = add([
- //   rect(600, 150, { radius: 30 }),
- //   pos(center().x - 300, 150),
- //   color(17, 12, 30),
- //   outline(6),
- //   opacity(0.8),
- //   z(1)
- // ]);
+  const playBtn = document.getElementById('playBtn');
+  const howToPlayBtn = document.getElementById('howToPlayBtn');
+  const meetCatsBtn = document.getElementById('meetCatsBtn');
 
-//  add([
-//    text("TEST VERSION", { size: 60, font: "orbitronBold" }),
-//    pos(center().x, 230),
-//    anchor("center"),
-//    color(rgb(255,199,255)),
-//   z(5)
-//  ]);
+  if (playBtn) {
+    playBtn.onclick = () => {
+      mainMenuButtons.classList.add('hidden');
+      go("charSelect");
+    };
+  }
 
- // add([
-//    text("TEST VERSION", { size: 60, font: "orbitronBold" }),
- //   pos(center().x + 3, 233),
-//    anchor("center"),
-//    color(rgb(115,1,50)),
-//    z(4)
-//  ]);
+  if (howToPlayBtn) {
+    howToPlayBtn.onclick = () => openHowToPlayModal();
+  }
 
-  const playBtn = add([
-    rect(300, 46, { radius: 53 }),
-    pos(center().x, 320),              
-    anchor("center"),                
-    color(rgb(0,0,0)),
-    outline(5, rgb(88,232,76)),
-    opacity(1),
-    area(),
-    scale(1),
-    z(5),
-    "playBtn"
-  ]);
+  if (meetCatsBtn) {
+    meetCatsBtn.onclick = () => openAboutCatsModal();
+  }
 
-    const playGlow = playBtn.add([
-    rect(303, 50, { radius: 58 }),
-    anchor("center"),                 
-    color(rgb(88,232,76)),
-    opacity(0.15),
-    pos(0, 0),
-    z(1),
-    "playGlow"
-  ]);
-
-    const playShine = playBtn.add([
-      rect(290, 35, { radius: 58 }),
-      anchor("center"),                 
-      color(rgb(158,255,158)),
-      opacity(0.2),
-      pos(-5, -5),
-      z(2),
-      "playShine"
-    ]);
-
-  playBtn.add([
-    text("PLAY", { size: 32, font: "science" }),
-    pos(0, 1),                        
-    anchor("center"),
-    color(rgb(255, 255, 255)),
-    z(3)
-  ]);
-
-  playBtn.add([
-    text("PLAY", { size: 32, font: "science" }),
-    pos(2, 3),
-    anchor("center"),
-    color(rgb(0, 0, 0)),
-    z(2)
-  ]);
-
-
-  playBtn.onHoverUpdate(() => {
-    playBtn.scale = vec2(1.1);
-    playBtn.color = rgb(88,232,76);
-    playGlow.scale = vec2(1.05);
-    playShine.scale = vec2(1.05);
-    playShine.color = rgb(14, 170, 0);
-    playGlow.opacity = 1;
-    playShine.opacity = 0.7;
+  onSceneLeave(() => {
+    if (mainMenuButtons) mainMenuButtons.classList.add('hidden');
   });
-
-  playBtn.onHoverEnd(() => {
-    playBtn.scale = vec2(1);
-    playBtn.color = rgb(0, 0, 0);
-    playGlow.scale = vec2(1);
-    playShine.scale = vec2(1);
-    playShine.color = rgb(88,232,76);
-    playGlow.opacity = 0.2;
-    playShine.opacity = 0.2;
-  });
-
-  playBtn.onClick(() => go("charSelect"));
-
- 
-  //const backBtn = add([
-  //  rect(300, 56, { radius: 30 }),
-//    pos(center().x, 430),
-//    anchor("center"),                  
-//    color(rgb(0, 0, 0)),
-//    outline(5, rgb(144,144,192)),
-//    area(),
-//    scale(1),
-//    z(1),
-//    "backBtn"
-//  ]);
-
-//    const backGlow = backBtn.add([
-//    rect(302, 58, { radius: 58 }),
-//    anchor("center"),                  
-//    color(rgb(101,115,131)),
-//    opacity(0.3),
-//    pos(0, 0),
-//    z(1),
-//    "playGlow"
-//  ]);
-
- //   const backShine = backBtn.add([
- //     rect(290, 45, { radius: 58 }),
- //     anchor("center"),                 
- //     color(rgb(219,226,233)),
- //     opacity(0.3),
- //     pos(-5, -5),
- //     z(2),
- //     "playShine"
- //   ]);
-
-//  backBtn.add([
- //   text("<- BACK", { size: 34, font: "science" }),
-//    pos(0, 0),
-//    anchor("center"),
-//    color(rgb(255, 255, 255)),
-//    z(3)
-//  ]);
-
-//  backBtn.add([
-//    text("<- BACK", { size: 34, font: "science" }),
-//    pos(2, 2),
-//    anchor("center"),
-//    color(rgb(0,0,0)),
-//    z(2)
- // ]);
-
-//  backBtn.onHoverUpdate(() => {
- //   backBtn.scale = vec2(1.1);
-//    backBtn.color = rgb(144,144,192);
-//    backGlow.scale = vec2(1.05);
-//    backShine.scale = vec2(1.05);
-//    backGlow.opacity = 1;
-//    backShine.opacity = 0.4;
-//  });
-
- // backBtn.onHoverEnd(() => {
- //   backBtn.scale = vec2(1);
- //   backBtn.color = rgb(0, 0, 0);
-//    backGlow.scale = vec2(1);
- //   backShine.scale = vec2(1);
- //   backGlow.opacity = 0.3;
- //   backShine.opacity = 0.3;
- // });
-
-//backBtn.onClick(() => {
-//    window.location.href = '/';
-//  });
-
-  // HOW TO PLAY BUTTON
-  
-  const howToPlayBtn = add([
-    rect(300, 46, { radius: 30 }),
-    pos(center().x, 380),
-    anchor("center"),
-    color(rgb(0, 0, 0)),
-    outline(5, rgb(144,144,192)),
-    area(),
-    scale(1),
-    z(1),
-    "howToPlayBtn"
-  ]);
-
-  const howToPlayGlow = howToPlayBtn.add([
-    rect(302, 48, { radius: 58 }),
-    anchor("center"),
-    color(rgb(144,144,192)),
-    opacity(0.3),
-    pos(0, 0),
-    z(1),
-  ]);
-
-  const howToPlayShine = howToPlayBtn.add([
-    rect(290, 35, { radius: 58 }),
-    anchor("center"),
-    color(rgb(144,144,192)),
-    opacity(0.3),
-    pos(-5, -5),
-    z(2),
-  ]);
-
-  howToPlayBtn.add([
-    text("HOW TO PLAY", { size: 27, font: "science" }),
-    pos(0, 1),
-    anchor("center"),
-    color(rgb(255, 255, 255)),
-    z(3)
-  ]);
-
-  howToPlayBtn.add([
-    text("HOW TO PLAY", { size: 27, font: "science" }),
-    pos(2, 3),
-    anchor("center"),
-    color(rgb(0, 0, 0)),
-    z(2)
-  ]);
-
-  howToPlayBtn.onHoverUpdate(() => {
-    howToPlayBtn.scale = vec2(1.1);
-    howToPlayBtn.color = rgb(144,144,192);
-    howToPlayGlow.scale = vec2(1.05);
-    howToPlayShine.scale = vec2(1.05);
-    howToPlayGlow.opacity = 1;
-    howToPlayShine.opacity = 0.4;
-  });
-
-  howToPlayBtn.onHoverEnd(() => {
-    howToPlayBtn.scale = vec2(1);
-    howToPlayBtn.color = rgb(0, 0, 0);
-    howToPlayGlow.scale = vec2(1);
-    howToPlayShine.scale = vec2(1);
-    howToPlayGlow.opacity = 0.3;
-    howToPlayShine.opacity = 0.3;
-  });
-
-howToPlayBtn.onClick(() => {
-    openHowToPlayModal();
-});
-  // ABOUT THE CATS BUTTON
-  const aboutCatsBtn = add([ // NEED TO FIX COLORS AND SPACING
-    rect(300, 46, { radius: 30 }),
-    pos(center().x, 440),
-    anchor("center"),
-    color(rgb(0, 0, 0)),
-    outline(5, rgb(144,144,192)),
-    area(),
-    scale(1),
-    z(1),
-    "aboutCatsBtn"
-  ]);
-
-  const aboutCatsGlow = aboutCatsBtn.add([
-    rect(302, 48, { radius: 58 }),
-    anchor("center"),
-    color(rgb(144,144,192)),
-    opacity(0.3),
-    pos(0, 0),
-    z(1),
-  ]);
-
-  const aboutCatsShine = aboutCatsBtn.add([
-    rect(290, 35, { radius: 58 }),
-    anchor("center"),
-    color(rgb(144,144,192)),
-    opacity(0.3),
-    pos(-5, -5),
-    z(2),
-  ]);
-
-  aboutCatsBtn.add([
-    text("MEET THE CATS", { size: 23, font: "science" }),
-    pos(0, 1),
-    anchor("center"),
-    color(rgb(255, 255, 255)),
-    z(3)
-  ]);
-
-  aboutCatsBtn.add([
-    text("MEET THE CATS", { size: 23, font: "science" }),
-    pos(2, 3),
-    anchor("center"),
-    color(rgb(0, 0, 0)),
-    z(2)
-  ]);
-
-  aboutCatsBtn.onHoverUpdate(() => {
-    aboutCatsBtn.scale = vec2(1.1);
-    aboutCatsBtn.color = rgb(144,144,192);
-    aboutCatsGlow.scale = vec2(1.05);
-    aboutCatsShine.scale = vec2(1.05);
-    aboutCatsGlow.opacity = 1;
-    aboutCatsShine.opacity = 0.4;
-  });
-
-  aboutCatsBtn.onHoverEnd(() => {
-    aboutCatsBtn.scale = vec2(1);
-    aboutCatsBtn.color = rgb(0, 0, 0);
-    aboutCatsGlow.scale = vec2(1);
-    aboutCatsShine.scale = vec2(1);
-    aboutCatsGlow.opacity = 0.3;
-    aboutCatsShine.opacity = 0.3;
-  });
-
-aboutCatsBtn.onClick(() => {
-    openAboutCatsModal();
-});
-
 }
 
 export function createCharSelectScene() {
   let selectedIndex = null;
   let animationComplete = false; 
-  let shopMusic = null; 
+  let shopMusic = null;
+
+  const charSelectButtons = document.getElementById('charSelectButtons');
+  if (charSelectButtons) charSelectButtons.classList.remove('hidden');
 
   const blackOverlay = add([
     rect(SCREEN_W, SCREEN_H),
@@ -462,7 +181,6 @@ export function createCharSelectScene() {
     "cafeSprite"
   ]);
 
-  
   const doorX = SCREEN_W / 2;
   const doorY = SCREEN_H * 0.7;
 
@@ -495,7 +213,7 @@ export function createCharSelectScene() {
       );
       
       wait(2.2, () => {
-        cafeSprite.frame = 1; // DOOR OPENS
+        cafeSprite.frame = 1;
         play("door", { volume: 0.5 });
         wait(0.3, () => {
           tween(
@@ -544,7 +262,6 @@ export function createCharSelectScene() {
     "regularBG"
   ]);
   
-  // CHARACTER "MENU" BOARD
   const menuBoard = add([
     rect(450, 240, { radius: 8 }),
     pos(30, 15),
@@ -673,6 +390,9 @@ export function createCharSelectScene() {
       });
 
       updatePreview(i);
+      
+      const confirmBtn = document.getElementById('confirmCharBtn');
+      if (confirmBtn) confirmBtn.classList.remove('disabled');
     });
 
     card.onHover(() => {
@@ -695,8 +415,6 @@ export function createCharSelectScene() {
     charMenuNames.push(charMenuName);
   });
 
-
-  // STATS BOARD
   const statsBoard = add([
     rect(280, 240, { radius: 8 }),
     pos(687, 15),
@@ -975,155 +693,35 @@ export function createCharSelectScene() {
     charMenuNames.forEach(charMenuName => {
       tween(charMenuName.opacity, 1, 0.8, (val) => charMenuName.opacity = val);
     });
-    
-    tween(backBtn.opacity, 1, 0.8, (val) => backBtn.opacity = val);
-    tween(confirmBtn.opacity, 0.4, 0.8, (val) => confirmBtn.opacity = val);
   }
 
-  const confirmBtn = add([
-    rect(200, 40, { radius: 20 }),
-    pos(750, 430),
-    color(rgb(0, 0, 0)),
-    outline(4, rgb(88,232,76)),
-    opacity(0),  
-    area(),
-    scale(1),
-    z(5),
-    "confirmBtn"
-  ]);
+  const backBtn = document.getElementById('charSelectBackBtn');
+  const confirmBtn = document.getElementById('confirmCharBtn');
 
-  const confirmGlow = confirmBtn.add([
-    rect(202, 45, { radius: 20 }),
-    anchor("left"),                 
-    color(rgb(88,232,76)),
-    opacity(0.15),
-    pos(0, 20),
-    z(1),
-    "confirmGlow"
-  ]);
+  if (backBtn) {
+    backBtn.onclick = () => {
+      if (!animationComplete) return;
+      if (shopMusic) shopMusic.stop();
+      charSelectButtons.classList.add('hidden');
+      go("menu");
+    };
+  }
 
-  const confirmShine = confirmBtn.add([
-    rect(192, 37, { radius: 30 }),
-    anchor("left"),                 
-    color(rgb(158,255,158)),
-    opacity(0.2),
-    pos(0, 18),
-    z(2),
-    "confirmShine"
-  ]);
+  if (confirmBtn) {
+    confirmBtn.onclick = () => {
+      if (selectedIndex === null || !animationComplete) return;
+      if (shopMusic) shopMusic.stop();
+      playPourAnimation(() => {
+        const char = characters[selectedIndex];
+        charSelectButtons.classList.add('hidden');
+        go("transition", "Transition1", char);
+      });
+    };
+  }
 
-  confirmBtn.add([
-    text("PLACE ORDER", { size: 20, font: "science", weight: "bold" }),
-    pos(100, 23),
-    anchor("center"),
-    color(255, 255, 255),
-    z(6)
-  ]);
-
-  confirmBtn.onClick(() => {
-    if (selectedIndex === null || !animationComplete) return;
-    if (shopMusic) shopMusic.stop();
-    playPourAnimation(() => {
-      const char = characters[selectedIndex];
-      go("transition", "Transition1", char);
-    });
+  onSceneLeave(() => {
+    if (charSelectButtons) charSelectButtons.classList.add('hidden');
   });
-
-  confirmBtn.onHoverUpdate(() => {
-    if (selectedIndex !== null && animationComplete) {
-      confirmBtn.scale = vec2(1.01);
-      confirmBtn.color = rgb(88,232,76);
-      confirmGlow.scale = vec2(1.01);
-      confirmShine.scale = vec2(1.01);
-      confirmShine.color = rgb(14, 170, 0);
-      confirmGlow.opacity = 1;
-      confirmShine.opacity = 0.7;
-    }
-  });
-
-  confirmBtn.onHoverEnd(() => {
-    confirmBtn.scale = vec2(1);
-    confirmBtn.color = rgb(0, 0, 0);
-    confirmGlow.scale = vec2(1);
-    confirmShine.scale = vec2(1);
-    confirmShine.color = rgb(88,232,76);
-    confirmGlow.opacity = 0.2;
-    confirmShine.opacity = 0.2;
-  });
-
-  const backBtn = add([
-    rect(120, 40, { radius: 20 }),
-    pos(50, 430),
-    color(rgb(0, 0, 0)),
-    outline(4, rgb(144,144,192)),
-    area(),
-    opacity(0),  
-    scale(1),
-    z(5),
-    "backBtn"
-  ]);
-
-  const backGlow = backBtn.add([
-    rect(122, 45, { radius: 20 }),
-    anchor("left"),                  
-    color(rgb(101,115,131)),
-    opacity(0.3),
-    pos(0, 20),
-    z(1),
-    "backGlow"
-  ]);
-
-  const backShine = backBtn.add([
-    rect(110, 37, { radius: 30 }),
-    anchor("left"),                 
-    color(rgb(219,226,233)),
-    opacity(0.1),
-    pos(0, 20),
-    z(2),
-    "backShine"
-  ]);
-
-  backBtn.add([
-    text("BACK", { size: 20, font: "science", weight: "bold" }),
-    pos(60, 23),
-    anchor("center"),
-    color(255, 255, 255),
-    z(5)
-  ]);
-
-  backBtn.onClick(() => {
-    if (!animationComplete) return;
-    if (shopMusic) shopMusic.stop()
-    go("menu");
-  });
-
-  backBtn.onHoverUpdate(() => {
-    if (!animationComplete) return;
-    backBtn.scale = vec2(1.01);
-    backBtn.color = rgb(0, 0, 0);
-    backGlow.scale = vec2(1.01);
-    backShine.scale = vec2(1.01);
-    backGlow.opacity = 1;
-    backShine.opacity = 0.4;
-  });
-
-  backBtn.onHoverEnd(() => {
-    backBtn.scale = vec2(1);
-    backBtn.color = rgb(0, 0, 0);
-    backGlow.scale = vec2(1);
-    backShine.scale = vec2(1);
-    backGlow.opacity = 0.1;
-    backShine.opacity = 0.3;
-  });
-
-  onUpdate(() => {
-    if (animationComplete && selectedIndex !== null) {
-      if (confirmBtn.opacity < 1) {
-        confirmBtn.opacity = 1;
-      }
-    }
-  });
-  
 }
 
 function playPourAnimation(onComplete) {

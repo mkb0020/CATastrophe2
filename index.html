@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/assets/css/dreamy.css">
   <link rel="stylesheet" href="/assets/css/canvas.css">
   <link rel="stylesheet" href="/assets/css/HUD.css">
+  <link rel="stylesheet" href="/assets/css/gameButtons.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <script type="importmap">
     {
@@ -106,7 +107,7 @@
                 |
       </div>
       <div class="stat-item stat-title">
-              🐱 CATastrophe2 🐱  <!-- CENTER LOGO -->
+              🐱 CATastrophe2 🐱 
       </div>
       <div class="stat-divider">
                 |
@@ -156,6 +157,99 @@
         </div>
 </div>
 
+
+<!-- ==================== BUTTONS ========================== -->
+
+
+<!-- MAIN MENU BUTTONS -->
+<div id="mainMenuButtons" class="hidden">
+    <button class="game-btn play-btn-container" id="playBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">PLAY</div>
+        </div>
+    </button>
+
+    <button class="game-btn standard-btn-container how-to-play" id="howToPlayBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">How to Play</div>
+        </div>
+    </button>
+
+    <button class="game-btn standard-btn-container meet-cats" id="meetCatsBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">Meet the Cats</div>
+        </div>
+    </button>
+</div>
+
+<!-- CHARACTER SELECT BUTTONS -->
+<div id="charSelectButtons" class="hidden">
+    <button class="game-btn back-btn-container" id="charSelectBackBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">Back</div>
+        </div>
+    </button>
+
+    <button class="game-btn confirm-btn-container disabled" id="confirmCharBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">Place Order</div>
+        </div>
+    </button>
+</div>
+
+<!-- GAME OVER BUTTONS -->
+<div id="gameOverButtons" class="hidden">
+    <button class="game-btn gameover-btn-container menu-btn" id="gameOverMenuBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">Main Menu</div>
+        </div>
+    </button>
+</div>
+
+<!-- YOU DIED BUTTONS -->
+<div id="youDiedButtons" class="hidden">
+    <button class="game-btn you-died-btn-container use-life-btn" id="useLifeBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">Use Life</div>
+        </div>
+    </button>
+
+    <button class="game-btn you-died-btn-container quit-btn" id="quitToMenuBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">Quit to Menu</div>
+        </div>
+    </button>
+</div>
+
+<!-- BOSS FINISH HIM BUTTON  -->
+<div id="finishHimButton" class="hidden">
+    <button class="game-btn finish-him-container" id="finishHimBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text" id="finishHimBtnText">Use Special Attack</div>
+        </div>
+    </button>
+</div>
+
+<!-- LEVEL COMPLETE CONTINUE BUTTON-->
+<div id="levelCompleteButton" class="hidden">
+    <button class="game-btn level-complete-container" id="levelContinueBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">Continue</div>
+        </div>
+    </button>
+</div>
+
+<!-- ========================= DEBUG STUFF ===================== -->
 <div class="debug-toggle" id="debugToggle" title="Toggle Debug Info">
     <img src="assets/images/settings.png" alt="Settings">
 </div>
@@ -448,10 +542,7 @@
                 <li>Reduce the boss’s HP to <strong>0</strong> to win the battle.</li>
                 <li>Stay strategic — your stats matter!</li>
             </ul>
-            <!--<h5>🔮 Secrets & Collectibles</h5>
-            <ul>
-                <li><strong>The Three Neko States:</strong> Collect all three to unlock a special thing!</li>
-            </ul>-->
+
 
         <p class="mission-text"><strong>Good luck, brave cat warrior!</strong><br>
         The fate of Schrödinger's Cat Café is now in your <em>toe beans</em>! 🐾</p>

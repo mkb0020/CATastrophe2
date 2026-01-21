@@ -457,7 +457,6 @@ applyUpgradesToBossPlayer(player);
 function checkBattleEnd() {
     const bossHP = parseInt(boss.hp) || 0;
     const currentPlayerHP = parseInt(player.hp) || 0;
-    console.log('🔍 Checking battle end | Boss HP:', bossHP, 'Player HP:', currentPlayerHP);
     
     if (bossHP <= 0) {
       console.log('🎉 BOSS DEFEATED! TIME FOR FINISH HIM!');
@@ -468,6 +467,20 @@ function checkBattleEnd() {
       moveButtons.forEach(({ btn }) => {
         btn.hidden = true;
       });
+      
+      const finishHimButton = document.getElementById('finishHimButton');
+      const finishHimBtn = document.getElementById('finishHimBtn');
+      const finishHimBtnText = document.getElementById('finishHimBtnText');
+      
+      if (finishHimButton && finishHimBtn && finishHimBtnText) {
+        const formattedMoveName = finishHimMove
+          .replace(/([A-Z])/g, ' $1')
+          .trim()
+          .toUpperCase();
+        finishHimBtnText.textContent = `USE ${formattedMoveName}`;
+        
+        finishHimButton.classList.remove('hidden');
+      }
       
       const finishText = add([
         text("FINISH HIM!", { size: 100, font: "orbitronBold" }),
@@ -518,7 +531,7 @@ function checkBattleEnd() {
         const cycleTime = pulseTime % 4; 
         let r, g, b;
 
-        if (cycleTime < 1.33) {  // COLOR HUE SHIFT RED - ORANGE - PINK
+        if (cycleTime < 1.33) {
           const t = cycleTime / 1.33;
           r = lerp(157, 184, t);  
           g = lerp(1, 59, t);     
@@ -537,164 +550,34 @@ function checkBattleEnd() {
         finishText.color = rgb(r, g, b);
       });
       
-      wait(1, () => {
-        const buttonWidth = 600;
-        const buttonHeight = 70;
-        const buttonX = SCREEN_W / 2;
-        const buttonY = SCREEN_H / 2 + 60;
-        
-        const btnBase = add([
-          rect(buttonWidth-5, buttonHeight-5, { radius: 35 }),
-          pos(buttonX+1.5, buttonY+1.5),
-          anchor("center"),
-          color(rgb(1,15,31)),
-          z(203),
-          opacity(0),
-        ]);
-
-        const btnInner = add([
-          rect(buttonWidth, buttonHeight, { radius: 50 }),
-          pos(buttonX, buttonY),
-          anchor("center"),
-          color(rgb(101,115,131)),
-          opacity(0.05),
-          z(200),
-          opacity(0),
-        ]);
-
-        const btnOutline = add([
-          rect(buttonWidth + 5, buttonHeight + 5, { radius: 38 }),
-          pos(buttonX, buttonY),
-          anchor("center"),
-          color(rgb(144,144,192)),
-          outline(1, rgb(0,0,0)),
-          z(199),
-          opacity(0),
-        ]);
-
-        const btnHighlight = add([
-          rect(buttonWidth - 200, buttonHeight, { radius: 50 }),
-          pos(buttonX-102, buttonY-2),
-          anchor("center"),
-          color(rgb(196,195,208)),
-          z(202),
-          opacity(0),
-        ]);
-
-        const highlightLeftX = buttonX - 102;  
-        const highlightRightX = buttonX + 102; 
-        let currentHighlightTween = null;  
-        
-        const specialBtn = add([
-          rect(buttonWidth, buttonHeight, { radius: 35 }),
-          pos(buttonX, buttonY),
-          anchor("center"),
-          area(),
-          z(205),
-          opacity(0),
-        ]);
-
-        const formattedMoveName = finishHimMove
-          .replace(/([A-Z])/g, ' $1')
-          .trim()
-          .toUpperCase();
-
-        const specialBtnText = add([
-          text(`USE ${formattedMoveName}`, { size: 32, font: "orbitronBold" }),
-          pos(buttonX, buttonY),
-          anchor("center"),
-          color(255, 255, 255),
-          outline(1, rgb(0, 0, 0)), 
-          z(210),
-          opacity(0),
-        ]);
-        
-        tween(0, 1, 0.4, (o) => {
-          btnBase.opacity = o * 0.8;
-          btnInner.opacity = o * 0.8;
-          btnOutline.opacity = o;
-          btnHighlight.opacity = o * 0.5;
-          specialBtnText.opacity = o;
-          btnInner.opacity = o;        
-        });
-
-        specialBtn.onHover(() => {
-          [btnBase, btnInner, btnOutline, btnHighlight, specialBtnText].forEach(obj => obj.scale = vec2(1.08));
-          btnBase.color = rgb(0,0,0);
-          btnInner.color = rgb(101,115,131);
-          btnOutline.outline.width = 2;
-          btnOutline.outline.color = rgb(101,115,131);
-          btnOutline.color = rgb(144,144,192);
-
-          currentHighlightTween = tween(
-            btnHighlight.pos.x,
-            highlightRightX,
-            0.15,  
-            (x) => btnHighlight.pos.x = x,
-            easings.easeOutQuad  
-          );
-        });
-
-        specialBtn.onHoverEnd(() => {
-          if (currentHighlightTween) currentHighlightTween.cancel();
-          [btnBase, btnInner, btnOutline, btnHighlight, specialBtnText].forEach(obj => obj.scale = vec2(1));
-          btnBase.color = rgb(1,15,31);
-          btnInner.color = rgb(42,52,57); 
-          btnOutline.outline.width = 2;
-          btnOutline.outline.color = rgb(144,144,192);
-
-          currentHighlightTween = tween(
-            btnHighlight.pos.x,
-            highlightLeftX,
-            0.15,
-            (x) => btnHighlight.pos.x = x,
-            easings.easeOutQuad
-          );
-        });
-      
-        specialBtn.onClick(() => {
+      if (finishHimBtn) {
+        finishHimBtn.onclick = () => {
           console.log('💥 SPECIAL ATTACK INITIATED!');
+          
+          finishHimButton.classList.add('hidden');
+          
           tween(1, 0, 0.3, (o) => {
             finishText.opacity = o;
             finishTextShadow.opacity = o;
-            finishTextShadow2.opacity = o;                 
-            btnBase.opacity = o;
-            btnOutline.opacity = o;
-            specialBtnText.opacity = o;
-            btnHighlight.opacity = o;
-            btnInner.opacity = o;
+            finishTextShadow2.opacity = o;
           }).then(() => {
             destroy(finishText);
             destroy(finishTextShadow);
             destroy(finishTextShadow2);
-            destroy(btnBase);
-            destroy(btnOutline);
-            destroy(specialBtn);
-            destroy(specialBtnText);
-            destroy(btnHighlight);
           });
           
           wait(0.5, () => {
             playFinishHimMove(finishHimMove);
             
-            let victoryDelay = 1.2;   
-            if (finishHimMove === 'CatCrossbow') {
-              victoryDelay = 3.2;  
-            }   
-            if (finishHimMove === 'PURRcisionRifle') {
-              victoryDelay = 2.8;  
-            }  
-            if (finishHimMove === 'MeowlotovCocktail') {
-              victoryDelay = 2.2;  
-            }          
-            if (finishHimMove === 'FelineFission') {
-              victoryDelay = 14.8; 
-            } 
+            let victoryDelay = 1.2;
+            if (finishHimMove === 'CatCrossbow') victoryDelay = 3.2;
+            if (finishHimMove === 'PURRcisionRifle') victoryDelay = 2.8;
+            if (finishHimMove === 'MeowlotovCocktail') victoryDelay = 2.2;
+            if (finishHimMove === 'FelineFission') victoryDelay = 14.8;
             
             wait(victoryDelay, () => {
               if (bossId === 'observerBoss') {
-                console.log('🎬 Final boss defeated! Transitioning to white screen then Transition7...');
-                  go("transition", "Transition7", character, player.hp, player.lives, startScore);
+                go("transition", "Transition7", character, player.hp, player.lives, startScore);
               } else {
                 animateDefeat(bossSprite, bossGlow, false);
                 updateLog(`PURRRRRFECT VICTORY! THE ${boss.name} HAS BEEN DEFEATED!`);
@@ -703,7 +586,7 @@ function checkBattleEnd() {
                   if (bossId === 'BossLaserPointer') {
                     go("bossDefeated", {
                       level: "laserPointerBoss",
-                      score: startScore, 
+                      score: startScore,
                       nextLevel: "Transition5",
                       character: character,
                       playerHP: player.hp,
@@ -718,13 +601,6 @@ function checkBattleEnd() {
                       playerHP: player.hp,
                       lives: player.lives
                     });
-                    console.log('✅ Boss defeated, passing to bossDefeated:', {
-                        score: startScore,
-                        playerHP: player.hp,
-                        lives: player.lives
-                      });
-
-            
                   } else if (bossId === 'BossCucumber') {
                     go("bossDefeated", {
                       level: "cucumberBoss",
@@ -748,12 +624,11 @@ function checkBattleEnd() {
               }
             });
           });
-        });
-      });
+        };
+      }
       
       return true;
-      
-    } else if (currentPlayerHP <= 0) {
+    }  else if (currentPlayerHP <= 0) {
       console.log('💀 PLAYER DEFEATED IN BOSS BATTLE!');
       battleActive = false;
       waitingForPlayer = false;

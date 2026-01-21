@@ -1,0 +1,367 @@
+/* BASE */
+.game-btn {
+  position: fixed;
+  font-family: 'Orbitron', 'Courier New', monospace;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  z-index: 10;
+  border: none;
+  background: transparent;
+  padding: 0;
+  overflow: visible;
+}
+
+.cyber-btn-base {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0f0f1a;
+  border-radius: 30px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.cyber-btn-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 32px;
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.cyber-btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.7s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cyber-btn-text {
+  position: relative;
+  z-index: 3;
+  color: white;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.game-btn:hover .cyber-btn-base {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.game-btn:hover .cyber-btn-shine {
+  left: 100%;
+}
+
+/* ==================== PLAY BUTTON  ==================== */
+.play-btn-container {
+  left: 50%;
+  top: 320px;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 60px;
+}
+
+.play-btn-container .cyber-btn-base {
+  border: 2px solid #58e84c;
+  box-shadow: 
+    0 0 8px #58e84c,
+    inset 0 0 12px rgba(88, 232, 76, 0.25),
+    0 0 35px #58e84c;
+}
+
+.play-btn-container .cyber-btn-text {
+  font-size: 1.5rem;
+  line-height: 60px;
+  color: #58e84c;
+  font-family: 'Orbitron', monospace;
+}
+
+.play-btn-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #58e84c,
+    inset 0 0 18px rgba(88, 232, 76, 0.35),
+    0 0 45px #58e84c;
+}
+
+/* ==================== STANDARD BUTTONS ==================== */
+.standard-btn-container {
+  width: 350px;
+  height: 55px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.standard-btn-container.how-to-play { top: 390px; }
+.standard-btn-container.meet-cats { top: 455px; }
+
+.standard-btn-container .cyber-btn-base {
+  border: 2px solid #9090C0;
+  box-shadow: 
+    0 0 8px #9090C0,
+    inset 0 0 12px rgba(144, 144, 192, 0.2),
+    0 0 35px #9090C0;
+}
+
+.standard-btn-container .cyber-btn-text {
+  font-size: 1.2rem;
+  line-height: 55px;
+  color: #e0e0ff;
+  text-shadow: 0 0 8px #a0a0ff;
+}
+
+.standard-btn-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #9090C0,
+    inset 0 0 18px rgba(144, 144, 192, 0.3),
+    0 0 45px #9090C0;
+}
+
+/* ==================== BACK BUTTON ==================== */
+.back-btn-container {
+  position: fixed;
+  left: 50px;
+  bottom: 50px;
+  width: 150px;
+  height: 50px;
+}
+
+.back-btn-container .cyber-btn-base {
+  border: 2px solid #8391A1;
+  box-shadow: 
+    0 0 8px #8391A1,
+    inset 0 0 12px rgba(131, 145, 161, 0.18),
+    0 0 35px #8391A1;
+}
+
+.back-btn-container .cyber-btn-text {
+  font-size: 1.1rem;
+  line-height: 50px;
+  color: #e0e0ff;
+  text-shadow: 0 0 8px #a0a0ff;
+}
+
+.back-btn-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #8391A1,
+    inset 0 0 18px rgba(131, 145, 161, 0.28),
+    0 0 45px #8391A1;
+}
+
+/* ==================== CONFIRM/CONTINUE BUTTON  ==================== */
+.confirm-btn-container {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  width: 250px;
+  height: 50px;
+}
+
+.confirm-btn-container .cyber-btn-base {
+  border: 2px solid #58e84c;
+  box-shadow: 
+    0 0 8px #58e84c,
+    inset 0 0 12px rgba(88, 232, 76, 0.25),
+    0 0 35px #58e84c;
+}
+
+.confirm-btn-container .cyber-btn-text {
+  font-size: 1.1rem;
+  line-height: 50px;
+  color: #58e84c;
+  font-weight: bold;
+}
+
+.confirm-btn-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #58e84c,
+    inset 0 0 18px rgba(88, 232, 76, 0.35),
+    0 0 45px #58e84c;
+}
+
+.confirm-btn-container.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ==================== GAME OVER BUTTONS ==================== */
+.gameover-btn-container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 60px;
+}
+
+.gameover-btn-container.menu-btn { 
+  top: 360px; 
+}
+
+.gameover-btn-container .cyber-btn-base {
+  border: 2px solid #9090C0;
+  box-shadow: 
+    0 0 8px #9090C0,
+    inset 0 0 12px rgba(144, 144, 192, 0.2),
+    0 0 35px #9090C0;
+}
+
+.gameover-btn-container .cyber-btn-text {
+  font-size: 1.3rem;
+  line-height: 60px;
+  color: #e0e0ff;
+  text-shadow: 0 0 8px #a0a0ff, 1px 1px 0 #00ffff;
+}
+
+.gameover-btn-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #9090C0,
+    inset 0 0 18px rgba(144, 144, 192, 0.3),
+    0 0 45px #9090C0;
+}
+
+/* ==================== YOU DIED BUTTONS ==================== */
+.you-died-btn-container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 55px;
+}
+
+.you-died-btn-container.use-life-btn { 
+  top: 320px; 
+}
+
+.you-died-btn-container.quit-btn { 
+  top: 390px; 
+}
+
+.you-died-btn-container.use-life-btn .cyber-btn-base {
+  border: 2px solid #67FEBD;
+  box-shadow: 
+    0 0 8px #67FEBD,
+    inset 0 0 12px rgba(103, 254, 189, 0.25),
+    0 0 35px #67FEBD;
+}
+
+.you-died-btn-container.use-life-btn .cyber-btn-text {
+  font-size: 1.2rem;
+  line-height: 55px;
+  color: #67FEBD;
+  text-shadow: 0 0 8px #67FEBD, 1px 1px 0 #00ffff;
+}
+
+.you-died-btn-container.use-life-btn:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #67FEBD,
+    inset 0 0 18px rgba(103, 254, 189, 0.35),
+    0 0 45px #67FEBD;
+}
+
+.you-died-btn-container.quit-btn .cyber-btn-base {
+  border: 2px solid #9090C0;
+  box-shadow: 
+    0 0 8px #9090C0,
+    inset 0 0 12px rgba(144, 144, 192, 0.2),
+    0 0 35px #9090C0;
+}
+
+.you-died-btn-container.quit-btn .cyber-btn-text {
+  font-size: 1.1rem;
+  line-height: 55px;
+  color: #e0e0ff;
+  text-shadow: 0 0 8px #a0a0ff, 1px 1px 0 #00ffff;
+}
+
+.you-died-btn-container.quit-btn:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #9090C0,
+    inset 0 0 18px rgba(144, 144, 192, 0.3),
+    0 0 45px #9090C0;
+}
+
+/* ==================== FINISH HIM BUTTON  ==================== */
+.finish-him-container {
+  position: fixed;
+  left: 50%;
+  bottom: 180px;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 70px;
+}
+
+.finish-him-container .cyber-btn-base {
+  border: 2px solid #c71585;
+  border-radius: 35px;
+  box-shadow: 
+    0 0 10px #c71585,
+    inset 0 0 15px rgba(199, 21, 133, 0.3),
+    0 0 40px #c71585;
+}
+
+.finish-him-container .cyber-btn-text {
+  font-size: 1.8rem;
+  line-height: 70px;
+  color: #ff69b4;
+  text-shadow: 0 0 12px #ff69b4;
+  font-weight: bold;
+}
+
+.finish-him-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 15px #c71585,
+    inset 0 0 20px rgba(199, 21, 133, 0.4),
+    0 0 50px #c71585;
+}
+
+/* ==================== LEVEL COMPLETE CONTINUE BUTTON ==================== */
+.level-complete-container {
+  position: fixed;
+  left: 50%;
+  top: 380px;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 70px;
+}
+
+.level-complete-container .cyber-btn-base {
+  border: 2px solid #58e84c;
+  border-radius: 35px;
+  box-shadow: 
+    0 0 10px #58e84c,
+    inset 0 0 15px rgba(88, 232, 76, 0.25),
+    0 0 40px #58e84c;
+}
+
+.level-complete-container .cyber-btn-text {
+  font-size: 1.8rem;
+  line-height: 70px;
+  color: #58e84c;
+  text-shadow: 0 0 12px #58e84c;
+  font-weight: bold;
+}
+
+.level-complete-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 15px #58e84c,
+    inset 0 0 20px rgba(88, 232, 76, 0.35),
+    0 0 50px #58e84c;
+}
+
+/* ==================== HIDDEN STATE ==================== */
+.hidden {
+  display: none !important;
+}
