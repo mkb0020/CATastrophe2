@@ -431,10 +431,15 @@ export function initializeMusicControls() {
         isMuted = !isMuted;
         volumeBtn.textContent = isMuted ? '🔇' : '🔊';
         volumeBtn.classList.toggle('muted', isMuted);
-        ['menuMusic', 'levelMusic', 'bossMusic', 'finalBossMusic', 'gameOverMusic', 'victoryMusic'].forEach(music => {
+        
+        volume(isMuted ? 0 : 1);
+        
+        ['menuMusic', 'levelMusic', 'bossMusic', 'finalBossMusic', 'gameOverMusic', 'victoryMusic', 'atmosphere'].forEach(music => {
             if (window[music]) window[music].volume = isMuted ? 0 : 0.5;
         });
-        console.log(`🔇 Volume ${isMuted ? 'MUTED' : 'UNMUTED'}`);
+        
+        window.isMuted = isMuted;
+        console.log(`🔇 Volume ${isMuted ? 'MUTED (All Audio)' : 'UNMUTED'}`);
     });
 
     pauseBtn.addEventListener('click', () => {
