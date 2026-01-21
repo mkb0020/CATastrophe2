@@ -178,13 +178,7 @@ levelConfig.platforms.forEach((platform, index) => {
   });
 
 
-  add([
-    rect(25000, 480),
-    pos(-1500, 0),
-    color(0, 0, 0),
-    opacity(0.2),
-    z(-3)
-  ]);
+
 
   return { bg };
 }
@@ -1248,27 +1242,26 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
       if (activeZones.length === 0) return;
       
       const zone = choose(activeZones);
-      
-      const offScreenAreas = [];
-      
-      if (zone.start < camLeft - 100) {
-        offScreenAreas.push({
-          start: Math.max(zone.start + 100, zone.start),
-          end: Math.min(camLeft - 100, zone.end - 100)
-        });
+      let spawnX; 
+
+      const offScreenLeft = zone.start < camLeft - 100;
+      const offScreenRight = zone.end > camRight + 100;
+
+      if (offScreenLeft && Math.random() > 0.5) {
+        spawnX = rand(
+          Math.max(zone.start + 100, zone.start),
+          Math.min(camLeft - 100, zone.end - 100)
+        );
+      } else if (offScreenRight) {
+        spawnX = rand(
+          Math.max(camRight + 100, zone.start + 100),
+          Math.min(zone.end - 100, zone.end)
+        );
+      } else {
+        spawnX = rand(zone.start + 100, zone.end - 100);
       }
+
       
-      if (zone.end > camRight + 100) {
-        offScreenAreas.push({
-          start: Math.max(camRight + 100, zone.start + 100),
-          end: Math.min(zone.end - 100, zone.end)
-        });
-      }
-      
-      if (offScreenAreas.length === 0) return;
-      
-      const spawnArea = choose(offScreenAreas);
-      const spawnX = rand(spawnArea.start, spawnArea.end);
       const spawnY = 390;
       
       if (!hasGroundAt(spawnX)) {
@@ -1302,7 +1295,6 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
       ]);
       
       rat.onUpdate(() => {
-          //if (window.debugCounts) window.debugCounts.rats++; 
 
         const distFromCam = Math.abs(rat.pos.x - camPos().x);
         if (distFromCam > SCREEN_W * 1.2) {

@@ -146,26 +146,31 @@ export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
     };
   }
   
-  wait(0.5, () => {
-    tween(0, 1, 1.2, (o) => {
-      bg.opacity = o;
-    }, easings.easeOutQuad);
-    
-    tween(0, 0.85, 1.2, (o) => {
-      darkOverlay.opacity = o;
-    }, easings.easeOutQuad);
-    
-    tween(0, 1, 1.5, (o) => {
-      textPanel.opacity = o;
-      gameOverTitle.opacity = o;
-      gameOverTitleShadow.opacity = o;
-      disappointText.opacity = o;
-      disappointText2.opacity = o;
-      if (reasonText) reasonText.opacity = o;
-      scoreText.opacity = o;
-      scoreText2.opacity = o;
-    }, easings.easeOutQuad);
-  });
+wait(0.5, () => {
+  tween(0, 1, 1.2, (o) => {
+    bg.opacity = o;
+  }, easings.easeOutQuad);
+  
+  tween(0, 0.6, 1.2, (o) => {
+    darkOverlay.opacity = o;
+  }, easings.easeOutQuad);
+  
+  tween(0, 1, 1.5, (o) => {
+    textPanel.opacity = o;
+    gameOverTitle.opacity = o;
+    gameOverTitleShadow.opacity = o;
+    disappointText.opacity = o;
+    disappointText2.opacity = o;
+    if (reasonText) reasonText.opacity = o;
+    scoreText.opacity = o;
+    scoreText2.opacity = o;
+  }, easings.easeOutQuad);
+  
+  const buttonContainer = document.querySelector('.gameover-btn-container');
+  if (buttonContainer) {
+    buttonContainer.classList.add('show');
+  }
+});
 
   onSceneLeave(() => {
     if (gameOverButtons) gameOverButtons.classList.add('hidden');

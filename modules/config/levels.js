@@ -248,7 +248,7 @@ export const LEVELS = {
       },
     rats: { 
       enabled: true,
-      spawnRate: 8000,
+      spawnRate: 2500,
       spawnZones: [
         { start: 1100, end: 1300 },   
         { start: 4000, end: 5000 },  
@@ -356,7 +356,7 @@ export const LEVELS = {
       },
     rats: { 
       enabled: true,
-      spawnRate: 3500,
+      spawnRate: 2500,
       spawnZones: [
         { start: 1100, end: 1300 },
         { start: 4400, end: 5700 },
@@ -465,7 +465,7 @@ export const LEVELS = {
         },
     rats: { 
       enabled: true,
-      spawnRate: 6000, 
+      spawnRate: 2500, 
       spawnZones: [
         { start: 13100, end: 14200 }, 
         { start: 17000, end: 17350 }, 
