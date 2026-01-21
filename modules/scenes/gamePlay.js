@@ -47,6 +47,7 @@ function createUnifiedLevel(levelId, data) {
   const startHP = data?.startHP;
   const startLives = data?.lives ?? 3;
   const startScore = data?.score ?? 0;
+  const startTime = data?.timeLeft ?? 90;
   
   const spawnX = data?.returnX;
   const spawnY = data?.returnY;
@@ -112,7 +113,7 @@ function createUnifiedLevel(levelId, data) {
   setupSequentialPlatformActivation(player, sequentialPlatforms);
 
   let score = startScore; 
-  let timeLeft = levelConfig.timeLimit;
+  let timeLeft = startTime;
   let gameActive = true;
   let lives = startLives;
 
@@ -140,11 +141,12 @@ if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
   setupDoorInteraction(player, doorData, levelConfig, levelId, () => ({
     character: getCharacter(),
     lives: getLives(),
-    score: getScore()
+    score: getScore(),
+    timeLeft: getTimeLeft()  
   }));
 }
 
-  setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite, getLives);  // Add getLives
+  setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite, getLives);   
   setupCupCollection(player, getScore, setScore);
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);
   
@@ -208,6 +210,7 @@ export function createLevel5Scene(data, levelId) {
   const startHP = data?.startHP;
   const startLives = data?.lives || 3;
   const startScore = data?.score ?? 0;
+  const startTime = data?.timeLeft ?? 90; 
   
   const spawnX = data?.returnX;
   const spawnY = data?.returnY;
@@ -269,7 +272,7 @@ export function createLevel5Scene(data, levelId) {
   const miniBoss = addMiniBoss(levelConfig, () => gameActive, player);
 
   let score = startScore;
-  let timeLeft = levelConfig.timeLimit;
+  let timeLeft = startTime;
   let gameActive = true;
   let lives = startLives;
 
@@ -295,7 +298,8 @@ export function createLevel5Scene(data, levelId) {
     setupDoorInteraction(player, doorData, levelConfig, 'level5', () => ({ 
       character: getCharacter(),
       lives: getLives(),
-      score: getScore()
+      score: getScore(),
+      timeLeft: getTimeLeft()  
     }));
   }
   

@@ -113,6 +113,7 @@ export function setupDoorInteraction(player, doors, levelConfig, levelId, getGam
           startHP: player.hp,
           lives: gameData.lives,
           score: gameData.score,
+          timeLeft: gameData.timeLeft,
           returnX: doorConfig.returnX,  
           returnY: doorConfig.returnY   
         };
@@ -164,6 +165,7 @@ export function returnToLevel(returnScene, returnData) {
     startHP: returnData.startHP,
     lives: returnData.lives,
     score: returnData.score || 0,
+    timeLeft: returnData.timeLeft, 
     returnX: returnData.returnX, 
     returnY: returnData.returnY   
   };

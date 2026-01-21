@@ -138,7 +138,7 @@ export const LEVELS = {
           { x: 17950, y: 220, width: 225, height: 20 }, // MILK
           { x: 18500, y: 360, width: 225, height: 20 }
         ],
-    noStuffZones: [{ start: 14125, end: 14550 }, { start: 17850, end: 18275 }], // BONUS HP AND MILK BOTTLE
+    noStuffZones: [{ start: 8000, end: 8400 }, { start: 10400, end: 10800 }, { start: 14125, end: 14550 }, { start: 17850, end: 18275 }], // BONUS HP AND MILK BOTTLE
     cups: { enabled: true, count: 15 },
     enemies: {
     cucumbers: { 
@@ -146,10 +146,12 @@ export const LEVELS = {
           spawnRate: 2500,
           damage: 5,
           spawnZones: [
-            { start: 4300, end: 4700  },  
-            { start: 7800, end: 8200  },
-            { start: 11300, end: 11700  },
-            { start: 14800, end: 15200  }
+            { start: 4200, end: 4700  }, 
+            { start: 7800, end: 7900  }, 
+            { start: 8500, end: 8600  },  
+            { start: 11600, end: 12200  },
+            { start: 15300, end: 15900  },
+            { start: 18900, end: 19000  }
              ]
         },
       rats: { enabled: false },
@@ -168,15 +170,15 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 } // EASY
     },
     challengeDoorIN: [ 
-    { x: 8200,
+    { x: 8100,
       y: 300, 
       roomId: 'room2',
-      returnX: 10550,  
+      returnX: 10512,  
       returnY: 60    
     }
     ],
     challengeDoorOUT: [ 
-    { x: 10500, y: 60, roomId: 'room2' }
+    { x: 10512, y: 60, roomId: 'room2' }
     ],
     levelMusic: 'PlatformerTrack2',
     nextBoss: 'cucumberBoss',
@@ -195,7 +197,7 @@ export const LEVELS = {
       { x: 3725, y: 440, width: 1500, height: 50 }, // 3725 - 5225
       { x: 7450, y: 440, width: 1500, height: 50 }, // 7450 - 8950
       { x: 11175, y: 440, width: 1500, height: 50 }, // 11175 - 12675
-      { x: 14900, y: 440, width: 1500, height: 50 }, // 14900 - 16400
+      { x: 14950, y: 440, width: 1500, height: 50 }, // 14950 - 16450
       { x: 19050, y: 440, width: 2500, height: 50 } // 19050 - 21550
 ],
     platforms: [
@@ -223,15 +225,15 @@ export const LEVELS = {
         { x: 14425, y: 310, width: 200, height: 20 },
         { x: 14975, y: 280, width: 200, height: 20 }, // CHALLENGE DOOR IN
 
-        { x: 16500, y: 350, width: 200, height: 20 },  // GAUNTLET 5: 16500 - 19000 // CHALLENGE DOOR OUT
+        { x: 16500, y: 340, width: 200, height: 20 },  // GAUNTLET 5: 16500 - 19000 // CHALLENGE DOOR OUT
         { x: 18150, y: 390, width: 200, height: 20 }, // LOWER LEVEL = NO EGG
         { x: 18700, y: 400, width: 200, height: 20 }, // LOWER LEVEL = NO EGG
         { x: 17050, y: 220, width: 200, height: 20 }, // STAIRWAY
         { x: 17600, y: 150, width: 200, height: 20 }, // STAIRWAY
-        { x: 18000, y: -15, width: 700, height: 20, isRect: true } , // SECRET PLATFORM
+        { x: 18100, y: -15, width: 600, height: 20, isRect: true } , // SECRET PLATFORM
         { x: 18900, y: 100, width: 100, height: 20 } // EGG
       ],
-    noStuffZones: [{ start: 3700, end: 4100 }, { start: 17700, end: 19100 },], 
+    noStuffZones: [{ start: 3700, end: 4100 }, { start: 14975, end: 15375 }, { start: 16370, end: 16770 }, { start: 17900, end: 19100 },], 
     cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { 
@@ -239,20 +241,20 @@ export const LEVELS = {
         spawnRate: 2200,
         damage: 5,
         spawnZones: [
-          { start: 7800, end: 8200  },   
-          { start: 11300, end: 11700  }
+          { start: 4500, end: 4700 },  
+          { start: 8200, end: 8600 },   
+          { start: 11900, end: 12300 }
         ]
       },
     rats: { 
       enabled: true,
       spawnRate: 8000,
       spawnZones: [
-        { start: 800, end: 1300  },   
-        { start: 4200, end: 4800  },  
-        { start: 9900, end: 10400 }, 
-        { start: 10800, end: 11800  },
-        { start: 18200, end: 18600  },
-
+        { start: 1100, end: 1300 },   
+        { start: 4000, end: 5000 },  
+        { start: 15300, end: 16100 }, 
+        { start: 11300, end: 12400 },
+        { start: 19400, end: 19900 }
       ]
     },
       lasers: { enabled: false }
@@ -271,15 +273,15 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [ 
-    { x: 14975, 
+    { x: 15125, 
       y: 120, 
       roomId: 'room3',
-      returnX: 16520,  
+      returnX: 16490,  
       returnY: 70
     }    
     ],
     challengeDoorOUT: [ 
-    { x: 16470, y: 70, roomId: 'room3' }
+    { x: 16505, y: 70, roomId: 'room3' }
     ],
     levelMusic: 'PlatformerTrack3', 
     nextBoss: 'bossRatKing',
@@ -339,7 +341,7 @@ export const LEVELS = {
       { x: 20580, y: 260, width: 200, height: 20 },
       { x: 21140, y: 370, width: 200, height: 20 }
     ],
-    noStuffZones: [  { start: 7000, end: 7500  },{ start: 15170, end: 17200 }], // CATNIP AND EGG
+    noStuffZones: [  { start: 7000, end: 7500  }, { start: 15000, end: 18000  }, { start: 19360, end: 19760 }], // CATNIP AND EGG
     cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { 
@@ -347,22 +349,29 @@ export const LEVELS = {
         spawnRate: 2100,
         damage: 5,
         spawnZones: [
-          { start: 4300, end: 4700 },
-          { start: 14800, end: 15200 }
+          { start: 4800, end: 5200 },
+          { start: 9200, end: 9400 },
+          { start: 13400, end: 13900 }
         ]
       },
     rats: { 
       enabled: true,
       spawnRate: 3500,
       spawnZones: [
-        { start: 800, end: 1300  },
-        { start: 7700, end: 8200  },
-        { start: 11100, end: 11800  }
+        { start: 1100, end: 1300 },
+        { start: 4400, end: 5700 },
+        { start: 13100, end: 14200 }
       ]
     },
     lasers: { 
       enabled: true,
-      positions: [1800, 7900, 11300, 18100]}
+      positions: [
+        2110, 
+        9000, 
+        9600, 
+        11200, 
+        18400, 
+        21700]}
     },
     bonusHPZone: [
       { x: 16750, y: 320 }, 
@@ -378,7 +387,7 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [  
-    { x: 17500, 
+    { x: 17700, 
       y: 300, 
       roomId: 'room4',
       returnX: 19510,
@@ -438,6 +447,8 @@ export const LEVELS = {
       { x: 18550, y: 330, width: 1100, height: 20 } // LONG PLATFORM THAT LEADS UP TO MINI BOSS
         ],
     noStuffZones: [  
+      { start: 4765, end: 5165  },
+      { start: 6885, end: 7285  },
       { start: 18300, end: 19900  },
     ], 
     cups: { enabled: true, count: 15 },
@@ -447,24 +458,30 @@ export const LEVELS = {
           spawnRate: 2000,
           damage: 5,
           spawnZones: [
-            { start: 7850, end: 8860  }, 
-            { start: 8820, end: 4600  }
+            { start: 5400, end: 5600  }, 
+            { start: 9100, end: 9300  },
+            { start: 13500, end: 13900  }
           ]
         },
     rats: { 
       enabled: true,
       spawnRate: 6000, 
       spawnZones: [
-        { start: 600, end: 1000 }, 
-        { start: 3100, end: 3800 }, 
-        { start: 9800, end: 10300 }]
+        { start: 13100, end: 14200 }, 
+        { start: 17000, end: 17350 }, 
+        { start: 17650, end: 18000 }]
     },
     lasers: { 
           enabled: true,
           positions: [
-            4450,   
-            5750,
-            12950,   
+            1100,   
+            4400,
+            8700, 
+            8900,  
+            9500, 
+            9700,
+            13010,
+            21700
           ]
         }
     },
