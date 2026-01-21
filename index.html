@@ -159,8 +159,6 @@
 
 
 <!-- ==================== BUTTONS ========================== -->
-
-
 <!-- MAIN MENU BUTTONS -->
 <div id="mainMenuButtons" class="hidden">
     <button class="game-btn play-btn-container" id="playBtn">
@@ -260,7 +258,7 @@
 </div>
 
 <!-- ======================= MODAlS =======================-->
-  <div id="howToPlayModal" class="modal">
+<div id="howToPlayModal" class="modal">
    <div class="modal-content">
     <div class="modal-header">
       <h1 class="modal-title">HOW TO PLAY</h1>
@@ -410,73 +408,74 @@
   </div>
 </div>
 
+
 <div id="upgradeModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
       <h1 class="modal-title">THAT WAS SUPURRRRR!!</h1>
-      <button class="modal-close" id="closeUpgradeModal">X</button>
+      <!--<button class="modal-close" id="closeUpgradeModal">X</button>-->
     </div>
     <div class="modal-body">
       <div class="unlock">
-        <h3 id="upgradeInstructions">You can meow select a stat to increase by 1 point!</h3>
-
-        <div class="stats-card">
-          <div class="stats-content">
-            <div class="stats-title">CURRENT STATS:</div>
-            
-            <div class="stat-row" id="attackRow">
-              <span class="stat-label">Attack</span>
-              <span class="stat-value" id="attackValue">0</span>
-            </div>
-            
-            <div class="stat-row" id="defenseRow">
-              <span class="stat-label">Defense</span>
-              <span class="stat-value" id="defenseValue">0</span>
-            </div>
-            
-            <div class="stat-row" id="speedRow">
-              <span class="stat-label">Speed</span>
-              <span class="stat-value" id="speedValue">0</span>
+        <h3 id="upgradeInstructions" style="margin-bottom: 10px;">You can meow select a stat to increase by 1 point!</h3>
+        <div style="display: flex; gap: 30px; align-items: center; justify-content: center; flex-wrap: wrap;">
+          
+          <div class="stats-card" style="flex: 0 1 400px; margin: 0;">
+            <div class="stats-content">
+              <div class="stats-title">CURRENT STATS:</div>
+              
+              <div class="stat-row" id="attackRow">
+                <span class="stat-label">Attack</span>
+                <span class="stat-value" id="attackValue">0</span>
+              </div>
+              
+              <div class="stat-row" id="defenseRow">
+                <span class="stat-label">Defense</span>
+                <span class="stat-value" id="defenseValue">0</span>
+              </div>
+              
+              <div class="stat-row" id="speedRow">
+                <span class="stat-label">Speed</span>
+                <span class="stat-value" id="speedValue">0</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div style="font-family: 'GothNerd', sans-serif; font-size: 1.3rem; color: #dbe2e9; text-align: center; margin: 20px 0; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; border: 2px solid #9090c0;" id="pointsRemaining">
-          Points Remaining: <span style="color: #ff6bff; font-weight: 700; font-size: 1.5rem;" id="pointsValue">1</span>
-        </div>
-
-        <div class="move-container">
-          <div class="move-grid">
+          <div style="flex: 0 1 280px; display: flex; flex-direction: column; gap: 10px;">
             <!-- ATTACK -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-              <button class="cyber-button aqua-btn alpha" id="attackIncBtn" style="padding: 8px 20px; font-size: 1.5rem; font-weight: bold;">+</button>
-              <div style="text-align: center;">
-                <strong style="font-family: 'Orbitron', monospace; font-size: 1.3rem; color: #67FEBD;">ATTACK</strong><br>
-                <span style="font-size: 1.1rem; color: #dbe2e9;">+<span id="attackIncrease">0</span></span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+              <button class="cyber-button aqua-btn alpha" id="attackDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
+              <div style="text-align: center; min-width: 120px;">
+                <strong style="font-family: 'Orbitron', monospace; font-size: 1rem; color: #67FEBD; display: block;">ATTACK</strong>
+                <span style="font-size: 1.2rem; color: #dbe2e9;">+<span id="attackIncrease">0</span></span>
               </div>
-              <button class="cyber-button aqua-btn alpha" id="attackDecBtn" style="padding: 8px 20px; font-size: 1.5rem; font-weight: bold; opacity: 0.3;" disabled>−</button>
+              <button class="cyber-button aqua-btn alpha" id="attackIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
             </div>
 
             <!-- DEFENSE -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-              <button class="cyber-button pink-btn" id="defenseIncBtn" style="padding: 8px 20px; font-size: 1.5rem; font-weight: bold;">+</button>
-              <div style="text-align: center;">
-                <strong style="font-family: 'Orbitron', monospace; font-size: 1.3rem; color: #ff69b4;">DEFENSE</strong><br>
-                <span style="font-size: 1.1rem; color: #dbe2e9;">+<span id="defenseIncrease">0</span></span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+              <button class="cyber-button pink-btn" id="defenseDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
+              <div style="text-align: center; min-width: 120px;">
+                <strong style="font-family: 'Orbitron', monospace; font-size: 1rem; color: #ff69b4; display: block;">DEFENSE</strong>
+                <span style="font-size: 1.2rem; color: #dbe2e9; ">+<span id="defenseIncrease">0</span></span>
               </div>
-              <button class="cyber-button pink-btn" id="defenseDecBtn" style="padding: 8px 20px; font-size: 1.5rem; font-weight: bold; opacity: 0.3;" disabled>−</button>
+              <button class="cyber-button pink-btn" id="defenseIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
             </div>
 
             <!-- SPEED -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-              <button class="cyber-button purple-btn vortex" id="speedIncBtn" style="padding: 8px 20px; font-size: 1.5rem; font-weight: bold;">+</button>
-              <div style="text-align: center;">
-                <strong style="font-family: 'Orbitron', monospace; font-size: 1.3rem; color: #A55AFF;">SPEED</strong><br>
-                <span style="font-size: 1.1rem; color: #dbe2e9;">+<span id="speedIncrease">0</span></span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+              <button class="cyber-button purple-btn vortex" id="speedDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
+              <div style="text-align: center; min-width: 120px;">
+                <strong style="font-family: 'Orbitron', monospace; font-size: 1rem; color: #A55AFF; display: block;">SPEED</strong>
+                <span style="font-size: 1.2rem; color: #dbe2e9; ">+<span id="speedIncrease">0</span></span>
               </div>
-              <button class="cyber-button purple-btn vortex" id="speedDecBtn" style="padding: 8px 20px; font-size: 1.5rem; font-weight: bold; opacity: 0.3;" disabled>−</button>
+              <button class="cyber-button purple-btn vortex" id="speedIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
             </div>
           </div>
+        </div>
+
+        <div style="font-family: 'GothNerd', sans-serif; font-size: 1.2rem; color: #dbe2e9; text-align: center; margin: 15px 0 20px 0; padding: 5px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; border: 2px solid #9090c0;" id="pointsRemaining">
+          Points Remaining: <span style="color: #ff6bff; font-weight: 700; font-size: 1.5rem;" id="pointsValue">1</span>
         </div>
         
         <button class="cyber-button green-btn" id="confirmUpgradeBtn" disabled style="opacity: 0.5;">CONFIRM</button>
@@ -667,7 +666,7 @@ class UpgradeModalController {
     
     document.getElementById('pointsValue').textContent = this.remainingPoints;
 
-    const statMultiplier = stat === 'speed' ? 10 : 5;
+    const statMultiplier = 1;
     const newStatValue = this.baseStats[stat] + (this.tempStats[stat] * statMultiplier);
     document.getElementById(`${stat}Value`).textContent = newStatValue;
 

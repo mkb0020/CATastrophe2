@@ -374,7 +374,7 @@ export const LEVELS = {
         21700]}
     },
     bonusHPZone: [
-      { x: 16750, y: 320 }, 
+      { x: 16730, y: 320 }, 
     ],  
     catnipZones: [
       { x: 7210, y: 80 }, 
