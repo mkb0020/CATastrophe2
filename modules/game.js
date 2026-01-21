@@ -3,7 +3,7 @@ import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from './config/gameConfig.j
 import { getCharacterList, SPRITE_FRAMES, RAINBOW_CAT_FRAMES } from './config/characters.js';
 import { getLevel } from './config/levels.js';
 import { getBoss } from './config/bosses.js';
-import { stopAllMusic, startMenuMusic } from './helpers/kittyHelpers.js';
+import { stopAllMusic, startMenuMusic, initializeAllUIHelpers  } from './helpers/kittyHelpers.js';
 import { createStartScene, createMainMenuScene, createCharSelectScene } from './scenes/mainMenu.js';
 import { createTransitionScene } from './scenes/transitionScene.js';
 import { createLevel1Scene, createLevel2Scene, createLevel3Scene, createLevel4Scene, createLevel5Scene } from './scenes/gamePlay.js';
@@ -361,6 +361,7 @@ async function startGame() {
   console.log('🚀 Starting CATastrophe 2...');
   await loadAssets();
   registerScenes();
+  initializeAllUIHelpers();
   go("start");
   console.log('✅ Game started! Click to begin...');
 }
