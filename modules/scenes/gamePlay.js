@@ -144,7 +144,7 @@ if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
   }));
 }
 
-  setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite);
+  setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite, getLives);  // Add getLives
   setupCupCollection(player, getScore, setScore);
   setupSpecialItemCollection(player, getLives, setLives, getScore, setScore);
   
