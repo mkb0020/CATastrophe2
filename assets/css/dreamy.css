@@ -1,7 +1,7 @@
  * { box-sizing: border-box; }
 
     body {
-      background: transparent;
+      background: #000000;
       font-family: 'GothNerd', sans-serif;
       position: relative;
       overflow-x: hidden;
@@ -11,8 +11,7 @@
       position: fixed;
       inset: 0;
       /*background: linear-gradient(to bottom, #37025A 5%, #8a2be2 5%, var(--HiggsHotPink) 10%, var(--PlanksPink) 20%, var(--PlanksPink) 100%);*/
-      background: linear-gradient(to bottom, #37025A 50%, #8a2be2 70%, var(--HiggsHotPink) 85%, var(--HiggsHotPink) 97%, var(--HiggsHotPink) 100%);
-
+      background: linear-gradient(to bottom, #37025A 40%, #8a2be2 60%, var(--HiggsHotPink) 85%, var(--HiggsHotPink) 97%, var(--HiggsHotPink) 100%);
       opacity: 0.85;
       z-index: -2;
     }
@@ -51,7 +50,7 @@
       position: fixed;
       inset: 0;
       background: rgba(80, 0, 150, 0.1);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(15px);
       pointer-events: none;
       z-index: 0;
     }
