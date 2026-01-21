@@ -1739,54 +1739,129 @@ export function animatePoisonAttack(boss, hero) {
   }
 
 // =================== FELINE FISSION ===================
-  export function animateFelineFission(boss) {
-      shake(30);
-      stopAllMusic();
-      play("finalFinishHim");
-      play("finalFinishHim2");
-      startAtmosphere();
-      const startPos = boss.pos.sub(vec2(250, -90));
-      const mushroom = add([
-          sprite("mushroom", { anim: "burst" }),
-          pos(startPos), 
-          scale(2),
-          z(50),
-          opacity(0.8),
+
+  function animateSuperSaiyan(){
+     const finalMoveBG = add([
+      sprite("finalMoveBG", { anim: "fade" }),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      scale(10),
+      anchor("center"),
+      z(1000),
+      fixed(),
+      opacity(0)
+    ]);
+  
+    const finalMoveAnimation1 = add([
+      sprite("finalMove1", { anim: "fade" }),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      scale(10),
+      anchor("center"),
+      z(1002),
+      fixed(),
+      opacity(0)
+    ]);
+
+    const finalMoveAnimation2 = add([
+      sprite("finalMove2", { anim: "fade" }),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      scale(10),
+      anchor("center"),
+      z(1002),
+      fixed(),
+      opacity(0)
+    ]);
+    
+    shake(50);
+    tween(finalMoveBG.opacity, 1, 0.3, (val) => finalMoveBG.opacity = val);
+    finalMoveBG.play("fade", { loop: false, speed: 10 }); // TOTAL TIME = 8s
+    
+    play("lightning", { volume: 0.4, speed: 0.8 });
+    wait(0.2, () => { play("lightning", { volume: 0.2, speed: 0.8 }) });
+    wait(0.4, () => { play("lightning", { volume: 0.4, speed: 0.8 }) });
+    wait(1, () => { play("lightning", { volume: 0.3, speed: 0.8 }) });
+    wait(5, () => { play("lightning", { volume: 0.3, speed: 0.8 }) });
+    wait(7, () => { play("lightning", { volume: 0.5, speed: 0.8 }) });
+    
+    
+    wait(1.3, () => { play("finalMovePowerUp", { volume: 0.4 }); });
+    wait(3.2, () => {
+      tween(finalMoveAnimation1.opacity, 1, 0.6, (val) => finalMoveAnimation1.opacity = val);
+      finalMoveAnimation1.play("fade", { loop: false, speed: 10 }); // 12 FRAMES / 1.2s
+      wait(1, () => {
+          tween(finalMoveAnimation1.opacity, 0, 0.3, (val) => finalMoveAnimation1.opacity = val);
+      });
+    });
+    wait(2.6, () => { play("finalMoveZap", { volume: 0.1 }); });
+    wait(7.5, () => {
+      play("finalMoveZap", { volume: 0.2 });
+      tween(finalMoveAnimation2.opacity, 1, 0.5, (val) => finalMoveAnimation2.opacity = val);
+      finalMoveAnimation2.play("fade", { loop: true, speed: 10 }); //1.3s
+      wait(1.1, () => {
+          tween(finalMoveAnimation2.opacity, 0, 0.2, (val) => finalMoveAnimation2.opacity = val);
+      });
+    });
+    
+  
+    
+    wait(8.3, () => {
+      const whiteFlash = add([
+        rect(SCREEN_W, SCREEN_H),
+        pos(0, 0),
+        color(255, 255, 255),
+        opacity(0),
+        z(1001),
+        fixed()
       ]);
       
-      const startScale = 3; // GROW CLOUD UP
-      const endScale = 9;
-      tween(0, 1, 1.5, (t) => {
-          const currentScale = startScale + (endScale - startScale) * t;
-          mushroom.scale = vec2(currentScale, currentScale);
-          const scaleGrowth = currentScale - startScale; // KEEP BOTTOM ANCHORED
-          mushroom.pos.y = startPos.y - (scaleGrowth * 50); //  HEIGHT MULTIPLIER
-      }, easings.easeOutQuad);
+      tween(whiteFlash.opacity, 1, 0.1, (val) => whiteFlash.opacity = val, easings.easeInQuad);
       
-      tween(mushroom.opacity, 0.7, 0.5, (o) => mushroom.opacity = o);
-      mushroom.play("burst", { loop: false });
+      wait(0.2, () => {
+            tween(finalMoveBG.opacity, 0, 0.3, (val) => finalMoveBG.opacity = val);
 
-      wait(0.4, () => {
-          shake(70); // SHAKE BUILD UP
-          const flash1 = add([ // QUICK FLASH
-              rect(width(), height()),
-              pos(0, 0),
-              color(255, 255, 255), 
-              opacity(0),
-              fixed(),
-              z(10000),
+        wait(0.5, () => {
+          tween(whiteFlash.opacity, 0, 0.5, (val) => whiteFlash.opacity = val, easings.easeOutQuad)
+            .then(() => destroy(whiteFlash));
+          shake(100)
+          
+
+        });
+      });
+    });
+  }
+
+  export function animateFelineFission(boss) {
+      animateSuperSaiyan();
+      wait(8.8, () => {
+       
+          shake(30);
+          stopAllMusic();
+          play("finalFinishHim");
+          play("finalFinishHim2");
+          startAtmosphere();
+          const startPos = boss.pos.sub(vec2(250, -90));
+          const mushroom = add([
+              sprite("mushroom", { anim: "burst" }),
+              pos(startPos), 
+              scale(2),
+              z(50),
+              opacity(0.8),
           ]);
           
-          tween(flash1.opacity, 1, 0.15, (val) => flash1.opacity = val, easings.easeInQuad);
-          wait(0.15, () => {
-              tween(flash1.opacity, 0, 0.2, (val) => flash1.opacity = val, easings.easeOutQuad);
-              wait(0.2, () => destroy(flash1));
-          });
+          const startScale = 3; // GROW CLOUD UP
+          const endScale = 9;
+          tween(0, 1, 1.5, (t) => {
+              const currentScale = startScale + (endScale - startScale) * t;
+              mushroom.scale = vec2(currentScale, currentScale);
+              const scaleGrowth = currentScale - startScale; // KEEP BOTTOM ANCHORED
+              mushroom.pos.y = startPos.y - (scaleGrowth * 50); //  HEIGHT MULTIPLIER
+          }, easings.easeOutQuad);
           
-          wait(1.5, () => destroy(mushroom)); // DESTROY MUSHROOM AFTER FIRST FLASH
-          wait(0.6, () => { // CINEMATIC FLASH
-              shake(100);
-              const flash2 = add([
+          tween(mushroom.opacity, 0.7, 0.5, (o) => mushroom.opacity = o);
+          mushroom.play("burst", { loop: false });
+
+          wait(0.4, () => {
+              shake(70); // SHAKE BUILD UP
+              const flash1 = add([ // QUICK FLASH
                   rect(width(), height()),
                   pos(0, 0),
                   color(255, 255, 255), 
@@ -1794,9 +1869,28 @@ export function animatePoisonAttack(boss, hero) {
                   fixed(),
                   z(10000),
               ]);
-              tween(flash2.opacity, 1, 0.3, (val) => flash2.opacity = val, easings.easeInQuad); // LINGERING FULL WHITE SCREEN 
               
-           
+              tween(flash1.opacity, 1, 0.15, (val) => flash1.opacity = val, easings.easeInQuad);
+              wait(0.15, () => {
+                  tween(flash1.opacity, 0, 0.2, (val) => flash1.opacity = val, easings.easeOutQuad);
+                  wait(0.2, () => destroy(flash1));
+              });
+              
+              wait(1.5, () => destroy(mushroom)); // DESTROY MUSHROOM AFTER FIRST FLASH
+              wait(0.6, () => { // CINEMATIC FLASH
+                  shake(100);
+                  const flash2 = add([
+                      rect(width(), height()),
+                      pos(0, 0),
+                      color(255, 255, 255), 
+                      opacity(0),
+                      fixed(),
+                      z(10000),
+                  ]);
+                  tween(flash2.opacity, 1, 0.6, (val) => flash2.opacity = val, easings.easeInQuad); // LINGERING FULL WHITE SCREEN 
+                  
+              
+              });
           });
       });
   }

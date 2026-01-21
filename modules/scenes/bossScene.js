@@ -688,7 +688,7 @@ function checkBattleEnd() {
               victoryDelay = 2.2;  
             }          
             if (finishHimMove === 'FelineFission') {
-              victoryDelay = 6; 
+              victoryDelay = 14.8; 
             } 
             
             wait(victoryDelay, () => {

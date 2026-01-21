@@ -97,6 +97,9 @@ async function loadAssets() {
   loadSound("finalFinishHim", "assets/sounds/fx/finalBoom.mp3");
   loadSound("finalFinishHim2", "assets/sounds/fx/finalBossEnd.wav");
   loadSound("atmosphere", "assets/sounds/fx/atmosphere.wav");
+  loadSound("finalMovePowerUp", "assets/sounds/fx/finalMovePowerUp.wav");
+  loadSound("finalMoveZap", "assets/sounds/fx/finalMoveZap.mp3");
+  
 
 
 // ======================================== SPRITES ========================================
@@ -214,22 +217,21 @@ async function loadAssets() {
 });
 
 
-
-  loadSprite("upgradeBG", "assets/images/animationSprites/upgrade1.png", { // NOT IN GAME YET
+  loadSprite("finalMoveBG", "assets/images/animationSprites/finalMoveBG.png", { 
     sliceX: 80, 
     sliceY: 1, 
     anims: { fade: { from: 0, to: 79 } }
 });
-  loadSprite("upgrade1", "assets/images/animationSprites/upgrade3.png", { // NOT IN GAME YET
-    sliceX: 8, 
+  loadSprite("finalMove1", "assets/images/animationSprites/finalMove1.png", {
+    sliceX: 12, 
     sliceY: 1, 
-    anims: { fade: { from: 0, to: 7 } }
+    anims: { fade: { from: 0, to: 11 } }
 });
 
-  loadSprite("upgrade2", "assets/images/animationSprites/upgrade2.png", { // NOT IN GAME YET
-    sliceX: 21, 
+  loadSprite("finalMove2", "assets/images/animationSprites/finalMove2.png", { 
+    sliceX: 10, 
     sliceY: 1, 
-    anims: { fade: { from: 0, to: 20 } }
+    anims: { fade: { from: 0, to: 9 } }
 });
 
   // BATTLE ANIMATIONS
