@@ -58,12 +58,11 @@ export function openStatUpgradeModal(statPoints, character, onComplete) {
     return;
   }
   
-  if (window.debug) window.debug.paused = true;
   
   const currentStats = {
-    attack: character.stats.baseAtk + (upgradeState.stats.attack * 5),
-    defense: character.stats.baseDefense + (upgradeState.stats.defense * 5),
-    speed: character.stats.baseSpeed + (upgradeState.stats.speed * 10)
+    attack: character.stats.baseAtk + (upgradeState.stats.attack * 1),
+    defense: character.stats.baseDefense + (upgradeState.stats.defense * 1),
+    speed: character.stats.baseSpeed + (upgradeState.stats.speed * 1)
   };
   
   console.log('📊 Current stats being displayed:', currentStats);
@@ -73,7 +72,6 @@ export function openStatUpgradeModal(statPoints, character, onComplete) {
     applyStatUpgrade('defense', tempStats.defense);
     applyStatUpgrade('speed', tempStats.speed);
     
-    if (window.debug) window.debug.paused = false;
     
     const canvas = document.querySelector('canvas');
     if (canvas) {
@@ -198,11 +196,10 @@ function showMoveSwapUI(character, fragmentsAfterCollection, onComplete) {
     return;
   }
   
-  if (window.debug) window.debug.paused = true;
   
   const moveName = "WHISKER WHIP!";
   const moveStats = "(DMG: 40, Uses: 2)";
-  const moveImage = "/static/images/items/whiskerWhip.PNG";
+  const moveImage = "assets/images/items/whiskerWhip.PNG";
   
   window.openMoveSelectionModal(moveName, moveStats, moveImage, character.moves, (selectedMove) => {
     upgradeState.moves.push('WHISKER WHIP');
@@ -211,7 +208,6 @@ function showMoveSwapUI(character, fragmentsAfterCollection, onComplete) {
     
     console.log(`✅ Replaced ${selectedMove} with WHISKER WHIP`);
     
-    if (window.debug) window.debug.paused = false;
     
     const canvas = document.querySelector('canvas');
     if (canvas) {
@@ -232,10 +228,8 @@ function showFragmentCollectionUI(fragmentsAfterCollection, onComplete) {
   
   upgradeState.newMoveFragments = fragmentsAfterCollection;
   
-  if (window.debug) window.debug.paused = true;
   
   window.openFragmentCollectionModal(fragmentsAfterCollection, () => {
-    if (window.debug) window.debug.paused = false;
     
     const canvas = document.querySelector('canvas');
     if (canvas) {

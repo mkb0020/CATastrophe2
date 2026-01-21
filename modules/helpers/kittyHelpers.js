@@ -2,6 +2,25 @@
 import { getCharacterList } from '../config/characters.js';
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 
+
+// =================================== STARS BACKGROUND =========================================
+export function initializeStars() {
+    const starsDiv = document.getElementById('stars');
+    if (!starsDiv) return;
+
+    for (let i = 0; i < 200; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = star.style.height = Math.random() * 2 + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 4 + 's';
+        starsDiv.appendChild(star);
+    }
+    console.log('⭐ Stars background initialized');
+}
+
+
 // =============================== IMAGE LOADER =============================================
 export class ImageLoader {
     constructor(baseUrl = '/static/') {
@@ -401,6 +420,31 @@ export function startAtmosphere() {
     });
     console.log('🎵 ATMOSPHERE BG MUSIC STARTED! 👁');
 }
+// ============================== MUSIC CONTROLS (NOW IN HTML/CSS INSTEAD OF IN CANVAS) ==============================================
+export function initializeMusicControls() {
+    const volumeBtn = document.getElementById('volume-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    if (!volumeBtn || !pauseBtn) return;
+
+    let isMuted = false;
+    volumeBtn.addEventListener('click', () => {
+        isMuted = !isMuted;
+        volumeBtn.textContent = isMuted ? '🔇' : '🔊';
+        volumeBtn.classList.toggle('muted', isMuted);
+        ['menuMusic', 'levelMusic', 'bossMusic', 'finalBossMusic', 'gameOverMusic', 'victoryMusic'].forEach(music => {
+            if (window[music]) window[music].volume = isMuted ? 0 : 0.5;
+        });
+        console.log(`🔇 Volume ${isMuted ? 'MUTED' : 'UNMUTED'}`);
+    });
+
+    pauseBtn.addEventListener('click', () => {
+        if (window.gamePauseSystem) window.gamePauseSystem.pause();
+    });
+
+    window.isMuted = isMuted;
+    window.toggleMute = () => volumeBtn.click();
+    console.log('🎮 Music controls initialized');
+}
 
 
 
@@ -657,6 +701,57 @@ export function addPauseToLevel(gameActiveGetter, gameActiveSetter) {
 
 
 
+// ================================== HUD ==========================================
+export function initializeHUD() {
+    window.gameState = { score: 0, hp: 120, maxHP: 120, lives: 3, timeLeft: 90, playerX: 0, playerY: 0 };
+    
+    window.updateHUD = (updates) => {
+        if (updates.score !== undefined) {
+            window.gameState.score = updates.score;
+            const el = document.getElementById('scoreText');
+            if (el) el.textContent = `Score: ${updates.score}`;
+        }
+        if (updates.hp !== undefined) {
+            window.gameState.hp = updates.hp;
+            const el = document.getElementById('hpText');
+            if (el) el.textContent = `HP: ${updates.hp}`;
+        }
+        if (updates.lives !== undefined) {
+            window.gameState.lives = updates.lives;
+            const el = document.getElementById('livesText');
+            if (el) el.textContent = `Lives: ${updates.lives}`;
+        }
+        if (updates.timeLeft !== undefined) {
+            window.gameState.timeLeft = updates.timeLeft;
+            const el = document.getElementById('timeText');
+            if (el) el.textContent = `Time: ${updates.timeLeft}`;
+        }
+    };
+    console.log('📊 HUD system initialized');
+}
+// ================================== DEBUG TOGGLE ==========================================
+export function initializeDebugToggle() {
+    const debugToggle = document.getElementById('debugToggle');
+    const debugInfo = document.getElementById('debugInfo');
+    if (!debugToggle || !debugInfo) return;
+
+    let debugVisible = false;
+    debugToggle.addEventListener('click', () => {
+        debugVisible = !debugVisible;
+        debugInfo.style.display = debugVisible ? 'block' : 'none';
+        debugToggle.style.background = debugVisible ? 'var(--AquaAura)' : 'rgba(0, 0, 0, 0.8)';
+        debugToggle.style.boxShadow = debugVisible ? '0 0 20px var(--AquaAura)' : 'none';
+    });
+
+    window.updateDebugInfo = (x, y) => {
+        if (debugVisible && debugInfo) {
+            debugInfo.textContent = `X: ${Math.round(x)}  Y: ${Math.round(y)}`;
+        }
+    };
+    console.log('🐛 Debug toggle initialized');
+}
+
+
 // ================================== DOM MODAL STUFF ==========================================
 export function openHowToPlayModal() {
     const modal = document.getElementById('howToPlayModal');
@@ -693,204 +788,204 @@ export function closeAboutCatsModal() {
 
   
 export function initializeModals() {
-    document.addEventListener('DOMContentLoaded', () => {
-        const helpBtn = document.getElementById('helpBtn');
-        const dropdown = helpBtn?.parentElement;
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const modal = document.getElementById('helpModal');
-        const guideModal = document.getElementById('guideModal');
-        const closeModal = document.getElementById('closeModal');
-        const closeGuide = document.getElementById('closeGuide');
-        const closeGuideBottom = document.getElementById('closeGuideBottom');
-        const openGuideBtn = document.getElementById('openGuideBtn');
-        const floatingBackToTop = document.getElementById('floatingBackToTop');
+    const helpBtn = document.getElementById('helpBtn');
+    const dropdown = helpBtn?.parentElement;
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const modal = document.getElementById('helpModal');
+    const guideModal = document.getElementById('guideModal');
+    const closeModal = document.getElementById('closeModal');
+    const closeGuide = document.getElementById('closeGuide');
+    const closeGuideBottom = document.getElementById('closeGuideBottom');
+    const openGuideBtn = document.getElementById('openGuideBtn');
+    const floatingBackToTop = document.getElementById('floatingBackToTop');
+    const howToPlayModal = document.getElementById('howToPlayModal');
+    const closeHow = document.getElementById('closeHow');
+    const aboutCatsModal = document.getElementById('aboutCatsModal');
+    const closeCatsModal = document.getElementById('closeCatsModal');
 
-
-        const howToPlayModal = document.getElementById('howToPlayModal');
-        const closeHow = document.getElementById('closeHow');
-        const aboutCatsModal = document.getElementById('aboutCatsModal');
-        const closeCatsModal = document.getElementById('closeCats');
-
-        const showBackToTop = () => {
-            if (floatingBackToTop) {
-                floatingBackToTop.classList.add('visible');
-            }
-        };
-
-        const hideBackToTop = () => {
-            if (floatingBackToTop) {
-                floatingBackToTop.classList.remove('visible');
-            }
-        };
-
+    const showBackToTop = () => {
         if (floatingBackToTop) {
-            const modalContent = modal?.querySelector('.modal-content');
-            const guideContent = guideModal?.querySelector('.modal-content');
-            
-            floatingBackToTop.onclick = () => {
-                if (modal && modal.style.display === 'flex' && modalContent) {
-                    modalContent.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
-                if (guideModal && guideModal.style.display === 'flex' && guideContent) {
-                    guideContent.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
-            };
+            floatingBackToTop.classList.add('visible');
+        }
+    };
 
-            if (modalContent) {
-                modalContent.addEventListener('scroll', () => {
-                    if (modalContent.scrollTop > 150) {
-                        showBackToTop();
-                    } else {
-                        hideBackToTop();
-                    }
+    const hideBackToTop = () => {
+        if (floatingBackToTop) {
+            floatingBackToTop.classList.remove('visible');
+        }
+    };
+
+    if (floatingBackToTop) {
+        const modalContent = modal?.querySelector('.modal-content');
+        const guideContent = guideModal?.querySelector('.modal-content');
+        
+        floatingBackToTop.onclick = () => {
+            if (modal && modal.style.display === 'flex' && modalContent) {
+                modalContent.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             }
-
-            if (guideContent) {
-                guideContent.addEventListener('scroll', () => {
-                    if (guideContent.scrollTop > 150) {
-                        showBackToTop();
-                    } else {
-                        hideBackToTop();
-                    }
+            if (guideModal && guideModal.style.display === 'flex' && guideContent) {
+                guideContent.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             }
-        }
+        };
 
-        if (helpBtn && dropdown) {
-            helpBtn.onclick = (e) => {
-                e.stopPropagation();
-                dropdown.classList.toggle('active');
-            };
-
-            document.addEventListener('click', () => {
-                dropdown.classList.remove('active');
-            });
-
-            if (dropdownMenu) {
-                dropdownMenu.onclick = (e) => e.stopPropagation();
-            }
-        }
-
-        const openMainHelp = document.getElementById('openMainHelp');
-        if (openMainHelp && modal) {
-            openMainHelp.onclick = () => {
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                if (dropdown) dropdown.classList.remove('active');
-            };
-        }
-
-        if (closeModal && modal) {
-            closeModal.onclick = () => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                hideBackToTop();
-            };
-
-            modal.onclick = (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
+        if (modalContent) {
+            modalContent.addEventListener('scroll', () => {
+                if (modalContent.scrollTop > 150) {
+                    showBackToTop();
+                } else {
                     hideBackToTop();
                 }
-            };
+            });
         }
 
-        const openGuide = document.getElementById('openGuide');
-        if (openGuide && guideModal) {
-            openGuide.onclick = () => {
-                guideModal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                if (dropdown) dropdown.classList.remove('active');
-            };
+        if (guideContent) {
+            guideContent.addEventListener('scroll', () => {
+                if (guideContent.scrollTop > 150) {
+                    showBackToTop();
+                } else {
+                    hideBackToTop();
+                }
+            });
         }
+    }
 
-        if (openGuideBtn && modal && guideModal) {
-            openGuideBtn.onclick = () => {
+    if (helpBtn && dropdown) {
+        helpBtn.onclick = (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        };
+
+        document.addEventListener('click', () => {
+            dropdown.classList.remove('active');
+        });
+
+        if (dropdownMenu) {
+            dropdownMenu.onclick = (e) => e.stopPropagation();
+        }
+    }
+
+    const openMainHelp = document.getElementById('openMainHelp');
+    if (openMainHelp && modal) {
+        openMainHelp.onclick = () => {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            if (dropdown) dropdown.classList.remove('active');
+        };
+    }
+
+    if (closeModal && modal) {
+        closeModal.onclick = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            hideBackToTop();
+        };
+
+        modal.onclick = (e) => {
+            if (e.target === modal) {
                 modal.style.display = 'none';
-                guideModal.style.display = 'flex';
-            };
-        }
-
-        const closeGuideFn = () => {
-            if (guideModal) {
-                guideModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
                 hideBackToTop();
             }
         };
+    }
 
-        if (closeGuide) closeGuide.onclick = closeGuideFn;
-        if (closeGuideBottom) closeGuideBottom.onclick = closeGuideFn;
+    const openGuide = document.getElementById('openGuide');
+    if (openGuide && guideModal) {
+        openGuide.onclick = () => {
+            guideModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            if (dropdown) dropdown.classList.remove('active');
+        };
+    }
 
+    if (openGuideBtn && modal && guideModal) {
+        openGuideBtn.onclick = () => {
+            modal.style.display = 'none';
+            guideModal.style.display = 'flex';
+        };
+    }
+
+    const closeGuideFn = () => {
         if (guideModal) {
-            guideModal.onclick = (e) => {
-                if (e.target === guideModal) closeGuideFn();
-            };
+            guideModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            hideBackToTop();
         }
+    };
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (modal) modal.style.display = 'none';
-                if (guideModal) guideModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                hideBackToTop();
-            }
-        });
+    if (closeGuide) closeGuide.onclick = closeGuideFn;
+    if (closeGuideBottom) closeGuideBottom.onclick = closeGuideFn;
 
-        const menuTrigger = document.querySelector('.menu-trigger');
-        const leftDropdown = document.querySelector('.left-dropdown');
+    if (guideModal) {
+        guideModal.onclick = (e) => {
+            if (e.target === guideModal) closeGuideFn();
+        };
+    }
 
-        if (menuTrigger && leftDropdown) {
-            menuTrigger.onclick = (e) => {
-                e.stopPropagation();
-                leftDropdown.classList.toggle('active');
-            };
-
-            document.addEventListener('click', () => {
-                leftDropdown.classList.remove('active');
-            });
-
-            document.querySelector('.left-menu')?.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (modal) modal.style.display = 'none';
+            if (guideModal) guideModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            hideBackToTop();
         }
-
-
-        
-
     });
 
-const closeHow = document.getElementById('closeHow');
-const closeCatsModal = document.getElementById('closeCatsModal');
-const howToPlayModal = document.getElementById('howToPlayModal');
-const aboutCatsModal = document.getElementById('aboutCatsModal');
+    const menuTrigger = document.querySelector('.menu-trigger');
+    const leftDropdown = document.querySelector('.left-dropdown');
 
-if (closeHow) {
-    closeHow.onclick = () => closeHowToPlayModal();
+    if (menuTrigger && leftDropdown) {
+        menuTrigger.onclick = (e) => {
+            e.stopPropagation();
+            leftDropdown.classList.toggle('active');
+        };
+
+        document.addEventListener('click', () => {
+            leftDropdown.classList.remove('active');
+        });
+
+        document.querySelector('.left-menu')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+
+    if (closeHow) {
+        closeHow.onclick = () => closeHowToPlayModal();
+    }
+
+    if (closeCatsModal) {
+        closeCatsModal.onclick = () => closeAboutCatsModal();
+    }
+
+    if (howToPlayModal) {
+        howToPlayModal.onclick = (e) => {
+            if (e.target.id === 'howToPlayModal') closeHowToPlayModal();
+        };
+    }
+
+    if (aboutCatsModal) {
+        aboutCatsModal.onclick = (e) => {
+            if (e.target.id === 'aboutCatsModal') closeAboutCatsModal();
+        };
+    }
+
+    console.log('📋 Modals initialized');
 }
 
-if (closeCatsModal) {
-    closeCatsModal.onclick = () => closeAboutCatsModal();
-}
 
-if (howToPlayModal) {
-    howToPlayModal.onclick = (e) => {
-        if (e.target.id === 'howToPlayModal') closeHowToPlayModal();
-    };
-}
 
-if (aboutCatsModal) {
-    aboutCatsModal.onclick = (e) => {
-        if (e.target.id === 'aboutCatsModal') closeAboutCatsModal();
-    };
-}
-
+// ================================== INITIALIZATION ==========================================
+export function initializeAllUIHelpers() {
+    initializeHUD();
+    initializeDebugToggle();
+    initializeMusicControls();
+    initializeStars();
+    initializeModals();
+    console.log('✅ All UI helpers initialized!');
 }
