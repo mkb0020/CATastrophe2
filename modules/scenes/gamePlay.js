@@ -29,7 +29,8 @@ import {
   addMiniBoss,
   setupMiniBossReflect,
   spawnRewardItems,
-  hideHUD
+  hideHUD,
+  setupParticleSystem
 } from '../helpers/levelHelpers.js';
 import { 
   addDoorsToLevel, 
@@ -99,6 +100,7 @@ function createUnifiedLevel(levelId, data) {
   addLaserBeams(levelConfig);
 
   const player = createPlayer(levelConfig, character, startHP);
+  setupParticleSystem(player); 
   
   applyUpgradesToPlayer(player);
   
@@ -259,6 +261,7 @@ export function createLevel5Scene(data, levelId) {
   addLaserBeams(levelConfig);
   
   const player = createPlayer(levelConfig, character, startHP);
+  setupParticleSystem(player); 
   
   applyUpgradesToPlayer(player);
   
