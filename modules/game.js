@@ -84,7 +84,9 @@ async function loadAssets() {
   loadSound("throw", "assets/sounds/fx/throw.mp3");
   loadSound("reflect", "assets/sounds/fx/reflect.mp3");
   loadSound("newMove", "assets/sounds/fx/newMove.wav");
-// MEOWS
+  loadSound("crumble", "assets/sounds/fx/crumble.mp3");
+  loadSound("upgrade", "assets/sounds/fx/upgrade.mp3");
+  // MEOWS
   loadSound("happyMeow", "assets/sounds/fx/meow06.mp3");
   loadSound("meow00", "assets/sounds/fx/meow00.mp3");
   loadSound("meow01", "assets/sounds/fx/meow01.mp3");
@@ -157,7 +159,6 @@ async function loadAssets() {
   loadSprite("tunaCan", "assets/images/items/TunaCan.png");
   loadSprite("milkBottle", "assets/images/items/MilkBottle.png");
   loadSprite("egg", "assets/images/items/egg.png"); // BUNUS HP ITEM
-  loadSprite("clock", "assets/images/items/clock.png");
   loadSprite("catnip", "assets/images/items/Catnip.png");
   loadSprite("yeet", "assets/images/items/yeet.png");
   loadSprite("pawsed", "assets/images/items/pawsed.png");
@@ -235,6 +236,7 @@ async function loadAssets() {
 });
 
   // BATTLE ANIMATIONS
+  loadSprite("smokeBlob", "assets/images/animationSprites/smokeBlobs.png", { sliceX:4, sliceY:1, anims:{puff:{from:0,to:3}} });
   loadSprite("explosion", "assets/images/animationSprites/redBoom.png", { sliceX:9, sliceY:1, anims:{burst:{from:0,to:8}} });
   loadSprite("smoke", "assets/images/animationSprites/Poof2.png", { sliceX:5, sliceY:1, anims:{puff:{from:0,to:4}} });
   loadSprite("swirl", "assets/images/animationSprites/swirl.png", { sliceX:10, sliceY:1, anims:{spin:{from:0,to:9}} });
