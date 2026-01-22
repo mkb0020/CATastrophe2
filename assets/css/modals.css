@@ -421,7 +421,16 @@ h6 {
 
 
 
-
+.fragment-icon{
+  font-family: 'GothNerd', sans-serif;
+  font-size: 2rem;
+  background: linear-gradient(45deg, var(--VortexViolet), var(--HiggsHotPink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 8px var(--ParticlePink);
+  animation: float 3s ease-in-out infinite;
+}
 
 
 .fragment-icon.collected {

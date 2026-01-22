@@ -67,10 +67,10 @@
 /* ==================== PLAY BUTTON  ==================== */
 .play-btn-container {
   left: 50%;
-  top: 320px;
+  top: 420px;
   transform: translateX(-50%);
   width: 350px;
-  height: 60px;
+  height: 50px;
 }
 
 .play-btn-container .cyber-btn-base {
@@ -82,8 +82,8 @@
 }
 
 .play-btn-container .cyber-btn-text {
-  font-size: 1.5rem;
-  line-height: 60px;
+  font-size: 1.7rem;
+  line-height: 45px;
   color: #58e84c;
   font-family: 'Orbitron', monospace;
 }
@@ -98,14 +98,14 @@
 /* ==================== STANDARD BUTTONS ==================== */
 .standard-btn-container {
   width: 350px;
-  height: 55px;
+  height: 50px;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.standard-btn-container.how-to-play { top: 390px; }
-.standard-btn-container.meet-cats { top: 455px; }
+.standard-btn-container.how-to-play { top: 480px; }
+.standard-btn-container.meet-cats { top: 500px; }
 
 .standard-btn-container .cyber-btn-base {
   border: 2px solid #9090C0;
@@ -116,8 +116,8 @@
 }
 
 .standard-btn-container .cyber-btn-text {
-  font-size: 1.2rem;
-  line-height: 55px;
+  font-size: 1.4rem;
+  line-height: 45px;
   color: #e0e0ff;
   /*text-shadow: 0 0 8px #a0a0ff;*/
 }
@@ -132,7 +132,7 @@
 /* ==================== BACK BUTTON ==================== */
 .back-btn-container {
   position: fixed;
-  left: 50px;
+  left: 150px;
   bottom: 50px;
   width: 150px;
   height: 50px;
@@ -147,8 +147,8 @@
 }
 
 .back-btn-container .cyber-btn-text {
-  font-size: 1.1rem;
-  line-height: 50px;
+  font-size: 1.2rem;
+  line-height: 45px;
   color: #e0e0ff;
   /*text-shadow: 0 0 8px #a0a0ff;*/
 }
@@ -163,7 +163,7 @@
 /* ==================== CONFIRM/CONTINUE BUTTON  ==================== */
 .confirm-btn-container {
   position: fixed;
-  right: 50px;
+  right: 150px;
   bottom: 50px;
   width: 250px;
   height: 50px;
@@ -178,8 +178,8 @@
 }
 
 .confirm-btn-container .cyber-btn-text {
-  font-size: 1.1rem;
-  line-height: 50px;
+  font-size: 1.2rem;
+  line-height: 45px;
   color: #58e84c;
   font-weight: bold;
 }
