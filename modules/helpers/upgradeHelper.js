@@ -394,7 +394,7 @@ function openStatUpgradeModalKaboom(statPoints, onComplete) {
       remainingPoints--;
       attackText.text = `ATTACK\n+${tempStats.attack}`;
       pointsText.text = `Points Remaining: ${remainingPoints}`;
-      play("collectCup", { volume: 0.2 });
+      play("happyMeow", { volume: 0.2 });
       
       if (remainingPoints === 0) {
         confirmBtn.opacity = 1;
@@ -408,7 +408,7 @@ function openStatUpgradeModalKaboom(statPoints, onComplete) {
       remainingPoints--;
       defenseText.text = `DEFENSE\n+${tempStats.defense}`;
       pointsText.text = `Points Remaining: ${remainingPoints}`;
-      play("collectCup", { volume: 0.2 });
+      play("happyMeow", { volume: 0.2 });
       
       if (remainingPoints === 0) {
         confirmBtn.opacity = 1;
@@ -422,7 +422,7 @@ function openStatUpgradeModalKaboom(statPoints, onComplete) {
       remainingPoints--;
       speedText.text = `SPEED\n+${tempStats.speed}`;
       pointsText.text = `Points Remaining: ${remainingPoints}`;
-      play("collectCup", { volume: 0.2 });
+      play("happyMeow", { volume: 0.2 });
       
       if (remainingPoints === 0) {
         confirmBtn.opacity = 1;

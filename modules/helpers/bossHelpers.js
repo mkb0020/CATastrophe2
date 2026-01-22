@@ -618,7 +618,7 @@ export function animateGhostPoof(target) {
 
 export function animatePoooof(target) {
   const pooooof = add([
-    sprite("poof", { anim: "burst" }),
+    sprite("smokeBlob", { anim: "puff" }),
     pos(target.pos),
     scale(3),
     opacity(1),
@@ -765,7 +765,7 @@ export function animateFireball(hero, target) {
 
 export function animateSmoke(target) {
   const poof = add([
-    sprite("smoke", { anim: "puff" }),
+    sprite("smokeBlob", { anim: "puff" }),
     pos(target.pos.add(rand(-20, 20), rand(-20, 20))),
     scale(4),
     opacity(0),

@@ -139,9 +139,18 @@ export function createSpriteGround(x, y, width, height) {
 export function addLevelEnvironment(levelConfig) {
   const bg = null;
 
+  add([
+    rect(30000, 480),
+    pos(-2000, 0),
+    color(0,0,0),
+    opacity(0.1),
+    z(-5),
+  ]);
+
+
   const yeet = add([
     sprite('yeet'),
-    pos(-960, 265),
+    pos(-960, 270),
     scale(1.9),
     z(0),
   ]);
@@ -267,7 +276,7 @@ export function setupSequentialPlatformActivation(player, sequentialPlatforms) {
         easings.easeOutQuad
       );
         
-        play("powerUp", { volume: 0.2, speed: 2 });
+        play("powerUp", { volume: 0.3, speed: 2 });
       }
     }
   });
@@ -546,7 +555,7 @@ export function setupCupCollection(player, scoreGetter, scoreSetter) {
       cup.z = 3;
       
       scoreSetter(scoreGetter() + cup.points);
-      play("collectCup", { volume: 0.3 });
+      play("collectCup", { volume: 0.2 });
       
       cup.onUpdate(() => {
          //if (window.debugCounts) window.debugCounts.cups++; 
@@ -715,7 +724,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
   player.onCollide("fishBones", (item) => { // FISH BONES
     destroy(item);
     scoreSetter(scoreGetter() + 25); 
-    play("happyMeow", { volume: 0.4 });
+    play("happyMeow", { volume: 0.3 });
     showBubble(BUBBLE_FRAMES.plusTen);
   });
   
@@ -725,14 +734,14 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
     const healAmount = 25;
     player.hp = Math.min(player.hp + healAmount, player.maxHP);
     console.log("🥫 HP after:", player.hp);
-    play("powerUp", { volume: 0.4 });
+    play("powerUp", { volume: 0.3 });
     showBubble(BUBBLE_FRAMES.plusHP);
   });
   
   player.onCollide("milkBottle", (item) => {
     destroy(item);
     livesSetter(livesGetter() + 1);
-    play("extraLife", { volume: 0.5 });
+    play("extraLife", { volume: 0.4 });
     showBubble(BUBBLE_FRAMES.heart);
   });
   
@@ -1164,7 +1173,7 @@ export function setupCucumberCollision(
       player.hp -= cucumber.damage;
       player.invulnerable = true;
       
-      play("takeHit", { volume: 0.4 });
+      play("takeHit", { volume: 0.3 });
       destroy(cucumber);
       
       const flashInterval = setInterval(() => {
@@ -1375,7 +1384,7 @@ export function setupRatCollision(
         player.hp -= 10;
         player.invulnerable = true;
         
-        play("takeHit", { volume: 0.4 });
+        play("takeHit", { volume: 0.3 });
         
         const flashInterval = setInterval(() => {
           player.opacity = player.opacity === 1 ? 0.3 : 1;
@@ -1500,7 +1509,7 @@ export function setupLaserCollision(
       player.hp -= 5;
       player.invulnerable = true;
       
-      play("takeHit", { volume: 0.4 });
+      play("takeHit", { volume: 0.3 });
       
       const flashInterval = setInterval(() => {
         player.opacity = player.opacity === 1 ? 0.3 : 1;
@@ -1599,30 +1608,29 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
       play("meow01", { volume: 0.4 });
       
       wait(0.5, () => {
-        const catBeep = add([
-          sprite('bubbles', { frame: BUBBLE_FRAMES.beep }),
-          pos(player.pos.x, player.pos.y - 70),
-          anchor("center"),
-          scale(1.3),
-          z(100),
-          opacity(0),
-          "bubble"
-        ]);
+        //const catBeep = add([
+         // sprite('bubbles', { frame: BUBBLE_FRAMES.beep }),
+         // pos(player.pos.x, player.pos.y - 70),
+        //  anchor("center"),
+        //  scale(1.3),
+        //  z(100),
+        //  opacity(0),
+        //  "bubble"
+       // ]);
         
-        tween(catBeep.opacity, 1, 0.2, (val) => catBeep.opacity = val);
-        tween(catBeep.scale.x, 1.6, 0.3, (val) => {
-          catBeep.scale.x = val;
-          catBeep.scale.y = val;
-        });
-        
+        //tween(catBeep.opacity, 1, 0.2, (val) => catBeep.opacity = val);
+       // tween(catBeep.scale.x, 1.6, 0.3, (val) => {
+        //  catBeep.scale.x = val;
+        //  catBeep.scale.y = val;
+       // 
         play("meow02", { volume: 0.3 });
         
         wait(1.5, () => {
           tween(bossExclamation.opacity, 0, 0.3, (val) => bossExclamation.opacity = val);
-          tween(catBeep.opacity, 0, 0.3, (val) => catBeep.opacity = val);
+          //tween(catBeep.opacity, 0, 0.3, (val) => catBeep.opacity = val);
           wait(0.3, () => {
             destroy(bossExclamation);
-            destroy(catBeep);
+            //destroy(catBeep);
           });
         });
       });
