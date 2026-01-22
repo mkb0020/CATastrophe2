@@ -343,7 +343,7 @@ function createTransition7Cinematic(character, startHP) {
         const yPos = Math.floor(i / 4) * (height() / 2) + rand(-50, 50);
 
         const poof = add([
-          sprite("smoke", { anim: "puff" }),
+          sprite("smokeBlob", { anim: "puff" }),
           pos(xPos, yPos),
           scale(6 + rand(-1, 1)),
           opacity(0.3),
@@ -702,4 +702,122 @@ function startCreditsSequence(character) {
       });
     });
   });
+}
+
+
+
+function animateSmokeTransition(){
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 6)
+  }
+
+  function spawnSmokeLayer({
+    count,
+    scaleMin,
+    scaleMax,
+    opacityMin,
+    opacityMax,
+    fadeOutMultiplier,
+    driftStrength,
+    zIndex,
+    duration,
+  }) {
+    for (let i = 0; i < count; i++) {
+      wait(i * 0.04, () => {  
+        const maxOpacity = rand(opacityMin, opacityMax)
+        let time = 0
+
+        const blob = add([
+          sprite("smokeBlob"),
+          pos(rand(0, width()), rand(0, height())),
+          scale(rand(scaleMin, scaleMax)),
+          opacity(0),
+          rotate(rand(0, 360)),
+          fixed(),
+          z(zIndex),
+          lifespan(duration),
+        ])
+
+        blob.play("puff")
+
+        const drift = vec2(
+          rand(-driftStrength, driftStrength),
+          rand(-driftStrength, driftStrength)
+        )
+
+        const fadeInTime = duration * 0.25   
+        const holdTime   = duration * 0.15  
+        const fadeOutTime = duration * fadeOutMultiplier
+
+        blob.onUpdate(() => {
+          time += dt()
+          blob.move(drift)
+
+  
+          if (time < fadeInTime) {
+            const t = time / fadeInTime
+            blob.opacity = easeOutCubic(t) * maxOpacity
+          }
+
+          else if (time < fadeInTime + holdTime) {
+            blob.opacity = maxOpacity
+          }
+          else {
+            const t = Math.min(
+              (time - fadeInTime - holdTime) / fadeOutTime,
+              1
+            )
+            blob.opacity = maxOpacity * (1 - easeOutCubic(t))
+          }
+        })
+      })
+    }
+  }
+
+  function smokeSceneReveal({ duration = 7 } = {}) {
+    const overlay = add([
+      rect(width(), height()),
+      color(101, 115, 131),
+      opacity(1),
+      fixed(),
+      z(1002),
+    ])
+
+    let overlayTime = 0
+    const overlayFadeDuration = duration * 9
+
+    overlay.onUpdate(() => {
+      overlayTime += dt()
+      const t = Math.min(overlayTime / overlayFadeDuration, 1)
+      overlay.opacity = 1 - easeOutCubic(t)
+    })
+
+  spawnSmokeLayer({
+    count: 30,
+    scaleMin: 8,
+    scaleMax: 10,
+    opacityMin: 0.1,
+    opacityMax: 0.2,
+    fadeOutMultiplier: 3,
+    driftStrength: 70,
+    zIndex: 1001,
+    duration,
+  })
+
+  wait(0.05, () => {
+    spawnSmokeLayer({
+      count: 30,
+      scaleMin: 5,
+      scaleMax: 8,
+      opacityMin: 0.3,
+      opacityMax: 0.5,
+      fadeOutMultiplier: 2,
+      driftStrength: 90,
+      zIndex: 999,
+      duration,
+    })
+  })
+
+  }
+  smokeSceneReveal({ duration: 6 })
 }

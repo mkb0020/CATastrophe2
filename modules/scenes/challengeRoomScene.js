@@ -236,7 +236,7 @@ player.onCollide("specialItem", (item) => {
       destroy(glow);
     }
     
-    play("happyMeow", { volume: 0.4 });
+    play("upgrade", { volume: 0.4 });
     
     if (roomConfig.items.newMove.enabled) {
       openMoveSelectionModal(character, () => {
@@ -417,6 +417,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
       if (!platform.isBeingSteppedOn) {
         console.log('💣 Starting crumble timer!');
         platform.isBeingSteppedOn = true;
+        play("crumble", { volume: 0.4 }); 
         startCrumble(platform);
       }
     } else if (player.vel.y < 0 || !horizontalOverlap) {
@@ -454,7 +455,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
         platform.hasCrumbled = true;
         
         if (platform.linkedSprite && platform.linkedSprite.exists()) {
-          //play("ratKill", { volume: 0.3 }); // PLACEHOLDER
+          
           
           const fallSpeed = 200;
           const rotateSpeed = 360;

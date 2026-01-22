@@ -1,7 +1,8 @@
-// mainMenu.js - Updated to use HTML/CSS buttons
+// mainMenu.js
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
+
 
 export function createStartScene(){
   add([
@@ -727,51 +728,112 @@ export function createCharSelectScene() {
 function playPourAnimation(onComplete) {
   const music = get("shop")[0];
   if (music) music.stop();
+
+  const brownOverlay = add([
+    rect(SCREEN_W, SCREEN_H),
+    pos(0, 0),
+    color(92, 64, 51),
+    opacity(0),
+    z(180),
+    "pourBrownOverlay",
+  ]);
+
   const blackOverlay = add([
     rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(0, 0, 0),
     opacity(0),
     z(200),
-    "pourBlackOverlay"
+    "pourBlackOverlay",
   ]);
 
-  const pourSprite = add([
-    sprite("pour", { frame: 0 }),
-    pos(SCREEN_W / 2, SCREEN_H / 2),
-    anchor("center"),
-    scale(10, 10),
-    opacity(0),
-    z(199),
-    "pourSprite"
-  ]);
-
-  tween(pourSprite.opacity, 1, 0.3, (val) => pourSprite.opacity = val, easings.easeOutQuad);
   play("pour", { volume: 0.3 });
-  wait(0.3, () => {
-    let frameTime = 0;
-    const FRAME_DURATION = 1.2 / 18; 
-    
-    const frameUpdate = onUpdate(() => {
-      frameTime += dt();
-      const frame = Math.floor(frameTime / FRAME_DURATION);
-      
-      if (frame >= 18) {
-        frameUpdate.cancel();
-        
-        tween(blackOverlay.opacity, 1, 0.5, (val) => blackOverlay.opacity = val, easings.easeInQuad);
-        
-        wait(0.5, () => {
+
+  const POUR_COUNT = 3;
+  const STAGGER = 0.1;
+  const POUR_OPACITY = 0.7;
+
+  let finishedSprites = 0;
+  let brownFadeStarted = false;
+  let blackFadeStarted = false;
+
+  function spawnPourSprite(delay) {
+    wait(delay, () => {
+      const pourSprite = add([
+        sprite("pour", { frame: 0 }),
+        pos(SCREEN_W / 2, SCREEN_H / 2),
+        anchor("center"),
+        scale(10),
+        opacity(0),
+        z(190),
+        "pourSprite",
+      ]);
+
+      tween(
+        pourSprite.opacity,
+        POUR_OPACITY,
+        0.3,
+        (v) => (pourSprite.opacity = v),
+        easings.easeOutQuad
+      );
+
+      let frameTime = 0;
+      const FRAME_DURATION = 1.2 / 18;
+
+      const frameUpdate = onUpdate(() => {
+        frameTime += dt();
+        const frame = Math.floor(frameTime / FRAME_DURATION);
+
+        if (frame >= 12 && !blackFadeStarted) {
+          blackFadeStarted = true;
+          tween(
+            blackOverlay.opacity,
+            1,
+            0.6,
+            (v) => (blackOverlay.opacity = v),
+            easings.easeInQuad
+          );
+        }
+
+        if (frame >= 15 && !brownFadeStarted) {
+          brownFadeStarted = true;
+          tween(
+            brownOverlay.opacity,
+            1,
+            0.4,
+            (v) => (brownOverlay.opacity = v),
+            easings.easeOutQuad
+          );
+        }
+
+        if (frame >= 18) {
+          frameUpdate.cancel();
           destroy(pourSprite);
-          destroy(blackOverlay);
-          onComplete();
-        });
-      } else {
-        pourSprite.frame = frame;
-      }
+          finishedSprites++;
+
+
+        if (finishedSprites === POUR_COUNT) {
+          blackOverlay.opacity = 1;
+          destroy(brownOverlay);
+
+          onComplete(); 
+        }
+
+
+
+        } else {
+          pourSprite.frame = frame;
+        }
+      });
     });
-  });
+  }
+
+  for (let i = 0; i < POUR_COUNT; i++) {
+    spawnPourSprite(i * STAGGER);
+  }
 }
+
+
 
 function lerp(start, end, t) {
   return start + (end - start) * t;
