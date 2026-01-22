@@ -370,6 +370,70 @@
     0 0 50px #58e84c;
 }
 
+
+
+
+
+/* ==================== PAUSE MENU BUTTONS ==================== */
+.pause-resume-btn-container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 315px;
+  width: 250px;
+  height: 50px;
+}
+
+.pause-resume-btn-container .cyber-btn-base {
+  border: 2px solid #9090C0;
+  box-shadow: 
+    0 0 8px #9090C0,
+    inset 0 0 12px rgba(103, 254, 189, 0.25),
+    0 0 35px #9090C0;
+}
+
+.pause-resume-btn-container .cyber-btn-text {
+  font-size: 1.4rem;
+  line-height: 45px;
+  color: #FFFFFF;
+}
+
+.pause-resume-btn-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #A55AFF,
+    inset 0 0 18px rgba(103, 254, 189, 0.35),
+    0 0 45px #A55AFF;
+}
+
+.pause-quit-btn-container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 385px;
+  width: 250px;
+  height: 50px;
+}
+
+.pause-quit-btn-container .cyber-btn-base {
+  border: 2px solid #9090C0;
+  box-shadow: 
+    0 0 5px #9090C0,
+    inset 0 0 12px rgba(165, 90, 255, 0.25),
+    0 0 25px #9090C0;
+}
+
+.pause-quit-btn-container .cyber-btn-text {
+  font-size: 1.4rem;
+  line-height: 45px;
+  color: #FFFFFF;
+}
+
+.pause-quit-btn-container:hover .cyber-btn-base {
+  box-shadow: 
+    0 0 12px #A55AFF,
+    inset 0 0 18px rgba(165, 90, 255, 0.35),
+    0 0 45px #A55AFF;
+}
 /* ==================== HIDDEN STATE ==================== */
 .hidden {
   display: none !important;

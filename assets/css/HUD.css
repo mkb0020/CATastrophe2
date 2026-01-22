@@ -27,28 +27,32 @@
       justify-content: space-around;
       align-items: center;
       gap: 0.1rem;
-      padding: 0 0.1rem;
+      padding: 1rem 0.1rem;
     }
 
     .stat-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
-      padding: 5px 1px;
-      /*background: rgba(0, 0, 0, 0.233);
-      border-radius: 50px;
-      border: 1px solid;*/
+      gap: 15px;
+      padding: 3px 1px;
+      background: rgba(2, 144, 82, 0.409);
+      border-radius: 5px;
+      border: 1px solid #67febdc6;
+      color: #9EFF9E;
       font-size: 1.1rem;
       font-family: 'GothNerd';
       min-width: 170px;
       transition: transform 0.2s ease;
+      box-shadow: 
+              0 0 8px #67FEBD,
+              inset 0 0 20px rgba(1, 137, 78, 0.103);
     }
 
   .stat-divider{
     font-size: 1.5rem;
     text-shadow: 10px 20px 20px var(--PlasmaPurple);
-    color: var(--PlasmaPurple);
+    color: transparent;
   }
 
 
@@ -63,20 +67,23 @@
         flex-shrink: 0;
         width: 330px;
         border: 1px solid rgba(0,0,0,0);
-        padding: 0 5px;
+        padding: 0 10px;
+        box-shadow: 
+              0 0 15px #000000,
+              inset 0 0 20px rgba(1, 109, 62, 0);
           }
 
 /* ==================== STATS ==================== */
     .stat-score {
-      border-color: var(--PlanksGlow3);
-      color: var(--White);
+      border-color: #67FEBD;
+      color: #9EFF9E;
       width: 150px;
       text-transform: uppercase;
     }
 
     .stat-hp {
-      border-color: var(--RadioactiveGlow3);
-      color: var(--White);
+      border-color: #67FEBD;
+      color: #9EFF9E;
       width: 150px;
       text-transform: uppercase;
     }
@@ -89,15 +96,15 @@
     }
 
     .stat-lives {
-      border-color: var(--AlphaGlow2);
-      color: var(--White);
+      border-color:#67FEBD;
+      color: #9EFF9E;
       width: 150px;
       text-transform: uppercase;
     }
 
     .stat-time {
-      border-color: var(--PlasmaGlow2);
-      color: var(--White);
+      border-color: #67FEBD;
+      color: #9EFF9E;
       width: 150px;
       text-transform: uppercase;
     }
@@ -135,34 +142,37 @@
 
 /* ==================== GAME CONTROLS ==================== */
 #game-controls {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
+            position: relative;
             display: flex;
-            gap: 12px;
+            gap: 8px;
             z-index: 1000;
         }
 
 .control-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: rgba(26, 16, 46, 0.9);
-            border: 2px solid var(--VortexViolet);
+            width: 35px;
+            height: 35px;
+            background: rgba(0, 0, 0, 0.9);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 23px;
+            font-size: 18px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid #67FEBD;
+            border-radius: 35px;
+            box-shadow: 
+              0 0 10px #67FEBD,
+              inset 0 0 15px rgba(125, 2, 182, 0.3),
+              0 0 20px #67FEBD;
         }
 
 .control-btn:hover {
-            background: var(--PlanksPink);
-            border-color: rgba(255, 255, 255, 0.6);
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            box-shadow: 
+              0 0 10 #67FEBD,
+              inset 0 0 12 rgba(125, 2, 182, 0.3),
+              0 0 15px #67FEBD;
+
         }
 
 .control-btn:active {
@@ -192,9 +202,9 @@
         }
 
 .pause-bar {
-            width: 5px;
-            height: 20px;
-            background: var(--VortexViolet);
+            width: 4px;
+            height: 14px;
+            background:#9EFF9E;
             border-radius: 2px;
         }
 

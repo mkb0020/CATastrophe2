@@ -52,10 +52,7 @@
 
           <div class="left-menu">
             <a href="https://mkb0020.vercel.app/" class="menu-item">Home</a>
-            <a href="https://mkb0020.github.io/" class="menu-item">Javascript Projects</a>
-            <a href="https://mkb0020.github.io/Toolkit.html" class="menu-item">Schrödinger's Toolbox</a>
-            <a href="https://mkb0020.onrender.com/resume" class="menu-item">Resume</a>
-            <a href="https://mkb0020.vercel.app/comments" class="menu-item">Guestbook</a>
+            <a href="https://mkb0020.github.io/n3wton.html" class="menu-item">N3wton's Battle Stats Balancer</a>
             <a href="https://mkb0020.vercel.app/game-testing" class="menu-item">CATastrophe 2 Feedback</a>
 
             <div class="social-links">
@@ -117,11 +114,25 @@
       </div>
 
 </div>
-      <div class="help-dropdown">
+      <!--<div class="help-dropdown">
         <button class="help-icon" id="helpBtn"><div class="question-mark">?</div></button>
         <div class="dropdown-menu">
           <button id="openHelp">About This Player</button>
         </div>
+      </div>-->
+      <div class="help-dropdown">
+            <div id="game-controls">
+                        <button id="volume-btn" class="control-btn" data-tooltip="TURN MUSIC OFF/ON">
+                            🔊
+                        </button>
+                        <button id="pause-btn" class="control-btn" data-tooltip="PAUSE LEVEL">
+                            <div class="pause-icon">
+                                <div class="pause-bar"></div>
+                                <div class="pause-bar"></div>
+                            </div>
+                        </button>
+                    </div>
+            </div>
       </div>
     </div>
   </nav>
@@ -134,18 +145,7 @@
       </div>
 </div>
 
-<div id="game-controls">
-            <button id="volume-btn" class="control-btn" data-tooltip="TURN MUSIC OFF/ON">
-                🔊
-            </button>
-            <button id="pause-btn" class="control-btn" data-tooltip="PAUSE LEVEL">
-                <div class="pause-icon">
-                    <div class="pause-bar"></div>
-                    <div class="pause-bar"></div>
-                </div>
-            </button>
-        </div>
-</div>
+
 
 
 <!-- ==================== BUTTONS ========================== -->
@@ -233,6 +233,23 @@
         <div class="cyber-btn-base">
             <div class="cyber-btn-shine"></div>
             <div class="cyber-btn-text">Continue</div>
+        </div>
+    </button>
+</div>
+
+<!-- PAUSE MENU BUTTONS -->
+<div id="pauseMenuButtons" class="hidden">
+    <button class="game-btn pause-resume-btn-container" id="pauseResumeBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">RESUME</div>
+        </div>
+    </button>
+
+    <button class="game-btn pause-quit-btn-container" id="pauseQuitBtn">
+        <div class="cyber-btn-base">
+            <div class="cyber-btn-shine"></div>
+            <div class="cyber-btn-text">QUIT</div>
         </div>
     </button>
 </div>
