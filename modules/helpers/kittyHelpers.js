@@ -459,28 +459,28 @@ export function createPauseOverlay(onResumeCallback, onQuitCallback) {
         rect(SCREEN_W, SCREEN_H),
         pos(0, 0),
         color(0, 0, 0),
-        opacity(0.7),
+        opacity(0.6),
         fixed(),
         z(200),
         "pauseOverlay"
     ]);
 
     const menuPanel = add([
-        rect(600, 400, { radius: 30 }),
-        pos(200, 50),
-        color(rgb(101,115,131)),
-        outline(5, Color.fromHex(Colors.VortexViolet)),
-        opacity(0.4),
+        rect(600, 330, { radius: 20 }),
+        pos(200, 65),
+        color(rgb(0,0,0)),
+        outline(5, rgb(103,254,189)),
+        opacity(0.9),
         fixed(),
         z(201),
         "pauseMenu"
     ]);
 
     const menuPanelPop = add([
-        rect(590, 390, { radius: 30 }),
-        pos(205, 55),
-        color(rgb(144,144,192)),
-        opacity(0.3),
+        rect(590, 320, { radius: 20 }),
+        pos(205, 70),
+        color(rgb(2, 144, 82)),
+        opacity(0.2),
         fixed(),
         z(201),
         "pauseMenuPop"
@@ -488,99 +488,40 @@ export function createPauseOverlay(onResumeCallback, onQuitCallback) {
 
     menuPanel.add([
         text("PAWSed", { size: 70, font: "orbitronBold" }),
-        pos(120, 25),
-        color(Color.fromHex(Colors.NuclearFuscia)),
+        pos(120, 40),
+        color(rgb(158,255,158)),
         z(204)
     ]);
 
     menuPanel.add([
         text("PAWSed", { size: 70, font: "orbitronBold" }),
-        pos(122, 27),
-        color(Color.fromHex(Colors.Black)),
+        pos(124, 44),
+        color(rgb(0,0,0)),
         z(203)
     ]);
 
-    const pawsed = menuPanel.add([
-        sprite('pawsed'),
-        pos(200, 100),
-        fixed(),
-        scale(2),
-        opacity(1),
-        z(202),
-        "pawsed"
-    ]);
 
-    const resumeBtn = add([
-        rect(200, 50, { radius: 40 }),
-        pos(525, 350),
-        color(Color.fromHex(Colors.Black)),
-        outline(3, Color.fromHex(Colors.RadioactiveGreen)),
-        area(),
-        fixed(),
-        z(203),
-        "resumeBtn"
-    ]);
 
-    resumeBtn.add([
-        text("RESUME", { size: 28, font: "orbitronBold" }),
-        pos(100, 25),
-        anchor("center"),
-        color(255, 255, 255),
-        z(204)
-    ]);
 
-    resumeBtn.onClick(() => {
-        onResumeCallback();
-    });
+    const pauseButtons = document.getElementById('pauseMenuButtons');
+    if (pauseButtons) pauseButtons.classList.remove('hidden');
 
-    resumeBtn.onHover(() => {
-        resumeBtn.color = Color.fromHex(Colors.RadioactiveGreen);
-    });
+    const resumeBtn = document.getElementById('pauseResumeBtn');
+    const quitBtn = document.getElementById('pauseQuitBtn');
 
-    resumeBtn.onHoverEnd(() => {
-        resumeBtn.color = Color.fromHex(Colors.Black);
-    });
+    const resumeHandler = () => onResumeCallback();
+    const quitHandler = () => onQuitCallback();
 
-    const quitBtn = add([
-        rect(200, 50, { radius: 40 }),
-        pos(275, 350),
-        color(Color.fromHex(Colors.Black)),
-        outline(3, Color.fromHex(Colors.VortexViolet)),
-        area(),
-        fixed(),
-        z(203),
-        "quitBtn"
-    ]);
+    if (resumeBtn) resumeBtn.addEventListener('click', resumeHandler);
+    if (quitBtn) quitBtn.addEventListener('click', quitHandler);
 
-    quitBtn.add([
-        text("QUIT", { size: 28, font: "orbitronBold" }),
-        pos(100, 25),
-        anchor("center"),
-        color(255, 255, 255),
-        z(204)
-    ]);
-
-    quitBtn.onClick(() => {
-        onQuitCallback();
-    });
-
-    quitBtn.onHover(() => {
-        quitBtn.color = Color.fromHex(Colors.NuclearFuscia);
-    });
-
-    quitBtn.onHoverEnd(() => {
-        quitBtn.color = Color.fromHex(Colors.Black);
-    });
-
-    menuPanel.add([
-        text("Press ESC or P to resume", { size: 18, font: "orbitron" }),
-        pos(300, 375),
-        anchor("center"),
-        color(Color.fromHex(Colors.MintGlow)),
-        z(202)
-    ]);
-
-    return { overlay, menuPanel, menuPanelPop, resumeBtn, quitBtn };
+    return { 
+        overlay, 
+        menuPanel, 
+        menuPanelPop, 
+        resumeHandler, 
+        quitHandler 
+    };
 }
 
 export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallback = null) {

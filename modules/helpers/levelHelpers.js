@@ -902,6 +902,155 @@ player.onUpdate(() => {
 });
 }
 
+
+//==================================== PARTICLE SYSTEM ====================================
+export function setupParticleSystem(player) {
+  player.particleTimer = 0;
+  player.particleSpawnRate = 0.03; 
+  player.wasGrounded = true; 
+  
+  player.onUpdate(() => {
+    const isGroundedNow = player.isGrounded();
+    if (isGroundedNow && !player.wasGrounded && player.vel.y > 100) {
+      createLandingPoof(player);
+    }
+    player.wasGrounded = isGroundedNow;
+    
+    if (player.isMoving || !player.isGrounded()) {
+      player.particleTimer += dt();
+      
+      if (player.particleTimer >= player.particleSpawnRate) {
+        player.particleTimer = 0;
+        createCatParticle(player);
+      }
+    }
+  });
+}
+
+function createLandingPoof(player) {
+  const particleCount = rand(15, 20);
+  
+  for (let i = 0; i < particleCount; i++) {
+    let particleColor;
+    if (player.rainbowActive || player.catnipActive) {
+      const colors = [
+        rgb(255, 100, 200), rgb(100, 200, 255), rgb(255, 255, 100),
+        rgb(150, 255, 150), rgb(200, 150, 255)
+      ];
+      particleColor = choose(colors);
+    } else {
+      const colors = [
+        rgb(255, 200, 220), rgb(200, 220, 255), rgb(255, 240, 200)
+      ];
+      particleColor = choose(colors);
+    }
+    
+    const angle = (i / particleCount) * Math.PI * 2;
+    const spread = rand(30, 60);
+    const offsetX = Math.cos(angle) * spread;
+    const offsetY = 35; 
+    
+    const particle = add([
+      rect(rand(4, 8), rand(4, 8)),
+      pos(player.pos.x + offsetX, player.pos.y + offsetY),
+      color(particleColor),
+      opacity(0.9),
+      scale(1.2),
+      z(2),
+      {
+        vel: vec2(Math.cos(angle) * rand(50, 100), rand(-120, -80)),
+        life: 1,
+        decay: rand(0.025, 0.045),
+        gravity: -120
+      },
+      "particle"
+    ]);
+    
+    particle.onUpdate(() => {
+      particle.pos.x += particle.vel.x * dt();
+      particle.pos.y += particle.vel.y * dt();
+      particle.vel.y += particle.gravity * dt();
+      particle.vel.x *= 0.95; 
+      
+      particle.life -= particle.decay;
+      particle.opacity = particle.life;
+      particle.scale = vec2(particle.life * 1.2, particle.life * 1.2);
+      
+      if (particle.life <= 0) {
+        destroy(particle);
+      }
+    });
+  }
+}
+
+function createCatParticle(player) {
+  let particleColor;
+  if (player.rainbowActive || player.catnipActive) {
+    const colors = [
+      rgb(255, 100, 200), 
+      rgb(100, 200, 255), 
+      rgb(255, 255, 100), 
+      rgb(150, 255, 150), 
+      rgb(200, 150, 255)  
+    ];
+    particleColor = choose(colors);
+  } else {
+
+    const colors = [
+      rgb(255, 199, 255),
+      rgb(165, 90, 255), 
+      rgb(0, 255, 255) 
+    ];
+    particleColor = choose(colors);
+  }
+  
+  
+  const spawnPoints = [
+    { x: -10, y: 40 },  
+    { x: 10, y: 40 },  
+    { x: -15, y: 40 },   
+    { x: 20, y: 40 },     
+    { x: 30, y: 40 },
+    { x: 40, y: 40 },
+    { x: 50, y: 40 }     
+  ];
+  
+  const spawnPoint = choose(spawnPoints);
+  const offsetX = player.facingRight ? spawnPoint.x : -spawnPoint.x;
+  const offsetY = spawnPoint.y + rand(-3, 3);
+  
+  const particle = add([
+    rect(rand(3, 6), rand(3, 6)),
+    pos(player.pos.x + offsetX, player.pos.y + offsetY),
+    color(particleColor),
+    opacity(0.8),
+    scale(1),
+    z(2),
+    {
+      vel: vec2(rand(-30, 30), rand(-80, -40)), 
+      life: 1,
+      decay: rand(0.02, 0.04),
+      gravity: -200  // NEGATIVE GRAVITY TO FLOAT UP
+    },
+    "particle"
+  ]);
+  
+  particle.onUpdate(() => {
+    particle.pos.x += particle.vel.x * dt();
+    particle.pos.y += particle.vel.y * dt();
+    particle.vel.y += particle.gravity * dt(); 
+    
+    particle.life -= particle.decay;
+    particle.opacity = particle.life;
+    
+    particle.scale = vec2(particle.life, particle.life);
+    
+    if (particle.life <= 0) {
+      destroy(particle);
+    }
+  });
+}
+
 export function updatePlayerAnim(player, character) {
   let newState;
   const grounded = player.isGrounded();
