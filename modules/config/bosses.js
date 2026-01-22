@@ -1,4 +1,4 @@
-// bosses.js - TESTING BOSS STATS
+// bosses.js
 export const BOSSES = {
   BossCup: { 
     name: "LARGE HADRON CUP (LHC)",  
@@ -24,7 +24,7 @@ export const BOSSES = {
     maxHP: 125,
     atk: 30,
     speed: 29,
-    defense: 33,
+    defense: 35,
     sprite: 'bossCucumber',
     glowSprite: 'CucumberGlow',
     background: 'battleBG1',
@@ -32,7 +32,7 @@ export const BOSSES = {
     nextState: 'Transition3',
     moves: {
       "CUCUMBER CRUNCH": { dmg: 28, uses: 99 },
-      "CUCUMBER CANNON": { dmg: 28, uses: 3 },
+      "CUCUMBER CANNON": { dmg: 29, uses: 3 },
       "GOURD GUARD": { defenseBoost: true, duration: 2, uses: 1 },
       "PICKLE": { heal: 30, uses: 2 }
     },
@@ -41,10 +41,10 @@ export const BOSSES = {
 
   BossRatKing: { 
     name: "RADIOACTIVE RAT KING", 
-    maxHP: 115,
-    atk: 33,
+    maxHP: 120,
+    atk: 31,
     speed: 26,
-    defense: 27,
+    defense: 26,
     sprite: 'bossRat',
     glowSprite: 'RatGlow',
     background: 'battleBG1', 
@@ -54,26 +54,26 @@ export const BOSSES = {
       "BITE": { dmg: 25, uses: 99 }, 
       "RODENT RAGE": { dmg: 25, speedBoost: true, uses: 3 },
       "MOUSE MISSILES": { dmg: 26, uses: 3 }, 
-      "SCURRY": { heal: 30, uses: 1 }
+      "SCURRY": { heal: 26, uses: 1 }
     },
     finishHim: 'PURRcisionRifle',
   },
 
   BossLaserPointer: { 
     name: "GAMMA LASER POINTER", 
-    maxHP: 135,
-    atk: 30,
-    speed: 32, 
-    defense: 28,
+    maxHP: 125,
+    atk: 29,
+    speed: 31, 
+    defense: 32,
     sprite: 'bossLaserPointer',
     glowSprite: 'laserPointerGlow',
     background: 'battleBG1', 
     introMessage: ["FINALLY CAUGHT THE GAMMA LASER POINTER!! TIME TO FINISH HIM OFF!"],
     nextState: 'Transition5',
     moves: {
-      "ZAP": { dmg: 21, speedBoost: true, uses: 99 }, 
+      "ZAP": { dmg: 24, speedBoost: true, uses: 99 }, 
       "FLASH": { dmg: 23, speedBoost: true, uses: 4 },
-      "LASER BEAM": { dmg: 25, uses: 3 }
+      "LASER BEAM": { dmg: 26, uses: 3 }
     },
     finishHim: 'MeowlotovCocktail',
   },
@@ -81,19 +81,19 @@ export const BOSSES = {
   observerBoss: { 
     name: "OBSERVER", 
     maxHP: 130,
-    atk: 28,
-    speed: 25,
-    defense: 29, 
+    atk: 33,
+    speed: 31,
+    defense: 31, 
     sprite: 'observer',
     glowSprite: 'ObserverGlow',
     background: 'battleBG1',
     introMessage: ["THE OBSERVER WANTS TO OPEN THE BOX!"],    
     nextState: 'Transition7',
     moves: {
-      "SUPERPOSITION SLAMPOISON": { dmg: 21, uses: 99 },
-      "POISON": { dmg: 22, speedBoost: true, uses: 4 },
-      "HYDROGEN HAMMER": { dmg: 24, uses: 3 }, 
-      "QUANTUM RECOVER": { heal: 25, uses: 3 }
+      "SUPERPOSITION SLAMPOISON": { dmg: 25, uses: 99 },
+      "POISON": { dmg: 26, speedBoost: true, uses: 4 },
+      "HYDROGEN HAMMER": { dmg: 27, uses: 3 }, 
+      "QUANTUM RECOVER": { heal: 26, uses: 3 }
     },
     finishHim: 'FelineFission',
   }

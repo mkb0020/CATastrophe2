@@ -75,11 +75,11 @@ export const CHARACTERS = {
   NONA: {
     name: 'NONA',
     stats: {
-      maxHP: 1200, //FOR TESTING
-      baseHP: 1200,
-      baseAtk: 3000,
-      baseSpeed: 3000,
-      baseDefense: 3000,
+      maxHP: 120, 
+      baseHP: 120,
+      baseAtk: 30,
+      baseSpeed: 30,
+      baseDefense: 30,
     },
     platformerStats: { 
       speed: 8,
@@ -102,9 +102,9 @@ export const CHARACTERS = {
     stats: {
       maxHP: 125,
       baseHP: 125,
-      baseAtk: 29,
+      baseAtk: 30,
       baseSpeed: 29,
-      baseDefense: 31,
+      baseDefense: 30,
     },
     platformerStats: { 
       speed: 8,
@@ -128,8 +128,8 @@ export const CHARACTERS = {
       maxHP: 115,
       baseHP: 115,
       baseAtk: 31,
-      baseSpeed: 31,
-      baseDefense: 29,
+      baseSpeed: 30,
+      baseDefense: 30,
     },
     platformerStats: { 
       speed: 8,
@@ -178,8 +178,8 @@ export const CHARACTERS = {
       maxHP: 125,
       baseHP: 125,
       baseAtk: 29,
-      baseSpeed: 29,
-      baseDefense: 31,
+      baseSpeed: 30,
+      baseDefense: 30,
     },
     platformerStats: { 
       speed: 8,
@@ -202,8 +202,8 @@ export const CHARACTERS = {
     stats: {
       maxHP: 115,
       baseHP: 115,
-      baseAtk: 31,
-      baseSpeed: 29,
+      baseAtk: 30,
+      baseSpeed: 30,
       baseDefense: 31,
     },
     platformerStats: { 
