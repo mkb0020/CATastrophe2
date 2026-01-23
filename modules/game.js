@@ -1,5 +1,8 @@
 import kaplay from "kaplay";
 import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from './config/gameConfig.js';
+import {   initializeMobileControls, 
+  MobileHUDController, 
+  detectMobile } from './helpers/mobileControls.js';
 import { getCharacterList, SPRITE_FRAMES, RAINBOW_CAT_FRAMES } from './config/characters.js';
 import { getLevel } from './config/levels.js';
 import { getBoss } from './config/bosses.js';
@@ -45,6 +48,31 @@ Object.assign(window, k);
 console.log('✅ Kaplay initialized!');
 initDebugTools(k);
 
+// ==================== MOBILE INITIALIZATION ====================
+const mobileSetup = initializeMobileControls(document.getElementById("gameCanvas"));
+window.mobileSetup = mobileSetup;
+
+
+const mobileHUD = new MobileHUDController();
+window.mobileHUD = mobileHUD; 
+
+if (mobileSetup.isMobile) {
+  console.log('📱 Mobile controls enabled');
+  
+  mobileHUD.setupVolumeButton(() => {
+    const currentVolume = volume();
+    const newVolume = currentVolume > 0 ? 0 : 0.5;
+    volume(newVolume);
+    return newVolume === 0; 
+  });
+
+  mobileHUD.setupPauseButton(() => {
+    const currentScene = getTreeRoot().name;
+    if (currentScene.startsWith('level') || currentScene === 'challengeRoom') {
+      console.log('⏸️ Game paused');
+    }
+  });
+}
 loadFont("narrow", "assets/fonts/PTSansNarrow-Regular.ttf");
 loadFont("narrowBold", "assets/fonts/PTSansNarrow-Bold.ttf");
 loadFont("orbitron", "assets/fonts/Orbitron-Regular.ttf");
@@ -106,6 +134,7 @@ async function loadAssets() {
 
 // ======================================== SPRITES ========================================
   loadSprite("realNona", "assets/images/realNona.png");
+  loadSprite("title", "assets/images/title.PNG");
   loadSprite("bubbles", "assets/images/items/bubbles.png", {
     sliceX: 11,
     sliceY: 1
@@ -231,18 +260,18 @@ async function loadAssets() {
 
 
 
-loadSprite("finalMoveBG1", "assets/images/animationSprites/finalMoveBG1.png");
-loadSprite("finalMoveBG2", "assets/images/animationSprites/finalMoveBG2.png", { 
-    sliceX: 32, 
-    sliceY: 1, 
-    anims: { fade: { from: 0, to: 31 } }
-});
+//loadSprite("finalMoveBG1", "assets/images/animationSprites/finalMoveBG1.png");
+//loadSprite("finalMoveBG2", "assets/images/animationSprites/finalMoveBG2.png", { 
+//    sliceX: 32, 
+//    sliceY: 1, 
+ //   anims: { fade: { from: 0, to: 31 } }
+//});
 
   // BATTLE ANIMATIONS
   loadSprite("smokeBlob", "assets/images/animationSprites/newSmoke.png", { sliceX:9, sliceY:1, anims:{puff:{from:0,to:8}} });
   loadSprite("poof", "assets/images/animationSprites/newPoof.png", { sliceX:8, sliceY:1, anims:{puff:{from:0,to:7}} });
   loadSprite("greenBlast", "assets/images/animationSprites/GreenBlast.png", { sliceX:12, sliceY:1, anims:{glitch:{from:0,to:11}} });
-  loadSprite("bam", "assets/images/animationSprites/newBoom.png", { sliceX: 7, sliceY: 1, anims: { burst: { from: 0, to: 6 } }});
+  loadSprite("bam", "assets/images/animationSprites/newBoom2.png", { sliceX: 7, sliceY: 1, anims: { burst: { from: 0, to: 6 } }});
   loadSprite("powerup", "assets/images/animationSprites/Powerup.png", { sliceX:9, sliceY:1, anims:{beam:{from:0,to:8}} });
   loadSprite("fireball", "assets/images/animationSprites/Fireball.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
   loadSprite("zoomies", "assets/images/animationSprites/Zoomies.png", { sliceX:3, sliceY:3, anims:{glitch:{from:0,to:8}} });

@@ -273,7 +273,7 @@ export const LEVELS = {
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [ 
-    { x: 15125, 
+    { x: 15155, 
       y: 120, 
       roomId: 'room3',
       returnX: 16490,  

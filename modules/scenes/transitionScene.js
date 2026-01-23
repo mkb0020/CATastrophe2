@@ -2,6 +2,7 @@ import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getTransition } from '../config/transitions.js';
 import { SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, startFinalVictoryMusic, stopAtmosphere, fadeMusicOut } from '../helpers/kittyHelpers.js';
+import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
 
 export function createTransitionScene(transitionKey, character, startHP, lives = 3, score = 0) {
     console.log('🎬 RAW PARAMS:', { transitionKey, character, startHP, lives, score });

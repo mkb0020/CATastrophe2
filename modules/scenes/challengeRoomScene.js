@@ -21,6 +21,8 @@ import {
 } from '../helpers/upgradeHelper.js';
 import { returnToLevel } from '../helpers/roomHelper.js';
 import { startChallenegeMusic, stopAllMusic } from '../helpers/kittyHelpers.js';
+import { setupMobilePlayerControls, setupTouchEvents, setupMobileExitWindow, showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+
 
 export function createChallengeRoomScene(data) {
   console.log('🎮 CHALLENGE ROOM SCENE');
@@ -34,7 +36,7 @@ export function createChallengeRoomScene(data) {
     return;
   }
   
-  const bgElement = document.querySelector('.parallax-bg'); // HIDE SCROLLING BG
+  const bgElement = document.querySelector('.parallax-bg');
   if (bgElement) {
     bgElement.style.display = 'none';
     console.log('🎨 Parallax background hidden');
@@ -50,6 +52,16 @@ export function createChallengeRoomScene(data) {
   
   console.log(`📊 Starting score: ${startScore}`);
   
+  // ==================== SHOW MOBILE HUD ====================
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.show();
+    console.log('📱 Mobile HUD shown for challenge room');
+  }
+  // ================================================================
+  
   if (isRoomCompleted(roomConfig.id)) {
     console.log('✅ Room already completed! Returning to level...');
     wait(0.5, () => returnToLevel(returnScene, returnData));
@@ -59,6 +71,7 @@ export function createChallengeRoomScene(data) {
   setGravity(1500);
   stopAllMusic();
   startChallenegeMusic();
+
 
   // ==================== BACKGROUND ====================
   add([
@@ -203,8 +216,7 @@ export function createChallengeRoomScene(data) {
     glow.scale = vec2(1 + Math.sin(time() * 2) * 0.1);
   });
   
-  // ==================== PLAYER ====================
-  const player = createPlayer(roomConfig, character, startHP);
+ const player = createPlayer(roomConfig, character, startHP);
   player.pos = vec2(roomConfig.playerSpawn.x, roomConfig.playerSpawn.y);
   applyUpgradesToPlayer(player);
   
@@ -220,7 +232,14 @@ export function createChallengeRoomScene(data) {
   const setLives = (val) => { lives = val; };
   const getCharacter = () => character;
   
-  setupPlayerControls(player, getGameActive);
+  if (mobileSetup && mobileSetup.isMobile) {
+    setupMobilePlayerControls(player, getGameActive, mobileSetup.mobileState);
+    setupTouchEvents(mobileSetup.controls, mobileSetup.mobileState, document.getElementById("gameCanvas"));
+    
+    setupMobileExitWindow(player, exitWindow, document.getElementById("gameCanvas"), returnScene, returnData, getScore, getLives);
+  } else {
+    setupPlayerControls(player, getGameActive);
+  }
   
   // ==================== CRUMBLING PLATFORM LOGIC ====================
   setupCrumblingPlatformCollisions(player, crumblingPlatforms);
@@ -236,7 +255,7 @@ player.onCollide("specialItem", (item) => {
       destroy(glow);
     }
     
-    play("upgrade", { volume: 0.4 });
+    play("upgrade", { volume: 0.3 });
     
     if (roomConfig.items.newMove.enabled) {
       openMoveSelectionModal(character, () => {
@@ -312,34 +331,50 @@ function openExitWindow() {
     startScore
   );
   
-  // ==================== HUD ====================
-    const hudElements = createUnifiedHUD(player);
+   const hudElements = createUnifiedHUD(player);
 
-    let hudUpdateCounter = 0;
-    onUpdate(() => {
-      if (gameActive) {
-        hudUpdateCounter++;
-        if (hudUpdateCounter % 5 === 0) {
-          updateUnifiedHUD(hudElements, score, null, player, lives); 
+  let hudUpdateCounter = 0;
+  onUpdate(() => {
+    if (gameActive) {
+      hudUpdateCounter++;
+      if (hudUpdateCounter % 5 === 0) {
+       
+        updateUnifiedHUD(hudElements, score, null, player, lives);
+        
+        // ====================  UPDATE MOBILE HUD ====================
+        if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+          mobileHUD.updateScore(score);
+          mobileHUD.updateHP(player.hp, player.maxHP);
+          mobileHUD.updateLives(lives);
+          mobileHUD.updateTime(0); 
         }
+        // ===================================================================
       }
-    });
+    }
+  });
   
   // ==================== CAMERA ====================
   setupChallengeRoomCamera(player, roomConfig, getGameActive, character);
   
   // ==================== CLEANUP ====================
-    onSceneLeave(() => {
-        hideHUD();
-        get("music").forEach(m => m.paused = true);
-        const bgElement = document.querySelector('.parallax-bg');
-        if (bgElement) {
-          bgElement.style.display = 'block';
-          console.log('🎨 Parallax background restored');
-        }
-      });
+  onSceneLeave(() => {
+    hideHUD();
+    
+    // ==================== HIDE MOBILE HUD ====================
+    if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+      mobileHUD.hide();
+      console.log('📱 Mobile HUD hidden on challenge room exit');
+    }
+    // =================================================================
+    
+    get("music").forEach(m => m.paused = true);
+    const bgElement = document.querySelector('.parallax-bg');
+    if (bgElement) {
+      bgElement.style.display = 'block';
+      console.log('🎨 Parallax background restored');
+    }
+  });
 }
-
 // ==================== HELPER FUNCTIONS ====================
 
 function createCrumblingPlatform(x, y, width, height) {
@@ -417,7 +452,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
       if (!platform.isBeingSteppedOn) {
         console.log('💣 Starting crumble timer!');
         platform.isBeingSteppedOn = true;
-        play("crumble", { volume: 0.4 }); 
+        play("crumble", { volume: 0.3 }); 
         startCrumble(platform);
       }
     } else if (player.vel.y < 0 || !horizontalOverlap) {

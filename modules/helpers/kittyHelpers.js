@@ -1,4 +1,4 @@
-// KittyUtils.js - Combined utility module for CATastrophe2
+// KittyUtils.js
 import { getCharacterList } from '../config/characters.js';
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 
@@ -565,7 +565,6 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
             pauseMenuPop = null;
         }
         
-        // Remove event listeners and hide buttons
         const resumeBtn = document.getElementById('pauseResumeBtn');
         const quitBtn = document.getElementById('pauseQuitBtn');
         if (resumeBtn && resumeHandler) resumeBtn.removeEventListener('click', resumeHandler);
@@ -595,7 +594,6 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
             pauseMenuPop = null;
         }
         
-        // Remove event listeners and hide buttons
         const resumeBtn = document.getElementById('pauseResumeBtn');
         const quitBtn = document.getElementById('pauseQuitBtn');
         if (resumeBtn && resumeHandler) resumeBtn.removeEventListener('click', resumeHandler);
@@ -933,6 +931,20 @@ export function initializeModals() {
 }
 
 
+
+
+// ================================== MOBILE ==========================================
+export function updateControlsForMobile(isMobile) {
+  const pauseBtn = document.getElementById('pause-btn');
+  const volumeBtn = document.getElementById('volume-btn');
+  
+  if (isMobile && pauseBtn && volumeBtn) {
+    pauseBtn.style.width = '45px';
+    pauseBtn.style.height = '45px';
+    volumeBtn.style.width = '45px';
+    volumeBtn.style.height = '45px';
+  }
+}
 
 // ================================== INITIALIZATION ==========================================
 export function initializeAllUIHelpers() {

@@ -1,5 +1,4 @@
 // mobileControls.js
-
 import { SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
 import { ROOMS } from '../config/challengeRoom.js';
 import { getRoom } from '../config/challengeRoom.js';
@@ -59,38 +58,6 @@ export function createOrientationPrompt() {
   return prompt;
 }
 
-// ==================== CANVAS SCALING ====================
-export function setupResponsiveCanvas(canvasElement, targetWidth = 1000, targetHeight = 480) {
-  function resizeCanvas() {
-    const targetRatio = targetWidth / targetHeight;
-    const windowRatio = window.innerWidth / window.innerHeight;
-    
-    let newWidth, newHeight;
-    
-    if (windowRatio > targetRatio) {
-      newHeight = window.innerHeight;
-      newWidth = newHeight * targetRatio;
-    } else {
-      newWidth = window.innerWidth;
-      newHeight = newWidth / targetRatio;
-    }
-    
-    canvasElement.style.width = `${newWidth}px`;
-    canvasElement.style.height = `${newHeight}px`;
-    
-    console.log('🎨 Canvas resized:', { newWidth, newHeight, ratio: newWidth/newHeight });
-  }
-  
-  resizeCanvas();
-  
-  window.addEventListener('resize', resizeCanvas);
-  window.addEventListener('orientationchange', () => {
-    setTimeout(resizeCanvas, 100); 
-  });
-  
-  return resizeCanvas;
-}
-
 // ==================== TOUCH CONTROLS ====================
 export function createTouchControls() {
   const controlsContainer = document.createElement('div');
@@ -112,14 +79,14 @@ export function createTouchControls() {
         bottom: 20px;
         width: 80px;
         height: 80px;
-        background: rgba(255, 255, 255, 0.3);
-        border: 3px solid rgba(255, 255, 255, 0.5);
+        background: rgba(2, 144, 83, 0.5);
+        border: 3px solid rgba(103,254,189, 0.8);
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 36px;
-        color: white;
+        color: rgb(103,254,189);
         pointer-events: all;
         user-select: none;
         -webkit-user-select: none;
@@ -128,7 +95,7 @@ export function createTouchControls() {
       }
       
       .touch-arrow:active {
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(103,254,189, 0.5);
         transform: scale(0.95);
       }
       
@@ -476,3 +443,157 @@ export function cleanupMobileControls() {
   
   console.log('🧹 Mobile controls cleaned up');
 }
+
+
+// ==================== MOBILE HUD CONTROLLER ====================
+export class MobileHUDController {
+  constructor() {
+    this.isMobile = detectMobile();
+    
+    if (!this.isMobile) return;
+    
+    this.scoreEl = document.getElementById('mobileScore');
+    this.hpEl = document.getElementById('mobileHP');
+    this.livesEl = document.getElementById('mobileLives');
+    this.timeEl = document.getElementById('mobileTime');
+    this.volumeBtn = document.getElementById('mobileVolumeBtn');
+    this.pauseBtn = document.getElementById('mobilePauseBtn');
+    
+    console.log('📱 Mobile HUD Controller initialized');
+  }
+  
+  updateScore(score) {
+    if (this.scoreEl) {
+      this.scoreEl.textContent = `Score: ${score}`;
+    }
+  }
+  
+  updateHP(hp, maxHP) {
+    if (this.hpEl) {
+      this.hpEl.textContent = `HP: ${hp}`;
+      
+      if (hp <= maxHP * 0.3) {
+        this.hpEl.classList.add('low-hp');
+      } else {
+        this.hpEl.classList.remove('low-hp');
+      }
+    }
+  }
+  
+  updateLives(lives) {
+    if (this.livesEl) {
+      this.livesEl.textContent = `Lives: ${lives}`;
+    }
+  }
+  
+  updateTime(seconds) {
+    if (this.timeEl) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      this.timeEl.textContent = `Time: ${mins}:${secs.toString().padStart(2, '0')}`;
+      
+      if (seconds <= 30) {
+        this.timeEl.classList.add('low-time');
+      } else {
+        this.timeEl.classList.remove('low-time');
+      }
+    }
+  }
+  
+  setupVolumeButton(onToggle) {
+    if (this.volumeBtn) {
+      this.volumeBtn.addEventListener('click', () => {
+        const isMuted = onToggle();
+        this.volumeBtn.textContent = isMuted ? '🔇' : '🔊';
+      });
+    }
+  }
+  
+  setupPauseButton(onPause) {
+    if (this.pauseBtn) {
+      this.pauseBtn.addEventListener('click', onPause);
+    }
+  }
+  
+  hide() {
+    const overlay = document.querySelector('.mobile-hud-overlay');
+    if (overlay) {
+      overlay.classList.remove('show');
+      console.log('📱 Mobile HUD hidden');
+    }
+  }
+  
+  show() {
+    const overlay = document.querySelector('.mobile-hud-overlay');
+    if (overlay) {
+      overlay.classList.add('show');
+      console.log('📱 Mobile HUD shown');
+    }
+  }
+}
+
+// ==================== MOBILE ARROW CONTROLS ====================
+export function showMobileArrows() {
+  const controls = document.getElementById('touchControls');
+  if (controls) {
+    controls.style.display = 'block';
+    console.log('➡️ Mobile arrows shown');
+  }
+}
+
+export function hideMobileArrows() {
+  const controls = document.getElementById('touchControls');
+  if (controls) {
+    controls.style.display = 'none';
+    console.log('⬅️ Mobile arrows hidden');
+  }
+}
+
+// ==================== UPDATE CANVAS SCALING FOR MOBILE ====================
+export function setupResponsiveCanvas(canvasElement, targetWidth = 1000, targetHeight = 480) {
+  function resizeCanvas() {
+    const isMobile = window.innerWidth <= 1024;
+    
+    if (isMobile) {
+      canvasElement.style.width = '100vw';
+      canvasElement.style.height = '100vh';
+      canvasElement.style.position = 'fixed';
+      canvasElement.style.top = '0';
+      canvasElement.style.left = '0';
+      
+      console.log('📱 Mobile canvas: Full screen', {
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    } else {
+      const targetRatio = targetWidth / targetHeight;
+      const windowRatio = window.innerWidth / window.innerHeight;
+      
+      let newWidth, newHeight;
+      
+      if (windowRatio > targetRatio) {
+        newHeight = Math.min(window.innerHeight - 200, targetHeight);
+        newWidth = newHeight * targetRatio;
+      } else {
+        newWidth = Math.min(window.innerWidth - 40, targetWidth);
+        newHeight = newWidth / targetRatio;
+      }
+      
+      canvasElement.style.width = `${newWidth}px`;
+      canvasElement.style.height = `${newHeight}px`;
+      canvasElement.style.position = 'relative';
+      
+      console.log('🖥️ Desktop canvas:', { newWidth, newHeight });
+    }
+  }
+  
+  resizeCanvas();
+  
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('orientationchange', () => {
+    setTimeout(resizeCanvas, 100);
+  });
+  
+  return resizeCanvas;
+}
+

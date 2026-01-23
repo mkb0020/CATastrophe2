@@ -2,6 +2,7 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../helpers/kittyHelpers.js';
 import { getCharacterStats } from '../config/characters.js'; 
+import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
 
 export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
   console.log('☠️ GAME OVER SCENE (NO LIVES LEFT)');

@@ -41,6 +41,8 @@ import {
   getUpgrades 
 } from '../helpers/upgradeHelper.js';
 import { getRoom } from '../config/challengeRoom.js';
+import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction, showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+
 
 
 function createUnifiedLevel(levelId, data) {
@@ -61,6 +63,18 @@ function createUnifiedLevel(levelId, data) {
   
   const currentUpgrades = getUpgrades();
   console.log('📊 Current Upgrades:', currentUpgrades);
+
+  // ==================== SHOW MOBILE HUD ====================
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.show();
+    showMobileArrows(); 
+
+    console.log('📱 Mobile HUD shown for level');
+  }
+  // ================================================================
 
   let logTimer = 0;
   onUpdate(() => {
@@ -96,7 +110,6 @@ function createUnifiedLevel(levelId, data) {
   
   addCups(levelConfig);
   addSpecialItems(levelConfig);
-  
   addLaserBeams(levelConfig);
 
   const player = createPlayer(levelConfig, character, startHP);
@@ -129,24 +142,45 @@ function createUnifiedLevel(levelId, data) {
   const setLives = (val) => { lives = val; };
   const getCharacter = () => character;
 
-  setupPlayerControls(player, getGameActive);
-
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
-  
 
-if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
-  const doorData = doorsIn.map((doorObj, index) => ({
-    doorObj: doorObj,
-    doorConfig: levelConfig.challengeDoorIN[index]
-  }));
-  
-  setupDoorInteraction(player, doorData, levelConfig, levelId, () => ({
-    character: getCharacter(),
-    lives: getLives(),
-    score: getScore(),
-    timeLeft: getTimeLeft()  
-  }));
-}
+  // 📱 MOBILE vs 🖥️ DESKTOP CONTROLS
+  if (mobileSetup && mobileSetup.isMobile) {
+    // 📱 MOBILE CONTROLS
+    setupMobilePlayerControls(player, getGameActive, mobileSetup.mobileState);
+    setupTouchEvents(mobileSetup.controls, mobileSetup.mobileState, document.getElementById("gameCanvas"));
+    
+    if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
+      const doorData = doorsIn.map((doorObj, index) => ({
+        doorObj: doorObj,
+        doorConfig: levelConfig.challengeDoorIN[index]
+      }));
+      
+      setupMobileDoorInteraction(player, doorData, levelConfig, levelId, () => ({
+        character: getCharacter(),
+        lives: getLives(),
+        score: getScore(),
+        timeLeft: getTimeLeft()
+      }), document.getElementById("gameCanvas"));
+    }
+  } else {
+    // 🖥️ DESKTOP CONTROLS
+    setupPlayerControls(player, getGameActive);
+
+    if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
+      const doorData = doorsIn.map((doorObj, index) => ({
+        doorObj: doorObj,
+        doorConfig: levelConfig.challengeDoorIN[index]
+      }));
+      
+      setupDoorInteraction(player, doorData, levelConfig, levelId, () => ({
+        character: getCharacter(),
+        lives: getLives(),
+        score: getScore(),
+        timeLeft: getTimeLeft()  
+      }));
+    }
+  }
 
   setupVictoryCollision(player, levelId, levelConfig.nextBoss, character, getGameActive, setGameActive, getScore, levelConfig, levelConfig.bossSprite, getLives);   
   setupCupCollection(player, getScore, setScore);
@@ -175,14 +209,30 @@ if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
       hudUpdateCounter++;
       if (hudUpdateCounter % 5 === 0) {
         if (window.debugCounts) window.debugCounts.hud++;
+        
+        // ==================== UPDATE BOTH DESKTOP AND MOBILE HUD ====================
         updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
+        
+        if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+          mobileHUD.updateScore(score);
+          mobileHUD.updateHP(player.hp, player.maxHP);
+          mobileHUD.updateLives(lives);
+          mobileHUD.updateTime(timeLeft);
+        }
+        // ===========================================================================
       }
     }
   });
 
-
   onSceneLeave(() => {
     hideHUD();
+    
+    // ==================== HIDE MOBILE HUD ON SCENE LEAVE ====================
+    if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+      mobileHUD.hide();
+      console.log('📱 Mobile HUD hidden on scene leave');
+    }
+    // =================================================================================
   });
 }
 
@@ -224,6 +274,18 @@ export function createLevel5Scene(data, levelId) {
   
   const currentUpgrades = getUpgrades();
   console.log('📊 Current Upgrades:', currentUpgrades);
+
+  // ==================== SHOW MOBILE HUD ====================
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.show();
+    showMobileArrows();
+    console.log('📱 Mobile HUD shown for level');
+  }
+  // =========================================================
+
   let logTimer = 0;
   onUpdate(() => {
     logTimer += dt();
@@ -250,7 +312,7 @@ export function createLevel5Scene(data, levelId) {
     debug.showArea = !debug.showArea;
   });
 
-   setGravity(1500);
+  setGravity(1500);
   setupLevelMusic(levelConfig);
 
   const { bg } = addLevelEnvironment(levelConfig);
@@ -289,21 +351,44 @@ export function createLevel5Scene(data, levelId) {
   const setLives = (val) => { lives = val; };
   const getCharacter = () => character;
 
-  setupPlayerControls(player, getGameActive);
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
-  
-  if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
-    const doorData = doorsIn.map((doorObj, index) => ({
-      doorObj: doorObj,
-      doorConfig: levelConfig.challengeDoorIN[index]
-    }));
+
+  // 📱 MOBILE vs 🖥️ DESKTOP CONTROLS
+  if (mobileSetup && mobileSetup.isMobile) {
+    // 📱 MOBILE CONTROLS
+    setupMobilePlayerControls(player, getGameActive, mobileSetup.mobileState);
+    setupTouchEvents(mobileSetup.controls, mobileSetup.mobileState, document.getElementById("gameCanvas"));
     
-    setupDoorInteraction(player, doorData, levelConfig, 'level5', () => ({ 
-      character: getCharacter(),
-      lives: getLives(),
-      score: getScore(),
-      timeLeft: getTimeLeft()  
-    }));
+    if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
+      const doorData = doorsIn.map((doorObj, index) => ({
+        doorObj: doorObj,
+        doorConfig: levelConfig.challengeDoorIN[index]
+      }));
+      
+      setupMobileDoorInteraction(player, doorData, levelConfig, levelId, () => ({
+        character: getCharacter(),
+        lives: getLives(),
+        score: getScore(),
+        timeLeft: getTimeLeft()
+      }), document.getElementById("gameCanvas"));
+    }
+  } else {
+    // 🖥️ DESKTOP CONTROLS
+    setupPlayerControls(player, getGameActive);
+
+    if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
+      const doorData = doorsIn.map((doorObj, index) => ({
+        doorObj: doorObj,
+        doorConfig: levelConfig.challengeDoorIN[index]
+      }));
+      
+      setupDoorInteraction(player, doorData, levelConfig, levelId, () => ({
+        character: getCharacter(),
+        lives: getLives(),
+        score: getScore(),
+        timeLeft: getTimeLeft()  
+      }));
+    }
   }
   
   setupCupCollection(player, getScore, setScore);
@@ -344,14 +429,30 @@ export function createLevel5Scene(data, levelId) {
       hudUpdateCounter++;
       if (hudUpdateCounter % 5 === 0) {
         if (window.debugCounts) window.debugCounts.hud++;
+        
+// ==================== UPDATE BOTH DESKTOP AND MOBILE HUD ====================
         updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
+        
+        if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+          mobileHUD.updateScore(score);
+          mobileHUD.updateHP(player.hp, player.maxHP);
+          mobileHUD.updateLives(lives);
+          mobileHUD.updateTime(timeLeft);
+        }
+// ===========================================================================
       }
     }
   });
 
-
   onSceneLeave(() => {
     hideHUD();
+    
+    // ==================== HIDE MOBILE HUD ON SCENE LEAVE ====================
+    if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+      mobileHUD.hide();
+      hideMobileArrows();
+      console.log('📱 Mobile HUD hidden on scene leave');
+    }
+    // =====================================================================
   });
-
 }

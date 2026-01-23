@@ -487,14 +487,14 @@ export function animateDefeat(sprite, glow, isPlayer) {
 // ================================= FANCY  ANIMATIONS ===========================================
 // ========================= GENERAL =========================
 export function animateKaBAM(target) {
-  shake(30);
+  shake(40);
   const kabam = add([
     sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(8),
+    scale(10),
     anchor("center"),
     z(40),
-    opacity(1)
+    opacity(0.5)
   ]);
   animateSmoke(target);
   wait(0.4, () => destroy(kabam))
@@ -621,7 +621,7 @@ export function animatePoooof(target) {
     sprite("smokeBlob", { anim: "puff" }),
     pos(target.pos),
     scale(6),
-    opacity(1),
+    opacity(0.6),
     z(12),
     anchor("center")
     ]);
@@ -637,8 +637,8 @@ export function animateRedBoom(target) {
   const boom = add([
     sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(8),
-    opacity(0.8),
+    scale(10),
+    opacity(0.5),
     z(100),
     anchor("center")
   ]);
@@ -651,12 +651,12 @@ export function animateRedBoom(target) {
 
 
 export function animateGreenBoom(target) {
-  shake(30);
+  shake(50);
   const boom = add([
     sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(8),
-    opacity(1),
+    scale(10),
+    opacity(0.5),
     z(100),
     anchor("center")
   ]);
@@ -725,11 +725,12 @@ export function animateExplosion(target) {
   const boom = add([
     sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(8),
-    opacity(1),
+    scale(10),
+    opacity(0.5),
     z(100),
     anchor("center")
   ]);
+  animateSmoke(target);
   wait(0.5, () => {
     tween(boom.opacity, 0, 0.3, (o) => boom.opacity = o, easings.easeOutQuad)
       .then(() => destroy(boom));
@@ -773,7 +774,7 @@ export function animateSmoke(target) {
     z(95),
     anchor("center")
   ]);
-  tween(poof.opacity, 0.7, 0.5, (o) => poof.opacity = o, easings.easeOutQuad);
+  tween(poof.opacity, 0.6, 0.5, (o) => poof.opacity = o, easings.easeOutQuad);
   tween(poof.pos.y, poof.pos.y - 50, 1.2, (y) => poof.pos.y = y, easings.easeOutQuad);
   wait(0.3, () => {
     tween(poof.opacity, 0, 0.9, (o) => poof.opacity = o, easings.easeOutQuad)
@@ -1162,7 +1163,7 @@ export function animateMouseMissiles(attacker, target) {
     scale(8),
     anchor("center"),
     z(40),
-    opacity(1)
+    opacity(0.5)
   ]);
 
   wait(0.25, () => destroy(flash));
@@ -1529,7 +1530,7 @@ export function animatePoisonAttack(boss, hero) {
                   .then(() => {
                     arrow.pos = boss.pos;
                     animateKaBAM(boss);
-                    animatePoooof(boss);
+                    animateSmoke(boss);
                     shake(20);
 
                     destroy(arrow);
@@ -1726,7 +1727,7 @@ export function animatePoisonAttack(boss, hero) {
      const finalMoveBG = add([
       sprite("finalMoveBG", { anim: "fade" }),
       pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(10),
+      scale(20),
       anchor("center"),
       z(1000),
       fixed(),
@@ -2087,7 +2088,7 @@ export function animatePoisonAttack(boss, hero) {
     ]);
   
     const bg1 = add([
-      sprite("finalMoveBG1"),
+      sprite("finalMoveBG"),
       pos(SCREEN_W / 2, SCREEN_H / 2),
       anchor("center"),
       scale(5),
@@ -2157,7 +2158,7 @@ export function animatePoisonAttack(boss, hero) {
         destroy(bg1);
   
         const bg2 = add([
-          sprite("finalMoveBG2", { anim: "fade" }),
+          sprite("finalMoveBG", { anim: "fade" }),
           pos(SCREEN_W / 2, SCREEN_H / 2),
           anchor("center"),
           scale(5),

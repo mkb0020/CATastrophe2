@@ -2,11 +2,20 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
-
+import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
 
 
 
 export function createStartScene(){
+    // ==================== HIDE MOBILE HUD ====================
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.hide();
+    hideMobileArrows(); 
+  }
+  // =========================================================
   add([
     sprite('startBG'),
     pos(0, 0),
@@ -67,6 +76,15 @@ export function createStartScene(){
 }
 
 export function createMainMenuScene() {
+    // ==================== HIDE MOBILE HUD ====================
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.hide();
+    hideMobileArrows(); 
+  }
+  // =========================================================
   const mainMenuButtons = document.getElementById('mainMenuButtons');
   if (mainMenuButtons) mainMenuButtons.classList.remove('hidden');
   const menuBG = add([
@@ -76,9 +94,16 @@ export function createMainMenuScene() {
     z(0)
   ]);
 
+  const title = add([
+    sprite('title'),
+    pos(center().x - 350, 30),
+    scale(1),
+    z(3)
+  ]);
+
   const titlePanel = add([
-    rect(800, 100, { radius: 30 }),
-    pos(center().x - 400, 30),
+    rect(800, 115, { radius: 30 }),
+    pos(center().x - 400, 28),
     color(17, 12, 30),
     outline(6),
     z(1)
@@ -94,6 +119,7 @@ export function createMainMenuScene() {
     pos(center().x, 80),
     anchor("center"),
     color(rgb(255, 255, 255)),
+    opacity(0),
     z(5)
   ]);
 
@@ -102,6 +128,7 @@ export function createMainMenuScene() {
     pos(center().x + 2, 82),
     anchor("center"),
     color(rgb(115,1,50)),
+    opacity(0),
     z(4)
   ]);
 
@@ -110,7 +137,8 @@ export function createMainMenuScene() {
     pos(center().x + 4, 84),
     anchor("center"),
     color(rgb(0, 255, 255)),
-    opacity(0.8),
+    //opacity(0.8),
+    opacity(0),
     z(3)
   ]);
 
@@ -119,7 +147,8 @@ export function createMainMenuScene() {
     pos(center().x + 8, 88),
     anchor("center"),
     color(rgb(220, 76, 232)),
-    opacity(0.5),
+    //opacity(0.5),
+    opacity(0),
     z(2)
   ]);
 
@@ -148,6 +177,15 @@ export function createMainMenuScene() {
 }
 
 export function createCharSelectScene() {
+   // ==================== HIDE MOBILE HUD ====================
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.hide();
+    hideMobileArrows(); 
+  }
+  // =========================================================
   let selectedIndex = null;
   let animationComplete = false; 
   let shopMusic = null;

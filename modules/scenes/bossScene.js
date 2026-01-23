@@ -52,6 +52,7 @@ import {
   animateFlash
 } from '../helpers/bossHelpers.js';
 import { applyUpgradesToBossPlayer } from '../helpers/upgradeHelper.js';
+import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
 
 
 export function createBossBattleScene(bossId, character, startHP, startScore = 0) {
