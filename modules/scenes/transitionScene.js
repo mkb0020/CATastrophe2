@@ -336,7 +336,7 @@ function createTransition7Cinematic(character, startHP) {
 
   wait(0.3, () => {
     tween(whiteScreen.opacity, 0, 0.8, (val) => whiteScreen.opacity = val, easings.easeOutQuad);
-
+    animateSmokeTransition();
     wait(0.3, () => {
       for (let i = 0; i < 12; i++) {
         const xPos = (i % 4) * (width() / 3) + rand(-50, 50);
@@ -346,7 +346,7 @@ function createTransition7Cinematic(character, startHP) {
           sprite("smokeBlob", { anim: "puff" }),
           pos(xPos, yPos),
           scale(6 + rand(-1, 1)),
-          opacity(0.3),
+          opacity(0),
           z(9998),
           anchor("center"),
           fixed(),
@@ -355,17 +355,17 @@ function createTransition7Cinematic(character, startHP) {
 
         tween(poof.pos.y, poof.pos.y + rand(-30, 30), 2, (y) => poof.pos.y = y, easings.easeOutQuad);
 
-        const smokeClear = add([
-          sprite('smokeClear', { anim: 'puff' }),
-          pos(0, 0),
-          scale(10, 10), 
-          z(9999),
-          fixed(),
-          opacity(0.7)
-        ]);
+        //const smokeClear = add([
+        //  sprite('smokeClear', { anim: 'puff' }),
+        //  pos(0, 0),
+        //  scale(10, 10), 
+        //  z(9999),
+        //  fixed(),
+       //   opacity(0.7)
+       // ]);
             
-        smokeClear.play("puff", { loop: false });
-        wait(0.8, () => destroy(smokeClear));
+        //smokeClear.play("puff", { loop: false });
+        //wait(0.8, () => destroy(smokeClear));
 
         wait(1.0 + (i * 0.03), () => {
           tween(poof.opacity, 0, 1.5, (o) => poof.opacity = o, easings.easeOutQuad)

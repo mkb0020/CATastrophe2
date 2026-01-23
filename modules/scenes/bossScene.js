@@ -20,7 +20,6 @@ import {
   animateExplosion,
   animateFireball,
   animateSmoke,
-  animateSwirl,
   animatePowerup,
   animateClaw,
   animateZoomies,
@@ -241,7 +240,7 @@ applyUpgradesToBossPlayer(player);
         break;
         
       case "GOURD GUARD":
-        animateSwirl(attackerSprite);
+        animatePowerup(attackerSprite);
         animateHeal(attackerSprite, attackerGlow);
         break;
       

@@ -4,6 +4,8 @@ import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/charac
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
 
 
+
+
 export function createStartScene(){
   add([
     sprite('startBG'),
@@ -67,7 +69,6 @@ export function createStartScene(){
 export function createMainMenuScene() {
   const mainMenuButtons = document.getElementById('mainMenuButtons');
   if (mainMenuButtons) mainMenuButtons.classList.remove('hidden');
-
   const menuBG = add([
     sprite('menuBG'),
     pos(0, 0),
