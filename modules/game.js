@@ -34,7 +34,9 @@ const k = kaplay({
   background: [11, 11, 27, 0],
   global: false, 
   canvas: document.getElementById("gameCanvas"),
-  debug: true, 
+  debug: true,
+  stretch: true,  
+  crisp: true     
 });
 
 window.k = k;
@@ -53,7 +55,7 @@ loadFont("science", "assets/fonts/ScienceGothic.ttf");
 async function loadAssets() {
   console.log('📦 Loading game assets...');
   //MUSIC 
- loadSound("menuMusic", "assets/sounds/tracks/mainMenu.wav"); 
+  loadSound("menuMusic", "assets/sounds/tracks/mainMenu.wav"); 
   loadSound("finalBossMusic", "assets/sounds/tracks/finalBoss.wav");
   loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.mp3")
   loadSound("finalVictory", "assets/sounds/tracks/endCredits.wav");
@@ -101,8 +103,6 @@ async function loadAssets() {
   loadSound("atmosphere", "assets/sounds/fx/atmosphere.wav");
   loadSound("finalMovePowerUp", "assets/sounds/fx/finalMovePowerUp.wav");
   loadSound("finalMoveZap", "assets/sounds/fx/finalMoveZap.mp3");
-  
-
 
 // ======================================== SPRITES ========================================
   loadSprite("realNona", "assets/images/realNona.png");
@@ -133,7 +133,7 @@ async function loadAssets() {
   // ENEMIES
   loadSprite("cup", "assets/images/enemies/Cup.png");
   loadSprite("littleCucumber", "assets/images/animationSprites/LittleCucumber.png");
-  loadSprite("smallRat", "assets/images/animationSprites/SmallRat.png");
+  loadSprite("smallRat", "assets/images/enemies/SmallRat2.png");
   loadSprite("smallRat2", "assets/images/enemies/SmallRat2.png");
   loadSprite("ghostRat", "assets/images/animationSprites/GhostRat.png");
   loadSprite("miniBossRat", "assets/images/animationSprites/bigRatAnimate.png", {
@@ -165,15 +165,10 @@ async function loadAssets() {
   loadSprite("statsUpgrade", "assets/images/animationSprites/statsUpgrade.png", { sliceX:8, sliceY:1, anims:{pulse:{from:0,to:7, loop: true, speed:5}} });
   loadSprite("moveUpgrade", "assets/images/animationSprites/moveUpgrade.png", { sliceX:33, sliceY:1, anims:{pulse:{from:0,to:32, loop: true, speed:5}} });
   // SCENES
-  loadSprite("drip2", "assets/images/animationSprites/Drip2.png", { 
-    sliceX: 17, 
+  loadSprite("drip", "assets/images/animationSprites/drip.png", { 
+    sliceX: 11, 
     sliceY: 1, 
-    anims: { drip: { from: 0, to: 16 } } 
-});
-  loadSprite("drip3", "assets/images/animationSprites/Drip3.png", { 
-    sliceX: 12, 
-    sliceY: 1, 
-    anims: { drip: { from: 0, to: 11 } } 
+    anims: { drip: { from: 0, to: 10 } } 
 });
   loadSprite("lightning", "assets/images/animationSprites/Lightning.png", { sliceX:6, sliceY:1, anims:{glitch:{from:0,to:5}} });
   loadSprite("smokeClear", "assets/images/animationSprites/smokeClear.png", { sliceX:18, sliceY:1, anims:{puff:{from:0,to:17, loop: false, speed:10}} });
@@ -217,7 +212,6 @@ async function loadAssets() {
     anims: { fade: { from: 0, to: 63 } }
 });
 
-
   loadSprite("finalMoveBG", "assets/images/animationSprites/finalMoveBG.png", { 
     sliceX: 80, 
     sliceY: 1, 
@@ -235,17 +229,25 @@ async function loadAssets() {
     anims: { fade: { from: 0, to: 9 } }
 });
 
+
+
+loadSprite("finalMoveBG1", "assets/images/animationSprites/finalMoveBG1.png");
+loadSprite("finalMoveBG2", "assets/images/animationSprites/finalMoveBG2.png", { 
+    sliceX: 32, 
+    sliceY: 1, 
+    anims: { fade: { from: 0, to: 31 } }
+});
+
   // BATTLE ANIMATIONS
-  loadSprite("smokeBlob", "assets/images/animationSprites/smokeBlobs.png", { sliceX:4, sliceY:1, anims:{puff:{from:0,to:3}} });
-  loadSprite("explosion", "assets/images/animationSprites/redBoom.png", { sliceX:9, sliceY:1, anims:{burst:{from:0,to:8}} });
-  loadSprite("smoke", "assets/images/animationSprites/Poof2.png", { sliceX:5, sliceY:1, anims:{puff:{from:0,to:4}} });
-  loadSprite("swirl", "assets/images/animationSprites/swirl.png", { sliceX:10, sliceY:1, anims:{spin:{from:0,to:9}} });
+  loadSprite("smokeBlob", "assets/images/animationSprites/newSmoke.png", { sliceX:9, sliceY:1, anims:{puff:{from:0,to:8}} });
+  loadSprite("poof", "assets/images/animationSprites/newPoof.png", { sliceX:8, sliceY:1, anims:{puff:{from:0,to:7}} });
+  loadSprite("greenBlast", "assets/images/animationSprites/GreenBlast.png", { sliceX:12, sliceY:1, anims:{glitch:{from:0,to:11}} });
+  loadSprite("bam", "assets/images/animationSprites/newBoom.png", { sliceX: 7, sliceY: 1, anims: { burst: { from: 0, to: 6 } }});
   loadSprite("powerup", "assets/images/animationSprites/Powerup.png", { sliceX:9, sliceY:1, anims:{beam:{from:0,to:8}} });
+  loadSprite("fireball", "assets/images/animationSprites/Fireball.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
   loadSprite("zoomies", "assets/images/animationSprites/Zoomies.png", { sliceX:3, sliceY:3, anims:{glitch:{from:0,to:8}} });
   loadSprite("claw", "assets/images/animationSprites/CatnipClaw.png", { sliceX:32, sliceY:1, anims:{slash:{from:0,to:31,speed:30}} }); 
-  loadSprite("greenBlast", "assets/images/animationSprites/GreenBlast.png", { sliceX:12, sliceY:1, anims:{glitch:{from:0,to:11}} });
-  loadSprite("biscuits", "assets/images/animationSprites/Biscuits.png", { sliceX:8, sliceY:3, anims:{glitch:{from:0,to:23}} });
-  loadSprite("fireball", "assets/images/animationSprites/Fireball.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
+  loadSprite("biscuits", "assets/images/animationSprites/Biscuits.png", { sliceX:8, sliceY:1, anims:{glitch:{from:0,to:7}},  loop: true, });
   loadSprite("scratch2", "assets/images/animationSprites/Scratch2.png", { sliceX:5, sliceY:1, anims:{glitch:{from:0,to:4}} });
   loadSprite("superposition", "assets/images/animationSprites/Superposition.png", { sliceX: 4,   sliceY: 1,   anims: { glitch: { from: 0, to: 3 } }});
   loadSprite("shock", "assets/images/animationSprites/Shock.png", {   sliceX: 4, sliceY: 1,   anims: { burst: { from: 0, to: 3 } }});
@@ -254,14 +256,10 @@ async function loadAssets() {
   loadSprite("bottle", "assets/images/animationSprites/PoisonBottle.png", { sliceX: 1, sliceY: 1, anims: { glitch: { from: 0, to: 0 } }});
   loadSprite("shatter", "assets/images/animationSprites/Shatter.png", { sliceX: 6, sliceY: 1, anims: { glitch: { from: 0, to: 5 } }});
   loadSprite("poison", "assets/images/animationSprites/Poison.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});
-  loadSprite("bam", "assets/images/animationSprites/Bam.png", { sliceX: 8, sliceY: 1, anims: { glitch: { from: 0, to: 7 } }});
   loadSprite("bite", "assets/images/animationSprites/Bite.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});
   loadSprite("laserCharge", "assets/images/animationSprites/LaserCharge.png", { sliceX: 6, sliceY: 1, anims: { glitch: { from: 0, to: 5 } }});
   loadSprite("laserBeam", "assets/images/animationSprites/LaserBeam.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});
   loadSprite("rage", "assets/images/animationSprites/RodentRage.png", { sliceX:3, sliceY:3, anims:{glitch:{from:0,to:8}} });
-  loadSprite("boom", "assets/images/animationSprites/redBoom.png", { sliceX:9, sliceY:1, anims:{burst:{from:0,to:8}} });
-  loadSprite("greenBoom", "assets/images/animationSprites/greenBoom.png", { sliceX:5, sliceY:1, anims:{burst:{from:0,to:4}} });
-  loadSprite("poof", "assets/images/animationSprites/Poof.png", { sliceX:8, sliceY:1, anims:{burst:{from:0,to:7}} });
   //FINISH HIM MOVES
   loadSprite("lock", "assets/images/animationSprites/LockOn.png", { sliceX:22, sliceY:1, anims:{glitch:{from:0,to:21,speed:15}} });
   loadSprite("catArrow", "assets/images/animationSprites/CatArrow2.png");
@@ -345,7 +343,6 @@ function registerScenes() {
   scene("bossRatKing", (data) => createRatKingBossScene(data));
   scene("observerBoss", (data) => createObserverBossScene(data));
   
-
   scene("youDied", (data) => createYouDiedScene(data));
   scene("gameOver", (data) => createGameOverScene(data));
   scene("victory", (data) => createVictoryScene(data));
