@@ -612,16 +612,21 @@ export function createCharSelectScene() {
     "preview"
   ]);
 
+
+
+
+
+  
   const characterNameDisplay = add([
     text("", { 
       size: 45, 
       font: "science",
       weight: "bold"
     }),
-    pos(500, 455),
+    pos(500, 453),
     anchor("center"),
-    color(rgb(0, 255, 255)),
-    z(11),
+    color(rgb(103, 254, 189)),
+    z(14),
     opacity(0),
     "charNameDisplay"
   ]);
@@ -632,13 +637,35 @@ export function createCharSelectScene() {
       font: "science",
       weight: "bold"
     }),
-    pos(503, 458),
+    pos(503, 456),
     anchor("center"),
     color(rgb(0, 0, 0)),
-    z(10),
+    z(13),
     opacity(0),
     "characterNameShadow"
   ]);
+
+
+  const previewBG = add([
+    rect(250, 55, { radius: 10 }),
+    pos(375, 420),
+    color(rgb(0, 0, 0)),
+    outline(3, rgb(103, 254, 189)),
+    opacity(0),  
+    z(11),
+    "previewBG"
+  ]);
+
+    const previewBG2 = add([
+      rect(248, 52, { radius: 10 }),
+      pos(376, 421),
+      color(rgb(103, 254, 189)),
+      opacity(0),  
+      z(12),
+    "previewBG2"
+  ]);
+
+
 
   function updatePreview(index) {
     const char = characters[index];
@@ -646,6 +673,9 @@ export function createCharSelectScene() {
     previewSprite.use(sprite(`${char.name}Sheet`, { frame: SPRITE_FRAMES.select }));
     previewSprite.scale = vec2(SPRITE_SCALES.select, SPRITE_SCALES.select);
     previewSprite.opacity = 1;
+
+    previewBG.opacity = 0.9;
+    previewBG2.opacity = 0.2;
     
     characterNameDisplay.text = char.name;
     characterNameDisplay.opacity = 1;
