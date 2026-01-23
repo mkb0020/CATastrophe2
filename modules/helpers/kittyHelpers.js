@@ -529,8 +529,8 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
     let pauseOverlay = null;
     let pauseMenu = null;
     let pauseMenuPop = null;
-    let resumeBtn = null;
-    let quitBtn = null;
+    let resumeHandler = null;
+    let quitHandler = null;
 
     const pause = () => {
         if (!gameActiveGetter() || isPaused) return;
@@ -542,8 +542,8 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
         pauseOverlay = overlay.overlay;
         pauseMenu = overlay.menuPanel;
         pauseMenuPop = overlay.menuPanelPop;
-        resumeBtn = overlay.resumeBtn;
-        quitBtn = overlay.quitBtn;
+        resumeHandler = overlay.resumeHandler;
+        quitHandler = overlay.quitHandler;
     };
 
     const resume = () => {
@@ -564,14 +564,18 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
             destroy(pauseMenuPop);
             pauseMenuPop = null;
         }
-        if (resumeBtn) {
-            destroy(resumeBtn);
-            resumeBtn = null;
-        }
-        if (quitBtn) {
-            destroy(quitBtn);
-            quitBtn = null;
-        }
+        
+        // Remove event listeners and hide buttons
+        const resumeBtn = document.getElementById('pauseResumeBtn');
+        const quitBtn = document.getElementById('pauseQuitBtn');
+        if (resumeBtn && resumeHandler) resumeBtn.removeEventListener('click', resumeHandler);
+        if (quitBtn && quitHandler) quitBtn.removeEventListener('click', quitHandler);
+        
+        const pauseButtons = document.getElementById('pauseMenuButtons');
+        if (pauseButtons) pauseButtons.classList.add('hidden');
+        
+        resumeHandler = null;
+        quitHandler = null;
     };
 
     const quit = () => {
@@ -590,14 +594,18 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
             destroy(pauseMenuPop);
             pauseMenuPop = null;
         }
-        if (resumeBtn) {
-            destroy(resumeBtn);
-            resumeBtn = null;
-        }
-        if (quitBtn) {
-            destroy(quitBtn);
-            quitBtn = null;
-        }
+        
+        // Remove event listeners and hide buttons
+        const resumeBtn = document.getElementById('pauseResumeBtn');
+        const quitBtn = document.getElementById('pauseQuitBtn');
+        if (resumeBtn && resumeHandler) resumeBtn.removeEventListener('click', resumeHandler);
+        if (quitBtn && quitHandler) quitBtn.removeEventListener('click', quitHandler);
+        
+        const pauseButtons = document.getElementById('pauseMenuButtons');
+        if (pauseButtons) pauseButtons.classList.add('hidden');
+        
+        resumeHandler = null;
+        quitHandler = null;
         
         if (window.levelMusic) {
             window.levelMusic.stop();
@@ -607,10 +615,10 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
         if (onQuitCallback) {
             onQuitCallback();
         } else {
+            startMenuMusic();
             go("menu");
         }
     };
-
 
     onKeyPress("escape", () => {
         if (isPaused) {
