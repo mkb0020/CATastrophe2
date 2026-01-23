@@ -32,45 +32,57 @@ import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '..
 //==================================== TRANSITION ANIMATION - TO GAME OVER ====================================
 function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {
   console.log('☠️ No lives remaining - GAME OVER');
-  console.log('☠️ Playing blood drip animation...');
   stopAllMusic();
-  
-  const bloodDrip = add([
-    sprite('drip3', { anim: 'drip' }),
+
+  const darkOverlay = add([
+    rect(width(), height()),
     pos(0, 0),
-    scale(10, 10),
-    z(1000),
     fixed(),
-    opacity(1)
+    color(0, 0, 0),
+    opacity(0),
+    z(4000),
   ]);
-  
-  bloodDrip.play('drip');
 
-  const bloodDrip2 = add([
-                      sprite('drip2', { anim: 'drip' }),
-                      pos(0, 0),
-                      scale(10, 10), 
-                      z(999),
-                      fixed(),
-                      opacity(1)
-                    ]);
-            
-  bloodDrip2.play('drip');  
+  const bloodDrip = add([
+    sprite('drip', { anim: 'drip' }),
+    pos(0, 0),
+    scale(10),
+    fixed(),
+    z(5000),
+    opacity(1),
+  ]);
 
-  wait(1, () => {
-        tween(bloodDrip.opacity, 0, 1.0, (val) => bloodDrip.opacity = val, k.easings.easeOutQuad);
-        destroy(bloodDrip);
-        });  
+bloodDrip.play('drip', { speed: 8 });
   
-  wait(1.5, () => {
+  wait(0.5, () => {
+    tween(
+      darkOverlay.opacity,
+      1,
+      0.5,
+      (val) => darkOverlay.opacity = val,
+      k.easings.easeOutQuad
+    );
+  });
+
+  wait(0.7, () => {
+    tween(
+      bloodDrip.opacity,
+      0,
+      0.6,
+      (val) => bloodDrip.opacity = val,
+      k.easings.easeOutQuad
+    );
+  });
+
+  wait(1.3, () => {
     gameStateSetter(false);
-    go("gameOver", { 
+    go("gameOver", {
       score: scoreGetter(),
       level: levelName,
       hp: 0,
       lives: 0,
-      character: character,
-      fromBloodDrip: true
+      character,
+      fromBloodDrip: true,
     });
   });
 }

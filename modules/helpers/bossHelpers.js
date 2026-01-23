@@ -489,14 +489,14 @@ export function animateDefeat(sprite, glow, isPlayer) {
 export function animateKaBAM(target) {
   shake(30);
   const kabam = add([
-    sprite("bam", { anim: "glitch" }),
+    sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(7),
+    scale(8),
     anchor("center"),
     z(40),
     opacity(1)
   ]);
-
+  animateSmoke(target);
   wait(0.4, () => destroy(kabam))
 }
 
@@ -540,9 +540,9 @@ export function animateBurn(target) {
   ]);
   
   const pooooof = add([
-    sprite("poof", { anim: "burst" }),
+    sprite("poof", { anim: "puff" }),
     pos(target.pos),
-    scale(3),
+    scale(5),
     opacity(0),
     z(12),
     anchor("center")
@@ -587,9 +587,9 @@ export function animateBurn(target) {
 
 export function animateGhostPoof(target) {
   const pooooof = add([
-    sprite("poof", { anim: "burst" }),
+    sprite("poof", { anim: "puff" }),
     pos(target.pos),
-    scale(2),
+    scale(4),
     opacity(1),
     z(12),
     anchor("center")
@@ -620,7 +620,7 @@ export function animatePoooof(target) {
   const pooooof = add([
     sprite("smokeBlob", { anim: "puff" }),
     pos(target.pos),
-    scale(3),
+    scale(6),
     opacity(1),
     z(12),
     anchor("center")
@@ -633,15 +633,16 @@ export function animatePoooof(target) {
 }
 
 export function animateRedBoom(target) {
-  shake(30);
+  shake(50);
   const boom = add([
-    sprite("boom", { anim: "burst" }),
+    sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(4),
-    opacity(1),
+    scale(8),
+    opacity(0.8),
     z(100),
     anchor("center")
   ]);
+  animateSmoke(target);
   wait(0.5, () => {
     tween(boom.opacity, 0, 0.3, (o) => boom.opacity = o, easings.easeOutQuad)
       .then(() => destroy(boom));
@@ -652,9 +653,9 @@ export function animateRedBoom(target) {
 export function animateGreenBoom(target) {
   shake(30);
   const boom = add([
-    sprite("greenBoom", { anim: "burst" }),
+    sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(4),
+    scale(8),
     opacity(1),
     z(100),
     anchor("center")
@@ -720,11 +721,11 @@ export function animateBigBoom(target) {
 }
 
 export function animateExplosion(target) {
-  shake(30);
+  shake(50);
   const boom = add([
-    sprite("explosion", { anim: "burst" }),
+    sprite("bam", { anim: "burst" }),
     pos(target.pos),
-    scale(4),
+    scale(8),
     opacity(1),
     z(100),
     anchor("center")
@@ -743,7 +744,7 @@ export function animateFireball(hero, target) {
   const fireball = add([
     sprite("fire", { anim: "ball" }),
     pos(start),
-    scale(3),
+    scale(4),
     z(90),
     anchor("center"),
     rotate(0)
@@ -767,7 +768,7 @@ export function animateSmoke(target) {
   const poof = add([
     sprite("smokeBlob", { anim: "puff" }),
     pos(target.pos.add(rand(-20, 20), rand(-20, 20))),
-    scale(4),
+    scale(8),
     opacity(0),
     z(95),
     anchor("center")
@@ -780,28 +781,7 @@ export function animateSmoke(target) {
   });
 }
 
-export function animateSwirl(target) {
-  const aura = add([
-    sprite("swirl", { anim: "spin" }),
-    pos(target.pos),
-    scale(2.5),
-    opacity(0),
-    z(85),
-    anchor("center")
-  ]);
-  tween(aura.opacity, 0.7, 0.3, (o) => aura.opacity = o, easings.easeOutQuad);
-  aura.onUpdate(() => {
-    aura.angle += 180 * dt();
-    aura.pos = target.pos.add(0, -40); 
-  });
-  const startScale = 2.5;
-  const endScale = 3.5;
-  tween(startScale, endScale, 1.5, (s) => aura.scale = vec2(s), easings.easeInOutSine);
-  wait(1.5, () => {
-    tween(aura.opacity, 0, 0.5, (o) => aura.opacity = o, easings.easeInQuad)
-      .then(() => destroy(aura));
-  });
-}
+
 
 export function animatePowerup(target) {
   const startY = target.pos.y + 100;
@@ -883,8 +863,8 @@ export function animateBiscuits(target) {
       paws.pos = target.pos.add(100, -20);
     });
 
-    wait(1.0, () => {
-      tween(paws.opacity, 0, 1, (o) => paws.opacity = o)
+    wait(0.8, () => {
+      tween(paws.opacity, 0, .5, (o) => paws.opacity = o)
         .then(() => destroy(paws));
     });
   }
@@ -1037,6 +1017,7 @@ export function animateLaserBeam(attacker, target) {
       easings.easeInQuad
     ).then(() => {
       animateRedBoom(target);
+      animateSmoke(target);
       shake(25);
       destroy(beam);
     });
@@ -1176,9 +1157,9 @@ export function animateRodentRage(attacker, target) {
 
 export function animateMouseMissiles(attacker, target) {
   const flash = add([
-    sprite("bam", { anim: "glitch" }),
+    sprite("bam", { anim: "burst" }),
     pos(attacker.pos.add(-40, 20)),
-    scale(4),
+    scale(8),
     anchor("center"),
     z(40),
     opacity(1)
@@ -1193,7 +1174,7 @@ export function animateMouseMissiles(attacker, target) {
       const ratProj = add([
         sprite("smallRat"),
         pos(attacker.pos.add(-30, 30)),
-        scale(5),
+        scale(0.7),
         anchor("center"),
         rotate(-15),
         z(40),
@@ -1334,6 +1315,7 @@ export function animateHydrogenHammer(boss, hero) {
       ).then(() => {
         shake(40);
         animateShock(hero);
+        animateSmoke(hero);
         tween(hammer.opacity, 0, 0.8, (o) => hammer.opacity = o)
           .then(() => destroy(hammer));
       });
@@ -2074,4 +2056,144 @@ export function animatePoisonAttack(boss, hero) {
               });
           });
       });
+  }
+
+
+
+
+  // ================== UPDATED ANIMATION USING LESS SPRITES - NOT APPLIED TO FELINE FISSION YET 
+  function whiteFlash(zIndex = 9999) {
+    return add([
+      rect(width(), height()),
+      pos(0, 0),
+      fixed(),
+      color(255, 255, 255),
+      opacity(0),
+      z(zIndex),
+    ]);
+  }
+  
+  function animateSuperSaiyanRefactor() {
+  
+    shake(50);
+  
+    const flash = add([
+      rect(SCREEN_W, SCREEN_H),
+      pos(0, 0),
+      fixed(),
+      color(255, 255, 255),
+      opacity(0),
+      z(2000),
+    ]);
+  
+    const bg1 = add([
+      sprite("finalMoveBG1"),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      anchor("center"),
+      scale(5),
+      fixed(),
+      z(1000),
+      opacity(0),
+    ]);
+  
+    const lightning = add([
+      sprite("lightning", { anim: "glitch" }),
+      pos(0, 0),
+      scale(10),
+      fixed(),
+      z(1001),
+      opacity(0),
+    ]);
+  
+    const fm1 = add([
+      sprite("finalMove1", { anim: "fade" }),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      scale(10),
+      anchor("center"),
+      fixed(),
+      z(2002),
+      opacity(0),
+    ]);
+  
+    const fm2 = add([
+      sprite("finalMove2", { anim: "fade" }),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      scale(10),
+      anchor("center"),
+      fixed(),
+      z(2002),
+      opacity(0),
+    ]);
+  
+    tween(bg1.opacity, 1, 0.3, v => bg1.opacity = v);
+  
+    wait(0.2, () => {
+      lightning.opacity = 1;
+      lightning.play("glitch", { speed: 15 });
+    });
+  
+    play("lightning", { volume: 0.4, speed: 0.8 });
+    wait(0.2, () => play("lightning", { volume: 0.2, speed: 0.8 }));
+    wait(0.4, () => play("lightning", { volume: 0.4, speed: 0.8 }));
+    wait(1, () => play("lightning", { volume: 0.3, speed: 0.8 }));
+  
+    wait(0.5, () => {
+      tween(fm1.opacity, 1, 0.6, v => fm1.opacity = v);
+      fm1.play("fade", { speed: 10 });
+  
+      wait(1.2, () => {
+        tween(fm1.opacity, 0, 0.6, v => fm1.opacity = v);
+      });
+    });
+  
+    wait(1, () => {
+  
+      tween(flash.opacity, 1, 0.2, v => flash.opacity = v);
+  
+      wait(1, () => {
+        tween(bg1.opacity, 0, 0.3, v => bg1.opacity = v);
+  
+        destroy(lightning);
+        destroy(bg1);
+  
+        const bg2 = add([
+          sprite("finalMoveBG2", { anim: "fade" }),
+          pos(SCREEN_W / 2, SCREEN_H / 2),
+          anchor("center"),
+          scale(5),
+          fixed(),
+          z(1000),
+        ]);
+  
+        bg2.play("fade", { speed: 8 }); 
+  
+      
+        tween(flash.opacity, 0, 0.3, v => flash.opacity = v);
+  
+        // ---------- FINAL MOVE 2 (late beat) ----------
+        wait(3, () => {
+          play("finalMoveZap", { volume: 0.2 });
+          tween(fm2.opacity, 1, 0.5, v => fm2.opacity = v);
+          fm2.play("fade", { speed: 10 });
+  
+          wait(1.1, () => {
+            tween(fm2.opacity, 0, 0.2, v => fm2.opacity = v);
+          });
+        });
+  
+        // ---------- END FLASH ----------
+        wait(4.3, () => {
+          tween(flash.opacity, 1, 0.1, v => flash.opacity = v);
+  
+          wait(0.2, () => {
+            tween(flash.opacity, 0, 0.5, v => flash.opacity = v);
+            shake(100);
+            destroy(fm2);
+            destroy(fm1);
+            destroy(bg2);
+           
+          });
+        });
+      });
+    });
   }
