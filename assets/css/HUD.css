@@ -21,13 +21,14 @@
   --NuclearGlow2: rgba(220,76,232, 0.5);
   --NuclearGlow3: rgba(220,76,232, 0.6);
   --ParticlePink: #FFC7FF;
-  --ParticleGlow1: rgba(255,199,255, 0.2);
+  --ParticleGlow1: rgba(255, 199, 255, 0.082);
   --ParticleGlow2: rgba(255,199,255, 0.5);
   --ParticleGlow3: rgba(255,199,255, 0.8);
   --PlanksPink: #ff69b4;
   --PlanksGlow3: #ff69b4bc;
   --HiggsHotPink: #c71585;
-  --HiggsGlow1: #c7158626;
+ --HiggsGlow2: #c7158646;
+  --HiggsGlow1: #c7158612;
   --RadiationRed: #730132;
 /*SECONDARY MINT FAM*/
   --AlphaAqua: #67FEBD;
@@ -84,15 +85,15 @@
 @keyframes neonPulse {
   from { 
     text-shadow: 
-      0 0 10px var(--ParticleGlow2),
-      0 0 20px var(--ParticleGlow3),
-      0 0 30px var(--ParticleGlow3);
+      0 0 2px var(--HiggsGlow1),
+      0 0 3px var(--ParticleGlow1),
+      0 0 4px var(--ParticleGlow1);
   }
   to { 
     text-shadow: 
-      0 0 20px var(--ParticleGlow3),
-      0 0 30px var(--NuclearFuscia),
-      0 0 40px var(--NuclearFuscia);
+      0 0 5px var(--ParticleGlow1),
+      0 0 6px var(--HiggsGlow1),
+      0 0 7px var(--HiggsGlow2);
   }
 }
 
@@ -1486,6 +1487,417 @@ h6 {
   margin: 1.3rem 0 0.5rem 0;
   font-size: 1.3rem;
   font-family: 'GothNerd';
+}
+
+
+/* ==================== MAIN MENU MODAL ==================== */
+#mainMenuModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  background-image: url('../images/backgrounds/menuBG3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#mainMenuModal.show {
+  display: flex;
+}
+
+.modal-mainmenu-content {
+  background: transparent; 
+  border: none;
+  box-shadow: none;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.modal-mainmenu-header {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, rgb(17, 12, 30), rgb(0, 0, 0));
+  border: 6px solid;
+  border-image: linear-gradient(
+    45deg,
+    hsl(0, 90%, 60%),
+    hsl(60, 90%, 60%),
+    hsl(120, 90%, 60%),
+    hsl(180, 90%, 60%),
+    hsl(240, 90%, 60%),
+    hsl(300, 90%, 60%),
+    hsl(360, 90%, 60%)
+  ) 1;
+  border-radius: 30px;
+  animation: borderRainbow 3s linear infinite;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes borderRainbow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.menu-title-img {
+  width: 700px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(27, 27, 27, 0.5));
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 150px; 
+}
+
+.button-column .cyber-button {
+  min-width: 350px;
+  font-size: 1.7rem;
+  padding: 15px 30px;
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .menu-title-img {
+    width: 90vw;
+    max-width: 500px;
+  }
+  
+  .modal-mainmenu-header {
+    top: 20px;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .button-column {
+    margin-top: 100px;
+    gap: 15px;
+  }
+  
+  .button-column .cyber-button {
+    min-width: 280px;
+    font-size: 1.4rem;
+    padding: 12px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-title-img {
+    width: 95vw;
+  }
+  
+  .modal-mainmenu-header {
+    top: 10px;
+    padding: 0.5rem 1rem;
+    border-width: 4px;
+  }
+  
+  .button-column {
+    margin-top: 80px;
+  }
+  
+  .button-column .cyber-button {
+    min-width: 250px;
+    width: 90vw;
+    font-size: 1.2rem;
+  }
+}
+
+
+/* ==================== GAME OVER MODAL ==================== */
+#gameOverModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#gameOverModal.show {
+  display: flex;
+}
+
+.modal-gameover-content {
+  background: linear-gradient(135deg, var(--BosonBlue), var(--Black));
+  border: 3px solid var(--RadiationRed);
+  box-shadow: 
+    0 0 30px #ff0059,
+    inset 0 0 50px rgba(255, 0, 89, 0.1);
+  border-radius: 20px;
+  max-width: 700px;
+  width: 100%;
+  height: 80%;
+  padding: 2rem;
+  animation: modalSlideIn 0.4s ease;
+  text-align: center;
+}
+
+.modal-gameover-header {
+  padding: 1rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-title-gameover {
+  font-family: 'GothNerd', sans-serif;
+  font-size: 5rem;
+  background: linear-gradient(45deg, #ff0059, var(--HiggsHotPink), #ff0059);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-align: center;
+  /*animation: neonPulse 2s infinite alternate;*/
+  text-shadow: 
+    5px 3px 0 rgb(126, 0, 0),
+    0 0 20px rgba(122, 1, 1, 0.5);
+}
+
+.disappointment-text {
+  font-size: 1.8rem;
+  color: var(--MutedGray);
+  font-family: 'GothNerd';
+  text-transform: uppercase;
+  margin: 1.5rem 0;
+  letter-spacing: 2px;
+}
+
+.score-text {
+  font-size: 2rem;
+  color: var(--CoolGray);
+  font-family: 'Orbitron', monospace;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(255, 0, 89, 0.1);
+  border: 1px solid rgba(255, 0, 89, 0.3);
+  border-radius: 10px;
+}
+
+/* ==================== YOU DIED MODAL ==================== */
+#youDiedModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.669);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+}
+
+#youDiedModal.show {
+  display: flex;
+}
+
+.modal-youdied-content {
+  background: linear-gradient(135deg, rgba(17, 12, 30, 0.95), rgba(0, 0, 0, 0.95));
+  border: 3px solid var(--CoolGray);
+  box-shadow: 
+    0 0 30px rgba(196, 195, 208, 0.5),
+    inset 0 0 50px rgba(196, 195, 208, 0.1);
+  border-radius: 20px;
+  max-width: 800px;
+  width: 100%;
+  height: 80%;
+  padding: 0rem;
+  animation: modalSlideIn 0.4s ease;
+  font-family: 'GothNerd';
+  text-align: center;
+}
+
+.modal-youdied-header {
+  padding: 0rem 0 0rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-title-youdied {
+  font-family: 'Orbitron', monospace;
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--ParticlePink);
+  text-shadow: 
+    5px 3px 0 rgb(201, 0, 0),
+    0 0 20px rgba(201, 0, 0, 0.5);
+  margin: 0px;
+  text-align: center;
+}
+
+.encourage-text {
+  font-size: 1.5rem;
+  color: var(--LightGray);
+  font-family: 'GothNerd';
+  margin: 0rem 0 0rem;
+}
+
+.stats-display {
+  margin: 0rem 0;
+  padding: 1.5rem;
+  background: rgba(144, 144, 192, 0.1);
+  border: 1px solid rgba(144, 144, 192, 0.3);
+  border-radius: 10px;
+}
+
+.stat-line {
+  font-size: 1.8rem;
+  color: var(--CoolGray);
+  font-family: 'Orbitron', monospace;
+  margin: 0rem 0;
+}
+
+.stat-line:last-child {
+  color: var(--AlphaAqua);
+}
+
+/* ==================== BUTTON ROW ==================== */
+.button-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 0rem;
+  flex-wrap: wrap;
+}
+
+.button-row .cyber-button {
+  min-width: 200px;
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 950px) {
+  .modal-title-gameover,
+  .modal-title-youdied {
+    font-size: 4rem;
+  }
+  
+.modal-youdied-content{
+  height: 90%;
+}
+
+  .disappointment-text,
+  .encourage-text {
+    font-size: 1.2rem;
+  }
+  
+  .score-text,
+  .stat-line {
+    font-size: 1.3rem;
+  }
+  
+  .button-row {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 0px;
+  }
+  
+  .button-row .cyber-button {
+    width: 100%;
+    font-size: 1.1rem;
+    font-family: 'GothNerd';
+    padding: 7px;
+
+  }
+}
+
+
+/* ==================== PAUSE MODAL ==================== */
+#pauseModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+#pauseModal.show {
+  display: flex;
+}
+
+.modal-pause-content {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(17, 12, 30, 0.95));
+  border: 3px solid var(--AlphaAqua);
+  box-shadow: 
+    0 0 40px rgba(103, 254, 189, 0.6),
+    inset 0 0 50px rgba(103, 254, 189, 0.1);
+  border-radius: 20px;
+  max-width: 600px;
+  width: 100%;
+  padding: 0rem;
+  animation: modalSlideIn 0.3s ease;
+  text-align: center;
+}
+
+.modal-pause-header {
+  padding: 1rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-title-pause {
+  font-family: 'Orbitron', monospace;
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--RadioactiveGreen);
+  text-shadow: 
+    3px 3px 0 rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(158, 255, 158, 0.8),
+    0 0 60px rgba(103, 254, 189, 0.5);
+  margin: 0px;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 950px) {
+  .modal-title-pause {
+    font-size: 4rem;
+    margin-bottom: 0px;
+  }
+  
+  .modal-pause-content {
+    padding: 0.5rem;
+    max-height: 90%;
+  }
 }
 
 /* ============================ ABOUT CATS MODAL ============================ */

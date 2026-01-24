@@ -2,7 +2,6 @@
 import { getCharacterList } from '../config/characters.js';
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 
-
 // =================================== STARS BACKGROUND =========================================
 export function initializeStars() {
     const starsDiv = document.getElementById('stars');
@@ -19,7 +18,6 @@ export function initializeStars() {
     }
     console.log('⭐ Stars background initialized');
 }
-
 
 // =============================== IMAGE LOADER =============================================
 export class ImageLoader {
@@ -231,14 +229,12 @@ export function fadeMusicOut(duration = 2) {
     console.log(`🎵 Music fading out over ${duration}s`);
 }
 
-
 export function stopAtmosphere() {
     if (window.atmosphere) {
         window.atmosphere.stop();
         window.atmosphere = null;
     }
 }
-
 
 export function stopAllMusic() {
     if (window.menuMusic) {
@@ -451,86 +447,12 @@ export function initializeMusicControls() {
     console.log('🎮 Music controls initialized');
 }
 
-
-
 // ============================== PAUSE SYSTEM ==============================================
-export function createPauseOverlay(onResumeCallback, onQuitCallback) {
-    const overlay = add([
-        rect(SCREEN_W, SCREEN_H),
-        pos(0, 0),
-        color(0, 0, 0),
-        opacity(0.6),
-        fixed(),
-        z(200),
-        "pauseOverlay"
-    ]);
-
-    const menuPanel = add([
-        rect(600, 330, { radius: 20 }),
-        pos(200, 65),
-        color(rgb(0,0,0)),
-        outline(5, rgb(103,254,189)),
-        opacity(0.9),
-        fixed(),
-        z(201),
-        "pauseMenu"
-    ]);
-
-    const menuPanelPop = add([
-        rect(590, 320, { radius: 20 }),
-        pos(205, 70),
-        color(rgb(2, 144, 82)),
-        opacity(0.2),
-        fixed(),
-        z(201),
-        "pauseMenuPop"
-    ]);
-
-    menuPanel.add([
-        text("PAWSed", { size: 70, font: "orbitronBold" }),
-        pos(120, 40),
-        color(rgb(158,255,158)),
-        z(204)
-    ]);
-
-    menuPanel.add([
-        text("PAWSed", { size: 70, font: "orbitronBold" }),
-        pos(124, 44),
-        color(rgb(0,0,0)),
-        z(203)
-    ]);
-
-
-
-
-    const pauseButtons = document.getElementById('pauseMenuButtons');
-    if (pauseButtons) pauseButtons.classList.remove('hidden');
-
-    const resumeBtn = document.getElementById('pauseResumeBtn');
-    const quitBtn = document.getElementById('pauseQuitBtn');
-
-    const resumeHandler = () => onResumeCallback();
-    const quitHandler = () => onQuitCallback();
-
-    if (resumeBtn) resumeBtn.addEventListener('click', resumeHandler);
-    if (quitBtn) quitBtn.addEventListener('click', quitHandler);
-
-    return { 
-        overlay, 
-        menuPanel, 
-        menuPanelPop, 
-        resumeHandler, 
-        quitHandler 
-    };
-}
-
 export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallback = null) {
     let isPaused = false;
-    let pauseOverlay = null;
-    let pauseMenu = null;
-    let pauseMenuPop = null;
-    let resumeHandler = null;
-    let quitHandler = null;
+    const modal = document.getElementById('pauseModal');
+    const resumeBtn = document.getElementById('pauseResumeModalBtn');
+    const quitBtn = document.getElementById('pauseQuitModalBtn');
 
     const pause = () => {
         if (!gameActiveGetter() || isPaused) return;
@@ -538,12 +460,11 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
         isPaused = true;
         debug.paused = true;
         
-        const overlay = createPauseOverlay(resume, quit);
-        pauseOverlay = overlay.overlay;
-        pauseMenu = overlay.menuPanel;
-        pauseMenuPop = overlay.menuPanelPop;
-        resumeHandler = overlay.resumeHandler;
-        quitHandler = overlay.quitHandler;
+        if (modal) {
+            modal.classList.add('show');
+        }
+        
+        console.log('⏸️ Game paused');
     };
 
     const resume = () => {
@@ -552,58 +473,28 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
         isPaused = false;
         debug.paused = false;
         
-        if (pauseOverlay) {
-            destroy(pauseOverlay);
-            pauseOverlay = null;
-        }
-        if (pauseMenu) {
-            destroy(pauseMenu);
-            pauseMenu = null;
-        }
-        if (pauseMenuPop) {
-            destroy(pauseMenuPop);
-            pauseMenuPop = null;
+        if (modal) {
+            modal.classList.remove('show');
         }
         
-        const resumeBtn = document.getElementById('pauseResumeBtn');
-        const quitBtn = document.getElementById('pauseQuitBtn');
-        if (resumeBtn && resumeHandler) resumeBtn.removeEventListener('click', resumeHandler);
-        if (quitBtn && quitHandler) quitBtn.removeEventListener('click', quitHandler);
+        setTimeout(() => {
+            const canvas = document.getElementById('gameCanvas');
+            if (canvas) {
+                canvas.focus();
+                console.log('✅ Canvas refocused after pause');
+            }
+        }, 100);
         
-        const pauseButtons = document.getElementById('pauseMenuButtons');
-        if (pauseButtons) pauseButtons.classList.add('hidden');
-        
-        resumeHandler = null;
-        quitHandler = null;
+        console.log('▶️ Game resumed');
     };
 
     const quit = () => {
         isPaused = false;
         debug.paused = false;
         
-        if (pauseOverlay) {
-            destroy(pauseOverlay);
-            pauseOverlay = null;
+        if (modal) {
+            modal.classList.remove('show');
         }
-        if (pauseMenu) {
-            destroy(pauseMenu);
-            pauseMenu = null;
-        }
-        if (pauseMenuPop) {
-            destroy(pauseMenuPop);
-            pauseMenuPop = null;
-        }
-        
-        const resumeBtn = document.getElementById('pauseResumeBtn');
-        const quitBtn = document.getElementById('pauseQuitBtn');
-        if (resumeBtn && resumeHandler) resumeBtn.removeEventListener('click', resumeHandler);
-        if (quitBtn && quitHandler) quitBtn.removeEventListener('click', quitHandler);
-        
-        const pauseButtons = document.getElementById('pauseMenuButtons');
-        if (pauseButtons) pauseButtons.classList.add('hidden');
-        
-        resumeHandler = null;
-        quitHandler = null;
         
         if (window.levelMusic) {
             window.levelMusic.stop();
@@ -616,7 +507,17 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
             startMenuMusic();
             go("menu");
         }
+        
+        console.log('🚪 Quit to menu from pause');
     };
+
+    if (resumeBtn) {
+        resumeBtn.onclick = resume;
+    }
+
+    if (quitBtn) {
+        quitBtn.onclick = quit;
+    }
 
     onKeyPress("escape", () => {
         if (isPaused) {
@@ -650,8 +551,6 @@ export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallb
 export function addPauseToLevel(gameActiveGetter, gameActiveSetter) {
     return setupPauseSystem(gameActiveGetter, gameActiveSetter);
 }
-
-
 
 // ================================== HUD ==========================================
 export function initializeHUD() {
@@ -737,8 +636,6 @@ export function closeAboutCatsModal() {
     }
 }
 
-
-  
 export function initializeModals() {
     const helpBtn = document.getElementById('helpBtn');
     const dropdown = helpBtn?.parentElement;
@@ -930,9 +827,6 @@ export function initializeModals() {
     console.log('📋 Modals initialized');
 }
 
-
-
-
 // ================================== MOBILE ==========================================
 export function updateControlsForMobile(isMobile) {
   const pauseBtn = document.getElementById('pause-btn');
@@ -945,7 +839,6 @@ export function updateControlsForMobile(isMobile) {
     volumeBtn.style.height = '45px';
   }
 }
-
 // ================================== INITIALIZATION ==========================================
 export function initializeAllUIHelpers() {
     initializeHUD();

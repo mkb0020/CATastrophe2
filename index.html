@@ -3,13 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <!--<link rel="stylesheet" href="/assets/css/basic.css">-->
- <!-- <link rel="stylesheet" href="/assets/css/modals.css"> -->
-  <!--<link rel="stylesheet" href="/assets/css/nav.css">-->
-  <!--<link rel="stylesheet" href="/assets/css/dreamy.css">-->
- <!-- <link rel="stylesheet" href="/assets/css/canvas.css"> -->
-  <link rel="stylesheet" href="/assets/css/HUD.css">
-  <!--<link rel="stylesheet" href="/assets/css/gameButtons.css">-->
+  <link rel="stylesheet" href="./assets/css/HUD.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <script type="importmap">
     {
@@ -47,7 +41,7 @@
         
         <div class="left-dropdown"><!-- LEFT DROPDOWN MENU -->
           <button class="menu-trigger" aria-label="Menu">
-            <img src="/assets/images/Niels2.png" alt="Menu" class="home-icon">
+            <img src="./assets/images/Niels2.png" alt="Menu" class="home-icon">
           </button>
 
           <div class="left-menu">
@@ -57,23 +51,23 @@
 
             <div class="social-links">
               <a href="https://www.youtube.com/@mkb0020" target="_blank" aria-label="YouTube">
-                <img src="/assets/images/icons/youtube-icon.png" alt="YouTube" class="social-icon">
+                <img src="./assets/images/icons/youtube-icon.png" alt="YouTube" class="social-icon">
               </a>
             
               <a href="https://www.linkedin.com/in/mkb0020/" target="_blank" aria-label="LinkedIn">
-                <img src="/assets/images/icons/linkedin-icon.png" alt="LinkedIn" class="social-icon">
+                <img src="./assets/images/icons/linkedin-icon.png" alt="LinkedIn" class="social-icon">
               </a>
 
               <a href="https://mkb0020.github.io/MKLambda.html" target="_blank" aria-label="Github">
-                <img src="/assets/images/icons/music-icon.png" alt="Github" class="social-icon">
+                <img src="./assets/images/icons/music-icon.png" alt="Github" class="social-icon">
               </a>
 
               <a href="https://github.com/mkb0020" target="_blank" aria-label="GitHub">
-                <img src="/assets/images/icons/github-icon.png" alt="GitHub" class="social-icon">
+                <img src="./assets/images/icons/github-icon.png" alt="GitHub" class="social-icon">
               </a>
 
               <a href="https://mkb0020.itch.io" target="_blank" aria-label="Itch.io">
-                <img src="/assets/images/icons/itchio-icon.png" alt="Itch.io" class="social-icon">
+                <img src="./assets/images/icons/itchio-icon.png" alt="Itch.io" class="social-icon">
               </a>
             </div>
           </div>
@@ -139,7 +133,7 @@
           <canvas id="gameCanvas"></canvas>
       </div>
 
-      <!-- Add this right after the canvas-container div -->
+
 <div class="mobile-hud-overlay">
   <div class="mobile-hud-left">
     <div class="mobile-stat" id="mobileScore">Score: --</div>
@@ -167,29 +161,7 @@
 
 <footer> @mkb0020 ALL RIGHTS RESERVED </footer>
 <!-- ==================== BUTTONS ========================== -->
-<!-- MAIN MENU BUTTONS -->
-<div id="mainMenuButtons" class="hidden">
-    <button class="game-btn play-btn-container" id="playBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">PLAY</div>
-        </div>
-    </button>
 
-    <button class="game-btn standard-btn-container how-to-play" id="howToPlayBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">How to Play</div>
-        </div>
-    </button>
-
-    <!--<button class="game-btn standard-btn-container meet-cats" id="meetCatsBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">Meet the Cats</div>
-        </div>
-    </button>-->
-</div>
 
 <!-- CHARACTER SELECT BUTTONS -->
 <div id="charSelectButtons" class="hidden">
@@ -255,22 +227,7 @@
     </button>
 </div>
 
-<!-- PAUSE MENU BUTTONS -->
-<div id="pauseMenuButtons" class="hidden">
-    <button class="game-btn pause-resume-btn-container" id="pauseResumeBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">RESUME</div>
-        </div>
-    </button>
 
-    <button class="game-btn pause-quit-btn-container" id="pauseQuitBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">QUIT</div>
-        </div>
-    </button>
-</div>
 
 <!-- ========================= DEBUG STUFF ===================== 
 <div class="debug-toggle" id="debugToggle" title="Toggle Debug Info">
@@ -283,6 +240,28 @@
 </div>-->
 
 <!-- ======================= MODAlS =======================-->
+
+<!-- MAIN MENU MODAL -->
+<div id="mainMenuModal" class="modal">
+  <div class="modal-mainmenu-content">
+    <div class="modal-mainmenu-header">
+      <img src="./assets/images/title.png" alt="CATastrophe 2" class="menu-title-img">
+    </div>
+    <div class="modal-body">
+      <div class="button-column">
+        <button class="cyber-button green-btn uranium" id="playModalBtn">
+          PLAY
+        </button>
+        
+        <button class="cyber-button grey-btn cool" id="howToPlayModalBtn">
+          HOW TO PLAY
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="howToPlayModal" class="modal">
    <div class="modal-content">
     <div class="modal-header">
@@ -298,7 +277,6 @@
           <h3> Welcome to Schrödinger's Cat Café! </h3>
           <p>The café is in a state of suPURRRposition — simultaneously fine and <em>very much not fine</em>. </p>
           <p>The vibe is off. The <strong>Entanglement Index</strong> has spiked off the charts. And the sass levels are dangerously high. </p>
-
           <p>
           Cups are behaving… <em>purrculiarly</em>.<br>
           Cucumbers are falling from the ceiling.<br>
@@ -345,7 +323,7 @@
   </div>
 </div>
 
-<div id="aboutCatsModal" class="modal">
+<div id="aboutCatsModal" class="modal"> <!-- LEAVING OFF THE GAME FOR NOW BUT KEEPING HERE BECAUSE I AM GOING TO ADD IT EVENTUALLY-->
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title">MEET THE CATS</h1>
@@ -356,7 +334,7 @@
           <div class="cat-card">
             <div class="cat-card-inner">
               <div class="cat-card-front">
-                <img src="/assets/images/portraits/Nona.png" alt="Nona">
+                <img src="./assets/images/portraits/Nona.png" alt="Nona">
                 <h3>NONA</h3>
               </div>
               <div class="cat-card-back">
@@ -369,7 +347,7 @@
           <div class="cat-card">
             <div class="cat-card-inner">
               <div class="cat-card-front">
-                <img src="/assets/images/portraits/Gato.png" alt="Gato">
+                <img src="./assets/images/portraits/Gato.png" alt="Gato">
                 <h3>GATO</h3>
               </div>
               <div class="cat-card-back">
@@ -382,7 +360,7 @@
           <div class="cat-card">
             <div class="cat-card-inner">
               <div class="cat-card-front">
-                <img src="/assets/images/portraits/Nova.png" alt="Nova">
+                <img src="./assets/images/portraits/Nova.png" alt="Nova">
                 <h3>NOVA</h3>
               </div>
               <div class="cat-card-back">
@@ -395,7 +373,7 @@
           <div class="cat-card">
             <div class="cat-card-inner">
               <div class="cat-card-front">
-                <img src="/assets/images/portraits/Niels.png" alt="Niels">
+                <img src="./assets/images/portraits/Niels.png" alt="Niels">
                 <h3>NIELS</h3>
               </div>
               <div class="cat-card-back">
@@ -408,7 +386,7 @@
           <div class="cat-card">
             <div class="cat-card-inner">
               <div class="cat-card-front">
-                <img src="/assets/images/portraits/Aubie.png" alt="Aubie">
+                <img src="./assets/images/portraits/Aubie.png" alt="Aubie">
                 <h3>AUBIE</h3>
               </div>
               <div class="cat-card-back">
@@ -421,7 +399,7 @@
           <div class="cat-card">
             <div class="cat-card-inner">
               <div class="cat-card-front">
-                <img src="/assets/images/portraits/Doug.png" alt="Doug">
+                <img src="./assets/images/portraits/Doug.png" alt="Doug">
                 <h3>DOUG</h3>
               </div>
               <div class="cat-card-back">
@@ -554,7 +532,69 @@
   </div>
 </div>
 
+<!-- GAME OVER MODAL -->
+<div id="gameOverModal" class="modal">
+  <div class="modal-gameover-content">
+    <div class="modal-gameover-header">
+      <h1 class="modal-title-gameover">GAME OVER</h1>
+    </div>
+    <div class="modal-body">
+      <p class="disappointment-text">YOU'VE DISAPPOINTED EVERYONE</p>
+      <p id="gameOverScoreText" class="score-text">Final Score: --</p>
+      
+      <div class="button-row">
+        <button class="cyber-button grey-btn cool" id="gameOverBackBtn">
+          BACK TO MENU
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- YOU DIED MODAL -->
+<div id="youDiedModal" class="modal">
+  <div class="modal-youdied-content">
+    <div class="modal-youdied-header">
+      <h1 class="modal-title-youdied">YOU DIED</h1>
+    </div>
+    <div class="modal-body">
+      <p class="encourage-text">Sharpen those claws and get back out there!</p>
+      
+      <div class="stats-display">
+        <p id="youDiedScoreText" class="stat-line">Score: --</p>
+        <p id="youDiedLivesText" class="stat-line">Lives Left: --</p>
+      </div>
+      
+      <div class="button-row">
+        <button class="cyber-button aqua-btn alpha" id="useLifeModalBtn">
+          USE LIFE
+        </button>
+        <button class="cyber-button grey-btn" id="quitToMenuModalBtn">
+          QUIT TO MENU
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAUSE MODAL -->
+<div id="pauseModal" class="modal">
+  <div class="modal-pause-content">
+    <div class="modal-pause-header">
+      <h1 class="modal-title-pause">PAWSed</h1>
+    </div>
+    <div class="modal-body">
+      <div class="button-row">
+        <button class="cyber-button green-btn" id="pauseResumeModalBtn">
+          RESUME
+        </button>
+        <button class="cyber-button grey-btn" id="pauseQuitModalBtn">
+          QUIT TO MENU
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ======================= SCRIPTS =======================-->
 <script type="module" src="modules/game.js"></script>   

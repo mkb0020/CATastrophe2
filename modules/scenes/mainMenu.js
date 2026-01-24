@@ -75,8 +75,9 @@ export function createStartScene(){
   });
 }
 
+
+
 export function createMainMenuScene() {
-    // ==================== HIDE MOBILE HUD ====================
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
   
@@ -84,81 +85,19 @@ export function createMainMenuScene() {
     mobileHUD.hide();
     hideMobileArrows(); 
   }
-  // =========================================================
-  const mainMenuButtons = document.getElementById('mainMenuButtons');
-  if (mainMenuButtons) mainMenuButtons.classList.remove('hidden');
-  const menuBG = add([
-    sprite('menuBG'),
-    pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
-    z(0)
-  ]);
-
-  const title = add([
-    sprite('title'),
-    pos(center().x - 350, 30),
-    scale(1),
-    z(3)
-  ]);
-
-  const titlePanel = add([
-    rect(800, 115, { radius: 30 }),
-    pos(center().x - 400, 28),
-    color(17, 12, 30),
-    outline(6),
-    z(1)
-  ]);
   
-  titlePanel.onUpdate(() => {
-    const h = (time() * 30) % 360 / 360;  
-    titlePanel.outline.color = hsl2rgb(h, 0.9, 0.6);
-  });
-
-  add([
-    text("CATastrophe 2", { size: 80, font: "orbitronBold" }),
-    pos(center().x, 80),
-    anchor("center"),
-    color(rgb(255, 255, 255)),
-    opacity(0),
-    z(5)
-  ]);
-
-  add([
-    text("CATastrophe 2", { size: 80, font: "orbitronBold" }),
-    pos(center().x + 2, 82),
-    anchor("center"),
-    color(rgb(115,1,50)),
-    opacity(0),
-    z(4)
-  ]);
-
-  add([
-    text("CATastrophe 2", { size: 80, font: "orbitronBold" }),
-    pos(center().x + 4, 84),
-    anchor("center"),
-    color(rgb(0, 255, 255)),
-    //opacity(0.8),
-    opacity(0),
-    z(3)
-  ]);
-
-  add([
-    text("CATastrophe 2", { size: 80, font: "orbitronBold" }),
-    pos(center().x + 8, 88),
-    anchor("center"),
-    color(rgb(220, 76, 232)),
-    //opacity(0.5),
-    opacity(0),
-    z(2)
-  ]);
-
-  const playBtn = document.getElementById('playBtn');
-  const howToPlayBtn = document.getElementById('howToPlayBtn');
-  const meetCatsBtn = document.getElementById('meetCatsBtn');
+  const modal = document.getElementById('mainMenuModal');
+  if (modal) {
+    modal.classList.add('show');
+  }
+  
+  const playBtn = document.getElementById('playModalBtn');
+  const howToPlayBtn = document.getElementById('howToPlayModalBtn');
+  const meetCatsBtn = document.getElementById('meetCatsModalBtn');
 
   if (playBtn) {
     playBtn.onclick = () => {
-      mainMenuButtons.classList.add('hidden');
+      modal.classList.remove('show');
       go("charSelect");
     };
   }
@@ -172,7 +111,7 @@ export function createMainMenuScene() {
   }
 
   onSceneLeave(() => {
-    if (mainMenuButtons) mainMenuButtons.classList.add('hidden');
+    if (modal) modal.classList.remove('show');
   });
 }
 

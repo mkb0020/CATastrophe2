@@ -4,177 +4,46 @@ import { stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } f
 import { getCharacterStats } from '../config/characters.js'; 
 import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
 
-export function createGameOverScene(data) { // GAME OVER SCREEN - NO LIVES LEFT
+export function createGameOverScene(data) {
   console.log('☠️ GAME OVER SCENE (NO LIVES LEFT)');
   console.log('📦 Data received:', data);
   
   const { score, level, character, reason } = data;
+  
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.hide();
+    hideMobileArrows();
+  }
+  
   stopAllMusic(); 
   startGameOverMusic();
   
-  const gameOverButtons = document.getElementById('gameOverButtons');
-  if (gameOverButtons) gameOverButtons.classList.remove('hidden');
- 
-  const darkRedOverlay = add([
-    rect(SCREEN_W, SCREEN_H),
-    pos(0, 0),
-    color(0, 0, 0),
-    z(1000),
-    opacity(1),
-    fixed()
-  ]);
-
-  tween(1, 0, 3, (o) => {
-    darkRedOverlay.opacity = o;
-  }, easings.easeInOutQuad).then(() => {
-    destroy(darkRedOverlay);
-  });
-
-  const bg = add([ 
-    sprite('menuBG'),
-    pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
-    z(0),
-    opacity(0)
-  ]);
-
-  const darkOverlay = add([
-    rect(SCREEN_W, SCREEN_H),
-    pos(0, 0),
-    color(0, 0, 0),
-    opacity(0),
-    z(1)
-  ]);
-
-  const textPanel = add([ // TEXT PANEL
-    rect(750, 405, { radius: 40 }),
-    pos(125, 40),
-    color(17, 12, 30),
-    outline(4, rgb(144,144,192)),
-    z(2),
-    opacity(0)
-  ]);
-
-  // "GAME OVER" 
-  const gameOverTitle = add([
-    text("GAME OVER", { 
-      size: 80, 
-      font: "science" 
-    }),
-    pos(SCREEN_W / 2, 125),
-    anchor("center"),
-    color(173,8,5),
-    z(3),
-    opacity(0)
-  ]);
-
-  const gameOverTitleShadow = add([
-    text("GAME OVER", { 
-      size: 80, 
-      font: "science" 
-    }),
-    pos(SCREEN_W / 2 + 2, 127),
-    anchor("center"),
-    color(Color.fromHex(Colors.White)),
-    z(2),
-    opacity(0)
-  ]);
-
-  const disappointText = add([
-    text("YOU'VE DISAPPOINTED EVERYONE", { 
-      size: 33, 
-      font: "science" 
-    }),
-    pos(SCREEN_W / 2, 230),
-    anchor("center"),
-    color(rgb(255,255,255)),
-    z(3),
-    opacity(0)
-  ]);
-
-  const disappointText2 = add([
-    text("YOU'VE DISAPPOINTED EVERYONE", { 
-      size: 35, 
-      font: "science" 
-    }),
-    pos(SCREEN_W / 2 + 1, 232),
-    anchor("center"),
-    color(Color.fromHex(Colors.Black)),
-    z(2),
-    opacity(0)
-  ]);
-
-  let reasonText = null;
-  if (reason) {
-    reasonText = add([
-      text(reason, { 
-        size: 22, 
-        font: "science" 
-      }),
-      pos(SCREEN_W / 2, 240),
-      anchor("center"),
-      color(200, 200, 200),
-      z(3),
-      opacity(0)
-    ]);
+  const modal = document.getElementById('gameOverModal');
+  const scoreText = document.getElementById('gameOverScoreText');
+  
+  if (scoreText) {
+    scoreText.textContent = `Final Score: ${score}`;
   }
-
-  const scoreText = add([
-    text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2, 305),
-    anchor("center"),
-    color(219, 226, 233),
-    z(3),
-    opacity(0)
-  ]);
-
-  const scoreText2 = add([
-    text(`Final Score: ${score}`, { size: 34, font: "science" }),
-    pos(SCREEN_W / 2 + 1, 306),
-    anchor("center"),
-    color(0, 0, 0),
-    z(2),
-    opacity(0)
-  ]);
-
-  const menuBtn = document.getElementById('gameOverMenuBtn');
-  if (menuBtn) {
-    menuBtn.onclick = () => {
-      gameOverButtons.classList.add('hidden');
+  
+  if (modal) {
+    modal.classList.add('show');
+  }
+  
+  const backBtn = document.getElementById('gameOverBackBtn');
+  if (backBtn) {
+    backBtn.onclick = () => {
+      modal.classList.remove('show');
       stopAllMusic();
       startMenuMusic();
       go("menu");
     };
   }
   
-wait(0.5, () => {
-  tween(0, 1, 1.2, (o) => {
-    bg.opacity = o;
-  }, easings.easeOutQuad);
-  
-  tween(0, 0.6, 1.2, (o) => {
-    darkOverlay.opacity = o;
-  }, easings.easeOutQuad);
-  
-  tween(0, 1, 1.5, (o) => {
-    textPanel.opacity = o;
-    gameOverTitle.opacity = o;
-    gameOverTitleShadow.opacity = o;
-    disappointText.opacity = o;
-    disappointText2.opacity = o;
-    if (reasonText) reasonText.opacity = o;
-    scoreText.opacity = o;
-    scoreText2.opacity = o;
-  }, easings.easeOutQuad);
-  
-  const buttonContainer = document.querySelector('.gameover-btn-container');
-  if (buttonContainer) {
-    buttonContainer.classList.add('show');
-  }
-});
-
   onSceneLeave(() => {
-    if (gameOverButtons) gameOverButtons.classList.add('hidden');
+    if (modal) modal.classList.remove('show');
   });
 }
 
@@ -202,142 +71,78 @@ function returnToMenu() {
 export function createYouDiedScene(data) {
   console.log('💀 YOU DIED SCENE');
   console.log('📦 Data received:', data);
-  console.log('💤 Character:', data.character);
   
   const { score, level, lives, character, reason, startingScore = 0 } = data;
   
-  console.log('💰 Current Score (for display):', score);
-  console.log('💰 Starting Score (will restore to):', startingScore);
-  
   if (!character) {
     console.error('❌ ERROR: No character data received!');
-    console.log('Redirecting to menu...');
     go("menu");
     return;
+  }
+  
+  const mobileSetup = window.mobileSetup;
+  const mobileHUD = window.mobileHUD;
+  
+  if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
+    mobileHUD.hide();
+    hideMobileArrows();
   }
   
   stopAllMusic();
   play("gameOverSound", { volume: 0.1 });
   
-  const youDiedButtons = document.getElementById('youDiedButtons');
-  if (youDiedButtons) youDiedButtons.classList.remove('hidden');
+  const modal = document.getElementById('youDiedModal');
+  const scoreText = document.getElementById('youDiedScoreText');
+  const livesText = document.getElementById('youDiedLivesText');
   
-  add([
-    sprite('menuBG'),
-    pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
-    z(0)
-  ]);
-
-  add([
-    rect(SCREEN_W, SCREEN_H),
-    pos(0, 0),
-    color(65, 3, 2),
-    opacity(0.6),
-    z(1)
-  ]);
-
-  add([
-    rect(700, 415, { radius: 40 }),
-    pos(150, 45),
-    color(0, 0, 0),
-    outline(4, rgb(196,195,208)),
-    z(1)
-  ]);
-
-  add([
-    text("YOU DIED", { 
-      size: 70, 
-      font: "orbitronBold",
-      weight: "bold"
-    }),
-    pos(SCREEN_W / 2, 100),
-    anchor("center"),
-    color(255, 255, 255),
-    z(3)
-  ]);
-
-  add([
-    text("YOU DIED", { 
-      size: 70, 
-      font: "orbitronBold",
-      weight: "bold"
-    }),
-    pos(SCREEN_W / 2 + 2, 102),
-    anchor("center"),
-    color(201, 0, 0),
-    z(2)
-  ]);
-
-  add([
-    text("Sharpen those claws and get back out there!", { 
-      size: 24, 
-      font: "science" 
-    }),
-    pos(SCREEN_W / 2, 180),
-    anchor("center"),
-    color(rgb(219,226,233)),
-    z(2)
-  ]);
-
-  add([
-    text(`Score: ${score}`, { size: 30, font: "science" }),
-    pos(SCREEN_W / 2, 230),
-    anchor("center"),
-    color(rgb(144,144,192)),
-    z(2)
-  ]);
-
-  add([
-    text(`Lives Left: ${lives}`, { 
-      size: 30, 
-      font: "science" 
-    }),
-    pos(SCREEN_W / 2, 280),
-    anchor("center"),
-    color(Color.fromHex(Colors.MintBlue)),
-    z(2)
-  ]);
-
-  const useLifeBtn = document.getElementById('useLifeBtn');
-  const quitBtn = document.getElementById('quitToMenuBtn');
-
-  if (useLifeBtn) {
-    useLifeBtn.onclick = () => {
-      console.log(`🎮 You had: ${lives} lives`);
-      const newLives = lives - 1;
-      character.lives = newLives; 
-      console.log(`🎮 Continuing ${level} with ${newLives} lives`);
-      console.log(`💤 Character:`, character);
-      
-      const maxHP = character.stats?.maxHP || 100;
-      const restoredHP = Math.floor(maxHP * 0.5);
-      
-      console.log(`❤️ Restoring HP to ${restoredHP} (50% of ${maxHP})`);
-      console.log(`💰 Restoring score to ${startingScore} (from before level started)`);
-      
-      youDiedButtons.classList.add('hidden');
-      
-      go(level, {
-        character,
-        startHP: restoredHP,
-        lives: newLives,
-        score: startingScore 
+  if (scoreText) scoreText.textContent = `Score: ${score}`;
+  if (livesText) livesText.textContent = `Lives Left: ${lives}`;
+  
+  if (modal) modal.classList.add('show');
+  
+  const useLifeBtn = document.getElementById('useLifeModalBtn');
+  const quitBtn = document.getElementById('quitToMenuModalBtn');
+  
+if (useLifeBtn) {
+  useLifeBtn.onclick = () => {
+    const newLives = lives - 1;
+    const maxHP = character.stats?.maxHP || 100;
+    const restoredHP = Math.floor(maxHP * 0.5);
+    
+    console.log(`🎮 Continuing ${level} with ${newLives} lives`);
+    console.log(`❤️ Restoring HP to ${restoredHP}`);
+    console.log(`💰 Restoring score to ${startingScore}`);
+    
+    modal.classList.remove('show');
+    
+    setTimeout(() => {
+      const canvas = document.getElementById('gameCanvas');
+      if (canvas) {
+        canvas.focus();
+        console.log('✅ Canvas refocused - ready to play!');
+      }
+    }, 100);
+    
+    go(level, {
+      character,
+      startHP: restoredHP,
+      lives: newLives,
+      score: startingScore 
       });
     };
   }
-
+  
   if (quitBtn) {
     quitBtn.onclick = () => {
-      youDiedButtons.classList.add('hidden');
+      modal.classList.remove('show');
       stopAllMusic();
       startMenuMusic();
       go("menu");
     };
   }
-
+  
   onSceneLeave(() => {
-    if (youDiedButtons) youDiedButtons.classList.add('hidden');
+    if (modal) modal.classList.remove('show');
   });
 }
 

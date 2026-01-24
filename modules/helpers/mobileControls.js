@@ -47,9 +47,11 @@ export function createOrientationPrompt() {
       color: white;
       font-family: Arial, sans-serif;
     ">
-      <div style="font-size: 48px; margin-bottom: 20px;">📱</div>
-      <div style="font-size: 24px; text-align: center; padding: 0 20px;">
-        Please rotate your device to landscape
+      <div style="font-size: 70px; margin-bottom: 20px;">𖦹</div>
+      <div style="color: #FFC7FF; font-size: 30px; font-family: 'GothNerd'; text-align: center; padding: 0 20px;">
+        <strong> Put that thang down flip it and reverse it! </strong>
+        <br> ...
+        <br>(rotate your phone)
       </div>
     </div>
   `;
@@ -444,7 +446,6 @@ export function cleanupMobileControls() {
   console.log('🧹 Mobile controls cleaned up');
 }
 
-
 // ==================== MOBILE HUD CONTROLLER ====================
 export class MobileHUDController {
   constructor() {
@@ -509,11 +510,19 @@ export class MobileHUDController {
     }
   }
   
-  setupPauseButton(onPause) {
-    if (this.pauseBtn) {
-      this.pauseBtn.addEventListener('click', onPause);
-    }
+setupPauseButton(onPause) {
+  if (this.pauseBtn) {
+    this.pauseBtn.addEventListener('click', () => {
+      if (window.gamePauseSystem) {
+        if (window.gamePauseSystem.isPaused()) {
+          window.gamePauseSystem.resume();
+        } else {
+          window.gamePauseSystem.pause();
+        }
+      }
+    });
   }
+}
   
   hide() {
     const overlay = document.querySelector('.mobile-hud-overlay');
