@@ -189,7 +189,7 @@ async function loadAssets() {
   loadSprite("tunaCan", "assets/images/items/TunaCan.PNG");
   loadSprite("milkBottle", "assets/images/items/MilkBottle.png");
   loadSprite("egg", "assets/images/items/egg.png"); // BUNUS HP ITEM
-  loadSprite("catnip", "assets/images/items/Catnip.png");
+  loadSprite("catnip", "assets/images/items/Catnip.PNG");
   loadSprite("yeet", "assets/images/items/yeet.png");
   loadSprite("statsUpgrade", "assets/images/animationSprites/statsUpgrade.png", { sliceX:8, sliceY:1, anims:{pulse:{from:0,to:7, loop: true, speed:5}} });
   loadSprite("moveUpgrade", "assets/images/animationSprites/moveUpgrade.png", { sliceX:33, sliceY:1, anims:{pulse:{from:0,to:32, loop: true, speed:5}} });

@@ -275,35 +275,37 @@ function buildCharacterCards() {
     card.dataset.index = index;
     
     const canvas = document.createElement('canvas');
-    canvas.width = 168;
-    canvas.height = 120;
-    canvas.className = 'char-sprite-canvas';
-    
-    const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
-    
-    const img = new Image();
-    const spriteName = char.name.charAt(0).toUpperCase() + char.name.slice(1).toLowerCase();
-    img.src = `./assets/images/cats/${spriteName}.png`; 
-    
-    console.log(`Loading sprite: ./assets/images/cats/${spriteName}.png`); 
-    
-    img.onerror = () => {
-      console.error(`Failed to load sprite: ./assets/images/cats/${spriteName}.png`);
-    };
-    
-    img.onload = () => {
-      const frameIndex = SPRITE_FRAMES.menu;
-      const frameWidth = 210;
-      const frameHeight = 150;
-      const cols = 28;
-      
-      const sx = (frameIndex % cols) * frameWidth;
-      const sy = Math.floor(frameIndex / cols) * frameHeight;
-      
-      ctx.drawImage(img, sx, sy, frameWidth, frameHeight, 0, 0, 168, 120);
-      console.log(`Successfully loaded sprite for ${char.name}`);
-    };
+canvas.width = 95;  
+canvas.height = 68; 
+canvas.className = 'char-sprite-canvas';
+
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+const img = new Image();
+const spriteName = char.name.charAt(0).toUpperCase() + char.name.slice(1).toLowerCase();
+img.src = `./assets/images/cats/${spriteName}.png`; 
+
+img.onload = () => {
+  const frameIndex = SPRITE_FRAMES.menu;
+  const frameWidth = 210;
+  const frameHeight = 150;
+  const cols = 28;
+  
+  const sx = (frameIndex % cols) * frameWidth;
+  const sy = Math.floor(frameIndex / cols) * frameHeight;
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  const scale = Math.min(canvas.width / frameWidth, canvas.height / frameHeight) * 0.9;
+  const drawWidth = frameWidth * scale;
+  const drawHeight = frameHeight * scale;
+  const drawX = (canvas.width - drawWidth) / 2;
+  const drawY = (canvas.height - drawHeight) / 2;
+  
+  ctx.drawImage(img, sx, sy, frameWidth, frameHeight, drawX, drawY, drawWidth, drawHeight);
+  console.log(`Successfully loaded sprite for ${char.name}`, { drawX, drawY, drawWidth, drawHeight });
+};
     
     const name = document.createElement('div');
     name.className = 'char-name';

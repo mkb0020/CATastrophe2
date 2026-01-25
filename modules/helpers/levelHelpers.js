@@ -1431,8 +1431,16 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
         spawnX = rand(zone.start + 100, zone.end - 100);
       }
 
-      
       const spawnY = 390;
+      
+     
+      const MIN_SPAWN_DISTANCE = 150; 
+      const distanceToPlayer = Math.abs(spawnX - player.pos.x);
+      
+      if (distanceToPlayer < MIN_SPAWN_DISTANCE) {
+        console.warn(`Rat spawn aborted at x:${spawnX} - too close to player!`);
+        return;
+      }
       
       if (!hasGroundAt(spawnX)) {
         console.warn(`Rat spawn aborted at x:${spawnX} - no ground detected!`);
