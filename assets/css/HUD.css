@@ -1099,66 +1099,7 @@ canvas {
     0 0 45px #9090C0;
 }
 
-/* ==================== YOU DIED BUTTONS ==================== */
-.you-died-btn-container {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 55px;
-}
 
-.you-died-btn-container.use-life-btn { 
-  top: 390px; 
-}
-
-.you-died-btn-container.quit-btn { 
-  top: 460px; 
-}
-
-.you-died-btn-container.use-life-btn .cyber-btn-base {
-  border: 2px solid #67FEBD;
-  box-shadow: 
-    0 0 8px #67FEBD,
-    inset 0 0 12px rgba(103, 254, 189, 0.25),
-    0 0 35px #67FEBD;
-}
-
-.you-died-btn-container.use-life-btn .cyber-btn-text {
-  font-size: 1.3rem;
-  line-height: 55px;
-  color: #FFFFFF;
-  /*text-shadow: 0 0 8px #67FEBD, 1px 1px 0 #00ffff;*/
-}
-
-.you-died-btn-container.use-life-btn:hover .cyber-btn-base {
-  box-shadow: 
-    0 0 12px #67FEBD,
-    inset 0 0 18px rgba(103, 254, 189, 0.35),
-    0 0 45px #67FEBD;
-}
-
-.you-died-btn-container.quit-btn .cyber-btn-base {
-  border: 2px solid #9090C0;
-  box-shadow: 
-    0 0 8px #9090C0,
-    inset 0 0 12px rgba(144, 144, 192, 0.2),
-    0 0 35px #9090C0;
-}
-
-.you-died-btn-container.quit-btn .cyber-btn-text {
-  font-size: 1.2rem;
-  line-height: 55px;
-  color: #FFFFFF;
-  /*text-shadow: 0 0 8px #a0a0ff, 1px 1px 0 #00ffff;*/
-}
-
-.you-died-btn-container.quit-btn:hover .cyber-btn-base {
-  box-shadow: 
-    0 0 12px #9090C0,
-    inset 0 0 18px rgba(144, 144, 192, 0.3),
-    0 0 45px #9090C0;
-}
 
 /* ==================== FINISH HIM BUTTON  ==================== */
 .finish-him-container {
@@ -1623,6 +1564,241 @@ h6 {
   }
 }
 
+/* ==================== CHARACTER SELECT MODAL ==================== */
+#charSelectModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+#charSelectModal.show {
+  display: flex !important;
+}
+
+.modal-charselect-content {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 30px !important;
+  max-width: 900px !important;
+  width: 90% !important;
+  height: 85vh !important;
+  border: 3px solid var(--VortexViolet) !important;
+  box-shadow: 0 0 50px var(--VortexGlow3) !important;
+  border-radius: 20px !important;
+  padding: 15px 25px !important;
+  background-image: url('../images/backgrounds/Select.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.charselect-left {
+  flex: 1 1 50% !important;
+  min-width: 0 !important;
+  max-height: 65%;
+  background: rgb(17, 17, 17) !important;
+  border: 4px solid rgb(109, 54, 15) !important;
+  border-radius: 8px !important;
+  padding: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.795) !important;
+  overflow-y: auto !important;
+}
+
+.charselect-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  padding: 0 !important;
+  max-width: 250px;
+  width: 250px;
+}
+.charselect-left .cyber-button {
+  position:fixed;
+  bottom: 10px;
+  left: 10px;
+  font-size: 1rem !important;
+  width: 150px;
+}
+
+.charselect-right .cyber-button {
+    position:fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.9rem !important;
+  width: 150px;
+}
+
+/*.charselect-right .cyber-button:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}*/
+
+.panel-title {
+  font-family: 'GothNerd', sans-serif !important;
+  font-size: 1.7rem !important;
+  background: linear-gradient(45deg, var(--ParticlePink), var(--White)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-align: center !important;
+  margin-bottom: 5px !important;
+}
+
+.character-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 10px !important;
+  padding: 5px 0 !important;
+  flex: 1 !important;
+  overflow-y: auto !important;
+}
+
+.character-card {
+  background: rgba(15, 15, 26, 0.8) !important;
+  border: 2px dashed var(--CoolGray) !important;
+  border-radius: 10px !important;
+  padding: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 5px !important;
+  box-shadow: 0 0 15px rgba(144, 144, 192, 0) !important;
+  min-height: 90px !important;
+}
+
+.character-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--AlphaAqua) !important;
+  box-shadow: 0 0 25px var(--AlphaGlow2) !important;
+}
+
+.character-card.selected {
+  border-color: var(--RadioactiveGreen) !important;
+  background: rgba(89, 232, 76, 0.055) !important;
+  box-shadow: 0 0 10px var(--RadioactiveGlow3) !important;
+}
+
+.char-sprite-canvas {
+  width: 95px !important;
+  height: 68px !important;
+  image-rendering: pixelated !important;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: crisp-edges !important;
+  border: 1px solid #ffffff00;
+  box-shadow: 0 0 30px rgba(0,0,0,0) !important;
+}
+
+.char-name {
+  font-family: 'GothNerd', sans-serif !important;
+  font-size: 1rem !important;
+  color: var(--ParticlePink) !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+}
+
+.stats-panel {
+  background: rgb(17, 17, 17) !important;
+  border: 4px solid rgb(109, 54, 15) !important;
+  border-radius: 12px !important;
+  padding: 10px !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.74) !important;
+  width: 100% !important;
+  height: 55%;
+}
+
+.stats-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  margin-top: 15px !important;
+}
+
+.select-stat-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  font-family: 'Orbitron', monospace !important;
+  font-size: 1.1rem !important;
+  color: var(--LightGray) !important;
+  align-items: center !important;
+}
+
+.select-stat-row span:first-child {
+  color: var(--AlphaAqua) !important;
+  font-weight: bold !important;
+}
+
+.select-stat-row span:last-child {
+  color: var(--ParticlePink) !important;
+}
+
+.preview-panel {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-30%);
+  background: rgba(15, 15, 26, 0) !important;
+  border: 2px solid rgba(15, 15, 26, 0) !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-shadow: 0 0 20px rgba(144, 144, 192, 0) !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  height: 30%;
+}
+
+#previewCanvas {
+  width: 210px !important;
+  height: 150px !important;
+  image-rendering: pixelated !important;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: crisp-edges !important;
+  border: 1px solid #00000000;
+  background: transparent;
+  box-shadow: 0 0 20px rgba(144, 144, 192, 0) !important;
+
+}
+
+#charName {
+  font-family: 'GothNerd', sans-serif !important;
+  font-size: 2.5rem !important;
+  color: var(--White) !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  text-shadow: 
+    5px 3px 0 rgb(0, 0, 0),
+    0 0 20px rgba(255, 255, 255, 0.5);
+  border: 2px solid var(--AlphaAqua) ;
+  padding: 5px 15px;
+  border-radius: 15px;
+  background-color: #02949456;
+  box-shadow: 0 0 20px var(--AlphaAqua) !important;
+
+}
+
+
+
+
+
+
+
+
 
 /* ==================== GAME OVER MODAL ==================== */
 #gameOverModal {
@@ -1646,14 +1822,14 @@ h6 {
 
 .modal-gameover-content {
   background: linear-gradient(135deg, var(--BosonBlue), var(--Black));
-  border: 3px solid var(--RadiationRed);
+  border: 3px solid #ff0059;
   box-shadow: 
-    0 0 30px #ff0059,
+    0 0 30px var(--HiggsHotPink),
     inset 0 0 50px rgba(255, 0, 89, 0.1);
   border-radius: 20px;
   max-width: 700px;
   width: 100%;
-  height: 80%;
+  height: 85%;
   padding: 2rem;
   animation: modalSlideIn 0.4s ease;
   text-align: center;
@@ -1669,7 +1845,7 @@ h6 {
 .modal-title-gameover {
   font-family: 'GothNerd', sans-serif;
   font-size: 5rem;
-  background: linear-gradient(45deg, #ff0059, var(--HiggsHotPink), #ff0059);
+  background: linear-gradient(45deg, #6b0026, var(--RadiationRed), #4d011b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1677,8 +1853,12 @@ h6 {
   text-align: center;
   /*animation: neonPulse 2s infinite alternate;*/
   text-shadow: 
-    5px 3px 0 rgb(126, 0, 0),
+    5px 3px 0 #ff0059,
     0 0 20px rgba(122, 1, 1, 0.5);
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 15%;
 }
 
 .disappointment-text {
@@ -1686,19 +1866,65 @@ h6 {
   color: var(--MutedGray);
   font-family: 'GothNerd';
   text-transform: uppercase;
-  margin: 1.5rem 0;
-  letter-spacing: 2px;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 35%;
+
 }
 
 .score-text {
-  font-size: 2rem;
-  color: var(--CoolGray);
+  font-size: 2.3rem;
+  color: var(--MutedGray);
   font-family: 'Orbitron', monospace;
   margin: 2rem 0;
   padding: 1rem;
-  background: rgba(255, 0, 89, 0.1);
-  border: 1px solid rgba(255, 0, 89, 0.3);
+  background: rgba(255, 0, 89, 0);
+  border: 1px solid rgba(255, 0, 89, 0);
   border-radius: 10px;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 45%;
+  text-transform: uppercase;
+}
+
+.gameOver-btn {
+  --glow-color: var(--CoolGray);          
+  --glow-intensity: 0.4;
+  --inner-glow: #ff0059;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 5px 10px;
+  font-family: 'Orbitron', 'Courier New', monospace; 
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  font-weight: bold;
+  background: rgba(49, 1, 18, 0.3);
+  border: 2px solid #ff0059;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 8px var(--HiggsHotPink),
+    inset 0 0 12px rgba(255, 0, 89, 0.3),
+    0 0 35px var(--HiggsHotPink);
+  overflow: hidden;
+    position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 18%;
+  width: 250px;
+  height: 50px;
+}
+
+@media (max-width: 950px) {
+
+.gameOver-btn {
+  font-size: 0.8rem;
+  height: 40px;
+}
 }
 
 /* ==================== YOU DIED MODAL ==================== */
@@ -1709,6 +1935,7 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
+  max-width: 100vw !important;
   background: rgba(0, 0, 0, 0.669);
   backdrop-filter: blur(5px);
   z-index: 10000;
@@ -1728,9 +1955,9 @@ h6 {
     0 0 30px rgba(196, 195, 208, 0.5),
     inset 0 0 50px rgba(196, 195, 208, 0.1);
   border-radius: 20px;
-  max-width: 800px;
+  max-width: 600px !important;
   width: 100%;
-  height: 80%;
+  height: 90%;
   padding: 0rem;
   animation: modalSlideIn 0.4s ease;
   font-family: 'GothNerd';
@@ -1754,27 +1981,40 @@ h6 {
     0 0 20px rgba(201, 0, 0, 0.5);
   margin: 0px;
   text-align: center;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 9%;
 }
 
 .encourage-text {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: var(--LightGray);
   font-family: 'GothNerd';
-  margin: 0rem 0 0rem;
+  margin: 0rem 0rem 0rem;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 28%;
 }
 
 .stats-display {
   margin: 0rem 0;
-  padding: 1.5rem;
-  background: rgba(144, 144, 192, 0.1);
-  border: 1px solid rgba(144, 144, 192, 0.3);
+  padding: 0rem;
+  background: rgba(144, 144, 192, 0);
+  border: 1px solid rgba(144, 144, 192, 0);
   border-radius: 10px;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 40%;
+  font-family: 'GothNerd';
 }
 
 .stat-line {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: var(--CoolGray);
-  font-family: 'Orbitron', monospace;
+  font-family: 'GothNerd', monospace;
   margin: 0rem 0;
 }
 
@@ -1783,52 +2023,100 @@ h6 {
 }
 
 /* ==================== BUTTON ROW ==================== */
-.button-row {
-  display: flex;
-  gap: 20px;
+
+
+
+.uselife-button, .diedmenu-button {
+  --glow-color: var(--CoolGray);          
+  --glow-intensity: 0.4;
+  --inner-glow: rgba(255, 255, 255, 0.103);
+  align-items: center;
   justify-content: center;
-  margin-top: 0rem;
-  flex-wrap: wrap;
+  padding: 5px 5px;
+  font-family: 'Orbitron', 'Courier New', monospace; 
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: white;
+  background: #0f0f1a;
+  border: 2px solid var(--glow-color);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 8px var(--glow-color),
+    inset 0 0 12px var(--inner-glow),
+    0 0 35px var(--glow-color);
+  overflow: hidden;
 }
 
-.button-row .cyber-button {
-  min-width: 200px;
+.uselife-button, .diedmenu-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--glow-color),
+    inset 0 0 15px var(--inner-glow),
+    0 0 20px var(--glow-color);
+}
+
+
+
+
+
+.uselife-button {
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 22%;
+  width: 250px;
+  height: 50px;
+}
+
+.diedmenu-button
+{  position: fixed;
+    bottom: 10%;
+    right: 50%;
+    transform: translateX(50%);
+    width: 250px;
+    height: 50px;
+
 }
 
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 950px) {
   .modal-title-gameover,
   .modal-title-youdied {
-    font-size: 4rem;
+    font-size: 2.7rem;
+    margin-bottom: 0px;
   }
   
 .modal-youdied-content{
   height: 90%;
+  width: 90vw;
+}
+
+.uselife-button {
+  font-size: 0.8rem;
+  height: 30px;
+}
+
+.diedmenu-button
+{    height: 30px;
+  font-size: 0.8rem;
+
 }
 
   .disappointment-text,
   .encourage-text {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    margin-top:0px;
+    margin-bottom:0px;
   }
   
   .score-text,
   .stat-line {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
   
-  .button-row {
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 0px;
-  }
-  
-  .button-row .cyber-button {
-    width: 100%;
-    font-size: 1.1rem;
-    font-family: 'GothNerd';
-    padding: 7px;
 
-  }
 }
 
 

@@ -3,7 +3,6 @@ function getCharacterSpritePaths(catName) {
   return {
     sheet: `${base}/${catName}.png`,  
     glow: `${base}/Glow.png`,
-    glitchBlue: `${base}/GlitchCatBlue.png`,
   };
 }
 

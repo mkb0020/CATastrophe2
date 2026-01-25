@@ -163,49 +163,9 @@
 <!-- ==================== BUTTONS ========================== -->
 
 
-<!-- CHARACTER SELECT BUTTONS -->
-<div id="charSelectButtons" class="hidden">
-    <button class="game-btn back-btn-container" id="charSelectBackBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">Back</div>
-        </div>
-    </button>
 
-    <button class="game-btn confirm-btn-container disabled" id="confirmCharBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">Place Order</div>
-        </div>
-    </button>
-</div>
 
-<!-- GAME OVER BUTTONS -->
-<div id="gameOverButtons" class="hidden">
-    <button class="game-btn gameover-btn-container menu-btn" id="gameOverMenuBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">Main Menu</div>
-        </div>
-    </button>
-</div>
 
-<!-- YOU DIED BUTTONS -->
-<div id="youDiedButtons" class="hidden">
-    <button class="game-btn you-died-btn-container use-life-btn" id="useLifeBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">Use Life</div>
-        </div>
-    </button>
-
-    <button class="game-btn you-died-btn-container quit-btn" id="quitToMenuBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text">Quit to Menu</div>
-        </div>
-    </button>
-</div>
 
 <!-- BOSS FINISH HIM BUTTON  -->
 <div id="finishHimButton" class="hidden">
@@ -245,7 +205,7 @@
 <div id="mainMenuModal" class="modal">
   <div class="modal-mainmenu-content">
     <div class="modal-mainmenu-header">
-      <img src="./assets/images/title.png" alt="CATastrophe 2" class="menu-title-img">
+      <img src="./assets/images/title.PNG" alt="CATastrophe 2" class="menu-title-img">
     </div>
     <div class="modal-body">
       <div class="button-column">
@@ -413,6 +373,47 @@
     </div>
   </div>
 
+
+
+<div id="charSelectModal" class="modal">
+  <div class="modal-charselect-content">
+    <!-- Left panel: Character grid -->
+    <div class="charselect-left">
+      <h2 class="panel-title">SPECIALS</h2>
+      <div id="characterGrid" class="character-grid">
+        <!-- Cards built dynamically in JS -->
+      </div>
+      <button class="cyber-button grey-btn" id="backToMenuBtn">BACK</button>
+
+    </div>
+    
+    <!-- Right panel: Stats + Preview -->
+    <div class="charselect-right">
+      <div class="stats-panel">
+        <h2 class="panel-title">STATS</h2>
+        <div id="statsDisplay" class="stats-list">
+          <div class="select-stat-row"><span>HP</span><span id="statHP">--</span></div>
+          <div class="select-stat-row"><span>ATK</span><span id="statATK">--</span></div>
+          <div class="select-stat-row"><span>DEF</span><span id="statDEF">--</span></div>
+          <div class="select-stat-row"><span>SPD</span><span id="statSPD">--</span></div>
+        </div>
+      </div>
+      
+
+      <button class="cyber-button green-btn uranium" id="confirmCharBtn" disabled>CONTINUE </button>
+    
+    </div>
+          <div class="preview-panel">
+        <canvas id="previewCanvas" width="210" height="150"></canvas>
+
+        <h3 id="charName">Select a cat</h3>
+      </div>
+
+  </div>
+
+</div>
+
+
 <div id="newMoveModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -422,7 +423,7 @@
       <div class="unlock">
         <h1 id="moveName">WHISKER WHIP!</h1>
         <h2 id="moveStats">(DMG: 40, Uses: 2)</h2>
-        <img id="moveImage" src="../assets/images/items/whiskerWhip.PNG" alt="WHISKER WHIP" style="display: block; margin: 20px auto; max-width: 200px; filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));">
+        <img id="moveImage" src="./assets/images/items/whiskerWhip.PNG" alt="WHISKER WHIP" style="display: block; margin: 20px auto; max-width: 200px; filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));">
         <h3>Select a move to replace:</h3>
         
         <div class="move-container">
@@ -543,7 +544,7 @@
       <p id="gameOverScoreText" class="score-text">Final Score: --</p>
       
       <div class="button-row">
-        <button class="cyber-button grey-btn cool" id="gameOverBackBtn">
+        <button class="gameOver-btn" id="gameOverBackBtn">
           BACK TO MENU
         </button>
       </div>
@@ -565,15 +566,16 @@
         <p id="youDiedLivesText" class="stat-line">Lives Left: --</p>
       </div>
       
-      <div class="button-row">
-        <button class="cyber-button aqua-btn alpha" id="useLifeModalBtn">
+     
+
+     
+    </div>
+            <button class="uselife-button" id="useLifeModalBtn">
           USE LIFE
         </button>
-        <button class="cyber-button grey-btn" id="quitToMenuModalBtn">
+        <button class="diedmenu-button" id="quitToMenuModalBtn">
           QUIT TO MENU
         </button>
-      </div>
-    </div>
   </div>
 </div>
 
