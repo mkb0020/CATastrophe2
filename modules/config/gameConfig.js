@@ -1,6 +1,39 @@
 // gameConfig.js
-export const SCREEN_W = 1000;
-export const SCREEN_H = 480;
+
+// VIRTUAL RESOLUTION 
+export const VIRTUAL_W = 1000;
+export const VIRTUAL_H = 480;
+
+// LEGACY EXPORTS 
+export const SCREEN_W = VIRTUAL_W;
+export const SCREEN_H = VIRTUAL_H;
+
+// ACTUAL SCREEN DIMENSIONS 
+export let ACTUAL_W = window.innerWidth;
+export let ACTUAL_H = window.innerHeight;
+
+export function updateScreenDimensions(width, height) {
+  ACTUAL_W = width;
+  ACTUAL_H = height;
+  console.log(`📐 Screen dimensions updated: ${ACTUAL_W}x${ACTUAL_H}`);
+}
+
+export function getCenterX() {
+  return ACTUAL_W / 2;
+}
+
+export function getCenterY() {
+  return ACTUAL_H / 2;
+}
+
+export function getScreenWidth() {
+  return ACTUAL_W;
+}
+
+export function getScreenHeight() {
+  return ACTUAL_H;
+}
+
 export const FPS = 60;
 
 export const Colors = {

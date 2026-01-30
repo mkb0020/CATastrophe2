@@ -152,7 +152,7 @@ export function addLevelEnvironment(levelConfig) {
   const bg = null;
 
   add([
-    rect(30000, 480),
+    rect(30000, SCREEN_H),
     pos(-2000, 0),
     color(0,0,0),
     opacity(0.1),
@@ -337,7 +337,7 @@ export function addVictoryArea(levelConfig) {
   return { catTower, arrow, victoryPlatform, helperPlatform };
 }
 
-export function setupVictoryCollision(player, levelName, nextBoss, character, gameStateGetter, gameStateSetter, scoreGetter, levelConfig, bossSpriteName, livesGetter) {  // Add livesGetter parameter
+export function setupVictoryCollision(player, levelName, nextBoss, character, gameStateGetter, gameStateSetter, scoreGetter, levelConfig, bossSpriteName, livesGetter) {  
   player.onCollide("victoryPlatform", async (platform) => {
     if (player.vel.y >= 0 && gameStateGetter()) {
       console.log('🏆 VICTORY!');

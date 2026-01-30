@@ -81,7 +81,7 @@ export const CHARACTERS = {
       baseDefense: 300, // FOR TESTING
     },
     platformerStats: { 
-      speed: 8,
+      speed: 10,
       jumpPower: -12,            
       maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
