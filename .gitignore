@@ -1,0 +1,7 @@
+# Local backups
+*.zip
+*.7z
+*.rar
+
+# Editor settings
+.vscode/
