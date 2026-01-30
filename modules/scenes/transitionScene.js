@@ -1,4 +1,4 @@
-import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
+import { SCREEN_W, SCREEN_H, Colors, getCenterX, getCenterY, getScreenWidth, getScreenHeight } from '../config/gameConfig.js';
 import { getTransition } from '../config/transitions.js';
 import { SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, startFinalVictoryMusic, stopAtmosphere, fadeMusicOut } from '../helpers/kittyHelpers.js';
@@ -45,18 +45,26 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   console.log(`🐱 Character: ${character.name}`);
   console.log(`📋 Transition sprites:`, transition.sprites);
 
+  // GET ACTUAL SCREEN DIMENSIONS
+  const screenW = getScreenWidth();
+  const screenH = getScreenHeight();
+  const centerX = getCenterX();
+  const centerY = getCenterY();
+
   let textIndex = 0;
   const textKeys = ['Text1', 'Text2', 'Text3'];
   
+  // BACKGROUND - FULL SCREEN
   add([
     sprite(transition.background),
     pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
+    scale(screenW / 1000, screenH / 480),
     z(0),
   ]);
 
+  // DARK OVERLAY - FULL SCREEN
   add([  
-    rect(SCREEN_W, SCREEN_H),
+    rect(screenW, screenH),
     pos(0, 0),
     color(0, 0, 0),
     opacity(0.4),
@@ -69,18 +77,20 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
 
   console.log(`🎭 Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
 
+  // CAT SPRITE - CENTERED
   const catSprite = add([
     sprite(`${character.name}Sheet`, { frame: initialFrame }),
-    pos(SCREEN_W / 2, SCREEN_H / 2-5),
+    pos(centerX, centerY - 5),
     anchor('center'),
     scale(initialScale * 1.2),
     z(2),
     opacity(1)
   ]);
 
-  add([ // TEXT BG
-    rect(SCREEN_W - 100, 100, { radius: 20 }),
-    pos(SCREEN_W / 2, SCREEN_H - 80),
+  // TEXT BACKGROUND - CENTERED AT BOTTOM
+  add([
+    rect(screenW - 100, 100, { radius: 20 }),
+    pos(centerX, screenH - 80),
     anchor('center'),
     color(0, 0, 0),
     opacity(0.8),
@@ -88,25 +98,27 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     z(2)
   ]);
 
-  const textDisplay = add([   // TEXT
+  // TEXT - CENTERED
+  const textDisplay = add([
     text(transition[textKeys[0]][0], {
       size: 25,
-      width: SCREEN_W - 150,
+      width: screenW - 150,
       align: 'center',
       font: 'science'
     }),
-    pos(SCREEN_W / 2, SCREEN_H - 85),
+    pos(centerX, screenH - 85),
     anchor('center'),
     color(255, 255, 255),
     z(3)
   ]);
 
-  const dots = [];   // DOTS
+  // PROGRESS DOTS - CENTERED
+  const dots = [];
 
   for (let i = 0; i < 3; i++) {
     const dot = add([
       circle(i === 0 ? 7 : 4),
-      pos(SCREEN_W / 2 - 30 + i * 30, SCREEN_H - 45),
+      pos(centerX - 30 + i * 30, screenH - 45),
       anchor('center'),
       color(i === 0 ? Color.fromHex(Colors.Highlight) : rgb(100, 100, 100)),
       z(3)
@@ -114,12 +126,13 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     dots.push(dot);
   }
 
-  const prompt = add([   // PROMPT - PRESS SPACE
+  // PROMPT - CENTERED
+  const prompt = add([
     text('Press SPACE or ENTER to continue', { 
       size: 18, 
       font: 'science'
     }),
-    pos(SCREEN_W / 2, SCREEN_H - 15),
+    pos(centerX, screenH - 15),
     anchor('center'),
     color(200, 200, 200),
     opacity(0.8),
@@ -215,8 +228,13 @@ function handleNext() {
 // TRANSITION 6: OBSERVER REVEAL
 function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0) {
   console.log('⚡ Starting Transition6 - Observer Reveal Cinematic');
+  
+  // GET ACTUAL SCREEN DIMENSIONS
+  const screenW = getScreenWidth();
+  const screenH = getScreenHeight();
+  
   const blackScreen = add([
-    rect(width(), height()),
+    rect(screenW, screenH),
     pos(0, 0),
     color(0, 0, 0),
     opacity(1),
@@ -226,7 +244,7 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
   
   wait(0.8, () => {
     const whiteFlash = add([
-      rect(width(), height()),
+      rect(screenW, screenH),
       pos(0, 0),
       color(255, 255, 255),
       opacity(0),
@@ -246,14 +264,14 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
         add([
           sprite("observerIntro"),
           pos(0, 0),
-          scale(SCREEN_W / 1000, SCREEN_H / 480),
+          scale(screenW / 1000, screenH / 480),
           z(0),
         ]);
         
         const lightning = add([
           sprite("lightning", { anim: "glitch" }),
           pos(0, 0),
-          scale(SCREEN_W / 100, SCREEN_H / 48),
+          scale(screenW / 100, screenH / 48),
           opacity(0.8),
           z(100),
         ]);
@@ -261,7 +279,7 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
         lightning.play("glitch");
         
         const flashOverlay = add([
-          rect(width(), height()),
+          rect(screenW, screenH),
           pos(0, 0),
           color(255, 255, 255),
           opacity(0.4),
@@ -279,277 +297,51 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
         
         wait(0.4, () => {
           const blackFade = add([
-            rect(width(), height()),
+            rect(screenW, screenH),
             pos(0, 0),
             color(0, 0, 0),
             opacity(0),
             fixed(),
-            z(10002),
+            z(98),
           ]);
           
-          tween(blackFade.opacity, 1, 0.4, (o) => blackFade.opacity = o, easings.easeInQuad).then(() => {
-            wait(0.3, () => {
-              const finalFlash = add([
-                rect(width(), height()),
-                pos(0, 0),
-                color(255, 255, 255),
-                opacity(0),
-                fixed(),
-                z(10003),
-              ]);
-              
-              tween(finalFlash.opacity, 1, 0.1, (o) => finalFlash.opacity = o).then(() => {
-                wait(0.1, () => {
-                  destroyAll();
-                    renderStandardTransition('Transition6', character, startHP, true, lives, score);
-                });
-              });
-            });
+          tween(blackFade.opacity, 1, 1.2, (o) => blackFade.opacity = o, easings.easeInQuad);
+          
+          wait(1.5, () => {
+            renderStandardTransition('Transition6', character, startHP, true, lives, score);
           });
         });
       });
     });
   });
-  
 }
 
-// TRANSITION 7: POST-NUCLEAR VICTORY + CREDITS
+// TRANSITION 7: POST-GAME CINEMATIC / CREDITS
 function createTransition7Cinematic(character, startHP) {
-  console.log('🎬 Starting Transition7 - Post Nuclear Cinematic + Credits');
-  console.log('🎵 Starting FinalVictoryTrack (50 seconds)');
-  const bg = add([
-    sprite("transitionBG7"),
-    pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
-    opacity(0),  
-    z(0)
-  ]);
+  console.log('🎬 Creating Transition7 cinematic (post-Observer)');
+  
+  // GET ACTUAL SCREEN DIMENSIONS
+  const screenW = getScreenWidth();
+  const screenH = getScreenHeight();
+  const centerX = getCenterX();
+  const centerY = getCenterY();
 
-  const whiteScreen = add([
-    rect(width(), height()),
-    pos(0, 0),
-    color(255, 255, 255),
-    opacity(1),
-    fixed(),
-    z(10000),
-    "whiteScreen"
-  ]);
-
-  wait(0.3, () => {
-    tween(whiteScreen.opacity, 0, 0.8, (val) => whiteScreen.opacity = val, easings.easeOutQuad);
-    animateSmokeTransition();
-    wait(0.3, () => {
-      for (let i = 0; i < 12; i++) {
-        const xPos = (i % 4) * (width() / 3) + rand(-50, 50);
-        const yPos = Math.floor(i / 4) * (height() / 2) + rand(-50, 50);
-
-        const poof = add([
-          sprite("smokeBlob", { anim: "puff" }),
-          pos(xPos, yPos),
-          scale(6 + rand(-1, 1)),
-          opacity(0),
-          z(9998),
-          anchor("center"),
-          fixed(),
-        ]);
-        poof.play("puff", { loop: true });
-
-        tween(poof.pos.y, poof.pos.y + rand(-30, 30), 2, (y) => poof.pos.y = y, easings.easeOutQuad);
-
-        //const smokeClear = add([
-        //  sprite('smokeClear', { anim: 'puff' }),
-        //  pos(0, 0),
-        //  scale(10, 10), 
-        //  z(9999),
-        //  fixed(),
-       //   opacity(0.7)
-       // ]);
-            
-        //smokeClear.play("puff", { loop: false });
-        //wait(0.8, () => destroy(smokeClear));
-
-        wait(1.0 + (i * 0.03), () => {
-          tween(poof.opacity, 0, 1.5, (o) => poof.opacity = o, easings.easeOutQuad)
-            .then(() => destroy(poof));
-        });
-      }
-
-      wait(1.0, () => {
-        destroy(whiteScreen);
-        tween(bg.opacity, 0.7, 2.0, (o) => bg.opacity = o, easings.easeOutQuad);
-
-        wait(7, () => {  
-          tween(bg.opacity, 0, 1.5, (o) => bg.opacity = o)
-            .then(() => destroy(bg));
-        });
-      });
-    });
-  });
-
-  const charSprite = add([
-    sprite(`${character.name}Sheet`, { frame: SPRITE_FRAMES.sitLookForwardRegular }),
-    pos(330, 260),
-    scale(1),
-    z(10),
-    opacity(0)
-  ]);
-
-  const transitionText = add([
-    text("QUANTUM BLISS RESTORED!", {
-      size: 50,
-      font: "science",
-      width: 800,
-      align: "center"
-    }),
-    pos(SCREEN_W / 2, SCREEN_H / 2 - 130),
-    anchor("center"),
-    color(255, 255, 255),
-    z(11),
-    opacity(0)
-  ]);
-
-  const shadowText = add([
-    text("QUANTUM BLISS RESTORED!", {
-      size: 50,
-      font: "science",
-      width: 800,
-      align: "center"
-    }),
-    pos(SCREEN_W / 2 + 3, SCREEN_H / 2 - 128),
-    anchor("center"),
-    color(144, 144, 192),
-    z(9),
-    opacity(0)
-  ]);
-
-  const shadowText2 = add([
-    text("QUANTUM BLISS RESTORED!", {
-      size: 50,
-      width: 800,
-      align: "center",
-      font: "science" 
-    }),
-    pos(k.width() / 2 + 1, k.height() / 2 - 129),
-    anchor("center"),
-    color(0, 0, 0),
-    z(10),
-    opacity(0)
-  ]);
-
-  const messages = [
-    "QUANTUM BLISS RESTORED!",
-    "TIME FOR ME TO TAKE A CATNAP",
-    "zzzZZZzzzZZZzzz"
-  ];
-
-  const spriteFrames = [
-    SPRITE_FRAMES.sitLookForwardRegular,
-    SPRITE_FRAMES.stretch,
-    SPRITE_FRAMES.sleep
-  ];
-
-  let msgIdx = 0;
-
-  wait(1.8, () => {
-    tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
-    wait(0.7, () => {
-      tween(transitionText.opacity, 1, 0.8, (o) => {
-        transitionText.opacity = o;
-        shadowText.opacity = o;
-        shadowText2.opacity = o;
-      });
-    });
-
-    wait(2.4, () => {
-      msgIdx = 1;
-      transitionText.text = messages[1];
-      shadowText.text = messages[1];
-      shadowText2.text = messages[1];
-      charSprite.use(k.sprite(`${character.name}Sheet`, { frame: spriteFrames[1] }));
-      transitionText.opacity = shadowText.opacity = shadowText2.opacity = charSprite.opacity = 0;
-      tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
-      tween(transitionText.opacity, 1, 0.8, (o) => { 
-        transitionText.opacity = o; 
-        shadowText.opacity = o; 
-        shadowText2.opacity = o; 
-      });
-
-      wait(2.4, () => {
-        msgIdx = 2;
-        transitionText.text = messages[2];
-        shadowText.text = messages[2];
-        shadowText2.text = messages[2];
-        charSprite.use(k.sprite(`${character.name}Sheet`, { frame: spriteFrames[2] }));
-        transitionText.opacity = shadowText.opacity = shadowText2.opacity = charSprite.opacity = 0;
-        tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
-        tween(transitionText.opacity, 1, 0.8, (o) => { 
-          transitionText.opacity = o; 
-          shadowText.opacity = o; 
-          shadowText2.opacity = o; 
-        });
-
-        wait(2.5, () => {
-          tween(charSprite.opacity, 0, 1.0, (o) => charSprite.opacity = o);
-          tween(transitionText.opacity, 0, 1.0, (o) => {
-            transitionText.opacity = o;
-            shadowText.opacity = o;
-            shadowText2.opacity = o;
-          }).then(() => {
-            destroy(charSprite);
-            destroy(transitionText);
-            destroy(shadowText);
-            destroy(shadowText2);
-          });
-
-          wait(0.8, () => 
-            startCreditsSequence(character));
-        });
-      });
-    });
-  });
-
-  wait(16, () => {
-    const confettiColors = [
-      k.rgb(144,144,192),
-      k.rgb(219,226,233),
-      k.rgb(101,115,131),
-      k.rgb(158,255,158),
-      k.rgb(255,199,255)
-    ];
-    loop(0.1, () => {
-      const c = add([
-        rect(8, 8),
-        pos(rand(0, SCREEN_W), -20),
-        color(choose(confettiColors)),
-        rotate(rand(0, 360)),
-        opacity(0.6),
-        z(15),
-        { vel: rand(30, 100), rotSpeed: rand(-5, 5) }
-      ]);
-      c.onUpdate(() => {
-        c.move(0, c.vel);
-        c.angle += c.rotSpeed;
-        if (c.pos.y > SCREEN_H + 20) destroy(c);
-      });
-    });
-  });
-
-}
-
-function startCreditsSequence(character) {
   stopAllMusic();
   startFinalVictoryMusic();
+  
+  animateSmokeTransition();
+
   const cafeBG = add([
     sprite("cafe"),
     pos(0, 0),
-    scale(k.width() / 1000, height() / 480),
+    scale(screenW / 1000, screenH / 480),
     z(1),
     opacity(0)
   ]);
   tween(cafeBG.opacity, 1, 2, (o) => cafeBG.opacity = o);
 
   const darkOverlay = add([
-    rect(width(), height()),
+    rect(screenW, screenH),
     pos(0, 0),
     color(0, 0, 0),
     z(2),
@@ -558,9 +350,9 @@ function startCreditsSequence(character) {
 
   const panel = add([
     rect(800, 400, { radius: 20 }),
-    pos(100, 30),
+    pos(centerX - 400, 30),
     color(0, 0, 0),
-    outline(4, k.rgb(144,144,192)),
+    outline(4, rgb(144,144,192)),
     opacity(0),
     z(7)
   ]);
@@ -581,7 +373,7 @@ function startCreditsSequence(character) {
 
       const lineObj = add([
         text(line, { size, font }),
-        pos(width() / 2, y),
+        pos(centerX, y),
         anchor("center"),
         color,
         opacity(0),
@@ -599,7 +391,7 @@ function startCreditsSequence(character) {
   wait(3.5, () => {
     const youDidIt = add([
       text("YOU DID IT!", { size: 65, font: "science", }),
-      pos(width() / 2, height() / 2 - 50),
+      pos(centerX, centerY - 50),
       anchor("center"),
       color(rgb(255,199,255)),
       opacity(0),
@@ -667,7 +459,7 @@ function startCreditsSequence(character) {
 
                 const nonaImage = add([
                   sprite("realNona"),
-                  pos(width() / 2, 285),
+                  pos(centerX, 285),
                   anchor("center"),
                   opacity(0),
                   scale(0.9),
@@ -708,6 +500,10 @@ function startCreditsSequence(character) {
 
 
 function animateSmokeTransition(){
+  // GET ACTUAL SCREEN DIMENSIONS
+  const screenW = getScreenWidth();
+  const screenH = getScreenHeight();
+  
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 6)
   }
@@ -730,7 +526,7 @@ function animateSmokeTransition(){
 
         const blob = add([
           sprite("smokeBlob"),
-          pos(rand(0, width()), rand(0, height())),
+          pos(rand(0, screenW), rand(0, screenH)),
           scale(rand(scaleMin, scaleMax)),
           opacity(0),
           rotate(rand(0, 360)),
@@ -777,7 +573,7 @@ function animateSmokeTransition(){
 
   function smokeSceneReveal({ duration = 7 } = {}) {
     const overlay = add([
-      rect(width(), height()),
+      rect(screenW, screenH),
       color(101, 115, 131),
       opacity(1),
       fixed(),

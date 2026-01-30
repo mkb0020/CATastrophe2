@@ -1,13 +1,20 @@
 // mainMenu.js
-import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
+import { SCREEN_W, SCREEN_H, Colors, getCenterX, getCenterY, getScreenWidth, getScreenHeight } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
 import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
 
-
+// ==================== INITIALIZE GAME STATE ====================
+if (!window.gameState) {
+  window.gameState = {
+    deviceType: null, 
+    score: 0,
+    currentLevel: 1
+  };
+}
 
 export function createStartScene(){
-    // ==================== HIDE MOBILE HUD ====================
+  // ==================== HIDE MOBILE HUD ====================
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
   
@@ -15,64 +22,177 @@ export function createStartScene(){
     mobileHUD.hide();
     hideMobileArrows(); 
   }
-  // =========================================================
+  
+  // ==================== USE ACTUAL SCREEN DIMENSIONS ====================
+  const screenW = getScreenWidth();
+  const screenH = getScreenHeight();
+  const centerX = getCenterX();
+  const centerY = getCenterY();
+  
+  // ==================== BACKGROUND ====================
   add([
     sprite('startBG'),
     pos(0, 0),
     z(0)
   ]);
 
-  const clickText = add([
-    text("CLICK TO START", { 
-      size: 70, 
-      font: "orbitronBold"
-    }),
-    pos(SCREEN_W / 2, 400),
+  // ==================== DEVICE SELECTION BUTTONS ====================
+  const buttonWidth = 280;
+  const buttonHeight = 70;
+  const buttonSpacing = 100;
+  const startY = centerY - 50; 
+
+  
+  const desktopBtnBG = add([
+    rect(buttonWidth, buttonHeight, { radius: 8 }),
+    pos(centerX, startY),
     anchor("center"),
-    color(255, 255, 255),
-    z(3),
-    opacity(1)
+    color(55, 2, 90), 
+    outline(3, rgb(165, 90, 255)),
+    area(),
+    z(2),
+    "desktop-btn"
   ]);
 
-  const clickText2 = add([
-    text("CLICK TO START", { 
-      size: 70, 
+  const desktopBtnText = add([
+    text("PLAY ON PC", { 
+      size: 32, 
       font: "orbitronBold"
     }),
-    pos(SCREEN_W / 2 +2, 402),
+    pos(centerX, startY),
+    anchor("center"),
+    color(255, 199, 255), 
+    z(3)
+  ]);
+
+  const desktopBtnShadow = add([
+    text("PLAY ON PC", { 
+      size: 32, 
+      font: "orbitronBold"
+    }),
+    pos(centerX + 2, startY + 2),
     anchor("center"),
     color(0, 0, 0),
-    z(2),
-    opacity(1)
+    z(1)
   ]);
 
-  let pulseDirection = -1;
-  clickText.onUpdate(() => {
-    clickText.opacity += pulseDirection * 2 * dt();
-    if (clickText.opacity <= 0.3) {
-      pulseDirection = 1;
-    } else if (clickText.opacity >= 1) {
-      pulseDirection = -1;
-    }
+  
+  const mobileBtnBG = add([
+    rect(buttonWidth, buttonHeight, { radius: 8 }),
+    pos(centerX, startY + buttonSpacing),
+    anchor("center"),
+    color(55, 2, 90), 
+    outline(3, rgb(165, 90, 255)), 
+    area(),
+    z(2),
+    "mobile-btn"
+  ]);
+
+  const mobileBtnText = add([
+    text("PLAY ON MOBILE", { 
+      size: 32, 
+      font: "orbitronBold"
+    }),
+    pos(centerX, startY + buttonSpacing),
+    anchor("center"),
+    color(255, 199, 255),
+    z(3)
+  ]);
+
+  const mobileBtnShadow = add([
+    text("PLAY ON MOBILE", { 
+      size: 32, 
+      font: "orbitronBold"
+    }),
+    pos(centerX + 2, startY + buttonSpacing + 2),
+    anchor("center"),
+    color(0, 0, 0),
+    z(1)
+  ]);
+
+  // ==================== BUTTON INTERACTIONS ====================
+  
+  desktopBtnBG.onHoverUpdate(() => {
+    desktopBtnBG.color = rgb(131, 12, 222);
+    setCursor("pointer");
   });
 
-  onClick(() => {
+  desktopBtnBG.onHoverEnd(() => {
+    desktopBtnBG.color = rgb(55, 2, 90);
+    setCursor("default");
+  });
+
+  desktopBtnBG.onClick(() => {
+    window.gameState.deviceType = 'desktop';
+    console.log('🖥️ Desktop mode selected');
     stopAtmosphere();
     startMenuMusic();
     go("menu");
   });
 
-  onKeyPress("space", () => {
+  mobileBtnBG.onHoverUpdate(() => {
+    mobileBtnBG.color = rgb(131, 12, 222);
+    setCursor("pointer");
+  });
+
+  mobileBtnBG.onHoverEnd(() => {
+    mobileBtnBG.color = rgb(55, 2, 90);
+    setCursor("default");
+  });
+
+  mobileBtnBG.onClick(() => {
+    window.gameState.deviceType = 'mobile';
+    console.log('📱 Mobile mode selected');
     stopAtmosphere();
     startMenuMusic();
     go("menu");
   });
 
-  onKeyPress("enter", () => {
+  // ==================== KEYBOARD SHORTCUTS ====================
+  onKeyPress("d", () => {
+    window.gameState.deviceType = 'desktop';
+    console.log('🖥️ Desktop mode selected (keyboard)');
     stopAtmosphere();
     startMenuMusic();
     go("menu");
   });
+
+  onKeyPress("1", () => {
+    window.gameState.deviceType = 'desktop';
+    console.log('🖥️ Desktop mode selected (keyboard)');
+    stopAtmosphere();
+    startMenuMusic();
+    go("menu");
+  });
+
+  onKeyPress("m", () => {
+    window.gameState.deviceType = 'mobile';
+    console.log('📱 Mobile mode selected (keyboard)');
+    stopAtmosphere();
+    startMenuMusic();
+    go("menu");
+  });
+
+  onKeyPress("2", () => {
+    window.gameState.deviceType = 'mobile';
+    console.log('📱 Mobile mode selected (keyboard)');
+    stopAtmosphere();
+    startMenuMusic();
+    go("menu");
+  });
+
+  // ==================== HELPER TEXT ====================
+  const helperText = add([
+    text("Keyboard: Press 1 for PC  |  Press 2 for Mobile", { 
+      size: 18, 
+      font: "orbitron"
+    }),
+    pos(centerX, screenH - 40),
+    anchor("center"),
+    color(200, 200, 200),
+    opacity(0.7),
+    z(3)
+  ]);
 }
 
 
@@ -130,9 +250,15 @@ export function createCharSelectScene() {
   let animationComplete = false;
   let shopMusic = null;
 
+  // ==================== USE ACTUAL SCREEN DIMENSIONS FOR OVERLAYS ====================
+  const screenW = getScreenWidth();
+  const screenH = getScreenHeight();
+  const centerX = getCenterX();
+  const centerY = getCenterY();
+
   // ==================== PHASE 1: DOOR ANIMATION ====================
   const blackOverlay = add([
-    rect(SCREEN_W, SCREEN_H),
+    rect(screenW, screenH),
     pos(0, 0),
     color(0, 0, 0),
     opacity(1),
@@ -142,7 +268,7 @@ export function createCharSelectScene() {
   ]);
 
   const whiteOverlay = add([
-    rect(SCREEN_W, SCREEN_H),
+    rect(screenW, screenH),
     pos(0, 0),
     color(254, 228, 180),
     opacity(0),
@@ -153,7 +279,7 @@ export function createCharSelectScene() {
 
   const cafeSprite = add([
     sprite("cafeDay", { frame: 0 }),
-    pos(SCREEN_W / 2, SCREEN_H / 2),
+    pos(centerX, centerY),
     anchor("center"),
     scale(2, 2),
     z(9998),
@@ -162,17 +288,17 @@ export function createCharSelectScene() {
     "cafeSprite"
   ]);
 
-  const doorX = SCREEN_W / 2;
-  const doorY = SCREEN_H * 0.7;
+  const doorX = centerX;
+  const doorY = screenH * 0.7;
 
   const START_SCALE = 2.0;
   const MID_SCALE = 5.5;    
   const END_SCALE = 8.0;     
   
-  const midOffsetX = (SCREEN_W / 2 - doorX) * (MID_SCALE - START_SCALE) / START_SCALE;
-  const midOffsetY = (SCREEN_H / 2 - doorY) * (MID_SCALE - START_SCALE) / START_SCALE;
-  const finalOffsetX = (SCREEN_W / 2 - doorX) * (END_SCALE - START_SCALE) / START_SCALE;
-  const finalOffsetY = (SCREEN_H / 2 - doorY) * (END_SCALE - START_SCALE) / START_SCALE;
+  const midOffsetX = (centerX - doorX) * (MID_SCALE - START_SCALE) / START_SCALE;
+  const midOffsetY = (centerY - doorY) * (MID_SCALE - START_SCALE) / START_SCALE;
+  const finalOffsetX = (centerX - doorX) * (END_SCALE - START_SCALE) / START_SCALE;
+  const finalOffsetY = (centerY - doorY) * (END_SCALE - START_SCALE) / START_SCALE;
 
   wait(0, () => {
     tween(blackOverlay.opacity, 0, 1.0, (val) => blackOverlay.opacity = val, easings.easeOutQuad);
@@ -188,7 +314,7 @@ export function createCharSelectScene() {
           const progress = (val - START_SCALE) / (MID_SCALE - START_SCALE);
           const offsetX = midOffsetX * progress;
           const offsetY = midOffsetY * progress;
-          cafeSprite.pos = vec2(SCREEN_W / 2 + offsetX, SCREEN_H / 2 + offsetY);
+          cafeSprite.pos = vec2(centerX + offsetX, centerY + offsetY);
         },
         easings.easeInOutQuad
       );
@@ -206,7 +332,7 @@ export function createCharSelectScene() {
               const progress = (val - START_SCALE) / (END_SCALE - START_SCALE);
               const offsetX = finalOffsetX * progress;
               const offsetY = finalOffsetY * progress;
-              cafeSprite.pos = vec2(SCREEN_W / 2 + offsetX, SCREEN_H / 2 + offsetY);
+              cafeSprite.pos = vec2(centerX + offsetX, centerY + offsetY);
             },
             easings.easeInQuad  
           );
@@ -301,12 +427,12 @@ function buildCharacterCards() {
       updateCharacterStats(char);
       
       const confirmBtn = document.getElementById('confirmCharBtn');
-      console.log('🔘 Button element found:', confirmBtn);
-      console.log('🔘 Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
+      console.log('📘 Button element found:', confirmBtn);
+      console.log('📘 Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
       
       if (confirmBtn) {
         confirmBtn.disabled = false;
-        console.log('🔘 Button disabled after:', confirmBtn.disabled);
+        console.log('📘 Button disabled after:', confirmBtn.disabled);
       }
       
       if (window.play) play("happyMeow", { volume: 0.2 });
@@ -383,8 +509,13 @@ function playPourAnimation(onComplete) {
   const music = get("shop")[0];
   if (music) music.stop();
 
+  const screenW = getScreenWidth();
+  const screenH = getScreenHeight();
+  const centerX = getCenterX();
+  const centerY = getCenterY();
+
   const brownOverlay = add([
-    rect(SCREEN_W, SCREEN_H),
+    rect(screenW, screenH),
     pos(0, 0),
     color(92, 64, 51),
     opacity(0),
@@ -393,7 +524,7 @@ function playPourAnimation(onComplete) {
   ]);
 
   const blackOverlay = add([
-    rect(SCREEN_W, SCREEN_H),
+    rect(screenW, screenH),
     pos(0, 0),
     color(0, 0, 0),
     opacity(0),
@@ -413,11 +544,20 @@ function playPourAnimation(onComplete) {
 
   function spawnPourSprite(delay) {
     wait(delay, () => {
+      const screenW = getScreenWidth();
+      const screenH = getScreenHeight();
+      const centerX = getCenterX();
+      const centerY = getCenterY();
+      
+      const targetHeight = screenH * 1.1; 
+      const spriteHeight = 48;
+      const scaleAmount = targetHeight / spriteHeight;
+      
       const pourSprite = add([
         sprite("pour", { frame: 0 }),
-        pos(SCREEN_W / 2, SCREEN_H / 2),
+        pos(centerX, centerY),
         anchor("center"),
-        scale(10),
+        scale(scaleAmount),
         opacity(0),
         z(190),
         "pourSprite",
