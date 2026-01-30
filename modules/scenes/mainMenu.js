@@ -245,6 +245,10 @@ export function createCharSelectScene() {
   tween(regularBG.opacity, 1, 0.8, (val) => regularBG.opacity = val);
 
   // ==================== PHASE 2: MODAL ====================
+
+
+
+
 function showCharSelectModal() {
   const modal = document.getElementById('charSelectModal');
   if (modal) modal.classList.add('show');
@@ -260,12 +264,7 @@ function buildCharacterCards() {
   const characters = getCharacterList();
   const grid = document.getElementById('characterGrid');
   
-  if (!grid) {
-    console.error('Character grid element not found!');
-    return;
-  }
-  
-  console.log('Building character cards...', characters); 
+  if (!grid) return;
   
   grid.innerHTML = '';
   
@@ -274,103 +273,51 @@ function buildCharacterCards() {
     card.className = 'character-card';
     card.dataset.index = index;
     
-    const canvas = document.createElement('canvas');
-canvas.width = 95;  
-canvas.height = 68; 
-canvas.className = 'char-sprite-canvas';
-
-const ctx = canvas.getContext('2d');
-ctx.imageSmoothingEnabled = false;
-
-const img = new Image();
-const spriteName = char.name.charAt(0).toUpperCase() + char.name.slice(1).toLowerCase();
-img.src = `./assets/images/cats/${spriteName}.png`; 
-
-img.onload = () => {
-  const frameIndex = SPRITE_FRAMES.menu;
-  const frameWidth = 210;
-  const frameHeight = 150;
-  const cols = 28;
-  
-  const sx = (frameIndex % cols) * frameWidth;
-  const sy = Math.floor(frameIndex / cols) * frameHeight;
-  
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  const scale = Math.min(canvas.width / frameWidth, canvas.height / frameHeight) * 0.9;
-  const drawWidth = frameWidth * scale;
-  const drawHeight = frameHeight * scale;
-  const drawX = (canvas.width - drawWidth) / 2;
-  const drawY = (canvas.height - drawHeight) / 2;
-  
-  ctx.drawImage(img, sx, sy, frameWidth, frameHeight, drawX, drawY, drawWidth, drawHeight);
-  console.log(`Successfully loaded sprite for ${char.name}`, { drawX, drawY, drawWidth, drawHeight });
-};
+    const img = document.createElement('img');
+    const spriteName = char.name.charAt(0).toUpperCase() + char.name.slice(1).toLowerCase();
+    img.src = `./assets/images/portraits/${spriteName}.png`;
+    img.className = 'char-select-img';
+    img.alt = char.name;
     
-    const name = document.createElement('div');
-    name.className = 'char-name';
-    name.textContent = char.name;
+    const nameLabel = document.createElement('div');
+    nameLabel.className = 'char-card-name';
+    nameLabel.textContent = char.name;
     
-    card.appendChild(canvas);
-    card.appendChild(name);
+    card.appendChild(img);
+    card.appendChild(nameLabel);
     
-card.onclick = () => {
-  console.log('🎯 Card clicked!', { animationComplete, index, charName: char.name });
-  
-  if (!animationComplete) {
-    console.log('⏳ Animation not complete yet, ignoring click');
-    return;
-  }
-  
-  selectedIndex = index;
-  console.log('✅ Selected index set to:', selectedIndex);
-  
-  document.querySelectorAll('.character-card').forEach(c => {
-    c.classList.remove('selected');
-  });
-  card.classList.add('selected');
-  console.log('🎨 Card marked as selected');
-  
-  updateCharacterPreview(char);
-  
-  const confirmBtnContainer = document.querySelector('.confirm-btn-container');
-  const confirmBtn = document.getElementById('confirmCharBtn');
-  console.log('🔧 Testing button click detection');
-confirmBtn?.addEventListener('click', () => {
-  console.log('👆 RAW CLICK DETECTED ON BUTTON!');
-});
-  
-  console.log('🔍 Found button elements:', {
-    container: !!confirmBtnContainer,
-    button: !!confirmBtn,
-    containerClasses: confirmBtnContainer?.className,
-    buttonDisabled: confirmBtn?.disabled
-  });
-  
-  if (confirmBtnContainer) {
-    confirmBtnContainer.classList.remove('disabled');
-    console.log('✨ Removed disabled class from container. New classes:', confirmBtnContainer.className);
-  }
-
-  
-  
-  if (confirmBtn) {
-    confirmBtn.disabled = false;
-    console.log('✨ Set button disabled = false');
-  }
-  
-  console.log('🎵 Playing meow sound');
-  if (window.play) play("happyMeow", { volume: 0.2 });
-};
+    card.onclick = () => {
+      console.log('🎯 Card clicked!', { index, animationComplete });
+      
+      if (!animationComplete) return;
+      
+      selectedIndex = index;
+      
+      document.querySelectorAll('.character-card').forEach(c => {
+        c.classList.remove('selected');
+      });
+      card.classList.add('selected');
+      
+      updateCharacterStats(char);
+      
+      const confirmBtn = document.getElementById('confirmCharBtn');
+      console.log('🔘 Button element found:', confirmBtn);
+      console.log('🔘 Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
+      
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        console.log('🔘 Button disabled after:', confirmBtn.disabled);
+      }
+      
+      if (window.play) play("happyMeow", { volume: 0.2 });
+    };
     
     grid.appendChild(card);
   });
-  
-  
 }
 
 
-function updateCharacterPreview(char) {
+function updateCharacterStats(char) {
   document.getElementById('statHP').textContent = char.stats.maxHP;
   document.getElementById('statATK').textContent = char.stats.baseAtk;
   document.getElementById('statDEF').textContent = char.stats.baseDefense;
@@ -378,87 +325,56 @@ function updateCharacterPreview(char) {
   
   document.getElementById('charName').textContent = char.name;
   
-  const previewCanvas = document.getElementById('previewCanvas');
-  if (previewCanvas) {
-    const ctx = previewCanvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
-    ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-    
-    const img = new Image();
-    const spriteName = char.name.charAt(0).toUpperCase() + char.name.slice(1).toLowerCase();
-    img.src = `./assets/images/cats/${spriteName}.png`; 
-    
-    img.onerror = () => {
-      console.error(`Failed to load preview sprite: ./assets/images/cats/${spriteName}.png`);
+}
+
+function setupCharSelectButtons() {
+  const backBtn = document.getElementById('backToMenuBtn');
+  const confirmBtn = document.getElementById('confirmCharBtn');
+  
+  if (backBtn) {
+    backBtn.onclick = () => {
+      if (!animationComplete) return;
+      if (shopMusic) shopMusic.stop();
+      
+      const modal = document.getElementById('charSelectModal');
+      if (modal) modal.classList.remove('show');
+      
+      go("menu");
     };
-    
-    img.onload = () => {
-      const frameIndex = SPRITE_FRAMES.select;
-      const frameWidth = 210;
-      const frameHeight = 150;
-      const cols = 28;
+  }
+  
+  if (confirmBtn) {
+    confirmBtn.onclick = () => {
+      console.log('🚀 Confirm button clicked!', {
+        selectedIndex,
+        animationComplete,
+        shopMusicExists: !!shopMusic
+      });
       
-      const sx = (frameIndex % cols) * frameWidth;
-      const sy = Math.floor(frameIndex / cols) * frameHeight;
+      if (selectedIndex === null || !animationComplete) {
+        console.log('❌ Cannot proceed:', { selectedIndex, animationComplete });
+        return;
+      }
+      if (shopMusic) shopMusic.stop();
       
-      const scale = 1;
-      const drawWidth = frameWidth * scale;
-      const drawHeight = frameHeight * scale;
-      const drawX = (previewCanvas.width - drawWidth) / 2;
-      const drawY = (previewCanvas.height - drawHeight) / 2;
+      const modal = document.getElementById('charSelectModal');
+      if (modal) modal.classList.remove('show');
       
-      ctx.drawImage(img, sx, sy, frameWidth, frameHeight, drawX, drawY, drawWidth, drawHeight);
+      playPourAnimation(() => {
+        const characters = getCharacterList();
+        const char = characters[selectedIndex];
+        go("transition", "Transition1", char);
+      });
     };
   }
 }
 
-  function setupCharSelectButtons() {
-    const backBtn = document.getElementById('backToMenuBtn');
-    const confirmBtn = document.getElementById('confirmCharBtn');
-    
-    if (backBtn) {
-      backBtn.onclick = () => {
-        if (!animationComplete) return;
-        if (shopMusic) shopMusic.stop();
-        
-        const modal = document.getElementById('charSelectModal');
-        if (modal) modal.classList.remove('show');
-        
-        go("menu");
-      };
-    }
-    
-if (confirmBtn) {
-  confirmBtn.onclick = () => {
-    console.log('🚀 Confirm button clicked!', {
-      selectedIndex,
-      animationComplete,
-      shopMusicExists: !!shopMusic
-    });
-    
-    if (selectedIndex === null || !animationComplete) {
-      console.log('❌ Cannot proceed:', { selectedIndex, animationComplete });
-      return;
-    }
-        if (shopMusic) shopMusic.stop();
-        
-        const modal = document.getElementById('charSelectModal');
-        if (modal) modal.classList.remove('show');
-        
-        playPourAnimation(() => {
-          const characters = getCharacterList();
-          const char = characters[selectedIndex];
-          go("transition", "Transition1", char);
-        });
-      };
-    }
-  }
-  
-  onSceneLeave(() => {
-    const modal = document.getElementById('charSelectModal');
-    if (modal) modal.classList.remove('show');
-  });
+onSceneLeave(() => {
+  const modal = document.getElementById('charSelectModal');
+  if (modal) modal.classList.remove('show');
+});
 }
+
 
 
 

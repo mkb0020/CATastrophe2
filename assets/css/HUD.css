@@ -1662,13 +1662,13 @@ h6 {
   display: flex !important;
   flex-direction: row !important;
   gap: 30px !important;
-  max-width: 900px !important;
+  max-width: 1000px !important;
   width: 90% !important;
   height: 85vh !important;
   border: 3px solid var(--VortexViolet) !important;
   box-shadow: 0 0 50px var(--VortexGlow3) !important;
   border-radius: 20px !important;
-  padding: 15px 25px !important;
+  padding: 15px 30px !important;
   background-image: url('../images/backgrounds/Select.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -1678,11 +1678,12 @@ h6 {
 .charselect-left {
   flex: 1 1 50% !important;
   min-width: 0 !important;
-  max-height: 65%;
+  max-height: 80%;
+  max-width: 550px;
   background: rgb(17, 17, 17) !important;
   border: 4px solid rgb(109, 54, 15) !important;
   border-radius: 8px !important;
-  padding: 10px !important;
+  padding: 15px !important;
   display: flex !important;
   flex-direction: column !important;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.795) !important;
@@ -1696,6 +1697,7 @@ h6 {
   padding: 0 !important;
   max-width: 250px;
   width: 250px;
+
 }
 .charselect-left .cyber-button {
   position:fixed;
@@ -1733,70 +1735,71 @@ h6 {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 10px !important;
-  padding: 5px 0 !important;
+  padding: 5px 1px !important;
   flex: 1 !important;
   overflow-y: auto !important;
 }
 
+
 .character-card {
-  background: rgba(15, 15, 26, 0.8) !important;
-  border: 2px dashed var(--CoolGray) !important;
-  border-radius: 10px !important;
-  padding: 6px !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important; 
-  gap: 5px !important;
-  box-shadow: 0 0 15px rgba(144, 144, 192, 0) !important;
-  overflow: hidden !important;  
-  position: relative !important; 
+  background: rgba(50, 50, 59, 0.8);
+  border: 2px dashed rgba(144, 144, 192, 0.237);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  width: 150px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.char-sprite-canvas {
-  width: 95px !important;
-  height: 68px !important;
-  image-rendering: pixelated !important;
-  image-rendering: -moz-crisp-edges !important;
-  image-rendering: crisp-edges !important;
-  border: 1px solid #ffffff00;
-  box-shadow: 0 0 30px rgba(0,0,0,0) !important;
-  display: block !important;
-  margin: 0 auto !important;
-  position: relative !important;  
+.char-select-img {
+  width: 110px;
+  height: auto;
+  display: block;
+  image-rendering: pixelated; 
+  margin: 0 auto;
+}
+
+.char-card-name {
+  font-family: 'SpaceLetters', sans-serif;
+  font-size: 0.9rem;
+  color: var(--AlphaAqua);
+  text-shadow: 0 0 8px var(--AlphaGlow2);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .character-card:hover {
-  transform: translateY(-2px) !important;
-  border-color: var(--AlphaAqua) !important;
-  box-shadow: 0 0 25px var(--AlphaGlow2) !important;
+  transform: translateY(-2px);
+  border-color: var(--AlphaAqua);
+  box-shadow: 0 0 25px var(--AlphaGlow2);
 }
 
 .character-card.selected {
-  border-color: var(--RadioactiveGreen) !important;
-  background: rgba(89, 232, 76, 0.055) !important;
-  box-shadow: 0 0 10px var(--RadioactiveGlow3) !important;
-}
-
-
-.char-name {
-  font-family: 'GothNerd', sans-serif !important;
-  font-size: 1rem;
-  color: var(--ParticlePink) !important;
-  text-align: center !important;
-  text-transform: uppercase !important;
+  border-color: var(--RadioactiveGreen);
+  background: rgba(89, 232, 76, 0.055);
+  box-shadow: 0 0 10px var(--RadioactiveGlow3);
 }
 
 .stats-panel {
   background: rgb(17, 17, 17) !important;
   border: 4px solid rgb(109, 54, 15) !important;
   border-radius: 12px !important;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.74) !important;
   width: 100% !important;
   height: 55%;
+  position: absolute;
+  right: 30px;
+  max-width: 300px !important;
 }
 
 .stats-list {
@@ -1825,11 +1828,11 @@ h6 {
 }
 
 .preview-panel {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-30%);
-  background: rgba(15, 15, 26, 0) !important;
+  position: absolute !important;
+  bottom: 25px !important;
+  left:50% !important;
+  transform: translateX(50%);
+  background: rgba(192, 192, 203, 0) !important;
   border: 2px solid rgba(15, 15, 26, 0) !important;
   border-radius: 12px !important;
   padding: 12px !important;
@@ -1837,26 +1840,14 @@ h6 {
   align-items: center !important;
   gap: 8px !important;
   box-shadow: 0 0 20px rgba(144, 144, 192, 0) !important;
-  width: 100% !important;
-  max-width: 400px !important;
-  height: 30%;
-}
-
-#previewCanvas {
-  max-width: 210px !important;
-  max-height: 150px !important;
-  image-rendering: pixelated !important;
-  image-rendering: -moz-crisp-edges !important;
-  image-rendering: crisp-edges !important;
-  border: 1px solid #00000000;
-  background: transparent;
-  box-shadow: 0 0 20px rgba(144, 144, 192, 0) !important;
 
 }
+
+
 
 #charName {
   font-family: 'GothNerd', sans-serif !important;
-  font-size: 2rem !important;
+  font-size: 3rem;
   color: var(--White) !important;
   text-align: center !important;
   text-transform: uppercase !important;
@@ -1875,22 +1866,30 @@ h6 {
 
 @media (max-width: 950px) {
 
+.charselect-left {
+  max-height: 90%;
+  max-width: 350px;
 
-  
-  #previewCanvas {
-    order: 1;
-    z-index: 1;
-  }
-  
-  #charName {
-    order: 2;
-    z-index: 2;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-1%);
-    bottom: 0%;
+}
+
+.charselect-right {
+  max-width: 150px;
+  width: 150px;
+
+}
+ 
+  .preview-panel {
+    display: none !important; 
   }
 
+.character-card {
+  width: 90px;
+  height: 80px;
+}
+
+.char-select-img {
+  width: 70px;
+}
 
 
   .panel-title {
@@ -1898,33 +1897,18 @@ h6 {
   margin-bottom: 3px !important;
 }
 
-.character-grid {
-  gap: 2px !important;
-  padding: 2px 0 !important;
-}
+  .character-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px;
+  }
+  
+  .character-card {
+    padding: 6px;
+  }
 
-.char-sprite-canvas {
-  width: 43px !important;
-  height: 34px !important;
-}
-
-.character-card {
-  padding: 6px !important;
-  gap: 5px !important;
-}
-
-.char-name {
-  font-size: 0.8rem;
-}
-
-.char-sprite-canvas {
-  width: 42px !important;
-  height: 30px !important;
-}
 
 .stats-panel {
-  padding: 8px !important;
-  width: 100% !important;
+  padding: 15px !important;
   height: 55%;
 }
 
@@ -1932,7 +1916,7 @@ h6 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 0.7rem;
 }
 
@@ -2577,6 +2561,77 @@ h6 {
     50% { transform: scale(1.2) rotate(180deg); }
     100% { transform: scale(1) rotate(360deg); }
   }
+
+
+.fragment-button {
+  --glow-color: var(--RadioactiveGreen);       
+  --glow-intensity: 0.4;
+  --inner-glow: rgba(255, 255, 255, 0.103);
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color:var(--RadioactiveGreen);
+  background: #000000;
+  border: 2px solid var(--RadioactiveGreen);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 8px var(--RadioactiveGreen),
+    inset 0 0 12px rgba(255, 255, 255, 0.103),
+    0 0 35px var(--RadioactiveGreen);
+  overflow: hidden;
+}
+
+.fragment-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--glow-color),
+    inset 0 0 15px var(--inner-glow),
+    0 0 20px var(--glow-color);
+}
+
+.fragment-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.fragment-button:hover::before {
+  left: 100%;
+}
+
+
+
+
+
+
+
+
+.fragment-btn {
+  --glow-color: #58e84c;           
+  --inner-glow: rgba(88, 232, 76, 0.25);
+  font-size: 1.5rem;
+  font-family: 'GothNerd';
+  font-weight: bold;
+  padding: 10px 30px;
+  width: 350px;
+  margin-top: 5px;
+  color: var(--RadioactiveGreen)
+}
+
 
 
   .stat-row.increase {

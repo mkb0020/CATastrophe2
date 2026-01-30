@@ -74,11 +74,11 @@ export const CHARACTERS = {
   NONA: {
     name: 'NONA',
     stats: {
-      maxHP: 120, 
-      baseHP: 120,
-      baseAtk: 30,
-      baseSpeed: 30,
-      baseDefense: 30,
+      maxHP: 1200, // FOR TESTING
+      baseHP: 1200, // FOR TESTING
+      baseAtk: 300, // FOR TESTING
+      baseSpeed: 300, // FOR TESTING
+      baseDefense: 300, // FOR TESTING
     },
     platformerStats: { 
       speed: 8,
