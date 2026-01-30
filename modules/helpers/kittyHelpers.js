@@ -418,14 +418,16 @@ export function startAtmosphere() {
 }
 // ============================== MUSIC CONTROLS (NOW IN HTML/CSS INSTEAD OF IN CANVAS) ==============================================
 export function initializeMusicControls() {
-    const volumeBtn = document.getElementById('volume-btn');
-    const pauseBtn = document.getElementById('pause-btn');
+    const volumeBtn = document.getElementById('muteBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const muteIcon = document.getElementById('muteIcon');
+
     if (!volumeBtn || !pauseBtn) return;
 
     let isMuted = false;
     volumeBtn.addEventListener('click', () => {
         isMuted = !isMuted;
-        volumeBtn.textContent = isMuted ? '🔇' : '🔊';
+        muteIcon.src = isMuted ? 'assets/images/icons/mute.png' : 'assets/images/icons/music.png';
         volumeBtn.classList.toggle('muted', isMuted);
         
         volume(isMuted ? 0 : 1);
@@ -439,7 +441,16 @@ export function initializeMusicControls() {
     });
 
     pauseBtn.addEventListener('click', () => {
-        if (window.gamePauseSystem) window.gamePauseSystem.pause();
+        console.log('🎮 Desktop pause button clicked');
+        if (window.gamePauseSystem) {
+            if (window.gamePauseSystem.isPaused()) {
+                window.gamePauseSystem.resume();
+            } else {
+                window.gamePauseSystem.pause();
+            }
+        } else {
+            console.warn('⚠️ Pause system not initialized yet');
+        }
     });
 
     window.isMuted = isMuted;
@@ -559,26 +570,58 @@ export function initializeHUD() {
     window.updateHUD = (updates) => {
         if (updates.score !== undefined) {
             window.gameState.score = updates.score;
-            const el = document.getElementById('scoreText');
-            if (el) el.textContent = `Score: ${updates.score}`;
+            const el = document.getElementById('score');
+            if (el) el.textContent = `☕: ${updates.score}`;
+            
+            const mobileEl = document.getElementById('mobileScore');
+            if (mobileEl) mobileEl.textContent = `Score: ${updates.score}`;
         }
         if (updates.hp !== undefined) {
             window.gameState.hp = updates.hp;
-            const el = document.getElementById('hpText');
-            if (el) el.textContent = `HP: ${updates.hp}`;
+            const el = document.getElementById('hp');
+            if (el) el.textContent = `❤️: ${updates.hp}`;
+            
+            const mobileEl = document.getElementById('mobileHP');
+            if (mobileEl) {
+                mobileEl.textContent = `HP: ${updates.hp}`;
+                if (updates.hp <= window.gameState.maxHP * 0.3) {
+                    mobileEl.classList.add('low-hp');
+                } else {
+                    mobileEl.classList.remove('low-hp');
+                }
+            }
         }
         if (updates.lives !== undefined) {
             window.gameState.lives = updates.lives;
-            const el = document.getElementById('livesText');
-            if (el) el.textContent = `Lives: ${updates.lives}`;
+            const el = document.getElementById('lives');
+            if (el) el.textContent = `🐱: ${updates.lives}`;
+            
+            
+            const mobileEl = document.getElementById('mobileLives');
+            if (mobileEl) mobileEl.textContent = `Lives: ${updates.lives}`;
         }
         if (updates.timeLeft !== undefined) {
             window.gameState.timeLeft = updates.timeLeft;
-            const el = document.getElementById('timeText');
-            if (el) el.textContent = `Time: ${updates.timeLeft}`;
+            const mins = Math.floor(updates.timeLeft / 60);
+            const secs = updates.timeLeft % 60;
+            const timeStr = `⏱️: ${mins}:${secs.toString().padStart(2, '0')}`;
+            
+            const el = document.getElementById('time');
+            if (el) el.textContent = timeStr;
+            
+            const mobileEl = document.getElementById('mobileTime');
+            if (mobileEl) {
+                mobileEl.textContent = `Time: ${mins}:${secs.toString().padStart(2, '0')}`;
+                
+                if (updates.timeLeft <= 30) {
+                    mobileEl.classList.add('low-time');
+                } else {
+                    mobileEl.classList.remove('low-time');
+                }
+            }
         }
     };
-    console.log('📊 HUD system initialized');
+    console.log('📊 HUD system initialized (desktop + mobile)');
 }
 // ================================== DEBUG TOGGLE ==========================================
 export function initializeDebugToggle() {

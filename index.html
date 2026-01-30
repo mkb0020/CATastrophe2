@@ -36,7 +36,6 @@
 
   </div>
 
-<!-- ======================= NAV =======================-->
 
 
 <!-- ======================= CANVAS =======================-->
@@ -46,16 +45,15 @@
     <canvas id="gameCanvas"></canvas>
   </div>
 
-  <!-- HUD OVERLAY (positioned over canvas) -->
+  <!-- HUD OVERLAY -->
   <div id="hud-container">
-    <!-- Left side: Score, HP, Lives -->
     <div class="hud-left">
-      <div id="score" class="hud-stat">☕: 0</div>
-      <div id="hp" class="hud-stat">❤️: 100</div>
-      <div id="lives" class="hud-stat">🐱: 3</div>
+      <div id="score" class="hud-stat">SCORE: 0</div>
+      <div id="hp" class="hud-stat">HP: 100</div>
+      <div id="lives" class="hud-stat">LIVES: 3</div>
+      <div id="time" class="hud-stat">TIME: 1:30</div>
     </div>
 
-    <!-- Right side: Control buttons -->
     <div class="hud-right">
       <button id="muteBtn" class="hud-control-btn" aria-label="Mute">
         <img id="muteIcon" src="assets/images/icons/music.png" alt="Music">
@@ -63,6 +61,20 @@
       <button id="pauseBtn" class="hud-control-btn" aria-label="Pause">
         <img src="assets/images/icons/pause.png" alt="Pause">
       </button>
+    </div>
+  </div>
+  
+  <!-- MOBILE HUD OVERLAY -->
+  <div class="mobile-hud-overlay">
+    <div class="mobile-hud-top">
+      <div id="mobileScore" class="mobile-hud-stat">SCORE: 0</div>
+      <div id="mobileHP" class="mobile-hud-stat">HP: 100</div>
+      <div id="mobileLives" class="mobile-hud-stat">LIVES: 3</div>
+      <div id="mobileTime" class="mobile-hud-stat">TIME: 1:30</div>
+    </div>
+    <div class="mobile-hud-controls">
+      <button id="mobileVolumeBtn" class="mobile-hud-btn"><img id="muteIcon" src="assets/images/icons/music.png" alt="Music"></button>
+      <button id="mobilePauseBtn" class="mobile-hud-btn"><img src="assets/images/icons/pause.png" alt="Pause"></button>
     </div>
   </div>
 <!-- ==================== BUTTONS ========================== -->

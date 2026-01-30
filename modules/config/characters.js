@@ -81,7 +81,7 @@ export const CHARACTERS = {
       baseDefense: 300, // FOR TESTING
     },
     platformerStats: { 
-      speed: 10,
+      speed: 11, // FOR TESTING
       jumpPower: -12,            
       maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  
@@ -99,14 +99,14 @@ export const CHARACTERS = {
   GATO: {
     name: 'GATO',
     stats: {
-      maxHP: 125,
-      baseHP: 125,
-      baseAtk: 30,
-      baseSpeed: 29,
-      baseDefense: 30,
+      maxHP: 1250, // FOR TESTING
+      baseHP: 1250,
+      baseAtk: 300,
+      baseSpeed: 290,
+      baseDefense: 300,
     },
     platformerStats: { 
-      speed: 8,
+      speed: 10,
       jumpPower: -12,            
       maxFallSpeed: 600,           
       airControlMultiplier: 0.95,  

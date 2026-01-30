@@ -37,7 +37,7 @@ export function createStartScene(){
   ]);
 
   // ==================== DEVICE SELECTION BUTTONS ====================
-  const buttonWidth = 280;
+  const buttonWidth = 350;
   const buttonHeight = 70;
   const buttonSpacing = 100;
   const startY = centerY - 50; 

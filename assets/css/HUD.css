@@ -1278,7 +1278,7 @@ h6 {
   cursor: pointer;
   transition: all 0.4s ease;
   overflow: hidden;
-  width: 300px;
+  width: 400px;
   height: 50px;
 }
 
@@ -2814,4 +2814,126 @@ h6 {
   0%, 19%, 21%, 23%, 100% { opacity: 1; }
   20%, 24% { opacity: 0.88; }
   22% { opacity: 0.92; }
+}
+
+
+/* =============================================
+   MOBILE HUD STYLES
+   Add this to your HUD.css file
+   ============================================= */
+
+/* Mobile HUD Overlay */
+.mobile-hud-overlay {
+  display: none; /* Hidden by default, shown on mobile via JS */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 900;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Show mobile HUD when it has the 'show' class */
+.mobile-hud-overlay.show {
+  display: block;
+}
+
+/* Mobile HUD Top Stats Bar */
+.mobile-hud-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(103, 254, 189, 0.6);
+  border-radius: 10px;
+  padding: 8px 12px;
+  backdrop-filter: blur(5px);
+  pointer-events: all;
+}
+
+/* Mobile HUD Individual Stats */
+.mobile-hud-stat {
+  font-family: 'Orbitron', 'science', sans-serif;
+  font-size: 14px;
+  color: #67febd;
+  text-shadow: 0 0 10px rgba(103, 254, 189, 0.6);
+  white-space: nowrap;
+}
+
+/* Low HP Warning */
+.mobile-hud-stat.low-hp {
+  color: #ff4444;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.8);
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+/* Low Time Warning */
+.mobile-hud-stat.low-time {
+  color: #ffaa00;
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+/* Mobile HUD Controls (Volume/Pause buttons) */
+.mobile-hud-controls {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: all;
+}
+
+.mobile-hud-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid rgba(103, 254, 189, 0.6);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 15px rgba(103, 254, 189, 0.3);
+}
+
+.mobile-hud-btn:active {
+  background: rgba(103, 254, 189, 0.3);
+  transform: scale(0.95);
+  box-shadow: 0 0 20px rgba(103, 254, 189, 0.6);
+}
+
+/* Pulse animation for warnings */
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
+
+/* Hide mobile HUD on desktop */
+@media (min-width: 1024px) {
+  .mobile-hud-overlay {
+    display: none !important;
+  }
+}
+
+/* Show mobile HUD on mobile devices */
+@media (max-width: 1023px) {
+  .mobile-hud-overlay.show {
+    display: block;
+  }
+  
+  /* Hide desktop HUD on mobile */
+  #hud-container {
+    display: none !important;
+  }
 }
