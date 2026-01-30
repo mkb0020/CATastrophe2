@@ -1,5 +1,5 @@
 import kaplay from "kaplay";
-import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from './config/gameConfig.js';
+import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES, updateScreenDimensions } from './config/gameConfig.js';
 import {   initializeMobileControls, 
   MobileHUDController, 
   detectMobile } from './helpers/mobileControls.js';
@@ -29,11 +29,23 @@ import { createChallengeRoomScene } from './scenes/challengeRoomScene.js';
 
 console.log('🎮 CATastrophe 2 - Kaplay Edition Loading...');
 
+// ======================================== RESPONSIVE CANVAS SETUP ========================================
+function getCanvasSize() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight
+  };
+}
+
 // ======================================== INITIALIZE KAPLAY ========================================
+const canvasSize = getCanvasSize();
+
+updateScreenDimensions(canvasSize.width, canvasSize.height);
+
 const k = kaplay({
-  width: SCREEN_W,
-  height: SCREEN_H,
-  letterbox: true,
+  width: canvasSize.width,
+  height: canvasSize.height,
+  letterbox: false,  
   background: [11, 11, 27, 0],
   global: false, 
   canvas: document.getElementById("gameCanvas"),
@@ -46,7 +58,25 @@ window.k = k;
 Object.assign(window, k);
 
 console.log('✅ Kaplay initialized!');
+console.log(`📐 Canvas size: ${canvasSize.width}x${canvasSize.height}`);
+console.log(`📐 Virtual size: ${SCREEN_W}x${SCREEN_H}`);
+
 initDebugTools(k);
+
+// ======================================== HANDLE WINDOW RESIZE ========================================
+window.addEventListener('resize', () => {
+  const newSize = getCanvasSize();
+  console.log(`📐 Resizing canvas to: ${newSize.width}x${newSize.height}`);
+  
+  updateScreenDimensions(newSize.width, newSize.height);
+  
+
+  const canvas = document.getElementById("gameCanvas");
+  if (canvas) {
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+  }
+});
 
 // ==================== MOBILE INITIALIZATION ====================
 const mobileSetup = initializeMobileControls(document.getElementById("gameCanvas"));
@@ -72,7 +102,6 @@ if (mobileSetup.isMobile) {
     }
   });
 }
-
 
 loadFont("narrow", "assets/fonts/PTSansNarrow-Regular.ttf");
 loadFont("narrowBold", "assets/fonts/PTSansNarrow-Bold.ttf");
@@ -304,7 +333,6 @@ async function loadAssets() {
   loadSprite("CrossBow", "assets/images/animationSprites/CatCrossBow2.png", { sliceX: 2, sliceY: 1, anims: { glitch: { from: 0, to: 1 } }});
 // UNLOCK MOVE
   loadSprite("whip", "assets/images/animationSprites/whip2.png", { sliceX:5, sliceY:1, anims:{glitch:{from:0,to:4,speed:50}} });
-
 //  ======================================== CHARACTER ANIMATION SPRITES ========================================
 const characters = getCharacterList();
 for (const char of characters) {

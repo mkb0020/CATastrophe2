@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <link rel="stylesheet" href="./assets/css/HUD.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-fullscreen">
+  <title>CATastrophe 2</title>
+  <link rel="stylesheet" href="assets/css/HUD.css">
   <script type="importmap">
     {
       "imports": {
@@ -12,9 +15,7 @@
       }
     }
   </script>
-  <title>CATastrophe2</title>
 </head>
-
 <body>
 <!-- ======================= BACKGROUND =======================-->
 <div id="stars"></div>
@@ -36,130 +37,34 @@
   </div>
 
 <!-- ======================= NAV =======================-->
-  <nav class="navbar">
-      <div class="nav-container">
-        
-        <div class="left-dropdown"><!-- LEFT DROPDOWN MENU -->
-          <button class="menu-trigger" aria-label="Menu">
-            <img src="./assets/images/Niels2.png" alt="Menu" class="home-icon">
-          </button>
 
-          <div class="left-menu">
-            <a href="https://mkb0020.vercel.app/" class="menu-item">Home</a>
-            <a href="https://mkb0020.github.io/n3wton.html" class="menu-item">N3wton's Battle Stats Balancer</a>
-            <a href="https://mkb0020.vercel.app/game-testing" class="menu-item">CATastrophe 2 Feedback</a>
-
-            <div class="social-links">
-              <a href="https://www.youtube.com/@mkb0020" target="_blank" aria-label="YouTube">
-                <img src="./assets/images/icons/youtube-icon.png" alt="YouTube" class="social-icon">
-              </a>
-            
-              <a href="https://www.linkedin.com/in/mkb0020/" target="_blank" aria-label="LinkedIn">
-                <img src="./assets/images/icons/linkedin-icon.png" alt="LinkedIn" class="social-icon">
-              </a>
-
-              <a href="https://mkb0020.github.io/MKLambda.html" target="_blank" aria-label="Github">
-                <img src="./assets/images/icons/music-icon.png" alt="Github" class="social-icon">
-              </a>
-
-              <a href="https://github.com/mkb0020" target="_blank" aria-label="GitHub">
-                <img src="./assets/images/icons/github-icon.png" alt="GitHub" class="social-icon">
-              </a>
-
-              <a href="https://mkb0020.itch.io" target="_blank" aria-label="Itch.io">
-                <img src="./assets/images/icons/itchio-icon.png" alt="Itch.io" class="social-icon">
-              </a>
-            </div>
-          </div>
-        </div>
-<div class="hud-stats-inner">
-      <div class="stat-divider">
-                |
-        </div>
-      <div class="stat-item stat-score">
-        <span id="scoreText">Score: --</span>
-      </div>
-      <div class="stat-divider">
-                |
-      </div>
-      <div class="stat-item stat-hp" id="hpStat">
-        <span id="hpText">HP: --</span>
-      </div>
-      <div class="stat-divider">
-                |
-      </div>
-
-      <div class="stat-item stat-lives">
-        <span id="livesText">Lives: --</span>
-      </div>
-      <div class="stat-divider">
-                |
-      </div>
-      <div class="stat-item stat-time" id="timeStat">
-        <span id="timeText">Time: --</span>
-      </div>
-      <div class="stat-divider">
-                |
-      </div>
-
-</div>
-      <!--<div class="help-dropdown">
-        <button class="help-icon" id="helpBtn"><div class="question-mark">?</div></button>
-        <div class="dropdown-menu">
-          <button id="openHelp">About This Player</button>
-        </div>
-      </div>-->
-      <div class="help-dropdown">
-            <div id="game-controls">
-                        <button id="volume-btn" class="control-btn" data-tooltip="TURN MUSIC OFF/ON">
-                            🔊
-                        </button>
-                        <button id="pause-btn" class="control-btn" data-tooltip="PAUSE LEVEL">
-                            <div class="pause-icon">
-                                <div class="pause-bar"></div>
-                                <div class="pause-bar"></div>
-                            </div>
-                        </button>
-                    </div>
-            </div>
-      </div>
-    
-  </nav>
 
 <!-- ======================= CANVAS =======================-->
 
-<div class="hero-content">
-      <div class="canvas-container">
-          <canvas id="gameCanvas"></canvas>
-      </div>
-
-
-<div class="mobile-hud-overlay">
-  <div class="mobile-hud-left">
-    <div class="mobile-stat" id="mobileScore">Score: --</div>
-    <div class="mobile-stat" id="mobileHP">HP: --</div>
-    <div class="mobile-stat" id="mobileLives">Lives: --</div>
-    <div class="mobile-stat" id="mobileTime">Time: --</div>
+  <div id="gameRoot">
+    <!-- Canvas will be inserted here by game.js -->
+    <canvas id="gameCanvas"></canvas>
   </div>
-  
-  <div class="mobile-hud-right">
-    <button class="mobile-control-btn" id="mobileVolumeBtn">
-      🔊
-    </button>
-    <button class="mobile-control-btn" id="mobilePauseBtn">
-      <div class="pause-icon-mobile">
-        <div class="pause-bar-mobile"></div>
-        <div class="pause-bar-mobile"></div>
-      </div>
-    </button>
+
+  <!-- HUD OVERLAY (positioned over canvas) -->
+  <div id="hud-container">
+    <!-- Left side: Score, HP, Lives -->
+    <div class="hud-left">
+      <div id="score" class="hud-stat">☕: 0</div>
+      <div id="hp" class="hud-stat">❤️: 100</div>
+      <div id="lives" class="hud-stat">🐱: 3</div>
+    </div>
+
+    <!-- Right side: Control buttons -->
+    <div class="hud-right">
+      <button id="muteBtn" class="hud-control-btn" aria-label="Mute">
+        <img id="muteIcon" src="assets/images/icons/music.png" alt="Music">
+      </button>
+      <button id="pauseBtn" class="hud-control-btn" aria-label="Pause">
+        <img src="assets/images/icons/pause.png" alt="Pause">
+      </button>
+    </div>
   </div>
-</div>
-
-</div>
-
-
-
-<footer> @mkb0020 ALL RIGHTS RESERVED </footer>
 <!-- ==================== BUTTONS ========================== -->
 
 
