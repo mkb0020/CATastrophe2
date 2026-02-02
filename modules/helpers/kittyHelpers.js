@@ -420,14 +420,12 @@ export function startAtmosphere() {
 export function initializeMusicControls() {
     const volumeBtn = document.getElementById('muteBtn');
     const pauseBtn = document.getElementById('pauseBtn');
-    const muteIcon = document.getElementById('muteIcon');
-
     if (!volumeBtn || !pauseBtn) return;
 
     let isMuted = false;
     volumeBtn.addEventListener('click', () => {
         isMuted = !isMuted;
-        muteIcon.src = isMuted ? 'assets/images/icons/mute.png' : 'assets/images/icons/music.png';
+        volumeBtn.textContent = isMuted ? '🔇' : '🔊';
         volumeBtn.classList.toggle('muted', isMuted);
         
         volume(isMuted ? 0 : 1);
@@ -571,15 +569,15 @@ export function initializeHUD() {
         if (updates.score !== undefined) {
             window.gameState.score = updates.score;
             const el = document.getElementById('score');
-            if (el) el.textContent = `☕: ${updates.score}`;
+            if (el) el.textContent = `SCORE: ${updates.score}`;
             
             const mobileEl = document.getElementById('mobileScore');
-            if (mobileEl) mobileEl.textContent = `Score: ${updates.score}`;
+            if (mobileEl) mobileEl.textContent = `SCORE: ${updates.score}`;
         }
         if (updates.hp !== undefined) {
             window.gameState.hp = updates.hp;
             const el = document.getElementById('hp');
-            if (el) el.textContent = `❤️: ${updates.hp}`;
+            if (el) el.textContent = `HP: ${updates.hp}`;
             
             const mobileEl = document.getElementById('mobileHP');
             if (mobileEl) {
@@ -594,29 +592,40 @@ export function initializeHUD() {
         if (updates.lives !== undefined) {
             window.gameState.lives = updates.lives;
             const el = document.getElementById('lives');
-            if (el) el.textContent = `🐱: ${updates.lives}`;
-            
+            if (el) el.textContent = `LIVES: ${updates.lives}`;
             
             const mobileEl = document.getElementById('mobileLives');
-            if (mobileEl) mobileEl.textContent = `Lives: ${updates.lives}`;
+            if (mobileEl) mobileEl.textContent = `LIVES: ${updates.lives}`;
         }
         if (updates.timeLeft !== undefined) {
             window.gameState.timeLeft = updates.timeLeft;
-            const mins = Math.floor(updates.timeLeft / 60);
-            const secs = updates.timeLeft % 60;
-            const timeStr = `⏱️: ${mins}:${secs.toString().padStart(2, '0')}`;
             
-            const el = document.getElementById('time');
-            if (el) el.textContent = timeStr;
-            
-            const mobileEl = document.getElementById('mobileTime');
-            if (mobileEl) {
-                mobileEl.textContent = `Time: ${mins}:${secs.toString().padStart(2, '0')}`;
+            if (updates.timeLeft === null) {
+                const el = document.getElementById('time');
+                if (el) el.textContent = 'TIME: --';
                 
-                if (updates.timeLeft <= 30) {
-                    mobileEl.classList.add('low-time');
-                } else {
+                const mobileEl = document.getElementById('mobileTime');
+                if (mobileEl) {
+                    mobileEl.textContent = 'TIME: --';
                     mobileEl.classList.remove('low-time');
+                }
+            } else {
+                const mins = Math.floor(updates.timeLeft / 60);
+                const secs = updates.timeLeft % 60;
+                const timeStr = `TIME: ${mins}:${secs.toString().padStart(2, '0')}`;
+                
+                const el = document.getElementById('time');
+                if (el) el.textContent = timeStr;
+                
+                const mobileEl = document.getElementById('mobileTime');
+                if (mobileEl) {
+                    mobileEl.textContent = `TIME: ${mins}:${secs.toString().padStart(2, '0')}`;
+                    
+                    if (updates.timeLeft <= 30) {
+                        mobileEl.classList.add('low-time');
+                    } else {
+                        mobileEl.classList.remove('low-time');
+                    }
                 }
             }
         }

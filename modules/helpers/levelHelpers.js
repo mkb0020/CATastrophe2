@@ -151,12 +151,15 @@ export function createSpriteGround(x, y, width, height) {
 export function addLevelEnvironment(levelConfig) {
   const bg = null;
 
-  add([
-    rect(30000, SCREEN_H),
-    pos(-2000, 0),
-    color(0,0,0),
+ // ==================== DARKK OVERLAY OVER BG SO WINDOWS DON'T LOOK WEIRD ====================
+
+ const darkOverlay = add([
+    rect(width(), height()),
+    pos(0, 0),
+    fixed(),
+    color(0, 0, 0),
     opacity(0.1),
-    z(-5),
+    z(-1),
   ]);
 
 
@@ -1139,53 +1142,24 @@ export function createUnifiedHUD(player, showDebug = true) {
     hudElement.classList.add('active');
   }
   
-  if (showDebug) {
-    const debugElement = document.getElementById('debugInfo');
-    if (debugElement) {
-      debugElement.style.display = 'block';
-    }
-  }
+ // if (showDebug) {
+//    const debugElement = document.getElementById('debugInfo');
+ //   if (debugElement) {
+ //     debugElement.style.display = 'block';
+//    }
+//  }
   
   return {};
 }
 
 export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
-  const scoreText = document.getElementById('scoreText');
-  if (scoreText) {
-    scoreText.textContent = `Score: ${score}`;
-  }
-  
-  const hpText = document.getElementById('hpText');
-  const hpStat = document.getElementById('hpStat');
-  if (hpText) {
-    hpText.textContent = `HP: ${player.hp}/${player.maxHP}`;
-  }
-  
-  if (hpStat) {
-    if (player.hp <= player.maxHP * 0.25) {
-      hpStat.classList.add('low-hp');
-    } else {
-      hpStat.classList.remove('low-hp');
-    }
-  }
-  
-  const livesText = document.getElementById('livesText');
-  if (livesText) {
-    livesText.textContent = `Lives: ${lives}`;
-  }
-  
-  const timeText = document.getElementById('timeText');
-  const timeStat = document.getElementById('timeStat');
-  if (timeText) {
-    timeText.textContent = timeLeft === null ? `Time: --` : `Time: ${timeLeft}`;
-  }
-  
-  if (timeStat) {
-    if (timeLeft !== null && timeLeft <= 10) {
-      timeStat.classList.add('low-time');
-    } else {
-      timeStat.classList.remove('low-time');
-    }
+  if (window.updateHUD) {
+    window.updateHUD({
+      score: score,
+      hp: player.hp,
+      lives: lives,
+      timeLeft: timeLeft
+    });
   }
   
   const debugInfo = document.getElementById('debugInfo');
@@ -1194,16 +1168,35 @@ export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
   }
 }
 
-export function hideHUD() {
-  const hudElement = document.getElementById('hudStats');
-  if (hudElement) {
-    hudElement.classList.remove('active');
+export function showHUD() {
+  const desktopHUD = document.getElementById('hud-container');
+  if (desktopHUD) {
+    desktopHUD.style.display = 'flex';
   }
   
-  const debugElement = document.getElementById('debugInfo');
-  if (debugElement) {
-    debugElement.style.display = 'none';
+  const mobileHUD = document.querySelector('.mobile-hud-overlay');
+  if (mobileHUD) {
+    mobileHUD.classList.add('show');
   }
+  
+  console.log('👁️ HUD shown');
+}
+
+export function hideHUD() {
+  const desktopHUD = document.getElementById('hud-container');
+  if (desktopHUD) {
+    desktopHUD.style.display = 'none';
+  }
+  
+  const mobileHUD = document.querySelector('.mobile-hud-overlay');
+  if (mobileHUD) {
+    mobileHUD.classList.remove('show');
+  }
+  
+  console.log('🙈 HUD hidden');
+
+    //debugElement.style.display = 'none';
+  
 }
 
 export function setupTimer(
@@ -1777,29 +1770,13 @@ export function addMiniBoss(levelConfig, gameStateGetter, player) {
       play("meow01", { volume: 0.4 });
       
       wait(0.5, () => {
-        //const catBeep = add([
-         // sprite('bubbles', { frame: BUBBLE_FRAMES.beep }),
-         // pos(player.pos.x, player.pos.y - 70),
-        //  anchor("center"),
-        //  scale(1.3),
-        //  z(100),
-        //  opacity(0),
-        //  "bubble"
-       // ]);
-        
-        //tween(catBeep.opacity, 1, 0.2, (val) => catBeep.opacity = val);
-       // tween(catBeep.scale.x, 1.6, 0.3, (val) => {
-        //  catBeep.scale.x = val;
-        //  catBeep.scale.y = val;
-       // 
+
         play("meow02", { volume: 0.3 });
         
         wait(1.5, () => {
           tween(bossExclamation.opacity, 0, 0.3, (val) => bossExclamation.opacity = val);
-          //tween(catBeep.opacity, 0, 0.3, (val) => catBeep.opacity = val);
           wait(0.3, () => {
             destroy(bossExclamation);
-            //destroy(catBeep);
           });
         });
       });

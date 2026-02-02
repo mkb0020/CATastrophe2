@@ -1,4 +1,5 @@
 // mobileControls.js
+import { SCREEN_W, SCREEN_H, Colors, ACTUAL_H, ACTUAL_W } from '../config/gameConfig.js';
 import { SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
 import { ROOMS } from '../config/challengeRoom.js';
 import { getRoom } from '../config/challengeRoom.js';
@@ -61,67 +62,162 @@ export function createOrientationPrompt() {
 }
 
 // ==================== TOUCH CONTROLS ====================
-export function createTouchControls() {
+export function createJoystickControls() {
   const controlsContainer = document.createElement('div');
   controlsContainer.id = 'touchControls';
   controlsContainer.innerHTML = `
-    <style>
-      #touchControls {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 120px;
-        pointer-events: none;
-        z-index: 1000;
-      }
-      
-      .touch-arrow {
-        position: absolute;
-        bottom: 20px;
-        width: 80px;
-        height: 80px;
-        background: rgba(2, 144, 83, 0.5);
-        border: 3px solid rgba(103,254,189, 0.8);
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 36px;
-        color: rgb(103,254,189);
-        pointer-events: all;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: none;
-        transition: background 0.1s;
-      }
-      
-      .touch-arrow:active {
-        background: rgba(103,254,189, 0.5);
-        transform: scale(0.95);
-      }
-      
-      #leftArrow {
-        left: 20px;
-      }
-      
-      #rightArrow {
-        right: 20px;
-      }
-    </style>
+    <div class="joystick-container">
+      <div class="joystick-base" id="joystickBase">
+        <div class="joystick-stick" id="joystickStick"></div>
+      </div>
+    </div>
     
-    <div id="leftArrow" class="touch-arrow">◀</div>
-    <div id="rightArrow" class="touch-arrow">▶</div>
+    <div class="jump-button" id="jumpButton">
+      JUMP
+    </div>
   `;
   
   document.body.appendChild(controlsContainer);
   
   return {
-    leftArrow: document.getElementById('leftArrow'),
-    rightArrow: document.getElementById('rightArrow'),
-    container: controlsContainer
+    container: controlsContainer,
+    joystickBase: document.getElementById('joystickBase'),
+    joystickStick: document.getElementById('joystickStick'),
+    jumpButton: document.getElementById('jumpButton')
   };
 }
+
+// ==================== SETUP JOYSTICK CONTROLS  ====================
+export function setupJoystickControls(controls, mobileState) {
+  const { joystickBase, joystickStick, jumpButton } = controls;
+  
+  let joystickActive = false;
+  let joystickX = 0;
+  
+  function handleJoystickMove(clientX, clientY) {
+    const rect = joystickBase.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    let deltaX = clientX - centerX;
+    const deltaY = clientY - centerY;
+
+    const maxDistance = 35;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    if (distance > maxDistance) {
+      deltaX = (deltaX / distance) * maxDistance;
+    }
+
+    joystickStick.style.transform = `translate(calc(-50% + ${deltaX}px), -50%)`;
+    joystickX = deltaX / maxDistance;
+    
+    if (joystickX < -0.3) {
+      mobileState.left = true;
+      mobileState.right = false;
+    } else if (joystickX > 0.3) {
+      mobileState.right = true;
+      mobileState.left = false;
+    } else {
+      mobileState.left = false;
+      mobileState.right = false;
+    }
+  }
+
+  function resetJoystick() {
+    joystickStick.style.transform = 'translate(-50%, -50%)';
+    joystickX = 0;
+    joystickActive = false;
+    joystickBase.classList.remove('active');
+    mobileState.left = false;
+    mobileState.right = false;
+    console.log('🕹️ Joystick reset to center');
+  }
+
+  const joystickTouchStart = (e) => {
+    e.preventDefault();
+    joystickActive = true;
+    joystickBase.classList.add('active');
+    const touch = e.touches[0];
+    handleJoystickMove(touch.clientX, touch.clientY);
+    console.log('🕹️ Joystick activated (touch)');
+  };
+
+  const joystickTouchMove = (e) => {
+    e.preventDefault();
+    if (joystickActive) {
+      const touch = e.touches[0];
+      handleJoystickMove(touch.clientX, touch.clientY);
+    }
+  };
+
+  const joystickTouchEnd = (e) => {
+    e.preventDefault();
+    resetJoystick();
+  };
+
+  const joystickMouseDown = (e) => {
+    joystickActive = true;
+    joystickBase.classList.add('active');
+    handleJoystickMove(e.clientX, e.clientY);
+    console.log('🕹️ Joystick activated (mouse)');
+  };
+
+  const documentMouseMove = (e) => {
+    if (joystickActive) {
+      handleJoystickMove(e.clientX, e.clientY);
+    }
+  };
+
+  const documentMouseUp = () => {
+    if (joystickActive) {
+      resetJoystick();
+    }
+  };
+
+  joystickBase.addEventListener('touchstart', joystickTouchStart);
+  joystickBase.addEventListener('touchmove', joystickTouchMove);
+  joystickBase.addEventListener('touchend', joystickTouchEnd);
+  joystickBase.addEventListener('touchcancel', joystickTouchEnd);
+  joystickBase.addEventListener('mousedown', joystickMouseDown);
+  document.addEventListener('mousemove', documentMouseMove);
+  document.addEventListener('mouseup', documentMouseUp);
+  jumpButton.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    mobileState.jumpJustPressed = true;
+    console.log('⬆️ Jump pressed!');
+  });
+  
+  jumpButton.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    mobileState.jumpJustPressed = false;
+  });
+  
+  jumpButton.addEventListener('touchcancel', (e) => {
+    e.preventDefault();
+    mobileState.jumpJustPressed = false;
+  });
+  
+  console.log('🎮 Simplified joystick controls initialized');
+}
+
+// ==================== SHOW/HIDE CONTROLS ====================
+export function showJoystickControls() {
+  const controls = document.getElementById('touchControls');
+  if (controls) {
+    controls.classList.add('active');
+    console.log('🎮 Joystick controls shown');
+  }
+}
+
+export function hideJoystickControls() {
+  const controls = document.getElementById('touchControls');
+  if (controls) {
+    controls.classList.remove('active');
+    console.log('🎮 Joystick controls hidden');
+  }
+}
+
 
 // ==================== MOBILE CONTROL STATE ====================
 export class MobileControlState {
@@ -195,58 +291,9 @@ export function setupMobilePlayerControls(player, gameStateGetter, mobileState) 
 
 // ==================== SETUP TOUCH EVENTS ====================
 export function setupTouchEvents(controls, mobileState, canvas) {
-  const { leftArrow, rightArrow } = controls;
-  
   const preventDefault = (e) => {
     e.preventDefault();
   };
-  
-  leftArrow.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    mobileState.left = true;
-    console.log('⬅️ Left pressed');
-  });
-  
-  leftArrow.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    mobileState.left = false;
-    console.log('⬅️ Left released');
-  });
-  
-  leftArrow.addEventListener('touchcancel', (e) => {
-    e.preventDefault();
-    mobileState.left = false;
-  });
-  
-  rightArrow.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    mobileState.right = true;
-    console.log('➡️ Right pressed');
-  });
-  
-  rightArrow.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    mobileState.right = false;
-    console.log('➡️ Right released');
-  });
-  
-  rightArrow.addEventListener('touchcancel', (e) => {
-    e.preventDefault();
-    mobileState.right = false;
-  });
-  
-  canvas.addEventListener('touchstart', (e) => {
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-    
-    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
-      mobileState.jumpJustPressed = true;
-      console.log('⬆️ Jump!');
-    }
-  });
-  
   document.body.addEventListener('touchmove', preventDefault, { passive: false });
 }
 
@@ -401,9 +448,11 @@ export function initializeMobileControls(canvasElement) {
   
   const resizeCanvas = setupResponsiveCanvas(canvasElement);
   
-  const controls = createTouchControls();
+  const controls = createJoystickControls();
   
   const mobileState = new MobileControlState();
+  
+  setupJoystickControls(controls, mobileState);
   
   function checkAndUpdateOrientation() {
     const isLandscape = checkOrientation();
@@ -559,20 +608,25 @@ export function hideMobileArrows() {
 }
 
 // ==================== UPDATE CANVAS SCALING FOR MOBILE ====================
-export function setupResponsiveCanvas(canvasElement, targetWidth = 1000, targetHeight = 480) {
+export function setupResponsiveCanvas(canvasElement, targetWidth =  ACTUAL_W, targetHeight = ACTUAL_H) {
   function resizeCanvas() {
     const isMobile = window.innerWidth <= 1024;
     
     if (isMobile) {
-      canvasElement.style.width = '100vw';
-      canvasElement.style.height = '100vh';
-      canvasElement.style.position = 'fixed';
-      canvasElement.style.top = '0';
-      canvasElement.style.left = '0';
+      canvasElement.style.width = '';
+      canvasElement.style.height = '';
       
-      console.log('📱 Mobile canvas: Full screen', {
-        width: window.innerWidth,
-        height: window.innerHeight
+      requestAnimationFrame(() => {
+        canvasElement.style.width = '100vw';
+        canvasElement.style.height = '100vh';
+        canvasElement.style.position = 'fixed';
+        canvasElement.style.top = '0';
+        canvasElement.style.left = '0';
+        
+        console.log('📱 Mobile canvas resized:', {
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
       });
     } else {
       const targetRatio = targetWidth / targetHeight;
@@ -598,11 +652,18 @@ export function setupResponsiveCanvas(canvasElement, targetWidth = 1000, targetH
   
   resizeCanvas();
   
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', () => {
+    clearTimeout(window.resizeTimeout);
+    window.resizeTimeout = setTimeout(resizeCanvas, 100);
+  });
+  
   window.addEventListener('orientationchange', () => {
-    setTimeout(resizeCanvas, 100);
+    console.log('🔄 Orientation changed - resizing canvas');
+    setTimeout(() => {
+      resizeCanvas();
+      setTimeout(resizeCanvas, 200);
+    }, 100);
   });
   
   return resizeCanvas;
 }
-
