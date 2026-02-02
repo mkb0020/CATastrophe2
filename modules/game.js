@@ -43,9 +43,9 @@ const canvasSize = getCanvasSize();
 updateScreenDimensions(canvasSize.width, canvasSize.height);
 
 const k = kaplay({
-  width: canvasSize.width,
-  height: canvasSize.height,
-  letterbox: false,  
+  width: SCREEN_W,  
+  height: SCREEN_H,
+  letterbox: true,  
   background: [11, 11, 27, 0],
   global: false, 
   canvas: document.getElementById("gameCanvas"),
@@ -69,9 +69,7 @@ window.addEventListener('resize', () => {
   console.log(`📐 Resizing canvas to: ${newSize.width}x${newSize.height}`);
   
   updateScreenDimensions(newSize.width, newSize.height);
-  
-
-  const canvas = document.getElementById("gameCanvas");
+    const canvas = document.getElementById("gameCanvas");
   if (canvas) {
     canvas.style.width = '100vw';
     canvas.style.height = '100vh';
@@ -368,6 +366,8 @@ loadSprite("rainbowCatSheet", "assets/images/cats/RainbowCat.png", {
   console.log('✅ Assets loaded!');
 }
 
+
+
 //======================================== REGISTER SCENES ========================================
 function registerScenes() {
   console.log('🎬 Registering scenes...');
@@ -391,19 +391,41 @@ function registerScenes() {
       createLevel5Scene(data);
     });
 
-  scene("challengeRoom", createChallengeRoomScene);
+  scene("challengeRoom", (data) => {
+    createChallengeRoomScene(data);
+  });
 
-  scene("laserPointerBoss", (data) => createLaserPointerBossScene(data));
-  scene("cupBoss", (data) => createCupBossScene(data));
-  scene("cucumberBoss", (data) => createCucumberBossScene(data));
-  scene("bossRatKing", (data) => createRatKingBossScene(data));
-  scene("observerBoss", (data) => createObserverBossScene(data));
+  scene("laserPointerBoss", (data) => {
+    createLaserPointerBossScene(data);
+  });
+  scene("cupBoss", (data) => {
+    createCupBossScene(data);
+  });
+  scene("cucumberBoss", (data) => {
+    createCucumberBossScene(data);
+  });
+  scene("bossRatKing", (data) => {
+    createRatKingBossScene(data);
+  });
+  scene("observerBoss", (data) => {
+    createObserverBossScene(data);
+  });
   
-  scene("youDied", (data) => createYouDiedScene(data));
-  scene("gameOver", (data) => createGameOverScene(data));
-  scene("victory", (data) => createVictoryScene(data));
-  scene("levelComplete", (data) => createLevelCompleteScene(data));
-  scene("bossDefeated", (data) => createBossDefeatedScene(data));
+  scene("youDied", (data) => {
+    createYouDiedScene(data);
+  });
+  scene("gameOver", (data) => {
+    createGameOverScene(data);
+  });
+  scene("victory", (data) => {
+    createVictoryScene(data);
+  });
+  scene("levelComplete", (data) => {
+    createLevelCompleteScene(data);
+  });
+  scene("bossDefeated", (data) => {
+    createBossDefeatedScene(data);
+  });
   
   scene("transition", (transitionKey, character, startHP, lives, score) =>  
     createTransitionScene(transitionKey, character, startHP, lives, score)
