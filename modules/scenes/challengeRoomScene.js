@@ -7,6 +7,7 @@ import {
   createUnifiedHUD,
   updateUnifiedHUD,
   hideHUD,
+  showHUD,
   setupPlayerCamera,
   setupFallDetection,
   createSpriteGround
@@ -73,13 +74,15 @@ export function createChallengeRoomScene(data) {
   startChallenegeMusic();
 
 
-  // ==================== BACKGROUND ====================
-  add([
-    rect(roomConfig.length, SCREEN_H),
+// ==================== DARKK OVERLAY OVER BG SO WINDOWS DON'T LOOK WEIRD ====================
+
+ const darkOverlay = add([
+    rect(width(), height()),
     pos(0, 0),
+    fixed(),
     color(0, 0, 0),
-    opacity(0.1), 
-    z(-10)
+    opacity(0.1),
+    z(-1),
   ]);
   
   // ==================== GROUND SEGMENTS ====================
@@ -114,7 +117,7 @@ export function createChallengeRoomScene(data) {
     z(-2)
   ]);
 
-  // ==================== ENTRANCE WINDOW ====================
+// ==================== ENTRANCE WINDOW ====================
   add([
     sprite('window', { frame: 1 }), 
     pos(roomConfig.playerSpawn.x-10, roomConfig.playerSpawn.y - 50),
@@ -123,7 +126,7 @@ export function createChallengeRoomScene(data) {
     "entranceWindow"
   ]);
   
-  // ==================== EXIT WINDOW ====================
+// ==================== EXIT WINDOW ====================
   const exitWindow = add([
     sprite('window', { frame: 0 }),
     pos(roomConfig.playerExit.x, roomConfig.playerExit.y - 50),
@@ -241,10 +244,9 @@ export function createChallengeRoomScene(data) {
     setupPlayerControls(player, getGameActive);
   }
   
-  // ==================== CRUMBLING PLATFORM LOGIC ====================
+// ==================== CRUMBLING PLATFORM LOGIC ====================
   setupCrumblingPlatformCollisions(player, crumblingPlatforms);
   
-
 // ==================== ITEM COLLECTION ====================
 player.onCollide("specialItem", (item) => {
   if (!itemCollected) {
@@ -355,10 +357,10 @@ function openExitWindow() {
   
   // ==================== CAMERA ====================
   setupChallengeRoomCamera(player, roomConfig, getGameActive, character);
-  
   // ==================== CLEANUP ====================
   onSceneLeave(() => {
     hideHUD();
+    showHUD();
     
     // ==================== HIDE MOBILE HUD ====================
     if (mobileSetup && mobileSetup.isMobile && mobileHUD) {

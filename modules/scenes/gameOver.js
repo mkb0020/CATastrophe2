@@ -3,10 +3,13 @@ import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../helpers/kittyHelpers.js';
 import { getCharacterStats } from '../config/characters.js'; 
 import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { hideHUD } from '../helpers/levelHelpers.js';
+
 
 export function createGameOverScene(data) {
   console.log('☠️ GAME OVER SCENE (NO LIVES LEFT)');
   console.log('📦 Data received:', data);
+  hideHUD();
   
   const { score, level, character, reason } = data;
   
@@ -71,7 +74,7 @@ function returnToMenu() {
 export function createYouDiedScene(data) {
   console.log('💀 YOU DIED SCENE');
   console.log('📦 Data received:', data);
-  
+  hideHUD();
   const { score, level, lives, character, reason, startingScore = 0 } = data;
   
   if (!character) {
@@ -147,6 +150,7 @@ if (useLifeBtn) {
 }
 
 export function createVictoryScene(data) {
+  hideHUD();
   const { character } = data || {};
   
   stopAllMusic(); 
@@ -277,6 +281,7 @@ export function createVictoryScene(data) {
 }
 
 export function createLevelCompleteScene(data) {
+  hideHUD();
   console.log('🎊 LEVEL COMPLETE SCENE');
   console.log('📦 Data received:', data);
   
@@ -376,6 +381,7 @@ export function createLevelCompleteScene(data) {
 }
 
 export function createBossDefeatedScene(data) {
+  hideHUD();
   console.log('🏆 Boss Defeated Scene received:', data);
 
   const { 

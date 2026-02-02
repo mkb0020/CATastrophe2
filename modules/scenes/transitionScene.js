@@ -1,8 +1,10 @@
-import { SCREEN_W, SCREEN_H, Colors, getCenterX, getCenterY, getScreenWidth, getScreenHeight } from '../config/gameConfig.js';
+import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getTransition } from '../config/transitions.js';
 import { SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, startFinalVictoryMusic, stopAtmosphere, fadeMusicOut } from '../helpers/kittyHelpers.js';
 import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { hideHUD } from '../helpers/levelHelpers.js';
+
 
 export function createTransitionScene(transitionKey, character, startHP, lives = 3, score = 0) {
     console.log('🎬 RAW PARAMS:', { transitionKey, character, startHP, lives, score });
@@ -14,6 +16,7 @@ export function createTransitionScene(transitionKey, character, startHP, lives =
     lives,
     score
   });
+  hideHUD();
 
   //  OBSERVER REVEAL
   if (transitionKey === 'Transition6') {
@@ -46,10 +49,10 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   console.log(`📋 Transition sprites:`, transition.sprites);
 
   // GET ACTUAL SCREEN DIMENSIONS
-  const screenW = getScreenWidth();
-  const screenH = getScreenHeight();
-  const centerX = getCenterX();
-  const centerY = getCenterY();
+  
+  
+  const centerX = SCREEN_W / 2;
+  const centerY = SCREEN_H / 2;
 
   let textIndex = 0;
   const textKeys = ['Text1', 'Text2', 'Text3'];
@@ -58,13 +61,13 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   add([
     sprite(transition.background),
     pos(0, 0),
-    scale(screenW / 1000, screenH / 480),
+    scale(SCREEN_W / 1000, SCREEN_H / 480),
     z(0),
   ]);
 
   // DARK OVERLAY - FULL SCREEN
   add([  
-    rect(screenW, screenH),
+    rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(0, 0, 0),
     opacity(0.4),
@@ -89,8 +92,8 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
 
   // TEXT BACKGROUND - CENTERED AT BOTTOM
   add([
-    rect(screenW - 100, 100, { radius: 20 }),
-    pos(centerX, screenH - 80),
+    rect(SCREEN_W - 100, 100, { radius: 20 }),
+    pos(centerX, SCREEN_H - 80),
     anchor('center'),
     color(0, 0, 0),
     opacity(0.8),
@@ -102,11 +105,11 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   const textDisplay = add([
     text(transition[textKeys[0]][0], {
       size: 25,
-      width: screenW - 150,
+      width: SCREEN_W - 150,
       align: 'center',
       font: 'science'
     }),
-    pos(centerX, screenH - 85),
+    pos(centerX, SCREEN_H - 85),
     anchor('center'),
     color(255, 255, 255),
     z(3)
@@ -118,7 +121,7 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   for (let i = 0; i < 3; i++) {
     const dot = add([
       circle(i === 0 ? 7 : 4),
-      pos(centerX - 30 + i * 30, screenH - 45),
+      pos(centerX - 30 + i * 30, SCREEN_H - 45),
       anchor('center'),
       color(i === 0 ? Color.fromHex(Colors.Highlight) : rgb(100, 100, 100)),
       z(3)
@@ -132,7 +135,7 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
       size: 18, 
       font: 'science'
     }),
-    pos(centerX, screenH - 15),
+    pos(centerX, SCREEN_H - 15),
     anchor('center'),
     color(200, 200, 200),
     opacity(0.8),
@@ -230,25 +233,23 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
   console.log('⚡ Starting Transition6 - Observer Reveal Cinematic');
   
   // GET ACTUAL SCREEN DIMENSIONS
-  const screenW = getScreenWidth();
-  const screenH = getScreenHeight();
+  
+  
   
   const blackScreen = add([
-    rect(screenW, screenH),
+    rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(0, 0, 0),
     opacity(1),
-    fixed(),
     z(10000),
   ]);
   
   wait(0.8, () => {
     const whiteFlash = add([
-      rect(screenW, screenH),
+      rect(SCREEN_W, SCREEN_H),
       pos(0, 0),
       color(255, 255, 255),
       opacity(0),
-      fixed(),
       z(10001),
     ]);
     
@@ -264,14 +265,14 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
         add([
           sprite("observerIntro"),
           pos(0, 0),
-          scale(screenW / 1000, screenH / 480),
+          scale(SCREEN_W / 1000, SCREEN_H / 480),
           z(0),
         ]);
         
         const lightning = add([
           sprite("lightning", { anim: "glitch" }),
           pos(0, 0),
-          scale(screenW / 100, screenH / 48),
+          scale(SCREEN_W / 100, SCREEN_H / 48),
           opacity(0.8),
           z(100),
         ]);
@@ -279,11 +280,10 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
         lightning.play("glitch");
         
         const flashOverlay = add([
-          rect(screenW, screenH),
+          rect(SCREEN_W, SCREEN_H),
           pos(0, 0),
           color(255, 255, 255),
           opacity(0.4),
-          fixed(),
           z(99),
         ]);
         
@@ -297,11 +297,10 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
         
         wait(0.4, () => {
           const blackFade = add([
-            rect(screenW, screenH),
+            rect(SCREEN_W, SCREEN_H),
             pos(0, 0),
             color(0, 0, 0),
             opacity(0),
-            fixed(),
             z(98),
           ]);
           
@@ -321,10 +320,10 @@ function createTransition7Cinematic(character, startHP) {
   console.log('🎬 Creating Transition7 cinematic (post-Observer)');
   
   // GET ACTUAL SCREEN DIMENSIONS
-  const screenW = getScreenWidth();
-  const screenH = getScreenHeight();
-  const centerX = getCenterX();
-  const centerY = getCenterY();
+  
+  
+  const centerX = SCREEN_W / 2;
+  const centerY = SCREEN_H / 2;
 
   stopAllMusic();
   startFinalVictoryMusic();
@@ -334,14 +333,14 @@ function createTransition7Cinematic(character, startHP) {
   const cafeBG = add([
     sprite("cafe"),
     pos(0, 0),
-    scale(screenW / 1000, screenH / 480),
+    scale(SCREEN_W / 1000, SCREEN_H / 480),
     z(1),
     opacity(0)
   ]);
   tween(cafeBG.opacity, 1, 2, (o) => cafeBG.opacity = o);
 
   const darkOverlay = add([
-    rect(screenW, screenH),
+    rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(0, 0, 0),
     z(2),
@@ -501,8 +500,8 @@ function createTransition7Cinematic(character, startHP) {
 
 function animateSmokeTransition(){
   // GET ACTUAL SCREEN DIMENSIONS
-  const screenW = getScreenWidth();
-  const screenH = getScreenHeight();
+  
+  
   
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 6)
@@ -526,11 +525,10 @@ function animateSmokeTransition(){
 
         const blob = add([
           sprite("smokeBlob"),
-          pos(rand(0, screenW), rand(0, screenH)),
+          pos(rand(0, SCREEN_W), rand(0, SCREEN_H)),
           scale(rand(scaleMin, scaleMax)),
           opacity(0),
           rotate(rand(0, 360)),
-          fixed(),
           z(zIndex),
           lifespan(duration),
         ])
@@ -573,10 +571,9 @@ function animateSmokeTransition(){
 
   function smokeSceneReveal({ duration = 7 } = {}) {
     const overlay = add([
-      rect(screenW, screenH),
+      rect(SCREEN_W, SCREEN_H),
       color(101, 115, 131),
       opacity(1),
-      fixed(),
       z(1002),
     ])
 

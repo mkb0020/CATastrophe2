@@ -53,9 +53,12 @@ import {
 } from '../helpers/bossHelpers.js';
 import { applyUpgradesToBossPlayer } from '../helpers/upgradeHelper.js';
 import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { hideHUD } from '../helpers/levelHelpers.js';
+
 
 
 export function createBossBattleScene(bossId, character, startHP, startScore = 0) {
+    hideHUD();
     console.log('🎮 Boss Battle Starting:', {
       bossId,
       character: character.name,

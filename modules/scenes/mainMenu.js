@@ -1,8 +1,10 @@
 // mainMenu.js
-import { SCREEN_W, SCREEN_H, Colors, getCenterX, getCenterY, getScreenWidth, getScreenHeight } from '../config/gameConfig.js';
+import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
 import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { hideHUD } from '../helpers/levelHelpers.js';
+
 
 // ==================== INITIALIZE GAME STATE ====================
 if (!window.gameState) {
@@ -14,7 +16,7 @@ if (!window.gameState) {
 }
 
 export function createStartScene(){
-  // ==================== HIDE MOBILE HUD ====================
+  hideHUD();
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
   
@@ -23,16 +25,13 @@ export function createStartScene(){
     hideMobileArrows(); 
   }
   
-  // ==================== USE ACTUAL SCREEN DIMENSIONS ====================
-  const screenW = getScreenWidth();
-  const screenH = getScreenHeight();
-  const centerX = getCenterX();
-  const centerY = getCenterY();
+  const centerX = SCREEN_W / 2;
+  const centerY = SCREEN_H / 2;
   
-  // ==================== BACKGROUND ====================
   add([
     sprite('startBG'),
     pos(0, 0),
+    scale(SCREEN_W / 1000, SCREEN_H / 480),
     z(0)
   ]);
 
@@ -54,7 +53,7 @@ export function createStartScene(){
     "desktop-btn"
   ]);
 
-  const desktopBtnText = add([
+  const desktopBtnText = add([ // THESE NEED TO MOVE TO CSS
     text("PLAY ON PC", { 
       size: 32, 
       font: "orbitronBold"
@@ -187,7 +186,7 @@ export function createStartScene(){
       size: 18, 
       font: "orbitron"
     }),
-    pos(centerX, screenH - 40),
+    pos(centerX, SCREEN_H - 40),
     anchor("center"),
     color(200, 200, 200),
     opacity(0.7),
@@ -200,6 +199,7 @@ export function createStartScene(){
 export function createMainMenuScene() {
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
+  hideHUD();
   
   if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
     mobileHUD.hide();
@@ -240,6 +240,7 @@ export function createMainMenuScene() {
 export function createCharSelectScene() {
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
+  hideHUD();
   
   if (mobileSetup?.isMobile && mobileHUD) {
     mobileHUD.hide();
@@ -250,30 +251,25 @@ export function createCharSelectScene() {
   let animationComplete = false;
   let shopMusic = null;
 
-  // ==================== USE ACTUAL SCREEN DIMENSIONS FOR OVERLAYS ====================
-  const screenW = getScreenWidth();
-  const screenH = getScreenHeight();
-  const centerX = getCenterX();
-  const centerY = getCenterY();
+  const centerX = SCREEN_W / 2;
+  const centerY = SCREEN_H / 2;
 
   // ==================== PHASE 1: DOOR ANIMATION ====================
   const blackOverlay = add([
-    rect(screenW, screenH),
+    rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(0, 0, 0),
     opacity(1),
     z(10000),
-    fixed(),
     "blackOverlay"
   ]);
 
   const whiteOverlay = add([
-    rect(screenW, screenH),
+    rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(254, 228, 180),
     opacity(0),
     z(9999),
-    fixed(),
     "whiteOverlay"
   ]);
 
@@ -284,12 +280,11 @@ export function createCharSelectScene() {
     scale(2, 2),
     z(9998),
     opacity(0),
-    fixed(),
     "cafeSprite"
   ]);
 
   const doorX = centerX;
-  const doorY = screenH * 0.7;
+  const doorY = SCREEN_H * 0.7;
 
   const START_SCALE = 2.0;
   const MID_SCALE = 5.5;    
@@ -371,10 +366,6 @@ export function createCharSelectScene() {
   tween(regularBG.opacity, 1, 0.8, (val) => regularBG.opacity = val);
 
   // ==================== PHASE 2: MODAL ====================
-
-
-
-
 function showCharSelectModal() {
   const modal = document.getElementById('charSelectModal');
   if (modal) modal.classList.add('show');
@@ -509,13 +500,11 @@ function playPourAnimation(onComplete) {
   const music = get("shop")[0];
   if (music) music.stop();
 
-  const screenW = getScreenWidth();
-  const screenH = getScreenHeight();
-  const centerX = getCenterX();
-  const centerY = getCenterY();
+  const centerX = SCREEN_W / 2;
+  const centerY = SCREEN_H / 2;
 
   const brownOverlay = add([
-    rect(screenW, screenH),
+    rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(92, 64, 51),
     opacity(0),
@@ -524,7 +513,7 @@ function playPourAnimation(onComplete) {
   ]);
 
   const blackOverlay = add([
-    rect(screenW, screenH),
+    rect(SCREEN_W, SCREEN_H),
     pos(0, 0),
     color(0, 0, 0),
     opacity(0),
@@ -544,12 +533,10 @@ function playPourAnimation(onComplete) {
 
   function spawnPourSprite(delay) {
     wait(delay, () => {
-      const screenW = getScreenWidth();
-      const screenH = getScreenHeight();
-      const centerX = getCenterX();
-      const centerY = getCenterY();
+      const centerX = SCREEN_W / 2;
+      const centerY = SCREEN_H / 2;
       
-      const targetHeight = screenH * 1.1; 
+      const targetHeight = SCREEN_H * 1.1; 
       const spriteHeight = 48;
       const scaleAmount = targetHeight / spriteHeight;
       

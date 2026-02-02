@@ -30,6 +30,7 @@ import {
   setupMiniBossReflect,
   spawnRewardItems,
   hideHUD,
+  showHUD,
   setupParticleSystem
 } from '../helpers/levelHelpers.js';
 import { 
@@ -46,6 +47,7 @@ import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction
 
 
 function createUnifiedLevel(levelId, data) {
+  showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startLives = data?.lives ?? 3;
