@@ -1,0 +1,1375 @@
+/* ==================== HIDDEN STATE ==================== */
+.hidden {
+  display: none !important;
+}
+/* ============================ MODALS ============================ */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.272);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto; 
+}
+
+.modal-content {
+  background: linear-gradient(135deg, var(--BosonBlue), var(--Black));
+  border: 3px solid var(--VortexViolet);
+  box-shadow: 0 0 50px var(--VortexGlow3);
+  border-radius: 20px;
+  max-width: 950px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.4s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  position: sticky;
+  top: 0;
+  background: transparent;
+  backdrop-filter: blur(50px);
+  padding: 1rem 1.5rem;
+  border-bottom: 2px dashed var(--PlasmaGlow2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  font-family: 'GothNerd', sans-serif;
+}
+
+.modal-title {
+  font-family: 'GothNerd', sans-serif;
+  font-size: 2rem;
+  background: linear-gradient(45deg, var(--AlphaAqua), var(--AquaAura), var(--AlphaAqua));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.modal-close {
+  background: var(--HiggsHotPink);
+  color: var(--ParticlePink);
+  border: 2px solid var(--ParticlePink);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+
+}
+
+.modal-close:hover {
+  background: var(--ParticlePink);
+  color: var(--HiggsHotPink);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 20px var(--ParticleGlow3);
+}
+
+.modal-body {
+  padding: 2rem;
+  line-height: 1.6;
+  font-size: 1.2rem;
+}
+
+.modal-body h3 {
+  color: var(--ParticlePink);
+  margin: 0.2rem 0 0.5rem 0;
+  font-size: 1.4rem;
+  font-family: 'GothNerd', sans-serif;
+}
+
+.modal-body p {
+  margin: 1rem 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-body ul {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-body li {
+  margin: 0.5rem 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ====================== SCROLL BAR =========================*/
+.modal-content::-webkit-scrollbar {
+  width: 18px;
+  height: 14px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #0a0015;
+  border: 2px dashed #830cdea2;
+  box-shadow: inset 0 0 12px #000000cc;
+  border-radius: 50px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    145deg,
+    #ff69b4 0%,
+    #c71585 5%,
+    #dc4ce8 10%,
+    #830cde 15%,
+    #00ffff 20%,
+    #67FEBD 25%
+  );
+  border-radius: 8px;          
+  border: 2px solid #000000;
+  box-shadow:
+    0 0 10px #ff69b4aa,
+    0 0 20px #c71585aa,
+    inset 0 0 6px #ffffff33;
+  background-size: 300% 300%;    
+  
+
+  filter: hue-rotate(0deg);
+  animation: 
+    hueCycle 18s linear infinite,    
+    neonFlow 8s ease-in-out infinite alternate; 
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  animation-duration: 12s, 4s;     
+  box-shadow:
+    0 0 16px #67febdcc,
+    0 0 32px #58e84ccc,
+    0 0 50px #00ffffaa;
+  border-color: var(--AlphaAqua);
+  filter: brightness(1.2) saturate(1.5);   
+}
+
+@keyframes hueCycle {
+  0%   { filter: hue-rotate(0deg) brightness(1.1) saturate(1.3); }
+  25%  { filter: hue-rotate(90deg) brightness(1.3) saturate(1.6); }
+  50%  { filter: hue-rotate(180deg) brightness(1.4) saturate(1.8); }
+  75%  { filter: hue-rotate(270deg) brightness(1.2) saturate(1.5); }
+  100% { filter: hue-rotate(360deg) brightness(1.1) saturate(1.3); }
+}
+
+@keyframes neonFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* ====================== HOW TO PLAY ======================  */
+
+.mission-text {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(103, 254, 189, 0.1);
+  border: 1px solid var(--AlphaGlow2);
+  border-radius: 12px;
+  color: var(--NuclearFuscia);
+  font-weight: bold;
+}
+
+blockquote {
+  background: rgba(165, 90, 255, 0.1);
+  border-left: 4px solid var(--PlasmaPurple);
+  padding: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--ParticlePink);
+}
+
+cite {
+  display: block;
+  text-align: right;
+  margin-top: 0.5rem;
+  color: var(--AlphaAqua);
+  font-weight: bold;
+}
+
+
+/* ==================== MAIN MENU MODAL ==================== */
+#mainMenuModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#mainMenuModal.show {
+  display: flex;
+}
+
+.modal-mainmenu-content {
+    display: flex !important;
+  flex-direction: row !important;
+  gap: 30px !important;
+  max-width: 1100px !important;
+  width: 95vw !important;
+  height: 95vh !important;
+  border: 3px solid var(--VortexViolet) !important;
+  box-shadow: 0 0 50px var(--VortexGlow3) !important;
+  border-radius: 20px !important;
+  padding: 15px 25px !important;
+  background-image: url('../images/backgrounds/MenuBG3.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  
+}
+
+.modal-mainmenu-header {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 900px;
+  max-height: 125px !important;
+  background: linear-gradient(135deg, rgb(17, 12, 30), rgb(0, 0, 0));
+  border: 6px solid;
+  border-image: linear-gradient(
+    45deg,
+    hsl(0, 90%, 60%),
+    hsl(60, 90%, 60%),
+    hsl(120, 90%, 60%),
+    hsl(180, 90%, 60%),
+    hsl(240, 90%, 60%),
+    hsl(300, 90%, 60%),
+    hsl(360, 90%, 60%)
+  ) 1;
+  animation: borderRainbow 5s linear infinite;
+  box-shadow: 0 0 30px rgb(0, 0, 0);
+}
+
+@keyframes borderRainbow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.menu-title-img {
+  width: 100%;
+  max-width: 875px;
+  max-height: 110px;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(27, 27, 27, 0.5));
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 7%;
+}
+
+.button-column .modal-button-menu-play, .modal-button-menu-how {
+  min-width: 350px;
+  padding: 7px 30px;
+}
+
+
+.modal-button-menu-play, .modal-button-menu-how {
+  align-items: center;
+  font-size: 1.7rem;
+  justify-content: center;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  text-transform: uppercase;
+  color: white;
+  background: #0f0f1a;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+
+.modal-button-menu-play {
+  --glow-color: var(--RadioactiveGreen);          
+  --glow-intensity: 0.4;
+  --inner-glow: rgba(255, 255, 255, 0.103);
+  border: 3px solid var(--RadioactiveGreen);
+  box-shadow: 
+    0 0 8px var(--glow-color),
+    inset 0 0 12px var(--inner-glow),
+    0 0 35px var(--glow-color);
+}
+
+.modal-button-menu-how {  
+    --glow-color: var(--CoolGray);          
+  --glow-intensity: 0.4;
+  --inner-glow: rgba(255, 255, 255, 0.103);
+  border: 3px solid var(--CoolGray);
+  box-shadow: 
+    0 0 8px var(--glow-color),
+    inset 0 0 12px var(--inner-glow),
+    0 0 35px var(--glow-color);
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 950px) {
+  .menu-title-img {
+    max-height: 80px !important;
+  }
+  
+  .modal-mainmenu-header {
+    padding: 0.3rem 0.3rem;
+    max-height: 100px !important;
+  }
+  
+
+.button-column {
+  bottom: 5%;
+}
+
+ .modal-button-menu-play, .modal-button-menu-how {
+  font-size: 1.2rem;
+}
+
+
+}
+
+@media (max-width: 480px) {
+  .menu-title-img {
+    width: 95vw;
+  }
+  
+  .modal-mainmenu-header {
+    top: 10px;
+    padding: 0.5rem 1rem;
+    border-width: 4px;
+  }
+  
+
+  
+}
+
+/* ==================== CHARACTER SELECT MODAL ==================== */
+#charSelectModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  overflow: hidden;
+}
+
+#charSelectModal.show {
+  display: flex !important;
+}
+
+.modal-charselect-content {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 20px !important;
+  max-width: 1200px !important;
+  width: 85% !important;
+  height: 90vh !important;
+  border: 3px solid var(--VortexViolet) !important;
+  box-shadow: 0 0 50px var(--VortexGlow3) !important;
+  border-radius: 20px !important;
+  padding: 15px 30px !important;
+  background-image: url('../images/backgrounds/Select.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.charselect-left {
+  flex: 1 1 50% !important;
+  min-width: 0 !important;
+  max-height: 85%;
+  max-width: 670px;
+  background: rgb(17, 17, 17) !important;
+  border: 4px solid rgb(109, 54, 15) !important;
+  border-radius: 8px !important;
+  padding: 5px 15px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.795) !important;
+  overflow-y: auto !important;
+}
+
+.charselect-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  padding: 0 !important;
+  max-width: 250px;
+  width: 250px;
+
+}
+.charselect-left .modal-button {
+  position:fixed;
+  bottom: 15px;
+  left: 20px;
+  font-size: 1.2rem !important;
+  width: 200px;
+}
+
+.charselect-right .modal-button {
+    position:fixed;
+  bottom: 15px;
+  right: 20px;
+  font-size: 1.2rem !important;
+  width: 200px;
+}
+
+
+.panel-title {
+  font-family: 'GothNerd', sans-serif !important;
+  font-size: 2rem !important;
+  background: linear-gradient(45deg, var(--ParticlePink), var(--White)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-align: center !important;
+  margin-bottom: 5px !important;
+}
+
+.character-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 10px !important;
+  padding: 5px 1px !important;
+  flex: 1 !important;
+  overflow-y: hidden !important;
+}
+
+
+.character-card {
+  background: rgba(50, 50, 59, 0.8);
+  border: 2px dashed rgba(144, 144, 192, 0.237);
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  max-width: 200px;
+  max-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.char-select-img {
+  width: 105px;
+  height: auto;
+  display: block;
+  image-rendering: pixelated; 
+  margin: 0 auto;
+}
+
+.char-card-name {
+  font-family: 'GothNerd', sans-serif;
+  font-size: 1.5rem;
+  color: var(--White);
+  text-shadow: 0 0 8px var(--AlphaGlow2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.character-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--AlphaAqua);
+  box-shadow: 0 0 25px var(--AlphaGlow2);
+}
+
+.character-card.selected {
+  border-color: var(--RadioactiveGreen);
+  background: rgba(89, 232, 76, 0.055);
+  box-shadow: 0 0 10px var(--RadioactiveGlow3);
+}
+
+.stats-panel {
+  background: rgb(17, 17, 17) !important;
+  border: 4px solid rgb(109, 54, 15) !important;
+  border-radius: 12px !important;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.74) !important;
+  width: 100% !important;
+  height: 55%;
+  position: absolute;
+  right: 30px;
+  max-width: 300px !important;
+}
+
+.stats-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.select-stat-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  font-family: 'Orbitron', monospace !important;
+  font-size: 1.1rem;
+  color: var(--LightGray) !important;
+  align-items: center !important;
+}
+
+.select-stat-row span:first-child {
+  color: var(--AlphaAqua) !important;
+  font-weight: bold !important;
+}
+
+.select-stat-row span:last-child {
+  color: var(--ParticlePink) !important;
+}
+
+.preview-panel {
+  display: none !important;   
+
+}
+
+
+
+#charName {
+  font-family: 'GothNerd', sans-serif !important;
+  font-size: 3rem;
+  color: transparent;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  border-radius: 15px;
+
+
+}
+
+
+
+@media (max-width: 950px) {
+
+.modal-charselect-content {
+  gap: 10px !important;
+  width: 95% !important;
+  height: 90vh !important;
+}
+
+.charselect-left {
+  max-height: 85%;
+  max-width: 50%;
+  width: 50%;
+
+}
+
+.charselect-right {
+  max-width: 40%;
+  width: 40%;
+
+}
+ 
+
+.panel-title {
+    font-size: 1rem;
+    margin-top: 0px;
+}
+
+
+  .preview-panel {
+    display: none !important; 
+  }
+
+.character-card {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+
+.char-card-name {
+  font-size: 0.7rem;
+  margin-top: 0px;
+}
+
+.char-select-img {
+  width: 70%;
+}
+
+
+  .panel-title {
+  font-size: 1rem !important;
+  margin-bottom: 3px !important;
+}
+
+  .character-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 5px;
+  }
+  
+
+
+
+.stats-panel {
+  padding: 10px !important;
+  height: 55%;
+  max-width: 90%;
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 0.7rem;
+}
+
+.select-stat-row {
+  font-size: 0.8rem;
+}
+}
+
+@media (max-width: 700px) {
+
+.charselect-right {
+  max-width: 30%;
+  width: 30%;
+
+}
+
+.char-card-name {
+  font-size: 0.7rem;
+}
+
+.char-select-img {
+  width: 80%;
+}
+
+.stats-panel {
+  padding: 10px !important;
+  height: 55%;
+  max-width: 250px !important;
+}
+
+}
+
+/* ==================== GAME OVER MODAL ==================== */
+#gameOverModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#gameOverModal.show {
+  display: flex;
+}
+
+.modal-gameover-content {
+  background: linear-gradient(135deg, var(--BosonBlue), var(--Black));
+  border: 3px solid #ff0059;
+  box-shadow: 
+    0 0 30px var(--HiggsHotPink),
+    inset 0 0 50px rgba(255, 0, 89, 0.1);
+  border-radius: 20px;
+  max-width: 700px;
+  width: 100%;
+  height: 85%;
+  padding: 2rem;
+  animation: modalSlideIn 0.4s ease;
+  text-align: center;
+}
+
+.modal-gameover-header {
+  padding: 1rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-title-gameover {
+  font-family: 'GothNerd', sans-serif;
+  font-size: 5rem;
+  background: linear-gradient(45deg, #6b0026, var(--RadiationRed), #4d011b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-align: center;
+  text-shadow: 
+    5px 3px 0 #ff0059,
+    0 0 20px rgba(122, 1, 1, 0.5);
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 15%;
+}
+
+.disappointment-text {
+  font-size: 1.8rem;
+  color: var(--MutedGray);
+  font-family: 'GothNerd';
+  text-transform: uppercase;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 35%;
+
+}
+
+.score-text {
+  font-size: 2.3rem;
+  color: var(--MutedGray);
+  font-family: 'Orbitron', monospace;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(255, 0, 89, 0);
+  border: 1px solid rgba(255, 0, 89, 0);
+  border-radius: 10px;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 45%;
+  text-transform: uppercase;
+}
+
+.gameOver-btn {
+  --glow-color: var(--CoolGray);          
+  --glow-intensity: 0.4;
+  --inner-glow: #ff0059;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 5px 10px;
+  font-family: 'Orbitron', 'Courier New', monospace; 
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  font-weight: bold;
+  background: rgba(49, 1, 18, 0.3);
+  border: 2px solid #ff0059;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 8px var(--HiggsHotPink),
+    inset 0 0 12px rgba(255, 0, 89, 0.3),
+    0 0 35px var(--HiggsHotPink);
+  overflow: hidden;
+    position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 18%;
+  width: 250px;
+  height: 50px;
+}
+
+@media (max-width: 950px) {
+
+.gameOver-btn {
+  font-size: 0.8rem;
+  height: 40px;
+}
+}
+
+/* ==================== YOU DIED MODAL ==================== */
+#youDiedModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100vw !important;
+  background: rgba(0, 0, 0, 0.669);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+}
+
+#youDiedModal.show {
+  display: flex;
+}
+
+.modal-youdied-content {
+  background: linear-gradient(135deg, rgba(17, 12, 30, 0.95), rgba(0, 0, 0, 0.95));
+  border: 3px solid var(--CoolGray);
+  box-shadow: 
+    0 0 30px rgba(196, 195, 208, 0.5),
+    inset 0 0 50px rgba(196, 195, 208, 0.1);
+  border-radius: 20px;
+  max-width: 600px !important;
+  width: 100%;
+  height: 90%;
+  padding: 0rem;
+  animation: modalSlideIn 0.4s ease;
+  font-family: 'GothNerd';
+  text-align: center;
+}
+
+.modal-youdied-header {
+  padding: 0rem 0 0rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-title-youdied {
+  font-family: 'Orbitron', monospace;
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--ParticlePink);
+  text-shadow: 
+    5px 3px 0 rgb(201, 0, 0),
+    0 0 20px rgba(201, 0, 0, 0.5);
+  margin: 0px;
+  text-align: center;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 9%;
+}
+
+.encourage-text {
+  font-size: 1.7rem;
+  color: var(--LightGray);
+  font-family: 'GothNerd';
+  margin: 0rem 0rem 0rem;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 28%;
+}
+
+.stats-display {
+  margin: 0rem 0;
+  padding: 0rem;
+  background: rgba(144, 144, 192, 0);
+  border: 1px solid rgba(144, 144, 192, 0);
+  border-radius: 10px;
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  top: 40%;
+  font-family: 'GothNerd';
+}
+
+.stat-line {
+  font-size: 2rem;
+  color: var(--CoolGray);
+  font-family: 'GothNerd', monospace;
+  margin: 0rem 0;
+}
+
+.stat-line:last-child {
+  color: var(--AlphaAqua);
+}
+
+/* ==================== BUTTON ROW ==================== */
+.uselife-button, .diedmenu-button {
+  --glow-color: var(--CoolGray);          
+  --glow-intensity: 0.4;
+  --inner-glow: rgba(255, 255, 255, 0.103);
+  align-items: center;
+  justify-content: center;
+  padding: 5px 5px;
+  font-family: 'Orbitron', 'Courier New', monospace; 
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: white;
+  background: #0f0f1a;
+  border: 2px solid var(--glow-color);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 8px var(--glow-color),
+    inset 0 0 12px var(--inner-glow),
+    0 0 35px var(--glow-color);
+  overflow: hidden;
+}
+
+.uselife-button, .diedmenu-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--glow-color),
+    inset 0 0 15px var(--inner-glow),
+    0 0 20px var(--glow-color);
+}
+
+
+
+
+
+.uselife-button {
+  position: fixed;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 22%;
+  width: 250px;
+  height: 50px;
+}
+
+.diedmenu-button
+{  position: fixed;
+    bottom: 10%;
+    right: 50%;
+    transform: translateX(50%);
+    width: 250px;
+    height: 50px;
+
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 950px) {
+  .modal-title-gameover,
+  .modal-title-youdied {
+    font-size: 2.7rem;
+    margin-bottom: 0px;
+  }
+  
+.modal-youdied-content{
+  height: 90%;
+  width: 90vw;
+}
+
+.uselife-button {
+  font-size: 0.8rem;
+  height: 30px;
+}
+
+.diedmenu-button
+{    height: 30px;
+  font-size: 0.8rem;
+
+}
+
+  .disappointment-text,
+  .encourage-text {
+    font-size: 1rem;
+    margin-top:0px;
+    margin-bottom:0px;
+  }
+  
+  .score-text,
+  .stat-line {
+    font-size: 1rem;
+  }
+  
+
+}
+
+
+/* ==================== PAUSE MODAL ==================== */
+#pauseModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+#pauseModal.show {
+  display: flex;
+}
+
+.modal-pause-content {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(17, 12, 30, 0.95));
+  border: 3px solid var(--AlphaAqua);
+  box-shadow: 
+    0 0 40px rgba(103, 254, 189, 0.6),
+    inset 0 0 50px rgba(103, 254, 189, 0.1);
+  border-radius: 20px;
+  max-width: 600px;
+  width: 100%;
+  padding: 0rem;
+  animation: modalSlideIn 0.3s ease;
+  text-align: center;
+}
+
+.modal-pause-header {
+  padding: 1rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-title-pause {
+  font-family: 'Orbitron', monospace;
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--RadioactiveGreen);
+  text-shadow: 
+    3px 3px 0 rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(158, 255, 158, 0.8),
+    0 0 60px rgba(103, 254, 189, 0.5);
+  margin: 0px;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+
+.pause-buttons{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-top: 0px; 
+  min-width: 450px;
+  font-size: 1.9rem;
+}
+
+
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 950px) {
+  .modal-title-pause {
+    font-size: 4rem;
+    margin-bottom: 0px;
+  }
+  
+  .modal-pause-content {
+    padding: 0.5rem;
+    max-height: 90%;
+  }
+}
+
+
+/* ============================ CHALLENGE ROOM MODALS ============================ */
+.unlock{
+  position:relative;
+  justify-content: center;
+  font-family: 'GothNerd';
+  text-align: center;
+  align-items: center;
+}
+
+.unlock h1{
+  font-size: 2.5rem;
+  color: var(--ParticlePink);
+}
+.unlock h2{
+  font-size: 1.3rem;
+  color: var(--CoolGray);
+}
+
+.unlock h3{
+  font-size: 1.2rem;
+  color: var(--White);
+  margin-bottom: 10px;
+}
+
+.move-container {
+  overflow:hidden;
+  padding: 5px;
+}
+
+.move-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    padding: 15px 0;
+}
+
+.stats-card {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    animation: pulse-glow 3s infinite ease-in-out; 
+    margin: 20px;
+}
+
+.stats-content {
+    width: 100%;
+    height: 100%;
+    background: #0f0f1a; 
+    border: 2px solid transparent;
+    border-image: linear-gradient(135deg, #A55AFF, #ff69b4, #00ffff, #58e84c) 1; 
+    border-radius: 18px;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.3),
+        inset 0 0 30px rgba(255, 255, 255, 0.08);
+    padding: 10px 50px;
+}
+
+.stats-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(255,255,255,0.12) 20%,
+        transparent 40%,
+        rgba(0,255,255,0.08) 60%,
+        transparent 100%
+    );
+    opacity: 0.6;
+    pointer-events: none;
+    animation: hologram-shimmer 8s infinite linear;
+    transform: translateZ(-1px);
+}
+
+.stats-title {
+    font-size: 1.4rem;
+    color: white;
+    text-align: center;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+}
+
+.stat-label {
+    font-size: 1.1em;
+    color: #ffffffcc;
+}
+
+.stat-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    color: white;
+}
+
+
+
+
+.stats-card:hover {
+    box-shadow: 0 0 40px rgba(165,90,255,0.5);
+    animation: pulse-glow 2s infinite ease-in-out;
+}
+
+
+
+.fragment-icon{
+  font-family: 'GothNerd', sans-serif;
+  font-size: 2rem;
+  background: linear-gradient(45deg, var(--VortexViolet), var(--HiggsHotPink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 8px var(--ParticlePink);
+  animation: float 3s ease-in-out infinite;
+}
+
+
+.fragment-icon.collected {
+    background: #58e84c;
+    border-color: #58e84c !important;
+    box-shadow: 0 0 20px rgba(88, 232, 76, 0.8);
+    animation: collectFragment 0.5s ease-out;
+  }
+
+  @keyframes collectFragment {
+    0% { transform: scale(0) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(180deg); }
+    100% { transform: scale(1) rotate(360deg); }
+  }
+
+
+.fragment-button {
+  --glow-color: var(--RadioactiveGreen);       
+  --glow-intensity: 0.4;
+  --inner-glow: rgba(255, 255, 255, 0.103);
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color:var(--RadioactiveGreen);
+  background: #000000;
+  border: 2px solid var(--RadioactiveGreen);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 8px var(--RadioactiveGreen),
+    inset 0 0 12px rgba(255, 255, 255, 0.103),
+    0 0 35px var(--RadioactiveGreen);
+  overflow: hidden;
+}
+
+.fragment-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--glow-color),
+    inset 0 0 15px var(--inner-glow),
+    0 0 20px var(--glow-color);
+}
+
+.fragment-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.fragment-button:hover::before {
+  left: 100%;
+}
+
+
+
+
+
+.fragment-btn {
+  --glow-color: #58e84c;           
+  --inner-glow: rgba(88, 232, 76, 0.25);
+  font-size: 1.5rem;
+  font-family: 'GothNerd';
+  font-weight: bold;
+  padding: 10px 30px;
+  width: 350px;
+  margin-top: 5px;
+  color: var(--RadioactiveGreen)
+}
+
+
+
+  .stat-row.increase {
+    animation: statIncrease 0.5s ease-in-out;
+  }
+
+  @keyframes statIncrease {
+    0%, 100% { transform: scale(1); }
+    50% { 
+      transform: scale(1.1); 
+      background: rgba(88, 232, 76, 0.2);
+    }
+  }
+
+
+    @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  #moveImage {
+    animation: float 3s ease-in-out infinite;
+  }
+
+
+/* ================== MODAL BUTTON =========== */
+
+.modal-button {   
+  --glow-intensity: 0.4;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: white;
+  background: #0f0f1a;
+  border: 2px solid #9090C0;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 8px #9090C0,
+    inset 0 0 12px rgba(255, 255, 255, 0.103),
+    0 0 35px #9090C0;
+  overflow: hidden;
+}
+
+.modal-button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px #9090C0,
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px #9090C0;
+}
+
+.modal-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.modal-button:hover::before {
+  left: 100%;
+}
