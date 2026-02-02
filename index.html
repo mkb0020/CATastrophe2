@@ -7,7 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-fullscreen">
   <title>CATastrophe 2</title>
-  <link rel="stylesheet" href="assets/css/HUD.css">
+  <!--<link rel="stylesheet" href="assets/css/HUD.css">-->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/mobile.css">
+  <link rel="stylesheet" href="assets/css/desktopHUD.css">
+  <link rel="stylesheet" href="assets/css/modals.css">
   <script type="importmap">
     {
       "imports": {
@@ -86,12 +90,11 @@
 
 <!-- BOSS FINISH HIM BUTTON  -->
 <div id="finishHimButton" class="hidden">
-    <button class="game-btn finish-him-container" id="finishHimBtn">
-        <div class="cyber-btn-base">
-            <div class="cyber-btn-shine"></div>
-            <div class="cyber-btn-text" id="finishHimBtnText">Use Special Attack</div>
-        </div>
+  <div class="finish-him-container">
+    <button class="finish-him-button" id="finishHimBtn">
+            <div class="finish-him-button-text" id="finishHimBtnText">Use Special Attack</div>
     </button>
+    </div>
 </div>
 
 
@@ -117,11 +120,11 @@
     </div>
     <div class="modal-body">
       <div class="button-column">
-        <button class="menu-play-btn" id="playModalBtn">
+        <button class="modal-button-menu-play" id="playModalBtn">
           PLAY
         </button>
         
-        <button class="menu-how-btn" id="howToPlayModalBtn">
+        <button class="modal-button-menu-how" id="howToPlayModalBtn">
           HOW TO PLAY
         </button>
 
@@ -191,7 +194,8 @@
   </div>
 </div>
 
-<div id="aboutCatsModal" class="modal"> <!-- LEAVING OFF THE GAME FOR NOW BUT KEEPING HERE BECAUSE I AM GOING TO ADD IT EVENTUALLY-->
+<!-- LEAVING OFF THE GAME FOR NOW BUT KEEPING HERE BECAUSE I AM GOING TO ADD IT EVENTUALLY-->
+<!--<div id="aboutCatsModal" class="modal"> 
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title">MEET THE CATS</h1>
@@ -279,9 +283,7 @@
         </div>
       </div>
     </div>
-  </div>
-
-
+  </div>-->
 
 <div id="charSelectModal" class="modal">
   <div class="modal-charselect-content">
@@ -291,7 +293,7 @@
       <div id="characterGrid" class="character-grid">
         <!-- Cards built dynamically in JS -->
       </div>
-      <button class="cyber-button grey-btn" id="backToMenuBtn">BACK</button>
+      <button class="modal-button" id="backToMenuBtn">BACK</button>
 
     </div>
     
@@ -307,7 +309,7 @@
       </div>
       
 
-      <button class="cyber-button green-btn uranium" id="confirmCharBtn" disabled>CONTINUE </button>
+      <button class="modal-button" id="confirmCharBtn" disabled>CONTINUE </button>
     
     </div>
           <div class="preview-panel">
@@ -318,7 +320,6 @@
   </div>
 
 </div>
-
 
 <div id="newMoveModal" class="modal">
   <div class="modal-content">
@@ -337,7 +338,7 @@
           </div>
         </div>
         
-        <button class="cyber-button green-btn" id="confirmMoveBtn" disabled style="opacity: 0.5;">CONFIRM</button>
+        <button class="modal-button" id="confirmMoveBtn" disabled style="opacity: 0.5;">CONFIRM</button>
       </div>
     </div>
   </div>
@@ -358,7 +359,7 @@
             <div class="fragment-icon" id="fragment3" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #9090c0; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-family: 'SpaceLetters'; transition: all 0.3s;">💫</div>
           </div>
         </div>
-        <button class="fragment-button" id="continueFragmentBtn">CONTINUE</button>
+        <button class="modal-button" id="continueFragmentBtn">CONTINUE</button>
       </div>
     </div>
   </div>
@@ -399,32 +400,32 @@
           <div style="flex: 0 1 280px; display: flex; flex-direction: column; gap: 10px;">
             <!-- ATTACK -->
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px;">
-              <button class="cyber-button aqua-btn alpha" id="attackDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
+              <button class="modal-button" id="attackDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
               <div style="text-align: center; min-width: 120px;">
                 <strong style="font-family: 'Orbitron', monospace; font-size: 1rem; color: #67FEBD; display: block;">ATTACK</strong>
                 <span style="font-size: 1.2rem; color: #dbe2e9;">+<span id="attackIncrease">0</span></span>
               </div>
-              <button class="cyber-button aqua-btn alpha" id="attackIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
+              <button class="modal-button" id="attackIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
             </div>
 
             <!-- DEFENSE -->
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px;">
-              <button class="cyber-button pink-btn" id="defenseDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
+              <button class="modal-button" id="defenseDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
               <div style="text-align: center; min-width: 120px;">
                 <strong style="font-family: 'Orbitron', monospace; font-size: 1rem; color: #ff69b4; display: block;">DEFENSE</strong>
                 <span style="font-size: 1.2rem; color: #dbe2e9; ">+<span id="defenseIncrease">0</span></span>
               </div>
-              <button class="cyber-button pink-btn" id="defenseIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
+              <button class="modal-button" id="defenseIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
             </div>
 
             <!-- SPEED -->
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px;">
-              <button class="cyber-button purple-btn vortex" id="speedDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
+              <button class="modal-button" id="speedDecBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; opacity: 0.3; flex-shrink: 0;" disabled>−</button>
               <div style="text-align: center; min-width: 120px;">
                 <strong style="font-family: 'Orbitron', monospace; font-size: 1rem; color: #A55AFF; display: block;">SPEED</strong>
                 <span style="font-size: 1.2rem; color: #dbe2e9; ">+<span id="speedIncrease">0</span></span>
               </div>
-              <button class="cyber-button purple-btn vortex" id="speedIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
+              <button class="modal-button" id="speedIncBtn" style="padding: 8px 16px; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">+</button>
             </div>
           </div>
         </div>
@@ -433,7 +434,7 @@
           Points Remaining: <span style="color: #ff6bff; font-weight: 700; font-size: 1.5rem;" id="pointsValue">1</span>
         </div>
         
-        <button class="cyber-button green-btn" id="confirmUpgradeBtn" disabled style="opacity: 0.5;">CONFIRM</button>
+        <button class="modal-button" id="confirmUpgradeBtn" disabled style="opacity: 0.5;">CONFIRM</button>
       </div>
     </div>
   </div>
@@ -450,7 +451,7 @@
       <p id="gameOverScoreText" class="score-text">Final Score: --</p>
       
       <div class="button-row">
-        <button class="gameOver-btn" id="gameOverBackBtn">
+        <button class="modal-button" id="gameOverBackBtn">
           BACK TO MENU
         </button>
       </div>
@@ -471,15 +472,11 @@
         <p id="youDiedScoreText" class="stat-line">Score: --</p>
         <p id="youDiedLivesText" class="stat-line">Lives Left: --</p>
       </div>
-      
-     
-
-     
     </div>
-            <button class="uselife-button" id="useLifeModalBtn">
+            <button class="modal-button" id="useLifeModalBtn">
           USE LIFE
         </button>
-        <button class="diedmenu-button" id="quitToMenuModalBtn">
+        <button class="modal-button" id="quitToMenuModalBtn">
           QUIT TO MENU
         </button>
   </div>
@@ -492,14 +489,14 @@
       <h1 class="modal-title-pause">PAWSed</h1>
     </div>
     <div class="modal-body">
-      <div class="button-row">
-        <button class="cyber-button green-btn" id="pauseResumeModalBtn">
+        <div class="pause-buttons">
+        <button class="modal-button" id="pauseResumeModalBtn">
           RESUME
         </button>
-        <button class="cyber-button grey-btn" id="pauseQuitModalBtn">
+        <button class="modal-button" id="pauseQuitModalBtn">
           QUIT TO MENU
         </button>
-      </div>
+        </div>
     </div>
   </div>
 </div>
