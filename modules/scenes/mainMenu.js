@@ -25,9 +25,7 @@ export function createStartScene(){
     hideMobileArrows(); 
   }
   
-  const centerX = SCREEN_W / 2;
-  const centerY = SCREEN_H / 2;
-  
+  // ==================== BACKGROUND (stays in canvas) ====================
   add([
     sprite('startBG'),
     pos(0, 0),
@@ -35,163 +33,47 @@ export function createStartScene(){
     z(0)
   ]);
 
-  // ==================== DEVICE SELECTION BUTTONS ====================
-  const buttonWidth = 350;
-  const buttonHeight = 70;
-  const buttonSpacing = 100;
-  const startY = centerY - 50; 
+  // ==================== SHOW HTML MODAL ====================
+  const modal = document.getElementById('startScreenModal');
+  if (modal) {
+    modal.classList.add('show');
+  }
 
-  
-  const desktopBtnBG = add([
-    rect(buttonWidth, buttonHeight, { radius: 8 }),
-    pos(centerX, startY),
-    anchor("center"),
-    color(55, 2, 90), 
-    outline(3, rgb(165, 90, 255)),
-    area(),
-    z(2),
-    "desktop-btn"
-  ]);
-
-  const desktopBtnText = add([ // THESE NEED TO MOVE TO CSS
-    text("PLAY ON PC", { 
-      size: 32, 
-      font: "orbitronBold"
-    }),
-    pos(centerX, startY),
-    anchor("center"),
-    color(255, 199, 255), 
-    z(3)
-  ]);
-
-  const desktopBtnShadow = add([
-    text("PLAY ON PC", { 
-      size: 32, 
-      font: "orbitronBold"
-    }),
-    pos(centerX + 2, startY + 2),
-    anchor("center"),
-    color(0, 0, 0),
-    z(1)
-  ]);
-
-  
-  const mobileBtnBG = add([
-    rect(buttonWidth, buttonHeight, { radius: 8 }),
-    pos(centerX, startY + buttonSpacing),
-    anchor("center"),
-    color(55, 2, 90), 
-    outline(3, rgb(165, 90, 255)), 
-    area(),
-    z(2),
-    "mobile-btn"
-  ]);
-
-  const mobileBtnText = add([
-    text("PLAY ON MOBILE", { 
-      size: 32, 
-      font: "orbitronBold"
-    }),
-    pos(centerX, startY + buttonSpacing),
-    anchor("center"),
-    color(255, 199, 255),
-    z(3)
-  ]);
-
-  const mobileBtnShadow = add([
-    text("PLAY ON MOBILE", { 
-      size: 32, 
-      font: "orbitronBold"
-    }),
-    pos(centerX + 2, startY + buttonSpacing + 2),
-    anchor("center"),
-    color(0, 0, 0),
-    z(1)
-  ]);
-
-  // ==================== BUTTON INTERACTIONS ====================
-  
-  desktopBtnBG.onHoverUpdate(() => {
-    desktopBtnBG.color = rgb(131, 12, 222);
-    setCursor("pointer");
-  });
-
-  desktopBtnBG.onHoverEnd(() => {
-    desktopBtnBG.color = rgb(55, 2, 90);
-    setCursor("default");
-  });
-
-  desktopBtnBG.onClick(() => {
+  // ==================== WIRE UP HTML BUTTONS ====================
+  function handleDesktop() {
     window.gameState.deviceType = 'desktop';
     console.log('🖥️ Desktop mode selected');
+    if (modal) modal.classList.remove('show');
     stopAtmosphere();
     startMenuMusic();
     go("menu");
-  });
+  }
 
-  mobileBtnBG.onHoverUpdate(() => {
-    mobileBtnBG.color = rgb(131, 12, 222);
-    setCursor("pointer");
-  });
-
-  mobileBtnBG.onHoverEnd(() => {
-    mobileBtnBG.color = rgb(55, 2, 90);
-    setCursor("default");
-  });
-
-  mobileBtnBG.onClick(() => {
+  function handleMobile() {
     window.gameState.deviceType = 'mobile';
     console.log('📱 Mobile mode selected');
+    if (modal) modal.classList.remove('show');
     stopAtmosphere();
     startMenuMusic();
     go("menu");
-  });
+  }
 
-  // ==================== KEYBOARD SHORTCUTS ====================
-  onKeyPress("d", () => {
-    window.gameState.deviceType = 'desktop';
-    console.log('🖥️ Desktop mode selected (keyboard)');
-    stopAtmosphere();
-    startMenuMusic();
-    go("menu");
-  });
+  const desktopBtn = document.getElementById('startDesktopBtn');
+  const mobileBtn  = document.getElementById('startMobileBtn');
 
-  onKeyPress("1", () => {
-    window.gameState.deviceType = 'desktop';
-    console.log('🖥️ Desktop mode selected (keyboard)');
-    stopAtmosphere();
-    startMenuMusic();
-    go("menu");
-  });
+  if (desktopBtn) desktopBtn.onclick = handleDesktop;
+  if (mobileBtn)  mobileBtn.onclick  = handleMobile;
 
-  onKeyPress("m", () => {
-    window.gameState.deviceType = 'mobile';
-    console.log('📱 Mobile mode selected (keyboard)');
-    stopAtmosphere();
-    startMenuMusic();
-    go("menu");
-  });
+  // ==================== KEYBOARD SHORTCUTS (unchanged) ====================
+  onKeyPress("d", handleDesktop);
+  onKeyPress("1", handleDesktop);
+  onKeyPress("m", handleMobile);
+  onKeyPress("2", handleMobile);
 
-  onKeyPress("2", () => {
-    window.gameState.deviceType = 'mobile';
-    console.log('📱 Mobile mode selected (keyboard)');
-    stopAtmosphere();
-    startMenuMusic();
-    go("menu");
+  // ==================== CLEANUP ====================
+  onSceneLeave(() => {
+    if (modal) modal.classList.remove('show');
   });
-
-  // ==================== HELPER TEXT ====================
-  const helperText = add([
-    text("Keyboard: Press 1 for PC  |  Press 2 for Mobile", { 
-      size: 18, 
-      font: "orbitron"
-    }),
-    pos(centerX, SCREEN_H - 40),
-    anchor("center"),
-    color(200, 200, 200),
-    opacity(0.7),
-    z(3)
-  ]);
 }
 
 
@@ -418,12 +300,12 @@ function buildCharacterCards() {
       updateCharacterStats(char);
       
       const confirmBtn = document.getElementById('confirmCharBtn');
-      console.log('📘 Button element found:', confirmBtn);
-      console.log('📘 Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
+      console.log('🔘 Button element found:', confirmBtn);
+      console.log('🔘 Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
       
       if (confirmBtn) {
         confirmBtn.disabled = false;
-        console.log('📘 Button disabled after:', confirmBtn.disabled);
+        console.log('🔘 Button disabled after:', confirmBtn.disabled);
       }
       
       if (window.play) play("happyMeow", { volume: 0.2 });
@@ -491,7 +373,6 @@ onSceneLeave(() => {
   if (modal) modal.classList.remove('show');
 });
 }
-
 
 
 
@@ -613,9 +494,6 @@ function playPourAnimation(onComplete) {
     spawnPourSprite(i * STAGGER);
   }
 }
-
-
-
 
 
 

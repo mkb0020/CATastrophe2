@@ -72,12 +72,6 @@
     </div>
   </div>
 <!-- ==================== BUTTONS ========================== -->
-
-
-
-
-
-
 <!-- BOSS FINISH HIM BUTTON  -->
 <div id="finishHimButton" class="hidden">
   <div class="finish-him-container">
@@ -101,6 +95,14 @@
 </div>-->
 
 <!-- ======================= MODAlS =======================-->
+
+<div id="startScreenModal" class="start-screen-modal">
+  <div class="start-screen-modal__inner">
+    <button id="startDesktopBtn"  class="start-screen-modal__btn">PLAY ON PC</button>
+    <button id="startMobileBtn"   class="start-screen-modal__btn">PLAY ON MOBILE</button>
+    <p class="start-screen-modal__hint">Keyboard: Press 1 for PC  |  Press 2 for Mobile</p>
+  </div>
+</div>
 
 <!-- MAIN MENU MODAL -->
 <div id="mainMenuModal" class="modal">
@@ -135,7 +137,7 @@
             Nature does not act by purposes."</em><br>
             <cite>— Erwin Schrödinger</cite></p>
           </blockquote>         
-          <h3> Welcome to Schrödinger's Cat Café! </h3>
+          <h1> Welcome to Schrödinger's Cat Café! </h3>
           <p>The café is in a state of suPURRRposition — simultaneously fine and <em>very much not fine</em>. </p>
           <p>The vibe is off. The <strong>Entanglement Index</strong> has spiked off the charts. And the sass levels are dangerously high. </p>
           <p>
@@ -154,8 +156,8 @@
 
           <hr>
 
-          <h5>🎮 How to Play</h5>
-            <h4>Levels</h4>
+          <h2>🎮 How to Play</h2>
+            <h3>Levels</h3>
             <ul>
               <li><strong>← / → Arrow Keys</strong> — Move</li>
               <li><strong>Spacebar</strong> — Jump</li>
@@ -163,7 +165,7 @@
             <p>Knock cups off tables (as cats do), keep an eye out for helpful items, avoid (or stomp!) enemies, and reach the Cat Tower to finish the level.</p>
             <p>  Some levels may hide <strong>secret rooms</strong>—because curious cats don’t always get caught… 👀</p>
 
-          <h5>⚔️ Boss Battles ⚔️</h5>
+          <h3>⚔️ Boss Battles ⚔️</h3>
 
             <p>  When things get hiss-terical, boss fights switch to <strong>turn-based</strong> battle style. </p>
             <ul>
@@ -440,11 +442,11 @@
       <p class="disappointment-text">YOU'VE DISAPPOINTED EVERYONE</p>
       <p id="gameOverScoreText" class="score-text">Final Score: --</p>
       
-      <div class="button-row">
-        <button class="modal-button" id="gameOverBackBtn">
+
+        <button class="modal-button-gameover" id="gameOverBackBtn">
           BACK TO MENU
         </button>
-      </div>
+
     </div>
   </div>
 </div>
@@ -457,18 +459,19 @@
     </div>
     <div class="modal-body">
       <p class="encourage-text">Sharpen those claws and get back out there!</p>
-      
-      <div class="stats-display">
         <p id="youDiedScoreText" class="stat-line">Score: --</p>
         <p id="youDiedLivesText" class="stat-line">Lives Left: --</p>
-      </div>
     </div>
-            <button class="modal-button" id="useLifeModalBtn">
+
+      <div class="modal-buttons-YouDied">
+            <button class="modal-button-died" id="useLifeModalBtn">
           USE LIFE
         </button>
-        <button class="modal-button" id="quitToMenuModalBtn">
+        <button class="modal-button-died" id="quitToMenuModalBtn">
           QUIT TO MENU
         </button>
+      </div>
+
   </div>
 </div>
 
@@ -490,6 +493,47 @@
     </div>
   </div>
 </div>
+
+<!-- ======================= BOSS BATTLES =======================-->
+<!--
+<div id="battleUI" class="battle-ui hidden">
+  <div class="battle-hp-panel battle-hp-panel--boss" id="bossHPPanel">
+    <div class="battle-hp-panel__name" id="bossName">Boss Name</div>
+    <div class="battle-hp-panel__row">
+      <span class="battle-hp-panel__label">HP:</span>
+      <div class="battle-hp-panel__bar-track">
+        <div class="battle-hp-panel__bar-fill" id="bossHPBarFill" style="width: 100%;"></div>
+      </div>
+      <span class="battle-hp-panel__text" id="bossHPText">100 / 100</span>
+    </div>
+  </div>
+
+  <div class="battle-hp-panel battle-hp-panel--player" id="playerHPPanel">
+    <div class="battle-hp-panel__name" id="playerName">Player Name</div>
+    <div class="battle-hp-panel__row">
+      <span class="battle-hp-panel__label">HP:</span>
+      <div class="battle-hp-panel__bar-track">
+        <div class="battle-hp-panel__bar-fill" id="playerHPBarFill" style="width: 100%;"></div>
+      </div>
+      <span class="battle-hp-panel__text" id="playerHPText">100 / 100</span>
+    </div>
+  </div>
+
+  <div class="battle-bottom-bar" id="battleBottomBar">
+
+    <div class="battle-log" id="battleLogPanel">
+      <div class="battle-log__text" id="battleLogText">...</div>
+    </div>
+
+    <div class="battle-moves" id="moveButtonsPanel">
+      <button class="battle-move-btn" id="moveBtn0" data-index="0">Move 1</button>
+      <button class="battle-move-btn" id="moveBtn1" data-index="1">Move 2</button>
+      <button class="battle-move-btn" id="moveBtn2" data-index="2">Move 3</button>
+      <button class="battle-move-btn" id="moveBtn3" data-index="3">Move 4</button>
+    </div>
+
+  </div>
+</div>-->
 
 <!-- ======================= SCRIPTS =======================-->
 <script type="module" src="modules/game.js"></script>   

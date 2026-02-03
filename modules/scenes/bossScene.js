@@ -580,7 +580,8 @@ function checkBattleEnd() {
             
             wait(victoryDelay, () => {
               if (bossId === 'observerBoss') {
-                go("transition", { transitionKey: "Transition7", character, startHP: player.hp, lives: player.lives, score: startScore });
+                go("transition", "Transition7", character, player.hp, player.lives, startScore);
+
               } else {
                 animateDefeat(bossSprite, bossGlow, false);
                 updateLog(`PURRRRRFECT VICTORY! THE ${boss.name} HAS BEEN DEFEATED!`);

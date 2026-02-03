@@ -22,7 +22,7 @@ export const LEVELS = {
     name: 'Level 1',
     timeLimit: 90,
     length:  18500, 
-    playerSpawn: { x: 12210, y: 200 },   // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 },   // FOR TESTING CHALLENGE ROOMS
     GroundSegments: [
       { x: -1000, y: 440, width: 2500, height: 50 }, // -1000 - 1500
       { x: 3700, y: 440, width: 1000, height: 50 }, // 3700 - 4700
@@ -99,7 +99,7 @@ export const LEVELS = {
     name: 'Level 2',
     timeLimit: 90,
     length:  20300,    
-    playerSpawn: { x: 8100, y: 200 },  // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 19850, y: 200 },  // FOR TESTING CHALLENGE ROOMS
     GroundSegments: [
       { x: -1000, y: 440, width: 2500, height: 50 }, // -1000 - 1500
       { x: 3725, y: 440, width: 1500, height: 50 }, // 3725 - 5225
@@ -194,7 +194,7 @@ export const LEVELS = {
     name: 'Level 3',
     timeLimit: 90,
     length:  21000,  
-    playerSpawn: { x: 15155, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 }, // FOR TESTING CHALLENGE ROOMS
     GroundSegments: [
       { x: -1000, y: 440, width: 2500, height: 50 }, // 0 - 1500
       { x: 3725, y: 440, width: 1500, height: 50 }, // 3725 - 5225
@@ -296,7 +296,7 @@ export const LEVELS = {
     name: 'Level 4',
     timeLimit: 90,
     length:  23000,  
-    playerSpawn: { x: 17700, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 }, // FOR TESTING CHALLENGE ROOMS
     GroundSegments: [
         { x: -1000, y: 440, width: 2500, height: 50 }, // 0-1500
         { x: 4310, y: 440, width: 1500, height: 50 }, // 4310 - 5810
@@ -410,7 +410,7 @@ export const LEVELS = {
     name: 'Level 5',
     timeLimit: 90,
     length:  21000,   
-    playerSpawn: { x: 4865, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 }, // FOR TESTING CHALLENGE ROOMS
     GroundSegments: [
       { x: -1000, y: 440, width: 2500, height: 50 }, // 0 - 1500
       { x: 4215, y: 440, width: 1500, height: 50 }, // 4215 - 5715

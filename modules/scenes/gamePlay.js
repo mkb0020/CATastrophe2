@@ -382,7 +382,7 @@ export function createLevel5Scene(data) {
       setGameActive(false);
       
       wait(0.5, () => {
-        go("transition", { transitionKey: "Transition6", character, startHP: player.hp, lives: getLives(), score: getScore() }); 
+        go("transition", "Transition6", character, player.hp, getLives(), getScore());
       });
     }
   });
