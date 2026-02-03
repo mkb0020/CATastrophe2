@@ -161,6 +161,11 @@ async function loadAssets() {
   loadSound("finalMoveZap", "assets/sounds/fx/finalMoveZap.mp3");
 
 // ======================================== SPRITES ========================================
+  loadSprite("muteButton", "assets/images/icon/mute.png");
+  loadSprite("musicButton", "assets/images/icon/music.png");
+  loadSprite("pauseButton", "assets/images/icon/pause.png");
+  loadSprite("playButton", "assets/images/icon/play.png");
+
   loadSprite("realNona", "assets/images/realNona.PNG");
   loadSprite("title", "assets/images/title.PNG");
   loadSprite("bubbles", "assets/images/items/bubbles.png", {
