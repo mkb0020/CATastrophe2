@@ -1169,28 +1169,18 @@ export function updateUnifiedHUD(hudElements, score, timeLeft, player, lives) {
 }
 
 export function showHUD() {
-  const desktopHUD = document.getElementById('hud-container');
-  if (desktopHUD) {
-    desktopHUD.style.display = 'flex';
-  }
-  
-  const mobileHUD = document.querySelector('.mobile-hud-overlay');
-  if (mobileHUD) {
-    mobileHUD.classList.add('show');
+  const hudOverlay = document.querySelector('.mobile-hud-overlay');
+  if (hudOverlay) {
+    hudOverlay.classList.add('show');
   }
   
   console.log('👁️ HUD shown');
 }
 
 export function hideHUD() {
-  const desktopHUD = document.getElementById('hud-container');
-  if (desktopHUD) {
-    desktopHUD.style.display = 'none';
-  }
-  
-  const mobileHUD = document.querySelector('.mobile-hud-overlay');
-  if (mobileHUD) {
-    mobileHUD.classList.remove('show');
+  const hudOverlay = document.querySelector('.mobile-hud-overlay');
+  if (hudOverlay) {
+    hudOverlay.classList.remove('show');
   }
   
   console.log('🙈 HUD hidden');

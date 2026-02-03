@@ -425,7 +425,7 @@ export function initializeMusicControls() {
     let isMuted = false;
     volumeBtn.addEventListener('click', () => {
         isMuted = !isMuted;
-        volumeBtn.textContent = isMuted ? '🔇' : '🔊';
+        volumeBtn.src = isMuted ? '../assets/images/icons/mute.png' : '../assets/images/icons/music.png';
         volumeBtn.classList.toggle('muted', isMuted);
         
         volume(isMuted ? 0 : 1);
@@ -568,69 +568,39 @@ export function initializeHUD() {
     window.updateHUD = (updates) => {
         if (updates.score !== undefined) {
             window.gameState.score = updates.score;
-            const el = document.getElementById('score');
+            const el = document.getElementById('mobileScore');
             if (el) el.textContent = `SCORE: ${updates.score}`;
-            
-            const mobileEl = document.getElementById('mobileScore');
-            if (mobileEl) mobileEl.textContent = `SCORE: ${updates.score}`;
         }
         if (updates.hp !== undefined) {
             window.gameState.hp = updates.hp;
-            const el = document.getElementById('hp');
-            if (el) el.textContent = `HP: ${updates.hp}`;
-            
-            const mobileEl = document.getElementById('mobileHP');
-            if (mobileEl) {
-                mobileEl.textContent = `HP: ${updates.hp}`;
-                if (updates.hp <= window.gameState.maxHP * 0.3) {
-                    mobileEl.classList.add('low-hp');
-                } else {
-                    mobileEl.classList.remove('low-hp');
-                }
+            const el = document.getElementById('mobileHP');
+            if (el) {
+                el.textContent = `HP: ${updates.hp}`;
+                el.classList.toggle('low-hp', updates.hp <= window.gameState.maxHP * 0.3);
             }
         }
         if (updates.lives !== undefined) {
             window.gameState.lives = updates.lives;
-            const el = document.getElementById('lives');
+            const el = document.getElementById('mobileLives');
             if (el) el.textContent = `LIVES: ${updates.lives}`;
-            
-            const mobileEl = document.getElementById('mobileLives');
-            if (mobileEl) mobileEl.textContent = `LIVES: ${updates.lives}`;
         }
         if (updates.timeLeft !== undefined) {
             window.gameState.timeLeft = updates.timeLeft;
-            
-            if (updates.timeLeft === null) {
-                const el = document.getElementById('time');
-                if (el) el.textContent = 'TIME: --';
-                
-                const mobileEl = document.getElementById('mobileTime');
-                if (mobileEl) {
-                    mobileEl.textContent = 'TIME: --';
-                    mobileEl.classList.remove('low-time');
-                }
-            } else {
-                const mins = Math.floor(updates.timeLeft / 60);
-                const secs = updates.timeLeft % 60;
-                const timeStr = `TIME: ${mins}:${secs.toString().padStart(2, '0')}`;
-                
-                const el = document.getElementById('time');
-                if (el) el.textContent = timeStr;
-                
-                const mobileEl = document.getElementById('mobileTime');
-                if (mobileEl) {
-                    mobileEl.textContent = `TIME: ${mins}:${secs.toString().padStart(2, '0')}`;
-                    
-                    if (updates.timeLeft <= 30) {
-                        mobileEl.classList.add('low-time');
-                    } else {
-                        mobileEl.classList.remove('low-time');
-                    }
+            const el = document.getElementById('mobileTime');
+            if (el) {
+                if (updates.timeLeft === null) {
+                    el.textContent = 'TIME: --';
+                    el.classList.remove('low-time');
+                } else {
+                    const mins = Math.floor(updates.timeLeft / 60);
+                    const secs = updates.timeLeft % 60;
+                    el.textContent = `TIME: ${mins}:${secs.toString().padStart(2, '0')}`;
+                    el.classList.toggle('low-time', updates.timeLeft <= 30);
                 }
             }
         }
     };
-    console.log('📊 HUD system initialized (desktop + mobile)');
+    console.log('📊 HUD system initialized');
 }
 // ================================== DEBUG TOGGLE ==========================================
 export function initializeDebugToggle() {
