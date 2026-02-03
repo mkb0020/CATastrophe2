@@ -307,6 +307,8 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
           tween(blackFade.opacity, 1, 1.2, (o) => blackFade.opacity = o, easings.easeInQuad);
           
           wait(1.5, () => {
+            destroy(blackFade);
+            destroy(blackScreen);
             renderStandardTransition('Transition6', character, startHP, true, lives, score);
           });
         });
@@ -318,10 +320,7 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
 // TRANSITION 7: POST-GAME CINEMATIC / CREDITS
 function createTransition7Cinematic(character, startHP) {
   console.log('🎬 Creating Transition7 cinematic (post-Observer)');
-  
   // GET ACTUAL SCREEN DIMENSIONS
-  
-  
   const centerX = SCREEN_W / 2;
   const centerY = SCREEN_H / 2;
 
