@@ -2,14 +2,14 @@ import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getTransition } from '../config/transitions.js';
 import { SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, startFinalVictoryMusic, stopAtmosphere, fadeMusicOut } from '../helpers/kittyHelpers.js';
-import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../helpers/mobileControls.js';
 import { hideHUD } from '../helpers/levelHelpers.js';
 
 
 export function createTransitionScene(transitionKey, character, startHP, lives = 3, score = 0) {
-    console.log('🎬 RAW PARAMS:', { transitionKey, character, startHP, lives, score });
-  console.log('🎬 lives type:', typeof lives, 'value:', lives);
-    console.log('🎬 Transition Scene received:', {
+    console.log('ðŸŽ¬ RAW PARAMS:', { transitionKey, character, startHP, lives, score });
+  console.log('ðŸŽ¬ lives type:', typeof lives, 'value:', lives);
+    console.log('ðŸŽ¬ Transition Scene received:', {
     transitionKey,
     character: character?.name,
     startHP,
@@ -17,6 +17,7 @@ export function createTransitionScene(transitionKey, character, startHP, lives =
     score
   });
   hideHUD();
+  hideJoystickControls(); 
 
   //  OBSERVER REVEAL
   if (transitionKey === 'Transition6') {
@@ -44,19 +45,17 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     return;
   }
 
-  console.log(`🎬 Playing transition: ${transitionKey}`);
-  console.log(`🐱 Character: ${character.name}`);
-  console.log(`📋 Transition sprites:`, transition.sprites);
+  console.log(`ðŸŽ¬ Playing transition: ${transitionKey}`);
+  console.log(`ðŸ± Character: ${character.name}`);
+  console.log(`ðŸ“‹ Transition sprites:`, transition.sprites);
 
   // GET ACTUAL SCREEN DIMENSIONS
-  
-  
   const centerX = SCREEN_W / 2;
   const centerY = SCREEN_H / 2;
 
   let textIndex = 0;
   const textKeys = ['Text1', 'Text2', 'Text3'];
-  
+
   // BACKGROUND - FULL SCREEN
   add([
     sprite(transition.background),
@@ -78,7 +77,7 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   const initialFrame = SPRITE_FRAMES[initialSpriteKey] || SPRITE_FRAMES.menu;
   const initialScale = SPRITE_SCALES[initialSpriteKey] || 1.0;
 
-  console.log(`🎭 Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
+  console.log(`ðŸŽ­ Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
 
   // CAT SPRITE - CENTERED
   const catSprite = add([
@@ -155,12 +154,12 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     const newFrame = SPRITE_FRAMES[newSpriteKey];
     const newScale = SPRITE_SCALES[newSpriteKey] || 1.0;
     
-    console.log(`🔄 Updating to sprite: ${newSpriteKey} -> frame ${newFrame} (textIndex: ${textIndex})`);
+    console.log(`ðŸ”„ Updating to sprite: ${newSpriteKey} -> frame ${newFrame} (textIndex: ${textIndex})`);
     
     const frameToUse = newFrame !== undefined ? newFrame : SPRITE_FRAMES.menu;
     
     if (newFrame === undefined) {
-      console.warn(`⚠️ Frame not found for sprite key "${newSpriteKey}", using menu frame ${SPRITE_FRAMES.menu}`);
+      console.warn(`âš ï¸ Frame not found for sprite key "${newSpriteKey}", using menu frame ${SPRITE_FRAMES.menu}`);
     }
     
     catSprite.use(sprite(`${character.name}Sheet`, { frame: frameToUse }));
@@ -199,7 +198,7 @@ function handleNext() {
       }
     } else {
       const nextState = transition.nextState;
-          console.log('🎬 Transition going to next state:', nextState, 'with HP:', startHP, 'lives:', lives, 'score:', score);
+          console.log('ðŸŽ¬ Transition going to next state:', nextState, 'with HP:', startHP, 'lives:', lives, 'score:', score);
 
       if (nextState === 'level1') {
         go('level1', { character, startHP, lives, score });
@@ -230,10 +229,8 @@ function handleNext() {
 
 // TRANSITION 6: OBSERVER REVEAL
 function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0) {
-  console.log('⚡ Starting Transition6 - Observer Reveal Cinematic');
-  
-  // GET ACTUAL SCREEN DIMENSIONS
-  
+  console.log('âš¡ Starting Transition6 - Observer Reveal Cinematic');
+  hideJoystickControls(); 
   
   
   const blackScreen = add([
@@ -319,7 +316,8 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
 
 // TRANSITION 7: POST-GAME CINEMATIC / CREDITS
 function createTransition7Cinematic(character, startHP) {
-  console.log('🎬 Creating Transition7 cinematic (post-Observer)');
+  console.log('ðŸŽ¬ Creating Transition7 cinematic (post-Observer)');
+  hideJoystickControls(); 
   // GET ACTUAL SCREEN DIMENSIONS
   const centerX = SCREEN_W / 2;
   const centerY = SCREEN_H / 2;
@@ -413,7 +411,7 @@ function createTransition7Cinematic(character, startHP) {
       "CATastrophe2",
       `Starring: ${character.name}`,
       "Special thanks:",
-      "The cats at Schrödinger's Cat Café"
+      "The cats at SchrÃ¶dinger's Cat CafÃ©"
     ], 120, 80, 1.2);
 
     // 20s INTO CREDITS
@@ -499,8 +497,6 @@ function createTransition7Cinematic(character, startHP) {
 
 function animateSmokeTransition(){
   // GET ACTUAL SCREEN DIMENSIONS
-  
-  
   
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 6)

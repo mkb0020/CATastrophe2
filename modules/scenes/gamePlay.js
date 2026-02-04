@@ -42,7 +42,7 @@ import {
   getUpgrades 
 } from '../helpers/upgradeHelper.js';
 import { getRoom } from '../config/challengeRoom.js';
-import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction } from '../helpers/mobileControls.js';
+import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
 
 
 
@@ -58,15 +58,15 @@ function createUnifiedLevel(levelId, data) {
   const spawnY = data?.returnY;
   
   const levelConfig = getLevel(levelId);
-  console.log(`🎮 ${levelConfig.name.toUpperCase()} INITIATED`);
-  console.log('❤️ Starting HP:', startHP);
-  console.log('💙 Starting Lives:', startLives);
-  console.log('💰 Starting Score:', startScore);
+  console.log(`ðŸŽ® ${levelConfig.name.toUpperCase()} INITIATED`);
+  console.log('â¤ï¸ Starting HP:', startHP);
+  console.log('ðŸ’™ Starting Lives:', startLives);
+  console.log('ðŸ’° Starting Score:', startScore);
   
   const currentUpgrades = getUpgrades();
-  console.log('📊 Current Upgrades:', currentUpgrades);
+  console.log('ðŸ“Š Current Upgrades:', currentUpgrades);
 
-  // 📱 MOBILE vs 🖥️ DESKTOP CONTROLS
+  // MOBILE vs  DESKTOP CONTROLS
   const mobileSetup = window.mobileSetup;
 
   let logTimer = 0;
@@ -112,7 +112,7 @@ function createUnifiedLevel(levelId, data) {
   
   if (spawnX !== undefined && spawnY !== undefined) {
     player.pos = vec2(spawnX, spawnY);
-    console.log(`🚪 Spawning at challenge room exit: (${spawnX}, ${spawnY})`);
+    console.log(`ðŸšª Spawning at challenge room exit: (${spawnX}, ${spawnY})`);
   }
   
   setupOneWayPlatforms(player);
@@ -137,12 +137,13 @@ function createUnifiedLevel(levelId, data) {
 
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
 
-  // 📱 MOBILE vs 🖥️ DESKTOP CONTROLS
+  // MOBILE vs DESKTOP CONTROLS
   if (mobileSetup && mobileSetup.isMobile) {
-    // 📱 MOBILE CONTROLS
+    // MOBILE CONTROLS
     setupMobilePlayerControls(player, getGameActive, mobileSetup.mobileState);
     setupTouchEvents(mobileSetup.controls, mobileSetup.mobileState, document.getElementById("gameCanvas"));
-    
+    console.log('ðŸ"± About to show joystick controls...');
+    setTimeout(() => showJoystickControls(), 100);
     if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
       const doorData = doorsIn.map((doorObj, index) => ({
         doorObj: doorObj,
@@ -157,7 +158,7 @@ function createUnifiedLevel(levelId, data) {
       }), document.getElementById("gameCanvas"));
     }
   } else {
-    // 🖥️ DESKTOP CONTROLS
+    //DESKTOP CONTROLS
     setupPlayerControls(player, getGameActive);
 
     if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
@@ -247,14 +248,14 @@ export function createLevel5Scene(data) {
   const spawnY = data?.returnY;
   
   const levelConfig = getLevel('level5');
-  console.log('🎮 LEVEL 5 - FINAL GAUNTLET');
-  console.log('❤️ Starting HP:', startHP);
-  console.log('💙 Starting Lives:', startLives);
+  console.log('ðŸŽ® LEVEL 5 - FINAL GAUNTLET');
+  console.log('â¤ï¸ Starting HP:', startHP);
+  console.log('ðŸ’™ Starting Lives:', startLives);
   
   const currentUpgrades = getUpgrades();
-  console.log('📊 Current Upgrades:', currentUpgrades);
+  console.log('ðŸ“Š Current Upgrades:', currentUpgrades);
 
-  // 📱 MOBILE vs 🖥️ DESKTOP CONTROLS
+  // MOBILE vs  DESKTOP CONTROLS
   const mobileSetup = window.mobileSetup;
 
   let logTimer = 0;
@@ -300,7 +301,7 @@ export function createLevel5Scene(data) {
   
   if (spawnX !== undefined && spawnY !== undefined) {
     player.pos = vec2(spawnX, spawnY);
-    console.log(`🚪 Spawning at challenge room exit: (${spawnX}, ${spawnY})`);
+    console.log(`ðŸšª Spawning at challenge room exit: (${spawnX}, ${spawnY})`);
   }
   
   setupOneWayPlatforms(player);
@@ -324,11 +325,12 @@ export function createLevel5Scene(data) {
 
   const { doorsIn, doorsOut } = addDoorsToLevel(levelConfig);
 
-  // 📱 MOBILE vs 🖥️ DESKTOP CONTROLS
+  // MOBILE vs DESKTOP CONTROLS
   if (mobileSetup && mobileSetup.isMobile) {
-    // 📱 MOBILE CONTROLS
+    // MOBILE CONTROLS
     setupMobilePlayerControls(player, getGameActive, mobileSetup.mobileState);
     setupTouchEvents(mobileSetup.controls, mobileSetup.mobileState, document.getElementById("gameCanvas"));
+    setTimeout(() => showJoystickControls(), 100); 
     
     if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
       const doorData = doorsIn.map((doorObj, index) => ({
@@ -344,7 +346,7 @@ export function createLevel5Scene(data) {
       }), document.getElementById("gameCanvas"));
     }
   } else {
-    // 🖥️ DESKTOP CONTROLS
+    // DESKTOP CONTROLS
     setupPlayerControls(player, getGameActive);
 
     if (doorsIn.length > 0 && levelConfig.challengeDoorIN) {
@@ -378,7 +380,7 @@ export function createLevel5Scene(data) {
   
   player.onCollide("victoryPlatform", (platform) => {
     if (player.vel.y >= 0 && getGameActive()) {
-      console.log('🏆 LEVEL 5 COMPLETE! Heading to final boss...');
+      console.log('ðŸ† LEVEL 5 COMPLETE! Heading to final boss...');
       setGameActive(false);
       
       wait(0.5, () => {
@@ -403,7 +405,6 @@ export function createLevel5Scene(data) {
         
 // ==================== UPDATE HUD ====================
         updateUnifiedHUD(hudElements, score, timeLeft, player, lives);
-// ===========================================================================
       }
     }
   });

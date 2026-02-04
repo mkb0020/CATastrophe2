@@ -12,7 +12,7 @@ export function detectMobile() {
   
   const isMobile = isMobileTouch || isMobileUA;
   
-  console.log('📱 Mobile Detection:', {
+  console.log('ðŸ“± Mobile Detection:', {
     isMobileTouch,
     isMobileUA,
     isMobile,
@@ -48,7 +48,7 @@ export function createOrientationPrompt() {
       color: white;
       font-family: Arial, sans-serif;
     ">
-      <div style="font-size: 70px; margin-bottom: 20px;">𖦹</div>
+      <div style="font-size: 70px; margin-bottom: 20px;">ð–¦¹</div>
       <div style="color: #FFC7FF; font-size: 30px; font-family: 'GothNerd'; text-align: center; padding: 0 20px;">
         <strong> Put that thang down flip it and reverse it! </strong>
         <br> ...
@@ -73,7 +73,7 @@ export function createJoystickControls() {
     </div>
     
     <div class="jump-button" id="jumpButton">
-      JUMP
+        <img src="assets/images/icons/jump.png">
     </div>
   `;
   
@@ -131,7 +131,7 @@ export function setupJoystickControls(controls, mobileState) {
     joystickBase.classList.remove('active');
     mobileState.left = false;
     mobileState.right = false;
-    console.log('🕹️ Joystick reset to center');
+    console.log('ðŸ•¹ï¸ Joystick reset to center');
   }
 
   const joystickTouchStart = (e) => {
@@ -140,7 +140,7 @@ export function setupJoystickControls(controls, mobileState) {
     joystickBase.classList.add('active');
     const touch = e.touches[0];
     handleJoystickMove(touch.clientX, touch.clientY);
-    console.log('🕹️ Joystick activated (touch)');
+    console.log('ðŸ•¹ï¸ Joystick activated (touch)');
   };
 
   const joystickTouchMove = (e) => {
@@ -160,7 +160,7 @@ export function setupJoystickControls(controls, mobileState) {
     joystickActive = true;
     joystickBase.classList.add('active');
     handleJoystickMove(e.clientX, e.clientY);
-    console.log('🕹️ Joystick activated (mouse)');
+    console.log('ðŸ•¹ï¸ Joystick activated (mouse)');
   };
 
   const documentMouseMove = (e) => {
@@ -185,7 +185,7 @@ export function setupJoystickControls(controls, mobileState) {
   jumpButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
     mobileState.jumpJustPressed = true;
-    console.log('⬆️ Jump pressed!');
+    console.log('â¬†ï¸ Jump pressed!');
   });
   
   jumpButton.addEventListener('touchend', (e) => {
@@ -198,22 +198,26 @@ export function setupJoystickControls(controls, mobileState) {
     mobileState.jumpJustPressed = false;
   });
   
-  console.log('🎮 Simplified joystick controls initialized');
+  console.log('ðŸŽ® Simplified joystick controls initialized');
 }
 
 // ==================== SHOW/HIDE CONTROLS ====================
 export function showJoystickControls() {
   const controls = document.getElementById('touchControls');
   if (controls) {
-    controls.classList.add('active');
-    console.log('🎮 Joystick controls shown');
+    controls.classList.add('show'); // FIXED - REMOVED ACTIVE AND REPLACED WITH SHOW - DO NOT CHANGE!
+    controls.style.display = ''; 
+    controls.style.pointerEvents = ''; 
+    console.log('ðŸŽ® Joystick controls shown');
   }
 }
 
 export function hideJoystickControls() {
   const controls = document.getElementById('touchControls');
   if (controls) {
-    controls.classList.remove('active');
+    controls.classList.remove('show'); // FIXED
+    controls.style.display = ''; 
+    controls.style.pointerEvents = 'none'; 
     console.log('🎮 Joystick controls hidden');
   }
 }
@@ -299,7 +303,7 @@ export function setupTouchEvents(controls, mobileState, canvas) {
 
 // ==================== SETUP MOBILE DOOR INTERACTION ====================
 export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, getGameData, canvas) {
-  console.log('🔧 Setting up MOBILE door interactions for', doors.length, 'doors');
+  console.log('ðŸ”§ Setting up MOBILE door interactions for', doors.length, 'doors');
   
   doors.forEach((door, index) => {
     const doorConfig = door.doorConfig;
@@ -320,7 +324,7 @@ export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, 
         if (!windowOpen) {
           windowOpen = true;
           doorObj.use(sprite('window', { frame: 1 }));
-          console.log('🪟 Window opened!');
+          console.log('ðŸªŸ Window opened!');
         }
       } else if (!isNear && playerNear) {
         playerNear = false;
@@ -328,7 +332,7 @@ export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, 
         if (windowOpen) {
           windowOpen = false;
           doorObj.use(sprite('window', { frame: 0 }));
-          console.log('🪟 Window closed!');
+          console.log('ðŸªŸ Window closed!');
         }
       }
     });
@@ -356,13 +360,13 @@ export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, 
       );
       
       if (doorDist < 100) {
-        console.log('🚪 Door tapped! Entering...');
+        console.log('ðŸšª Door tapped! Entering...');
         
         const gameData = getGameData();
         const roomConfig = ROOMS[doorConfig.roomId] || getRoom(doorConfig.roomId);
         
         if (!roomConfig) {
-          console.error('❌ Room not found:', doorConfig.roomId);
+          console.error('âŒ Room not found:', doorConfig.roomId);
           return;
         }
         
@@ -422,7 +426,7 @@ export function setupMobileExitWindow(player, exitWindow, canvas, returnScene, r
     );
     
     if (windowDist < 120) {
-      console.log('🚪 Exit window tapped! Leaving...');
+      console.log('ðŸšª Exit window tapped! Leaving...');
       
       returnData.startHP = player.hp;
       returnData.lives = livesGetter();
@@ -438,11 +442,11 @@ export function initializeMobileControls(canvasElement) {
   const isMobile = detectMobile();
   
   if (!isMobile) {
-    console.log('💻 Desktop detected - skipping mobile controls');
+    console.log('ðŸ’» Desktop detected - skipping mobile controls');
     return { isMobile: false };
   }
   
-  console.log('📱 Mobile detected - initializing touch controls');
+  console.log('ðŸ“± Mobile detected - initializing touch controls');
   
   const orientationPrompt = createOrientationPrompt();
   
@@ -459,9 +463,9 @@ export function initializeMobileControls(canvasElement) {
     orientationPrompt.style.display = isLandscape ? 'none' : 'flex';
     
     if (isLandscape) {
-      console.log('📱 Landscape mode - game ready!');
+      console.log('ðŸ“± Landscape mode - game ready!');
     } else {
-      console.log('📱 Portrait mode - showing rotation prompt');
+      console.log('ðŸ“± Portrait mode - showing rotation prompt');
     }
   }
   
@@ -470,6 +474,9 @@ export function initializeMobileControls(canvasElement) {
   window.addEventListener('orientationchange', () => {
     setTimeout(checkAndUpdateOrientation, 100);
   });
+  
+  window.showJoystickControls = showJoystickControls;
+  window.hideJoystickControls = hideJoystickControls;
   
   return {
     isMobile: true,
@@ -492,7 +499,7 @@ export function cleanupMobileControls() {
     prompt.remove();
   }
   
-  console.log('🧹 Mobile controls cleaned up');
+  console.log('ðŸ§¹ Mobile controls cleaned up');
 }
 
 // ==================== MOBILE HUD CONTROLLER ====================
@@ -509,7 +516,7 @@ export class MobileHUDController {
     this.volumeBtn = document.getElementById('mobileVolumeBtn');
     this.pauseBtn = document.getElementById('mobilePauseBtn');
     
-    console.log('📱 Mobile HUD Controller initialized');
+    console.log('ðŸ“± Mobile HUD Controller initialized');
   }
   
   updateScore(score) {
@@ -554,7 +561,7 @@ export class MobileHUDController {
     if (this.volumeBtn) {
       this.volumeBtn.addEventListener('click', () => {
         const isMuted = onToggle();
-        this.volumeBtn.textContent = isMuted ? '🔇' : '🔊';
+        this.volumeBtn.textContent = isMuted ? 'ðŸ”‡' : 'ðŸ”Š';
       });
     }
   }
@@ -577,7 +584,7 @@ setupPauseButton(onPause) {
     const overlay = document.querySelector('.mobile-hud-overlay');
     if (overlay) {
       overlay.classList.remove('show');
-      console.log('📱 Mobile HUD hidden');
+      console.log('ðŸ“± Mobile HUD hidden');
     }
   }
   
@@ -585,7 +592,7 @@ setupPauseButton(onPause) {
     const overlay = document.querySelector('.mobile-hud-overlay');
     if (overlay) {
       overlay.classList.add('show');
-      console.log('📱 Mobile HUD shown');
+      console.log('ðŸ“± Mobile HUD shown');
     }
   }
 }
@@ -595,7 +602,7 @@ export function showMobileArrows() {
   const controls = document.getElementById('touchControls');
   if (controls) {
     controls.style.display = 'block';
-    console.log('➡️ Mobile arrows shown');
+    console.log('âž¡ï¸ Mobile arrows shown');
   }
 }
 
@@ -603,7 +610,7 @@ export function hideMobileArrows() {
   const controls = document.getElementById('touchControls');
   if (controls) {
     controls.style.display = 'none';
-    console.log('⬅️ Mobile arrows hidden');
+    console.log('â¬…ï¸ Mobile arrows hidden');
   }
 }
 
@@ -623,7 +630,7 @@ export function setupResponsiveCanvas(canvasElement, targetWidth =  ACTUAL_W, ta
         canvasElement.style.top = '0';
         canvasElement.style.left = '0';
         
-        console.log('📱 Mobile canvas resized:', {
+        console.log('ðŸ“± Mobile canvas resized:', {
           width: window.innerWidth,
           height: window.innerHeight
         });
@@ -646,7 +653,7 @@ export function setupResponsiveCanvas(canvasElement, targetWidth =  ACTUAL_W, ta
       canvasElement.style.height = `${newHeight}px`;
       canvasElement.style.position = 'relative';
       
-      console.log('🖥️ Desktop canvas:', { newWidth, newHeight });
+      console.log('ðŸ–¥ï¸ Desktop canvas:', { newWidth, newHeight });
     }
   }
   
@@ -658,7 +665,7 @@ export function setupResponsiveCanvas(canvasElement, targetWidth =  ACTUAL_W, ta
   });
   
   window.addEventListener('orientationchange', () => {
-    console.log('🔄 Orientation changed - resizing canvas');
+    console.log('ðŸ”„ Orientation changed - resizing canvas');
     setTimeout(() => {
       resizeCanvas();
       setTimeout(resizeCanvas, 200);

@@ -2,7 +2,7 @@ import kaplay from "kaplay";
 import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES, updateScreenDimensions } from './config/gameConfig.js';
 import {   initializeMobileControls, 
   MobileHUDController, 
-  detectMobile } from './helpers/mobileControls.js';
+  detectMobile, showJoystickControls } from './helpers/mobileControls.js';
 import { getCharacterList, SPRITE_FRAMES, RAINBOW_CAT_FRAMES } from './config/characters.js';
 import { getLevel } from './config/levels.js';
 import { getBoss } from './config/bosses.js';
@@ -41,10 +41,13 @@ function getCanvasSize() {
 const canvasSize = getCanvasSize();
 
 updateScreenDimensions(canvasSize.width, canvasSize.height);
-
+const scale = 2; // SCALE TO FIX KPLAY PIXEL PADDING ISSUE
+const scaleWidth = SCREEN_W / 2;
+const scaleHeight = SCREEN_H / 2;
 const k = kaplay({
-  width: SCREEN_W,  
-  height: SCREEN_H,
+  width: scaleWidth * scale, 
+  height: scaleHeight * scale,
+  scale,
   letterbox: true,  
   background: [11, 11, 27, 0],
   global: false, 
@@ -76,7 +79,9 @@ window.addEventListener('resize', () => {
   }
 });
 
+
 // ==================== MOBILE INITIALIZATION ====================
+
 const mobileSetup = initializeMobileControls(document.getElementById("gameCanvas"));
 window.mobileSetup = mobileSetup;
 
@@ -86,7 +91,6 @@ window.mobileHUD = mobileHUD;
 
 if (mobileSetup.isMobile) {
   console.log('📱 Mobile controls enabled');
-  
   mobileHUD.setupVolumeButton(() => {
     const currentVolume = volume();
     const newVolume = currentVolume > 0 ? 0 : 0.5;
@@ -100,6 +104,8 @@ if (mobileSetup.isMobile) {
     }
   });
 }
+
+
 
 loadFont("narrow", "assets/fonts/PTSansNarrow-Regular.ttf");
 loadFont("narrowBold", "assets/fonts/PTSansNarrow-Bold.ttf");
@@ -161,10 +167,7 @@ async function loadAssets() {
   loadSound("finalMoveZap", "assets/sounds/fx/finalMoveZap.mp3");
 
 // ======================================== SPRITES ========================================
-  loadSprite("muteButton", "assets/images/icon/mute.png");
-  loadSprite("musicButton", "assets/images/icon/music.png");
-  loadSprite("pauseButton", "assets/images/icon/pause.png");
-  loadSprite("playButton", "assets/images/icon/play.png");
+
 
   loadSprite("realNona", "assets/images/realNona.PNG");
   loadSprite("title", "assets/images/title.PNG");

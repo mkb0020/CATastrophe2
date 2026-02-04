@@ -2,7 +2,7 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
-import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../helpers/mobileControls.js';
 import { hideHUD } from '../helpers/levelHelpers.js';
 
 
@@ -17,12 +17,13 @@ if (!window.gameState) {
 
 export function createStartScene(){
   hideHUD();
+  hideJoystickControls(); 
+  
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
   
   if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
     mobileHUD.hide();
-    hideMobileArrows(); 
   }
   
   // ==================== BACKGROUND (stays in canvas) ====================
@@ -42,7 +43,7 @@ export function createStartScene(){
   // ==================== WIRE UP HTML BUTTONS ====================
   function handleDesktop() {
     window.gameState.deviceType = 'desktop';
-    console.log('🖥️ Desktop mode selected');
+    console.log('ðŸ–¥ï¸ Desktop mode selected');
     if (modal) modal.classList.remove('show');
     stopAtmosphere();
     startMenuMusic();
@@ -51,7 +52,7 @@ export function createStartScene(){
 
   function handleMobile() {
     window.gameState.deviceType = 'mobile';
-    console.log('📱 Mobile mode selected');
+    console.log('ðŸ“± Mobile mode selected');
     if (modal) modal.classList.remove('show');
     stopAtmosphere();
     startMenuMusic();
@@ -64,7 +65,7 @@ export function createStartScene(){
   if (desktopBtn) desktopBtn.onclick = handleDesktop;
   if (mobileBtn)  mobileBtn.onclick  = handleMobile;
 
-  // ==================== KEYBOARD SHORTCUTS (unchanged) ====================
+  // ==================== KEYBOARD SHORTCUTS ====================
   onKeyPress("d", handleDesktop);
   onKeyPress("1", handleDesktop);
   onKeyPress("m", handleMobile);
@@ -79,13 +80,14 @@ export function createStartScene(){
 
 
 export function createMainMenuScene() {
+  hideHUD();
+  hideJoystickControls(); 
+  
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
-  hideHUD();
   
   if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
     mobileHUD.hide();
-    hideMobileArrows(); 
   }
   
   const modal = document.getElementById('mainMenuModal');
@@ -120,13 +122,14 @@ export function createMainMenuScene() {
 
 
 export function createCharSelectScene() {
+  hideHUD();
+  hideJoystickControls(); 
+  
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
-  hideHUD();
   
   if (mobileSetup?.isMobile && mobileHUD) {
     mobileHUD.hide();
-    hideMobileArrows(); 
   }
 
   let selectedIndex = null;
@@ -286,7 +289,7 @@ function buildCharacterCards() {
     card.appendChild(nameLabel);
     
     card.onclick = () => {
-      console.log('🎯 Card clicked!', { index, animationComplete });
+      console.log('ðŸŽ¯ Card clicked!', { index, animationComplete });
       
       if (!animationComplete) return;
       
@@ -300,12 +303,12 @@ function buildCharacterCards() {
       updateCharacterStats(char);
       
       const confirmBtn = document.getElementById('confirmCharBtn');
-      console.log('🔘 Button element found:', confirmBtn);
-      console.log('🔘 Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
+      console.log('ðŸ”˜ Button element found:', confirmBtn);
+      console.log('ðŸ”˜ Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
       
       if (confirmBtn) {
         confirmBtn.disabled = false;
-        console.log('🔘 Button disabled after:', confirmBtn.disabled);
+        console.log('ðŸ”˜ Button disabled after:', confirmBtn.disabled);
       }
       
       if (window.play) play("happyMeow", { volume: 0.2 });
@@ -344,14 +347,14 @@ function setupCharSelectButtons() {
   
   if (confirmBtn) {
     confirmBtn.onclick = () => {
-      console.log('🚀 Confirm button clicked!', {
+      console.log('ðŸš€ Confirm button clicked!', {
         selectedIndex,
         animationComplete,
         shopMusicExists: !!shopMusic
       });
       
       if (selectedIndex === null || !animationComplete) {
-        console.log('❌ Cannot proceed:', { selectedIndex, animationComplete });
+        console.log('âŒ Cannot proceed:', { selectedIndex, animationComplete });
         return;
       }
       if (shopMusic) shopMusic.stop();

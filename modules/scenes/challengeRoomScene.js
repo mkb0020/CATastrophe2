@@ -22,17 +22,17 @@ import {
 } from '../helpers/upgradeHelper.js';
 import { returnToLevel } from '../helpers/roomHelper.js';
 import { startChallenegeMusic, stopAllMusic } from '../helpers/kittyHelpers.js';
-import { setupMobilePlayerControls, setupTouchEvents, setupMobileExitWindow, showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { setupMobilePlayerControls, setupTouchEvents, setupMobileExitWindow, showMobileArrows, hideMobileArrows, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
 
 
 export function createChallengeRoomScene(data) {
-  console.log('🎮 CHALLENGE ROOM SCENE');
-  console.log('📦 Data received:', data);
+  console.log('ðŸŽ® CHALLENGE ROOM SCENE');
+  console.log('ðŸ“¦ Data received:', data);
   
   const { roomConfig, returnScene, returnData } = data;
   
   if (!roomConfig) {
-    console.error('❌ No room config provided!');
+    console.error('âŒ No room config provided!');
     go("menu");
     return;
   }
@@ -40,18 +40,18 @@ export function createChallengeRoomScene(data) {
   const bgElement = document.querySelector('.parallax-bg');
   if (bgElement) {
     bgElement.style.display = 'none';
-    console.log('🎨 Parallax background hidden');
+    console.log('ðŸŽ¨ Parallax background hidden');
   }
   
-  console.log(`🚪 Entering ${roomConfig.name}`);
-  console.log(`🔙 Will return to: ${returnScene}`);
+  console.log(`ðŸšª Entering ${roomConfig.name}`);
+  console.log(`ðŸ”™ Will return to: ${returnScene}`);
   
   const character = returnData.character;
   const startHP = returnData.startHP;
   const startLives = returnData.lives;
   const startScore = returnData.score || 0; 
   
-  console.log(`📊 Starting score: ${startScore}`);
+  console.log(`ðŸ“Š Starting score: ${startScore}`);
   
   // ==================== SHOW MOBILE HUD ====================
   const mobileSetup = window.mobileSetup;
@@ -59,12 +59,12 @@ export function createChallengeRoomScene(data) {
   
   if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
     mobileHUD.show();
-    console.log('📱 Mobile HUD shown for challenge room');
+    console.log('ðŸ“± Mobile HUD shown for challenge room');
   }
   // ================================================================
   
   if (isRoomCompleted(roomConfig.id)) {
-    console.log('✅ Room already completed! Returning to level...');
+    console.log('âœ… Room already completed! Returning to level...');
     wait(0.5, () => returnToLevel(returnScene, returnData));
     return;
   }
@@ -75,7 +75,6 @@ export function createChallengeRoomScene(data) {
 
 
 // ==================== DARKK OVERLAY OVER BG SO WINDOWS DON'T LOOK WEIRD ====================
-
  const darkOverlay = add([
     rect(width(), height()),
     pos(0, 0),
@@ -156,13 +155,13 @@ export function createChallengeRoomScene(data) {
       maxFrame = 32;
     }
     
-    console.log(`✨ Move fragment ${currentFragments + 1} - animating frames 0-${maxFrame}`);
+    console.log(`âœ¨ Move fragment ${currentFragments + 1} - animating frames 0-${maxFrame}`);
     
   } else if (roomConfig.items.statsUpgrade.enabled) {
     itemSprite = 'statsUpgrade';
     maxFrame = 7;
     
-    console.log('✨ Stat upgrade - animating frames 0-7');
+    console.log('âœ¨ Stat upgrade - animating frames 0-7');
   }
   
   const specialItem = add([
@@ -238,6 +237,7 @@ export function createChallengeRoomScene(data) {
   if (mobileSetup && mobileSetup.isMobile) {
     setupMobilePlayerControls(player, getGameActive, mobileSetup.mobileState);
     setupTouchEvents(mobileSetup.controls, mobileSetup.mobileState, document.getElementById("gameCanvas"));
+    setTimeout(() => showJoystickControls(), 100); 
     
     setupMobileExitWindow(player, exitWindow, document.getElementById("gameCanvas"), returnScene, returnData, getScore, getLives);
   } else {
@@ -277,7 +277,7 @@ function openExitWindow() {
     exitWindow.isOpen = true;
     exitWindow.use(sprite('window', { frame: 1 }));
     
-    console.log('🚪 Exit window opened!');
+    console.log('ðŸšª Exit window opened!');
     
     const exitPrompt = add([
       text("Press UP to exit", { size: 20 }),
@@ -308,8 +308,8 @@ function openExitWindow() {
     
     onKeyPress("up", () => {
       if (exitWindow.playerNearby && exitWindow.isOpen) {
-        console.log('🚪 Exiting challenge room...');
-        console.log(`📊 Returning with score: ${score}`);
+        console.log('ðŸšª Exiting challenge room...');
+        console.log(`ðŸ“Š Returning with score: ${score}`);
         
         returnData.startHP = player.hp;
         returnData.lives = lives;
@@ -365,7 +365,7 @@ function openExitWindow() {
     // ==================== HIDE MOBILE HUD ====================
     if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
       mobileHUD.hide();
-      console.log('📱 Mobile HUD hidden on challenge room exit');
+      console.log('ðŸ“± Mobile HUD hidden on challenge room exit');
     }
     // =================================================================
     
@@ -373,12 +373,11 @@ function openExitWindow() {
     const bgElement = document.querySelector('.parallax-bg');
     if (bgElement) {
       bgElement.style.display = 'block';
-      console.log('🎨 Parallax background restored');
+      console.log('ðŸŽ¨ Parallax background restored');
     }
   });
 }
 // ==================== HELPER FUNCTIONS ====================
-
 function createCrumblingPlatform(x, y, width, height) {
   const spriteWidth = 70;
   const scaleX = width / spriteWidth;
@@ -416,14 +415,14 @@ function createCrumblingPlatform(x, y, width, height) {
 }
 
 function setupCrumblingPlatformCollisions(player, platforms) {
-  console.log(`🔧 Setting up crumbling collisions for ${platforms.length} platforms`);
+  console.log(`ðŸ”§ Setting up crumbling collisions for ${platforms.length} platforms`);
   
   const hitboxHeight = player.area.height || 60;
   const hitboxOffsetY = player.area.offset?.y || 0;
   const hitboxWidth = player.area.width || 80;
   
   player.onCollide("crumblingPlatform", (platform) => {
-    console.log('🎯 Collision detected with crumbling platform!');
+    console.log('ðŸŽ¯ Collision detected with crumbling platform!');
     
     const playerBottom = player.pos.y + (hitboxHeight / 2) + hitboxOffsetY;
     const platformTop = platform.pos.y - platform.height / 2;
@@ -434,7 +433,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
     const platformRight = platform.pos.x + platform.width;
     const horizontalOverlap = playerRight > platformLeft && playerLeft < platformRight;
     
-    console.log('📊 Collision data:', {
+    console.log('ðŸ“Š Collision data:', {
       playerBottom,
       platformTop,
       playerVelY: player.vel.y,
@@ -443,7 +442,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
     });
     
     if (player.vel.y > 0 && playerBottom < platformTop + 10 && horizontalOverlap) {
-      console.log('✅ Landing on platform!');
+      console.log('âœ… Landing on platform!');
       player.pos.y = platformTop - (hitboxHeight / 2) - hitboxOffsetY;
       player.vel.y = 0;
       
@@ -452,7 +451,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
       }
       
       if (!platform.isBeingSteppedOn) {
-        console.log('💣 Starting crumble timer!');
+        console.log('ðŸ’£ Starting crumble timer!');
         platform.isBeingSteppedOn = true;
         play("crumble", { volume: 0.3 }); 
         startCrumble(platform);
@@ -470,7 +469,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
       
       platform.crumbleTimer += dt();
       
-      console.log(`⏱️ Crumble timer: ${platform.crumbleTimer.toFixed(2)}/${platform.crumbleDelay}`);
+      console.log(`â±ï¸ Crumble timer: ${platform.crumbleTimer.toFixed(2)}/${platform.crumbleDelay}`);
       
       if (platform.linkedSprite && platform.linkedSprite.exists()) {
         const shakeAmount = platform.crumbleTimer / platform.crumbleDelay;
@@ -488,7 +487,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
       }
       
       if (platform.crumbleTimer >= platform.crumbleDelay) {
-        console.log('💥💥💥 PLATFORM CRUMBLING NOW! 💥💥💥');
+        console.log('ðŸ’¥ðŸ’¥ðŸ’¥ PLATFORM CRUMBLING NOW! ðŸ’¥ðŸ’¥ðŸ’¥');
         platform.hasCrumbled = true;
         
         if (platform.linkedSprite && platform.linkedSprite.exists()) {

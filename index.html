@@ -83,7 +83,6 @@
 
 
 
-
 <!-- ========================= DEBUG STUFF ===================== 
 <div class="debug-toggle" id="debugToggle" title="Toggle Debug Info">
     <img src="assets/images/settings.png" alt="Settings">
@@ -98,8 +97,10 @@
 
 <div id="startScreenModal" class="start-screen-modal">
   <div class="start-screen-modal__inner">
-    <button id="startDesktopBtn"  class="start-screen-modal__btn">PLAY ON PC</button>
-    <button id="startMobileBtn"   class="start-screen-modal__btn">PLAY ON MOBILE</button>
+    <div class="modal-buttons-start">
+      <button id="startDesktopBtn"  class="modal-button-start-PC">PLAY ON PC</button>
+      <button id="startMobileBtn"   class="modal-button-start-mobile">PLAY ON MOBILE</button>
+    </div>
     <p class="start-screen-modal__hint">Keyboard: Press 1 for PC  |  Press 2 for Mobile</p>
   </div>
 </div>
@@ -111,7 +112,7 @@
       <img src="./assets/images/title.PNG" alt="CATastrophe 2" class="menu-title-img">
     </div>
     <div class="modal-body">
-      <div class="button-column">
+      <div class="modal-buttons-menu">
         <button class="modal-button-menu-play" id="playModalBtn">
           PLAY
         </button>
@@ -493,6 +494,18 @@
     </div>
   </div>
 </div>
+
+
+<!--JOYSTICK-
+    <div class="joystick-container" >
+      <div class="joystick-base" id="joystickBase">
+        <div class="joystick-stick" id="joystickStick"></div>
+      </div>
+    </div>
+    
+    <div class="jump-button" id="jumpButton">
+      JUMP
+    </div>-->
 
 <!-- ======================= BOSS BATTLES =======================-->
 <!--

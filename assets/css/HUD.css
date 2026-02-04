@@ -1,5 +1,4 @@
 /* ============================ FULLSCREEN CANVAS & LAYOUT ============================ */
-
 @media screen and (orientation: portrait) and (max-width: 768px) {
   body::before {
     content: "Please rotate your device to landscape mode";
@@ -68,7 +67,6 @@ html, body {
 }
 
 /* ============================ HUD OVERLAY ============================ */
-
 #hud-container {
   position: fixed;
   top: 0;
@@ -156,7 +154,6 @@ html, body {
 }
 
 /* ============================ MOBILE SPECIFIC ============================ */
-
 @media (max-width: 768px) {
   #hud-container {
     padding: 8px 12px;
@@ -223,7 +220,7 @@ html, body {
   --NuclearGlow3: rgba(220,76,232, 0.6);
   --ParticlePink: #FFC7FF;
   --ParticleGlow1: rgba(255, 199, 255, 0.082);
-  --ParticleGlow2: rgba(255,199,255, 0.5);
+  --ParticleGlow2: rgba(31, 28, 31, 0.5);
   --ParticleGlow3: rgba(255,199,255, 0.8);
   --PlanksPink: #ff69b4;
   --PlanksGlow3: #ff69b4bc;
@@ -433,16 +430,7 @@ body {
       50% { opacity: 1; }
     }
 
-/* ============================ NAVBAR ============================ */
-
-
-
-
-
-
-
-
-
+/* ============================ CANVAS ============================ */
 @media (max-width: 968px) {
 
 .canvas-container {
@@ -601,7 +589,7 @@ body {
       box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }
 
-    /* =================== BUTTONS =========== */
+/* =================== BUTTONS =========== */
 
     /* BASE */
 .game-btn {
@@ -650,7 +638,6 @@ body {
   position: relative;
   z-index: 3;
   color: white;
-  /*text-shadow: 0 0 8px currentColor;*/
 }
 
 .game-btn:hover .cyber-btn-base {
@@ -716,7 +703,6 @@ body {
   font-size: 1.4rem;
   line-height: 45px;
   color: #e0e0ff;
-  /*text-shadow: 0 0 8px #a0a0ff;*/
 }
 
 .standard-btn-container:hover .cyber-btn-base {
@@ -747,7 +733,6 @@ body {
   font-size: 1.2rem;
   line-height: 45px;
   color: #e0e0ff;
-  /*text-shadow: 0 0 8px #a0a0ff;*/
 }
 
 .back-btn-container:hover .cyber-btn-base {
@@ -794,15 +779,6 @@ body {
 }
 
 /* ==================== GAME OVER BUTTONS ==================== */
-/*#gameOverButtons {
-  opacity: 0;
-  transition: opacity 1.5s ease-out;
-}
-
-#gameOverButtons.show {
-  opacity: 1;
-}*/
-
 .gameover-btn-container {
   position: fixed;
   left: 50%;
@@ -827,7 +803,6 @@ body {
   font-size: 1.5rem;
   line-height: 60px;
   color: #FFFFFF;
-  /*text-shadow: 0 0 8px #a0a0ff, 1px 1px 0 #00ffff;*/
 }
 
 .gameover-btn-container:hover .cyber-btn-base {
@@ -862,7 +837,6 @@ body {
   font-size: 1.8rem;
   line-height: 70px;
   color: #FFFFFF;
-  /*text-shadow: 0 0 12px #ff69b4;*/
   font-weight: bold;
 }
 
@@ -896,7 +870,6 @@ body {
   font-size: 1.8rem;
   line-height: 70px;
   color: #58e84c;
-  /*text-shadow: 0 0 12px #58e84c;*/
   font-weight: bold;
 }
 
@@ -1454,10 +1427,6 @@ h6 {
   width: 200px;
 }
 
-/*.charselect-right .cyber-button:disabled {
-  opacity: 0.4 !important;
-  cursor: not-allowed !important;
-}*/
 
 .panel-title {
   font-family: 'GothNerd', sans-serif !important;
@@ -1651,13 +1620,7 @@ h6 {
 .select-stat-row {
   font-size: 0.8rem;
 }
-
-
 }
-
-
-
-
 
 /* ==================== GAME OVER MODAL ==================== */
 #gameOverModal {
@@ -1882,9 +1845,6 @@ h6 {
 }
 
 /* ==================== BUTTON ROW ==================== */
-
-
-
 .uselife-button, .diedmenu-button {
   --glow-color: var(--CoolGray);          
   --glow-intensity: 0.4;
@@ -2440,11 +2400,6 @@ h6 {
   font-size:1.4rem;
 }
 
-
-
-
-
-
 .green-btn {
   --glow-color: #58e84c;           
   --inner-glow: rgba(88, 232, 76, 0.25);
@@ -2461,7 +2416,6 @@ h6 {
   --glow-color: #75FB1E;          
   --inner-glow: rgba(117, 251, 30, 0.28);
 }
-
 
 .grey-btn {
   --glow-color: #8391A1;           
@@ -2496,31 +2450,25 @@ h6 {
   --inner-glow: rgba(199, 21, 133, 0.3);
 }
 
-
 .purple-btn {
   --glow-color: #A55AFF;          
   --inner-glow: rgba(165, 90, 255, 0.32);
 }
-
 
 .purple-btn.vortex {
   --glow-color: #830cde;          
   --inner-glow: rgba(131, 12, 222, 0.28);
 }
 
-
 .red-btn {
   --glow-color: #ff0059;         
   --inner-glow: rgba(255, 0, 89, 0.35);
 }
 
-
 .red-btn.radiation {
   --glow-color: #730132;         
   --inner-glow: rgba(115, 1, 50, 0.25);
 }
-
-
 
   .cyber-button.selected {
     background: linear-gradient(135deg, rgba(255, 107, 255, 0.3), rgba(165, 90, 255, 0.3));
@@ -2540,7 +2488,6 @@ h6 {
   }
 
 /* ============================ RESPONSIVE MOBILE LAYOUT ============================ */
-
 @media (min-width: 1025px) {
   canvas {
     width: 1000px !important;
@@ -2731,11 +2678,7 @@ h6 {
   }
 }
 
-
-
-
 /* ====================== */
-
 .modal-content::-webkit-scrollbar {
   width: 18px;
   height: 14px;
@@ -2798,7 +2741,6 @@ h6 {
 
 .modal-content {
   animation: 
-    /*glitch-shadow 6s infinite alternate,*/
     subtle-flicker 5s infinite;
 }
 
@@ -2816,15 +2758,8 @@ h6 {
   22% { opacity: 0.92; }
 }
 
-
-/* =============================================
-   MOBILE HUD STYLES
-   Add this to your HUD.css file
-   ============================================= */
-
-/* Mobile HUD Overlay */
 .mobile-hud-overlay {
-  display: none; /* Hidden by default, shown on mobile via JS */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -2835,12 +2770,20 @@ h6 {
   box-sizing: border-box;
 }
 
-/* Show mobile HUD when it has the 'show' class */
+@media (min-width: 1024px) {
+  #hud-container {
+    display: flex;
+  }
+  
+  .mobile-hud-overlay {
+    display: none;
+  }
+}
+
 .mobile-hud-overlay.show {
   display: block;
 }
 
-/* Mobile HUD Top Stats Bar */
 .mobile-hud-top {
   display: flex;
   justify-content: space-between;
@@ -2853,7 +2796,6 @@ h6 {
   pointer-events: all;
 }
 
-/* Mobile HUD Individual Stats */
 .mobile-hud-stat {
   font-family: 'Orbitron', 'science', sans-serif;
   font-size: 14px;
@@ -2862,21 +2804,18 @@ h6 {
   white-space: nowrap;
 }
 
-/* Low HP Warning */
 .mobile-hud-stat.low-hp {
   color: #ff4444;
   text-shadow: 0 0 10px rgba(255, 68, 68, 0.8);
   animation: pulse 0.5s ease-in-out infinite alternate;
 }
 
-/* Low Time Warning */
 .mobile-hud-stat.low-time {
   color: #ffaa00;
   text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
   animation: pulse 0.5s ease-in-out infinite alternate;
 }
 
-/* Mobile HUD Controls (Volume/Pause buttons) */
 .mobile-hud-controls {
   position: fixed;
   top: 60px;
@@ -2909,7 +2848,7 @@ h6 {
   box-shadow: 0 0 20px rgba(103, 254, 189, 0.6);
 }
 
-/* Pulse animation for warnings */
+
 @keyframes pulse {
   from {
     opacity: 1;
@@ -2919,21 +2858,125 @@ h6 {
   }
 }
 
-/* Hide mobile HUD on desktop */
-@media (min-width: 1024px) {
-  .mobile-hud-overlay {
-    display: none !important;
-  }
-}
-
-/* Show mobile HUD on mobile devices */
+/* ===== MOBILE SPECIFIC STYLES ===== */
 @media (max-width: 1023px) {
   .mobile-hud-overlay.show {
-    display: block;
+    display: block !important;
   }
   
-  /* Hide desktop HUD on mobile */
   #hud-container {
     display: none !important;
   }
 }
+
+
+     #touchControls {
+      position: fixed;
+      display: none;
+      pointer-events: none;
+      z-index: 200;
+      }
+      
+      #touchControls.active {
+        display: block;
+      }
+      
+      .joystick-container {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        width: 130px;
+        height: 130px;
+        pointer-events: all;
+      }
+      
+      .joystick-base {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: rgba(0, 121, 121, 0.4);
+        border: 5px solid #9090C0;
+        border-radius: 50%;
+        pointer-events: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: none;
+        transition: background 0.2s;
+      }
+      
+      .joystick-stick {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 50px;
+          height: 50px;
+          background: rgba(0, 255, 255, 0.8);
+          border: 4px solid #fff;
+          border-radius: 50%;
+          box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+          pointer-events: none;
+      }
+      
+      .joystick-stick:active {
+        background: rgba(103, 254, 189, 0.9);
+        box-shadow: 0 0 25px rgba(103, 254, 189, 1);
+      }
+      
+      .jump-button {
+          position: absolute;
+          font-size: 2.7rem;
+          color: #00FFFF;
+          background: rgba(0, 121, 121, 0.6);
+          border: 5px solid #9090C0;
+          border-radius: 50%;
+          width: 120px;
+          height: 120px;
+          pointer-events: auto;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          line-height: 1;
+          text-shadow: 
+            1px -1px 0 #003d3d,
+            -1px -1px 0 #003d3d,
+            -1px 1px 0 #003d3d, 
+            1px 1px 0 #003d3d;
+          transition: background 0.2s;
+      }
+      
+      .jump-button:active {
+        background: rgba(103, 254, 189, 0.5);
+        transform: scale(0.95);
+        box-shadow: 0 0 30px rgba(103, 254, 189, 0.8);
+      }
+      
+      .joystick-direction {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
+      
+      .joystick-direction.active {
+        opacity: 0.6;
+      }
+      
+      .direction-left {
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      
+      .direction-right {
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }

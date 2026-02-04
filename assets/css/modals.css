@@ -58,8 +58,8 @@
 
 .modal-title {
   font-family: 'GothNerd', sans-serif;
-  font-size: 2rem;
-  background: linear-gradient(45deg, var(--AlphaAqua), var(--AquaAura), var(--AlphaAqua));
+  font-size: 2.2rem;
+  background: linear-gradient(45deg, var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink), var(--PlasmaPurple), var(--AquaAura), var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -71,7 +71,7 @@
 .modal-close {
   background: var(--HiggsHotPink);
   color: var(--ParticlePink);
-  border: 2px solid var(--ParticlePink);
+  border: 2px solid var(--LaserRed);
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -84,26 +84,50 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
-
+  box-shadow: 0 0 15px var(--LaserRed);
 }
 
 .modal-close:hover {
   background: var(--ParticlePink);
   color: var(--HiggsHotPink);
   transform: rotate(90deg) scale(1.1);
-  box-shadow: 0 0 20px var(--ParticleGlow3);
+  box-shadow: 0 0 25px var(--LaserRed);
 }
 
 .modal-body {
   padding: 2rem;
   line-height: 1.6;
   font-size: 1.2rem;
+  color: #FFFFFF;
+  font-family: 'GothNerd';
+}
+
+
+.modal-body h1 {
+  color: var(--NuclearFuscia);
+  margin: 0.2rem 0 0.5rem 0;
+  font-size: 2rem;
+  font-family: 'GothNerd', sans-serif;
+}
+
+.modal-body h2 {
+  color: var(--AlphaAqua);
+  margin: 0.2rem 0 0.5rem 0;
+  font-size: 1.8rem;
+  font-family: 'GothNerd', sans-serif;
 }
 
 .modal-body h3 {
   color: var(--ParticlePink);
   margin: 0.2rem 0 0.5rem 0;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  font-family: 'GothNerd', sans-serif;
+}
+
+.modal-body h4 {
+  color: var(--AquaAura);
+  margin: 0.2rem 0 0.5rem 0;
+  font-size: 1.2rem;
   font-family: 'GothNerd', sans-serif;
 }
 
@@ -185,23 +209,151 @@
   100% { background-position: 300% 50%; }
 }
 
+/* ====================== START SCREEN======================  */
+.start-screen-modal {
+  display: none;
+  position: fixed;
+  inset: 0;                        
+  z-index: 900;                    
+  justify-content: center;
+  align-items:   center;
+}
+
+.start-screen-modal.show {
+  display: flex;                   
+}
+
+.start-screen-modal__inner {
+  display: flex;
+  flex-direction: column;
+  align-items:   center;
+  gap:           16px;            
+}
+
+
+
+.modal-buttons-start {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20%;
+}
+
+.modal-buttons-start .modal-button-start-PC, .modal-button-start-mobile {
+  min-width: 350px;
+  padding: 10px 30px;
+}
+.modal-button-start-PC, .modal-button-start-mobile {   
+  --glow-intensity: 0.4;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.7rem;
+  text-transform: uppercase;
+  background: #0f0f1a;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.modal-button-start-PC {
+  border: 1px solid var(--PlasmaPurple);
+    box-shadow: 
+    0 0 8px var(--PlasmaPurple),
+    inset 0 0 9px rgba(255, 255, 255, 0.103),
+    0 0 10px var(--PlasmaPurple);
+
+}
+
+.modal-button-start-PC:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--PlasmaPurple),
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px var(--PlasmaPurple);
+}
+
+.modal-button-start-PC:before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.modal-button-start-PC:hover::before {
+  left: 100%;
+}
+
+
+.modal-button-start-mobile {
+  border: 1px solid var(--PlanksPink);
+    box-shadow: 
+    0 0 8px var(--PlanksPink),
+    inset 0 0 9px rgba(255, 255, 255, 0.103),
+    0 0 10px var(--PlanksPink);
+  
+}
+
+.modal-button-start-mobile:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--PlanksPink),
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px var(--PlanksPink);
+}
+
+.modal-button-start-mobile::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.modal-button-start-mobile:hover::before {
+  left: 100%;
+}
+
+
+
+
 /* ====================== HOW TO PLAY ======================  */
 
 .mission-text {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   text-align: center;
   margin-top: 2rem;
-  padding: 1rem;
-  background: rgba(103, 254, 189, 0.1);
-  border: 1px solid var(--AlphaGlow2);
-  border-radius: 12px;
-  color: var(--NuclearFuscia);
-  font-weight: bold;
+  font-family: 'GothNerd' !important;
+  padding: 1rem 4rem;
+  background: linear-gradient(45deg, var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink), var(--PlasmaPurple), var(--AquaAura), var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 blockquote {
-  background: rgba(165, 90, 255, 0.1);
-  border-left: 4px solid var(--PlasmaPurple);
+  background: linear-gradient(135deg, rgba(0,255,255, 0.2), rgba(165,90,255,0.2));
+  border-left: 4px solid var(--CoolGray);
   padding: 1rem;
   margin: 1.5rem 0;
   font-style: italic;
@@ -297,7 +449,8 @@ cite {
   filter: drop-shadow(0 0 20px rgba(27, 27, 27, 0.5));
 }
 
-.button-column {
+
+.modal-buttons-menu {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -308,19 +461,19 @@ cite {
   bottom: 7%;
 }
 
-.button-column .modal-button-menu-play, .modal-button-menu-how {
+.modal-buttons-menu .modal-button-menu-play, .modal-button-menu-how {
   min-width: 350px;
   padding: 7px 30px;
 }
-
-
-.modal-button-menu-play, .modal-button-menu-how {
+.modal-button-menu-play, .modal-button-menu-how {   
+  --glow-intensity: 0.4;
+  position: relative;
   align-items: center;
-  font-size: 1.7rem;
   justify-content: center;
+  color: #FFFFFF;
   font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.5rem;
   text-transform: uppercase;
-  color: white;
   background: #0f0f1a;
   border-radius: 50px;
   cursor: pointer;
@@ -328,28 +481,79 @@ cite {
   overflow: hidden;
 }
 
-
 .modal-button-menu-play {
-  --glow-color: var(--RadioactiveGreen);          
-  --glow-intensity: 0.4;
-  --inner-glow: rgba(255, 255, 255, 0.103);
-  border: 3px solid var(--RadioactiveGreen);
-  box-shadow: 
-    0 0 8px var(--glow-color),
-    inset 0 0 12px var(--inner-glow),
-    0 0 35px var(--glow-color);
+  border: 1px solid var(--RadioactiveGreen);
+    box-shadow: 
+    0 0 8px var(--RadioactiveGreen),
+    inset 0 0 9px rgba(255, 255, 255, 0.103),
+    0 0 10px var(--RadioactiveGreen);
+
 }
 
-.modal-button-menu-how {  
-    --glow-color: var(--CoolGray);          
-  --glow-intensity: 0.4;
-  --inner-glow: rgba(255, 255, 255, 0.103);
-  border: 3px solid var(--CoolGray);
+.modal-button-menu-play:hover {
+  transform: translateY(-1px) scale(1.03);
   box-shadow: 
-    0 0 8px var(--glow-color),
-    inset 0 0 12px var(--inner-glow),
-    0 0 35px var(--glow-color);
+    0 0 10px var(--RadioactiveGreen),
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px var(--RadioactiveGreen),
 }
+
+.modal-button-menu-play:before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.modal-button-menu-play:hover::before {
+  left: 100%;
+}
+
+
+.modal-button-menu-how {
+  border: 1px solid var(--CoolGray);
+    box-shadow: 
+    0 0 8px var(--CoolGray),
+    inset 0 0 9px rgba(255, 255, 255, 0.103),
+    0 0 10px var(--CoolGray);
+  
+}
+
+.modal-button-menu-how:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px #9090C0,
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px #9090C0;
+}
+
+.modal-button-menu-how::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.modal-button-menu-how:hover::before {
+  left: 100%;
+}
+
+
+
 
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 950px) {
@@ -440,6 +644,7 @@ cite {
   flex-direction: column !important;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.795) !important;
   overflow-y: auto !important;
+  text-align: center;
 }
 
 .charselect-right {
@@ -471,69 +676,107 @@ cite {
 .panel-title {
   font-family: 'GothNerd', sans-serif !important;
   font-size: 2rem !important;
-  background: linear-gradient(45deg, var(--ParticlePink), var(--White)) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
+  background: linear-gradient(45deg, var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink), var(--PlasmaPurple), var(--AquaAura), var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-align: center !important;
   margin-bottom: 5px !important;
+  margin-top: 0px;
 }
 
 .character-grid {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 10px !important;
-  padding: 5px 1px !important;
+  padding: 15px 10px !important;
   flex: 1 !important;
-  overflow-y: hidden !important;
+  overflow-y:hidden !important
 }
 
 
 .character-card {
-  background: rgba(50, 50, 59, 0.8);
+  background: rgba(0, 0, 0);
   border: 2px dashed rgba(144, 144, 192, 0.237);
   border-radius: 10px;
   padding: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  overflow: hidden;
   max-width: 200px;
-  max-height: 150px;
+  max-height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   justify-content: center;
   gap: 10px;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.character-card:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px #9090C0,
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px #9090C0;
+}
+
+.character-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.character-card:hover::before {
+  left: 100%;
 }
 
 .char-select-img {
-  width: 105px;
+  width: 110px;
   height: auto;
   display: block;
   image-rendering: pixelated; 
-  margin: 0 auto;
+  position: relative;
+  right: 15%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .char-card-name {
   font-family: 'GothNerd', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--White);
-  text-shadow: 0 0 8px var(--AlphaGlow2);
+  text-shadow: 0 0 8px var(--AlphaAqua);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  margin-top: 0px !important;
+  position: relative;
+  left:27%;
+  bottom: 30%;
+  z-index: 100;  
+  text-shadow: 
+    3px -1px 0 #000000,
+    -3px 1px 0 #000000,
+
 }
 
-.character-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--AlphaAqua);
-  box-shadow: 0 0 25px var(--AlphaGlow2);
-}
+
 
 .character-card.selected {
-  border-color: var(--RadioactiveGreen);
+  transform: translateY(-2px) scale(1.02);
+  border: 1px solid var(--RadioactiveGreen);
   background: rgba(89, 232, 76, 0.055);
-  box-shadow: 0 0 10px var(--RadioactiveGlow3);
+    box-shadow: 
+    0 0 10px var(--RadioactiveGreen),
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px var(--RadioactiveGreen);
 }
 
 .stats-panel {
@@ -604,14 +847,14 @@ cite {
 
 .charselect-left {
   max-height: 85%;
-  max-width: 50%;
-  width: 50%;
+  max-width: 450px;
+
 
 }
 
 .charselect-right {
-  max-width: 40%;
-  width: 40%;
+  max-width: 150px !important;
+
 
 }
  
@@ -629,16 +872,19 @@ cite {
 .character-card {
   width: 100%;
   height: 100%;
-  padding: 5px;
 }
 
 .char-card-name {
   font-size: 0.7rem;
-  margin-top: 0px;
 }
 
 .char-select-img {
-  width: 70%;
+  max-width: 70px;
+  image-rendering: pixelated; 
+  position: relative;
+  right: 15%;
+  top: 50%;
+  transform: translateY(-35%);
 }
 
 
@@ -658,7 +904,7 @@ cite {
 .stats-panel {
   padding: 10px !important;
   height: 55%;
-  max-width: 90%;
+  max-width: 200px !important;
 }
 
 .stats-list {
@@ -674,11 +920,11 @@ cite {
 }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 750px) {
 
 .charselect-right {
-  max-width: 30%;
-  width: 30%;
+  max-width: 300px !important;
+ 
 
 }
 
@@ -687,13 +933,13 @@ cite {
 }
 
 .char-select-img {
-  width: 80%;
+  width: 55px;
 }
 
 .stats-panel {
   padding: 10px !important;
   height: 55%;
-  max-width: 250px !important;
+  max-width: 200px !important;
 }
 
 }
@@ -720,21 +966,20 @@ cite {
 
 .modal-gameover-content {
   background: linear-gradient(135deg, var(--BosonBlue), var(--Black));
-  border: 3px solid #ff0059;
+  border: 3px solid var(--RadiationRed);
   box-shadow: 
-    0 0 30px var(--HiggsHotPink),
-    inset 0 0 50px rgba(255, 0, 89, 0.1);
+    0 0 50px var(--LaserRed),
+    inset 0 0 40px rgba(255, 0, 89, 0.1);
   border-radius: 20px;
-  max-width: 700px;
+  max-width: 750px;
   width: 100%;
   height: 85%;
-  padding: 2rem;
+  padding: 1rem;
   animation: modalSlideIn 0.4s ease;
   text-align: center;
 }
 
 .modal-gameover-header {
-  padding: 1rem 0 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -743,78 +988,85 @@ cite {
 .modal-title-gameover {
   font-family: 'GothNerd', sans-serif;
   font-size: 5rem;
-  background: linear-gradient(45deg, #6b0026, var(--RadiationRed), #4d011b);
+  background: linear-gradient(45deg,  var(--RadiationRed), var(--LaserRed), var(--RadiationRed), var(--LaserRed), var(--RadiationRed));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0;
+  margin: 0px !important;
   text-align: center;
-  text-shadow: 
-    5px 3px 0 #ff0059,
-    0 0 20px rgba(122, 1, 1, 0.5);
-  position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  top: 15%;
 }
 
 .disappointment-text {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   color: var(--MutedGray);
-  font-family: 'GothNerd';
+  font-family: 'GothNerd'!important;
   text-transform: uppercase;
-  position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  top: 35%;
-
+  margin-top: 0px !important;
 }
 
 .score-text {
-  font-size: 2.3rem;
+  font-size: 1.5rem;
   color: var(--MutedGray);
-  font-family: 'Orbitron', monospace;
+  font-family: 'GothNerd'!important;
   margin: 2rem 0;
   padding: 1rem;
   background: rgba(255, 0, 89, 0);
   border: 1px solid rgba(255, 0, 89, 0);
   border-radius: 10px;
-  position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  top: 45%;
   text-transform: uppercase;
 }
 
-.gameOver-btn {
-  --glow-color: var(--CoolGray);          
+
+
+
+.modal-button-gameover {   
   --glow-intensity: 0.4;
-  --inner-glow: #ff0059;
+  position: relative;
   align-items: center;
   justify-content: center;
-  padding: 10px 5px 10px;
-  font-family: 'Orbitron', 'Courier New', monospace; 
-  font-size: 1.2rem;
+  padding: 10px 30px !important;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.5rem;
   text-transform: uppercase;
-  color: #FFFFFF;
-  font-weight: bold;
-  background: rgba(49, 1, 18, 0.3);
-  border: 2px solid #ff0059;
+  color: #ffffff;
+  background: #0f0f1a;
+  border: 2px solid var(--RadiationRed);
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.4s ease;
   box-shadow: 
-    0 0 8px var(--HiggsHotPink),
-    inset 0 0 12px rgba(255, 0, 89, 0.3),
-    0 0 35px var(--HiggsHotPink);
+    0 0 8px var(--LaserRed),
+    inset 0 0 12px rgba(255, 255, 255, 0.103),
+    0 0 35px var(--LaserRed);
   overflow: hidden;
-    position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  bottom: 18%;
-  width: 250px;
-  height: 50px;
 }
+
+.modal-button-gameover:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--LaserRed),
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px var(--LaserRed);
+}
+
+.modal-button-gameover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(254, 46, 46, 0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.modal-button-gameover:hover::before {
+  left: 100%;
+}
+
 
 @media (max-width: 950px) {
 
@@ -838,7 +1090,6 @@ cite {
   z-index: 10000;
   align-items: center;
   justify-content: center;
-  padding: 0px;
 }
 
 #youDiedModal.show {
@@ -849,13 +1100,13 @@ cite {
   background: linear-gradient(135deg, rgba(17, 12, 30, 0.95), rgba(0, 0, 0, 0.95));
   border: 3px solid var(--CoolGray);
   box-shadow: 
-    0 0 30px rgba(196, 195, 208, 0.5),
+    0 0 20px var(--CoolGray),
     inset 0 0 50px rgba(196, 195, 208, 0.1);
   border-radius: 20px;
   max-width: 600px !important;
   width: 100%;
   height: 90%;
-  padding: 0rem;
+  padding: 1rem;
   animation: modalSlideIn 0.4s ease;
   font-family: 'GothNerd';
   text-align: center;
@@ -866,113 +1117,97 @@ cite {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .modal-title-youdied {
-  font-family: 'Orbitron', monospace;
-  font-size: 5rem;
+  font-family: 'GothNerd', !important;
+  font-size: 4rem;
   font-weight: bold;
-  color: var(--ParticlePink);
-  text-shadow: 
-    5px 3px 0 rgb(201, 0, 0),
-    0 0 20px rgba(201, 0, 0, 0.5);
-  margin: 0px;
+  background: linear-gradient(45deg,  var(--PlanksPink), var(--HiggsHotPink), var(--LaserRed), var(--HiggsHotPink), var(--PlanksPink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0px !important;
+  margin-top: 0px !important;
   text-align: center;
-  position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  top: 9%;
 }
 
 .encourage-text {
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   color: var(--LightGray);
-  font-family: 'GothNerd';
-  margin: 0rem 0rem 0rem;
-  position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  top: 28%;
+  font-family: 'GothNerd' !important;
+  margin-top: 0rem !important;
 }
 
-.stats-display {
-  margin: 0rem 0;
-  padding: 0rem;
-  background: rgba(144, 144, 192, 0);
-  border: 1px solid rgba(144, 144, 192, 0);
-  border-radius: 10px;
-  position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  top: 40%;
-  font-family: 'GothNerd';
-}
 
 .stat-line {
-  font-size: 2rem;
-  color: var(--CoolGray);
-  font-family: 'GothNerd', monospace;
-  margin: 0rem 0;
+  font-size: 1.3rem;
+  color: #FFFFFF;
+  font-family: 'GothNerd' !important;
+  margin-bottom: 0px !important;
 }
 
-.stat-line:last-child {
-  color: var(--AlphaAqua);
+.modal-buttons-YouDied {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-top: 0px !important;
 }
 
-/* ==================== BUTTON ROW ==================== */
-.uselife-button, .diedmenu-button {
-  --glow-color: var(--CoolGray);          
+.modal-buttons-YouDied .modal-button-died {
+  min-width: 350px;
+  padding: 7px 30px;
+}
+.modal-button-died {   
   --glow-intensity: 0.4;
-  --inner-glow: rgba(255, 255, 255, 0.103);
+  position: relative;
   align-items: center;
   justify-content: center;
-  padding: 5px 5px;
-  font-family: 'Orbitron', 'Courier New', monospace; 
-  font-size: 1.3rem;
+  color: #FFFFFF;
+  border: 1px solid var(--CoolGray);
+    box-shadow: 
+    0 0 8px var(--CoolGray),
+    inset 0 0 9px rgba(255, 255, 255, 0.103),
+    0 0 10px var(--CoolGray);
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.2rem;
   text-transform: uppercase;
-  color: white;
   background: #0f0f1a;
-  border: 2px solid var(--glow-color);
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 
-    0 0 8px var(--glow-color),
-    inset 0 0 12px var(--inner-glow),
-    0 0 35px var(--glow-color);
   overflow: hidden;
 }
 
-.uselife-button, .diedmenu-button:hover {
+
+.modal-button-died:hover {
   transform: translateY(-1px) scale(1.03);
   box-shadow: 
-    0 0 10px var(--glow-color),
-    inset 0 0 15px var(--inner-glow),
-    0 0 20px var(--glow-color);
+    0 0 10px #9090C0,
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px #9090C0;
 }
 
-
-
-
-
-.uselife-button {
-  position: fixed;
-  right: 50%;
-  transform: translateX(50%);
-  bottom: 22%;
-  width: 250px;
-  height: 50px;
+.modal-button-died::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
 }
 
-.diedmenu-button
-{  position: fixed;
-    bottom: 10%;
-    right: 50%;
-    transform: translateX(50%);
-    width: 250px;
-    height: 50px;
-
+.modal-button-died:hover::before {
+  left: 100%;
 }
+
 
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 950px) {
@@ -1069,7 +1304,6 @@ cite {
   letter-spacing: 3px;
 }
 
-
 .pause-buttons{
   display: flex;
   flex-direction: column;
@@ -1079,8 +1313,6 @@ cite {
   min-width: 450px;
   font-size: 1.9rem;
 }
-
-
 
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 950px) {
@@ -1120,18 +1352,7 @@ cite {
   margin-bottom: 10px;
 }
 
-.move-container {
-  overflow:hidden;
-  padding: 5px;
-}
-
-.move-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 30px;
-    padding: 15px 0;
-}
-
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ STATS UPGRADE ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 .stats-card {
     position: relative;
     border-radius: 18px;
@@ -1197,14 +1418,38 @@ cite {
     color: white;
 }
 
-
-
-
 .stats-card:hover {
     box-shadow: 0 0 40px rgba(165,90,255,0.5);
     animation: pulse-glow 2s infinite ease-in-out;
 }
 
+.stat-row.increase {
+    animation: statIncrease 0.5s ease-in-out;
+  }
+
+  @keyframes statIncrease {
+    0%, 100% { transform: scale(1); }
+    50% { 
+      transform: scale(1.1); 
+      background: rgba(88, 232, 76, 0.2);
+    }
+  }
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ FRAGMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/*=========== FRAGMENT MODAL ========*/
+
+
+    @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  #moveImage {
+    animation: float 3s ease-in-out infinite;
+  }
 
 
 .fragment-icon{
@@ -1301,27 +1546,21 @@ cite {
 
 
 
-  .stat-row.increase {
-    animation: statIncrease 0.5s ease-in-out;
-  }
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ NEW MOVE ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-  @keyframes statIncrease {
-    0%, 100% { transform: scale(1); }
-    50% { 
-      transform: scale(1.1); 
-      background: rgba(88, 232, 76, 0.2);
-    }
-  }
+.move-container {
+  overflow:hidden;
+  padding: 5px;
+}
+
+.move-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    padding: 15px 0;
+}
 
 
-    @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-
-  #moveImage {
-    animation: float 3s ease-in-out infinite;
-  }
 
 
 /* ================== MODAL BUTTON =========== */

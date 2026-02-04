@@ -37,7 +37,7 @@ import {
   animateLaserBeam,
   animateZap,
   animateWhiskerWhip,
-  // 💥 FINISH HIM ANIMATIONS
+  // FINISH HIM ANIMATIONS
   animateCatArrow,
   animateCatCrossbow,
   animateBrassToeBeans,
@@ -52,14 +52,15 @@ import {
   animateFlash
 } from '../helpers/bossHelpers.js';
 import { applyUpgradesToBossPlayer } from '../helpers/upgradeHelper.js';
-import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
+import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../helpers/mobileControls.js';
 import { hideHUD } from '../helpers/levelHelpers.js';
 
 
 
 export function createBossBattleScene(bossId, character, startHP, startScore = 0) {
     hideHUD();
-    console.log('🎮 Boss Battle Starting:', {
+    hideJoystickControls();
+    console.log('ðŸŽ® Boss Battle Starting:', {
       bossId,
       character: character.name,
       startHP,
@@ -147,9 +148,9 @@ applyUpgradesToBossPlayer(player);
     logText.text = message;
   }
 
-  // 🎮 ANIMATIONS
+  // ANIMATIONS
   function playAttackAnimation(moveName, attackerSprite, targetSprite, attackerGlow, isHeal) {
-    console.log('🎮 Playing animation for:', moveName, 'uppercase:', moveName.toUpperCase());
+    console.log('ðŸŽ® Playing animation for:', moveName, 'uppercase:', moveName.toUpperCase());
 
     const isPlayer = attackerSprite === playerSprite;
     
@@ -425,9 +426,9 @@ applyUpgradesToBossPlayer(player);
     return message;
   }
 
-  // 💥 FINISH HIM ANIMATION DISPATCHER
+  // FINISH HIM ANIMATION DISPATCHER
   function playFinishHimMove(finishHimName) {
-    console.log('💥 FINISH HIM:', finishHimName);
+    console.log('ðŸ’¥ FINISH HIM:', finishHimName);
     
     switch(finishHimName) {
       case 'CatCrossbow':
@@ -451,7 +452,7 @@ applyUpgradesToBossPlayer(player);
         break;
         
       default:
-        console.log('⚠️ Unknown finish move:', finishHimName);
+        console.log('âš ï¸ Unknown finish move:', finishHimName);
         animatePoooof(bossSprite);
         break;
     }
@@ -462,7 +463,7 @@ function checkBattleEnd() {
     const currentPlayerHP = parseInt(player.hp) || 0;
     
     if (bossHP <= 0) {
-      console.log('🎉 BOSS DEFEATED! TIME FOR FINISH HIM!');
+      console.log('ðŸŽ‰ BOSS DEFEATED! TIME FOR FINISH HIM!');
       battleActive = false;
       waitingForPlayer = false;
       const finishHimMove = bossConfig.finishHim;
@@ -555,7 +556,7 @@ function checkBattleEnd() {
       
       if (finishHimBtn) {
         finishHimBtn.onclick = () => {
-          console.log('💥 SPECIAL ATTACK INITIATED!');
+          console.log('ðŸ’¥ SPECIAL ATTACK INITIATED!');
           
           finishHimButton.classList.add('hidden');
           
@@ -633,7 +634,7 @@ function checkBattleEnd() {
       
       return true;
     }  else if (currentPlayerHP <= 0) {
-      console.log('💀 PLAYER DEFEATED IN BOSS BATTLE!');
+      console.log('ðŸ’€ PLAYER DEFEATED IN BOSS BATTLE!');
       battleActive = false;
       waitingForPlayer = false;
       updateLog(`${player.name} has been defeated...`);
@@ -642,7 +643,7 @@ function checkBattleEnd() {
       wait(1, () => {
         const currentLives = character.lives !== undefined ? character.lives : (player.lives || 0);
         if (currentLives > 0) {
-          console.log(`💚 Player has ${currentLives} lives remaining - going to You Died screen`);
+          console.log(`ðŸ’š Player has ${currentLives} lives remaining - going to You Died screen`);
           
           let restartLevel = "level1";
           if (bossId === 'BossLaserPointer') {
@@ -667,7 +668,7 @@ function checkBattleEnd() {
         });
 
         } else {
-          console.log('☠️ No lives remaining - GAME OVER');
+          console.log('â˜ ï¸ No lives remaining - GAME OVER');
           stopAllMusic();
           
           const bloodDrip = add([
