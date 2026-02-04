@@ -1,0 +1,276 @@
+/* ==================== BOSS BATTLE MOVE BUTTONS ==================== */
+
+#battleUI {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; 
+  pointer-events: none; /
+}
+
+
+.battle-moves {
+  pointer-events: auto; 
+}
+
+.battle-move-btn {
+  pointer-events: auto; 
+}
+
+.battle-moves {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 1px;
+  max-width: 470px;
+  position: fixed;
+  bottom: 3.5%;
+  right: 6%;
+}
+
+.battle-move-btn {
+  position: relative;
+  max-height: 53px !important;
+  max-width: 220px;
+  width: 220px;
+  padding: 1px 12px;
+  font-family: 'GothNerd';
+  font-size: 1.1rem;
+  color: #000000;
+  text-align: center;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #9090c0 0%, #5e5e85 100%);
+  border: 2px solid #2a3439;
+  border-radius: 8px;
+  box-shadow: 
+    0 0 10px rgba(144, 144, 192, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+    user-select: none;
+  -webkit-user-select: none;
+   text-transform: uppercase;
+     transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.battle-move-btn:not(:disabled):hover {
+  transform: scale(1.03);
+  box-shadow: 
+    0 0 10px #00FFFF,
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 30px #00FFFF;
+}
+
+.battle-move-btn:not(:disabled):before { 
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.battle-move-btn:not(:disabled):hover::before {
+      left: 100%;
+}
+
+.battle-move-btn:not(:disabled):active {
+  transform: translateY(0px);
+  box-shadow: 
+    0 0 10px rgba(165, 90, 255, 0.4),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.battle-move-btn:disabled {
+  background: linear-gradient(135deg, #646464 0%, #4a4a4a 100%);
+  color: #999999;
+  border-color: #3a3a3a;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.battle-move-btn .move-name {
+  display: block;
+  margin-bottom: 0px;
+}
+
+.battle-move-btn .move-uses {
+  display: block;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.battle-move-btn.ready {
+  animation: buttonPulse 2s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px rgba(144, 144, 192, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px rgba(144, 144, 192, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+@media (max-width: 900px) {
+
+    .battle-moves{
+        gap: 5px;
+        right: 5%;
+    }
+
+  .battle-move-btn {
+    max-height: 37px !important;
+    font-size: 0.7rem !important;
+    padding: 1px 8px;
+    width: 150px;
+  }
+  
+  .battle-move-btn .move-name {
+    font-size: 0.7rem;
+  }
+  
+  .battle-move-btn .move-uses {
+    font-size: 0.6rem;
+  }
+}
+
+.battle-move-btn:focus-visible {
+  outline: 3px solid #67FEBD;
+  outline-offset: 2px;
+}
+
+
+
+
+       /* ==================== FINISH HIM BUTTON  ==================== */
+.finish-him-container {
+  position: fixed;
+  left: 50%;
+  bottom: 30%;
+  transform: translateX(-50%);
+  max-width: 1000px;
+  height: 70px;
+  z-index: 100;
+}
+
+
+
+.finish-him-button {   
+  --glow-intensity: 0.4;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  padding: 10px 30px;
+  color: white;
+  text-shadow: 
+    3px -1px 0 #000000,
+    -3px 1px 0 #000000,
+    4px 2px 0 #00FFFF,
+    -4px -2px 0 rgb(255,0,0),
+
+    0 0 20px rgb(2, 2, 2);
+  background: #0f0f1a;
+  border: 4px solid #c71585;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 10px #c71585,
+    inset 0 0 15px rgba(199, 21, 133, 0.3),
+    0 0 50px #c71585;
+  overflow: hidden;
+}
+
+.finish-him-button:hover {
+  transform: translateY(-1px) scale(1.01);
+  color: rgb(255,0,0);
+  font-weight: bold;
+  text-shadow: 
+    1px 0px 0 rgb(0,0,0),
+    -1px 0px 0 rgb(0,0,0),
+    8px 4px 0 var(--AquaAura),
+    -8px -4px 0 var(--AquaAura),
+    0 0 20px rgb(2, 2, 2);
+  box-shadow: 
+    0 0 15px #c71585,
+    inset 0 0 20px rgba(199, 21, 133, 0.4),
+    0 0 70px #c71585;
+}
+
+.finish-him-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.finish-him-button:hover::before {
+  left: 100%;
+}
+
+.finish-him-button-text {
+  position: relative;
+  z-index: 4;
+
+}
+
+@media (max-width: 968px){
+.finish-him-container {
+  position: fixed;
+  left: 50%;
+  bottom: 20%;
+  transform: translateX(-50%);
+  max-width: 1000px;
+  height: 50px;
+  z-index: 100;
+}
+
+.finish-him-button {   
+  font-size: 1.7rem;
+  text-shadow: 
+    0px 0px 0 #000000,
+    0px 0px 0 #000000,
+    0px 0px 0 #00FFFF,
+    0px 0px 0 rgb(255,0,0),
+
+    0 0 20px rgb(2, 2, 2);
+}
+
+.finish-him-button:hover {
+    transform: translateY(0px) scale(1.05);
+    color: rgb(255,0,0);
+    font-weight: bold;
+    text-shadow: 
+        0px 0px 0 rgb(0,0,0),
+        0px 0px 0 rgb(0,0,0),
+        0px 0px 0 var(--AquaAura),
+        0px 0px 0 var(--AquaAura),
+        0 0 20px rgb(2, 2, 2);
+    }
+
+
+
+}

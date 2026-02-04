@@ -10,6 +10,8 @@ import {
   addBossHPPanel,
   addBattleLogPanel,
   addMoveButtonsPanel,
+  hideMoveButtons,
+  showMoveButtons,
   createMoveButtons,
   updateHPBars,
   updateMoveButtons,
@@ -127,6 +129,13 @@ applyUpgradesToBossPlayer(player);
   let battleLog = bossConfig.introMessage[0];
   let waitingForPlayer = true;
   let battleActive = true;
+
+
+  const battleUI = document.getElementById('battleUI');
+  if (battleUI) {
+    battleUI.classList.remove('hidden');
+    console.log('✅ Battle UI shown');
+  }
 
   // VISUAL ELEMENTS
   addBossBackground(bossConfig);
@@ -309,13 +318,13 @@ applyUpgradesToBossPlayer(player);
   function executeTurn(playerMoveName) {
     waitingForPlayer = false;
     
-    const playerMove = player.moves[playerMoveName];
-    const bossMoveName = chooseBossMove(boss, null);
-    const bossMove = boss.moves[bossMoveName];
+  const playerMove = player.moves[playerMoveName];
+  const bossMoveName = chooseBossMove(boss, null);
+  const bossMove = boss.moves[bossMoveName];
     
     // DECREMENT USES
-    playerMove.uses--;
-    bossMove.uses--;
+  playerMove.uses--;
+  bossMove.uses--;
     
     // DETERMINE ORDER BASED ON SPEED
     let firstAttacker, secondAttacker;
@@ -389,9 +398,9 @@ applyUpgradesToBossPlayer(player);
         if (boss.defenseBuffTurns > 0) boss.defenseBuffTurns--;
         
         wait(1, () => {
-          updateMoveButtons(moveButtons, player);
-          waitingForPlayer = true;
-          updateLog("Choose your move!");
+            updateMoveButtons(moveButtons, player); // ✅ This now updates HTML buttons
+            waitingForPlayer = true;
+            updateLog("Choose your move!");
         });
       });
     });
@@ -466,6 +475,7 @@ function checkBattleEnd() {
       console.log('ðŸŽ‰ BOSS DEFEATED! TIME FOR FINISH HIM!');
       battleActive = false;
       waitingForPlayer = false;
+      hideMoveButtons(moveButtons);
       const finishHimMove = bossConfig.finishHim;
       
       moveButtons.forEach(({ btn }) => {
@@ -721,6 +731,14 @@ function checkBattleEnd() {
   // INITIALIZE
   updateHPBars(player, boss, playerHPBar, playerHPText, bossHPBar, bossHPText);
   updateMoveButtons(moveButtons, player);
+  
+  onSceneLeave(() => {
+      const battleUI = document.getElementById('battleUI');
+      if (battleUI) {
+        battleUI.classList.add('hidden');
+        console.log('🧹 Battle UI hidden on scene leave');
+      }
+    });
 }
 
 export function createLaserPointerBossScene(data) {

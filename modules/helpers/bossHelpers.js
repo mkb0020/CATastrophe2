@@ -288,7 +288,6 @@ export function addMoveButtonsPanel() {
     z(9)
   ]);
 
-
   add([
     rect(405, 110, { radius: 15 }),
     pos(570, 355),
@@ -299,58 +298,52 @@ export function addMoveButtonsPanel() {
 }
 
 export function createMoveButtons(player, onMoveClick, gameStateGetter) {
+  const container = document.getElementById('moveButtonsPanel');
+  if (!container) {
+    console.error('❌ Move buttons container not found in HTML!');
+    return [];
+  }
+  
+  container.innerHTML = '';
+  
   const moveButtons = [];
   const moveNames = Object.keys(player.moves);
-
+  
   moveNames.forEach((moveName, i) => {
     const moveData = player.moves[moveName];
-    const x = i % 2 === 0 ? 577 : 778;
-    const y = i < 2 ? 365 : 415;
     
-    const btn = add([
-      rect(190, 45, { radius: 15 }),
-      pos(x, y),
-      color(rgb(144,144,192)),
-      area(),
-      opacity(0),
-      z(11),
-      {
-        moveName: moveName,
-        moveData: moveData,
-        enabled: moveData.uses > 0
-      },
-      "moveBtn"
-    ]);
-
-    const btnText = btn.add([
-      text(`${moveName} (${moveData.uses})`, { size: 24, font: "narrowBold" }),
-      pos(95, 25),
-      anchor("center"),
-      color(0, 0, 0),
-      z(12)
-    ]);
-
-    btn.onClick(() => {
-      if (gameStateGetter() && btn.enabled) {
+    const btn = document.createElement('button');
+    btn.className = 'battle-move-btn';
+    btn.dataset.index = i;
+    btn.dataset.moveName = moveName;
+    
+    btn.innerHTML = `
+      <span class="move-name">${moveName}</span>
+      <span class="move-uses">(${moveData.uses})</span>
+    `;
+    
+    btn.disabled = moveData.uses <= 0;
+    if (moveData.uses > 0) {
+      btn.classList.add('ready');
+    }
+    
+    btn.addEventListener('click', () => {
+      if (gameStateGetter() && !btn.disabled) {
+        console.log('🎯 Move clicked:', moveName);
         onMoveClick(moveName);
       }
     });
-
-    btn.onHover(() => {
-      if (btn.enabled) {
-        btn.color = Color.fromHex(Colors.VortexViolet);
-        btn.opacity = 1;
-      }
+    
+    container.appendChild(btn);
+    
+    moveButtons.push({
+      btn: btn,
+      moveName: moveName,
+      moveData: moveData
     });
-
-    btn.onHoverEnd(() => {
-      btn.color = Color.fromHex(Colors.MutedGrey);
-      btn.opacity = 0;
-    });
-
-    moveButtons.push({ btn, btnText, moveName });
   });
-
+  
+  console.log('✅ Created', moveButtons.length, 'HTML move buttons');
   return moveButtons;
 }
 
@@ -371,17 +364,48 @@ export function updateHPBars(player, boss, playerHPBar, playerHPText, bossHPBar,
 }
 
 export function updateMoveButtons(moveButtons, player) {
-  moveButtons.forEach(({ btn, btnText, moveName }) => {
+  moveButtons.forEach(({ btn, moveName }) => {
     const move = player.moves[moveName];
-    btn.enabled = move.uses > 0;
-    btnText.text = `${moveName} (${move.uses})`;
     
-    if (!btn.enabled) {
-      btn.color = rgb(100, 100, 100);
-      btn.opacity = 0.5;
+    const usesSpan = btn.querySelector('.move-uses');
+    if (usesSpan) {
+      usesSpan.textContent = `(${move.uses})`;
+    }
+    
+    btn.disabled = move.uses <= 0;
+    
+    if (move.uses > 0) {
+      btn.classList.add('ready');
+    } else {
+      btn.classList.remove('ready');
     }
   });
 }
+
+
+export function hideMoveButtons(moveButtons) {
+  const container = document.getElementById('moveButtonsPanel');
+  if (container) {
+    container.style.display = 'none';
+  }
+  
+  moveButtons.forEach(({ btn }) => {
+    btn.style.display = 'none';
+  });
+}
+
+
+export function showMoveButtons(moveButtons) {
+  const container = document.getElementById('moveButtonsPanel');
+  if (container) {
+    container.style.display = 'grid';
+  }
+  
+  moveButtons.forEach(({ btn }) => {
+    btn.style.display = '';
+  });
+}
+
 
 // ================================================== ANIMATIONS ==================================================
 export function animateAttack(sprite, glow, isPlayer) {
