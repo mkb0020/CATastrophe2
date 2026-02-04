@@ -65,216 +65,48 @@ export function addBattleSprites(character, bossConfig) {
 }
 
 export function addPlayerHPPanel(player) {
-  add([
-    rect(480, 85, { radius: 50 }),
-    pos(450, 250),
-    color(rgb(144,144,192)),
-    opacity(1),
-    outline(4, rgb(42,52,57)),
-    z(10)
-  ]);
-
-  add([
-    rect(480, 85, { radius: 50 }),
-    pos(450, 250),
-    color(Color.fromHex(Colors.MintBlue)),
-    opacity(1),
-    outline(9, rgb(101,115,131)),
-    z(9)
-  ]);
-
-
-  add([
-      rect(452, 75, { radius: 50 }),
-      pos(455, 251),
-      color(rgb(219,226,233)),
-      opacity(0.3),
-      z(11)
-    ]);
-
-  add([
-    text(player.name, { size: 23, font: "orbitronBold" }),
-    pos(488, 271),
-    anchor("left"),
-    color(0, 0, 0),
-    z(13)
-  ]);
-
-  add([
-    text(player.name, { size: 23, font: "orbitronBold" }),
-    pos(489, 272),
-    anchor("left"),
-    color(255, 255, 255),
-    z(12)
-  ]);
-
-  add([
-    text("HP:", { size: 20, font: "orbitronBold" }),
-    pos(498, 287),
-    color(Color.fromHex(Colors.Black)),
-    z(13)
-  ]);
-
-  add([
-    text("HP:", { size: 20, font: "orbitronBold" }),
-    pos(499, 288),
-    color(Color.fromHex('#FFFFFF')),
-    z(12)
-  ]);
-
-  add([
-    rect(350, 15, { radius: 8 }),
-    pos(545, 288 ),
-    color(0, 0, 0),
-    opacity(1),
-    outline(10, Color.fromHex(Colors.DarCoolGrey)),
-    z(12)
-  ]);
-
-  const playerHPBar = add([
-    rect(350, 15, { radius: 8 }),
-    pos(545, 288),
-    color(Color.fromHex(Colors.UraniumGreen)),
-    z(13),
-    "playerHPBar"
-  ]);
-
-  const playerHPText = add([
-    text(`${player.hp} / ${player.maxHP}`, { size: 18, font: "orbitron" }),
-    pos(890, 320),
-    anchor("right"),
-    color(0, 0, 0),
-    z(13)
-  ]);
-
-  return { playerHPBar, playerHPText };
+  const nameEl = document.getElementById('playerName');
+  const hpText = document.getElementById('playerHPText');
+  const hpBarFill = document.getElementById('playerHPBarFill');
+  
+  if (nameEl) nameEl.textContent = player.name;
+  if (hpText) hpText.textContent = `${player.hp} / ${player.maxHP}`;
+  if (hpBarFill) hpBarFill.style.width = '100%';
+  
+  console.log('✅ Player HP panel initialized in HTML');
+  
+  return { 
+    playerHPBar: hpBarFill, 
+    playerHPText: hpText 
+  };
 }
 
 export function addBossHPPanel(boss) {
- add([
-    rect(480, 85, { radius: 50 }),
-    pos(70, 20),
-    color(rgb(144,144,192)),
-    opacity(1),
-    outline(4, rgb(42,52,57)),
-    z(10)
-  ]);
-
-  add([
-    rect(480, 85, { radius: 50 }),
-    pos(70, 20),
-    color(Color.fromHex(Colors.MintBlue)),
-    opacity(1),
-    outline(9, rgb(101,115,131)),
-    z(9)
-  ]);
-
-
-    add([
-      rect(452, 75, { radius: 50 }),
-      pos(75, 19),
-      color(rgb(219,226,233)),
-      opacity(0.3),
-      z(11)
-    ]);
-
-
-  add([
-    text(boss.name, { size: 22, font: "orbitronBold" }),
-    pos(104, 42),
-    anchor("left"),
-    color(255, 255, 255),
-    z(12)
-  ]);
-
-  add([
-    text(boss.name, { size: 22, font: "orbitronBold" }),
-    pos(103, 41),
-    anchor("left"),
-    color(0, 0, 0),
-    z(13)
-  ]);
-
-  add([
-    text("HP:", { size: 20, font: "orbitronBold" }),
-    pos(116, 56),
-    color(Color.fromHex(Colors.White)),
-    z(12)
-  ]);
-
-  add([
-    text("HP:", { size: 20, font: "orbitronBold" }),
-    pos(115, 56),
-    color(Color.fromHex('#000000')),
-    z(13)
-  ]);
-
-  add([
-    rect(350, 15, { radius: 8 }),
-    pos(170, 58),
-    color(0, 0, 0),
-    opacity(1),
-    outline(8, Color.fromHex(Colors.DarCoolGrey)),
-    z(12)
-  ]);
-
-
-
-  const bossHPBar = add([
-    rect(350, 15, { radius: 8 }),
-    pos(170, 58),
-    color(Color.fromHex(Colors.UraniumGreen)),
-    z(13),
-    "bossHPBar"
-  ]);
-
-  const bossHPText = add([
-    text(`${boss.hp} / ${boss.maxHP}`, { size: 18, font: "orbitron" }),
-    pos(500, 88),
-    anchor("right"),
-    color(0, 0, 0),
-    z(14)
-
-  ]);
-
-  return { bossHPBar, bossHPText };
+  const nameEl = document.getElementById('bossName');
+  const hpText = document.getElementById('bossHPText');
+  const hpBarFill = document.getElementById('bossHPBarFill');
+  
+  if (nameEl) nameEl.textContent = boss.name;
+  if (hpText) hpText.textContent = `${boss.hp} / ${boss.maxHP}`;
+  if (hpBarFill) hpBarFill.style.width = '100%';
+  
+  console.log('✅ Boss HP panel initialized in HTML');
+  
+  return { 
+    bossHPBar: hpBarFill, 
+    bossHPText: hpText 
+  };
 }
 
 export function addBattleLogPanel(initialMessage) {
-
-  add([
-    rect(980, 125, { radius: 25 }),
-    pos(10, 350),
-    color(rgb(101,115,131)),
-    opacity(1.0),
-    z(8)
-  ]);
-
-  add([
-    rect(540, 115, { radius: 30 }),
-    pos(20, 355),
-    color(rgb(144,144,192)),
-    opacity(1),
-    outline(1, rgb(42,52,57)),
-    z(9)
-  ]);
-
-    add([
-    rect(535, 110, { radius: 30 }),
-    pos(20, 355),
-    color(rgb(255,255,255)),
-    opacity(0.3),
-    z(10)
-  ]);
-
-  const logText = add([
-    text(initialMessage, { size: 24, font: "narrow", width: 500 }),
-    pos(47, 370),
-    color(0, 0, 0),
-    z(11),
-    "logText"
-  ]);
-
+  const logText = document.getElementById('battleLogText');
+  
+  if (logText) {
+    logText.textContent = initialMessage;
+  }
+  
+  console.log('✅ Battle log initialized in HTML');
+  
   return logText;
 }
 
@@ -283,7 +115,7 @@ export function addMoveButtonsPanel() {
     rect(410, 115, { radius: 15 }),
     pos(570, 355),
     color(rgb(144,144,192)),
-    opacity(1),
+    opacity(0),
     outline(1, rgb(42,52,57)),
     z(9)
   ]);
@@ -292,7 +124,7 @@ export function addMoveButtonsPanel() {
     rect(405, 110, { radius: 15 }),
     pos(570, 355),
     color(255,255,255),
-    opacity(0.3),
+    opacity(0),
     z(10)
   ]);
 }
@@ -305,6 +137,8 @@ export function createMoveButtons(player, onMoveClick, gameStateGetter) {
   }
   
   container.innerHTML = '';
+   container.style.display = 'grid';
+
   
   const moveButtons = [];
   const moveNames = Object.keys(player.moves);
@@ -352,15 +186,15 @@ export function updateHPBars(player, boss, playerHPBar, playerHPText, bossHPBar,
   const maxHP = parseInt(player.maxHP) || 1;
   const hpPercent = currentHP / maxHP;
   
-  playerHPBar.width = 350 * hpPercent;
-  playerHPText.text = `${currentHP} / ${maxHP}`;
+  if (playerHPBar) playerHPBar.style.width = `${hpPercent * 100}%`;
+  if (playerHPText) playerHPText.textContent = `${currentHP} / ${maxHP}`;
   
   const bossCurrentHP = parseInt(boss.hp) || 0;
   const bossMaxHP = parseInt(boss.maxHP) || 1;
   const bossHPPercent = bossCurrentHP / bossMaxHP;
   
-  bossHPBar.width = 350 * bossHPPercent;
-  bossHPText.text = `${bossCurrentHP} / ${bossMaxHP}`;
+  if (bossHPBar) bossHPBar.style.width = `${bossHPPercent * 100}%`;
+  if (bossHPText) bossHPText.textContent = `${bossCurrentHP} / ${bossMaxHP}`;
 }
 
 export function updateMoveButtons(moveButtons, player) {

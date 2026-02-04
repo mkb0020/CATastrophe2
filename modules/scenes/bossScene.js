@@ -69,6 +69,23 @@ export function createBossBattleScene(bossId, character, startHP, startScore = 0
       startScore
     });
 
+
+  // ==================== LETTERBOX FOR BOSS BATTLES ====================
+  const canvas = document.getElementById('gameCanvas');
+  const originalCanvasStyles = {
+    maxWidth: canvas.style.maxWidth,
+    maxHeight: canvas.style.maxHeight,
+    aspectRatio: canvas.style.aspectRatio,
+    margin: canvas.style.margin
+  };
+  
+  canvas.style.maxWidth = '1000px';
+  canvas.style.maxHeight = '480px';
+  canvas.style.aspectRatio = '1000 / 480';
+  canvas.style.margin = 'auto'; 
+  
+  console.log('📦 Boss battle letterboxing applied');
+
   if (bossId !== 'observerBoss' && bossId !== 'observer') {
     stopAllMusic();
     startBossMusic();
@@ -150,12 +167,16 @@ applyUpgradesToBossPlayer(player);
 
   // CREATE MOVE BUTTONS
   const moveButtons = createMoveButtons(player, executeTurn, getGameActive);
+  showMoveButtons(moveButtons);
 
-  // UPDATE BATTLE LOG
-  function updateLog(message) {
-    battleLog = message;
-    logText.text = message;
+
+function updateLog(message) {
+  battleLog = message;
+  const logText = document.getElementById('battleLogText');
+  if (logText) {
+    logText.textContent = message;
   }
+}
 
   // ANIMATIONS
   function playAttackAnimation(moveName, attackerSprite, targetSprite, attackerGlow, isHeal) {
@@ -398,7 +419,7 @@ applyUpgradesToBossPlayer(player);
         if (boss.defenseBuffTurns > 0) boss.defenseBuffTurns--;
         
         wait(1, () => {
-            updateMoveButtons(moveButtons, player); // ✅ This now updates HTML buttons
+            updateMoveButtons(moveButtons, player); 
             waitingForPlayer = true;
             updateLog("Choose your move!");
         });
@@ -732,6 +753,7 @@ function checkBattleEnd() {
   updateHPBars(player, boss, playerHPBar, playerHPText, bossHPBar, bossHPText);
   updateMoveButtons(moveButtons, player);
   
+  
   onSceneLeave(() => {
       const battleUI = document.getElementById('battleUI');
       if (battleUI) {
@@ -739,8 +761,17 @@ function checkBattleEnd() {
         console.log('🧹 Battle UI hidden on scene leave');
       }
     });
+  
+  // ==================== RESTORE CANVAS ON SCENE LEAVE ====================
+  onSceneLeave(() => {
+    canvas.style.maxWidth = originalCanvasStyles.maxWidth;
+    canvas.style.maxHeight = originalCanvasStyles.maxHeight;
+    canvas.style.aspectRatio = originalCanvasStyles.aspectRatio;
+    canvas.style.margin = originalCanvasStyles.margin;
+    console.log('🔄 Canvas restored to responsive mode');
+  });
+  // ===================================================================
 }
-
 export function createLaserPointerBossScene(data) {
   const character = data?.character || data;
   const startHP = data?.startHP;

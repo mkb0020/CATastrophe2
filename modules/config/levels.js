@@ -16,13 +16,13 @@ export const BUBBLE_FRAMES = {
 };
 
 
-export const LEVELS = {  
+export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS, SPECIAL ITEMS, NO STUFF ZONES, AND ENEMY SPAWN POINTS FOR ALL LEVELS 
   level1: { 
     id: 'level1',
     name: 'Level 1',
     timeLimit: 90,
     length:  25500, 
-    playerSpawn: { x: 300, y: 200 },   // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 },   // FOR TESTING: USE 12210 FOR CHALLENGE ROOMS / USE 24950 FOR BOSS BATTLES
     GroundSegments: [
     { x: -1000, y: 440, width: 3000, height: 50 },
     { x: 4800, y: 440, width: 2000, height: 50 },
@@ -100,7 +100,7 @@ export const LEVELS = {
     name: 'Level 2',
     timeLimit: 90,
     length:  25825,    
-    playerSpawn: { x: 300, y: 200 },  // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 },  // FOR TESTING: USE 8100 FOR CHALLENGE ROOMS / USE 25225 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 4865, y: 440, width: 2000, height: 50 },
@@ -195,7 +195,7 @@ export const LEVELS = {
     name: 'Level 3',
     timeLimit: 90,
     length:  27900,  
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 15155 FOR CHALLENGE ROOMS / USE 28350 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5280, y: 440, width: 2000, height: 50 },
@@ -301,7 +301,7 @@ export const LEVELS = {
     name: 'Level 4',
     timeLimit: 90,
     length:  28850,  
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 17700 FOR CHALLENGE ROOMS / USE 28350 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5470, y: 440, width: 2000, height: 50 },
@@ -419,8 +419,8 @@ export const LEVELS = {
     id: 'level5',
     name: 'Level 5',
     timeLimit: 90,
-    length:  27800,   
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    length:  300,   
+    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 4865 FOR CHALLENGE ROOMS / USE 27350 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5660, y: 440, width: 2000, height: 50 },
