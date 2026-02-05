@@ -90,7 +90,7 @@ export const BOSSES = {
     introMessage: ["THE OBSERVER WANTS TO OPEN THE BOX!"],    
     nextState: 'Transition7',
     moves: {
-      "SUPERPOSITION SLAMPOISON": { dmg: 25, uses: 99 },
+      "SUPERPOSITION SLAM": { dmg: 25, uses: 99 },
       "POISON": { dmg: 26, speedBoost: true, uses: 4 },
       "HYDROGEN HAMMER": { dmg: 27, uses: 3 }, 
       "QUANTUM RECOVER": { heal: 26, uses: 3 }

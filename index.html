@@ -496,20 +496,7 @@
   </div>
 </div>
 
-
-<!--JOYSTICK-
-    <div class="joystick-container" >
-      <div class="joystick-base" id="joystickBase">
-        <div class="joystick-stick" id="joystickStick"></div>
-      </div>
-    </div>
-    
-    <div class="jump-button" id="jumpButton">
-      JUMP
-    </div>-->
-
 <!-- ======================= BOSS BATTLES =======================-->
-
 <div id="battleUI" class="battle-ui hidden">
   <div class="battle-hp-panel battle-hp-panel--boss" id="bossHPPanel">
     <div class="battle-hp-panel__name" id="bossName">Boss Name</div> 
@@ -518,7 +505,7 @@
       <div class="battle-hp-panel__bar-track"> 
         <div class="battle-hp-panel__bar-fill" id="bossHPBarFill" style="width: 100%;"></div> 
       </div>
-      <span class="battle-hp-panel__text" id="bossHPText">100 / 100</span> 
+      <br><span class="battle-hp-panel__text" id="bossHPText">100 / 100</span> 
     </div>
   </div>
 
@@ -529,24 +516,25 @@
       <div class="battle-hp-panel__bar-track"> 
         <div class="battle-hp-panel__bar-fill" id="playerHPBarFill" style="width: 100%;"></div> 
       </div>
-      <span class="battle-hp-panel__text" id="playerHPText">100 / 100</span> 
+      <br><span class="battle-hp-panel__text" id="playerHPText">100 / 100</span> 
     </div>
   </div>
 
-  <div class="battle-bottom-bar" id="battleBottomBar"> 
 
-    <div class="battle-log" id="battleLogPanel"> 
-      <div class="battle-log__text" id="battleLogText">...</div> 
+    <div class="battle-bottom-bar" id="battleBottomBar"> 
+
+      <div class="battle-log" id="battleLogPanel"> 
+        <div class="battle-log__text" id="battleLogText">...</div> 
+      </div>
+
+      <div class="battle-moves" id="moveButtonsPanel"> 
+        <button class="battle-move-btn" id="moveBtn0" data-index="0">Move 1</button> 
+        <button class="battle-move-btn" id="moveBtn1" data-index="1">Move 2</button>
+        <button class="battle-move-btn" id="moveBtn2" data-index="2">Move 3</button> 
+        <button class="battle-move-btn" id="moveBtn3" data-index="3">Move 4</button> 
+      </div>
+
     </div>
-
-    <div class="battle-moves" id="moveButtonsPanel"> 
-      <button class="battle-move-btn" id="moveBtn0" data-index="0">Move 1</button> 
-      <button class="battle-move-btn" id="moveBtn1" data-index="1">Move 2</button>
-      <button class="battle-move-btn" id="moveBtn2" data-index="2">Move 3</button> 
-      <button class="battle-move-btn" id="moveBtn3" data-index="3">Move 4</button> 
-    </div>
-
-  </div>
 </div>
 
 <!-- ======================= SCRIPTS =======================-->

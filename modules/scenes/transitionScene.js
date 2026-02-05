@@ -7,9 +7,9 @@ import { hideHUD } from '../helpers/levelHelpers.js';
 
 
 export function createTransitionScene(transitionKey, character, startHP, lives = 3, score = 0) {
-    console.log('ðŸŽ¬ RAW PARAMS:', { transitionKey, character, startHP, lives, score });
-  console.log('ðŸŽ¬ lives type:', typeof lives, 'value:', lives);
-    console.log('ðŸŽ¬ Transition Scene received:', {
+    console.log('Ã°Å¸Å½Â¬ RAW PARAMS:', { transitionKey, character, startHP, lives, score });
+  console.log('Ã°Å¸Å½Â¬ lives type:', typeof lives, 'value:', lives);
+    console.log('Ã°Å¸Å½Â¬ Transition Scene received:', {
     transitionKey,
     character: character?.name,
     startHP,
@@ -45,9 +45,9 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     return;
   }
 
-  console.log(`ðŸŽ¬ Playing transition: ${transitionKey}`);
-  console.log(`ðŸ± Character: ${character.name}`);
-  console.log(`ðŸ“‹ Transition sprites:`, transition.sprites);
+  console.log(`Ã°Å¸Å½Â¬ Playing transition: ${transitionKey}`);
+  console.log(`Ã°Å¸ÂÂ± Character: ${character.name}`);
+  console.log(`Ã°Å¸â€œâ€¹ Transition sprites:`, transition.sprites);
 
   // GET ACTUAL SCREEN DIMENSIONS
   const centerX = SCREEN_W / 2;
@@ -77,7 +77,7 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   const initialFrame = SPRITE_FRAMES[initialSpriteKey] || SPRITE_FRAMES.menu;
   const initialScale = SPRITE_SCALES[initialSpriteKey] || 1.0;
 
-  console.log(`ðŸŽ­ Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
+  console.log(`Ã°Å¸Å½Â­ Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
 
   // CAT SPRITE - CENTERED
   const catSprite = add([
@@ -154,12 +154,12 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     const newFrame = SPRITE_FRAMES[newSpriteKey];
     const newScale = SPRITE_SCALES[newSpriteKey] || 1.0;
     
-    console.log(`ðŸ”„ Updating to sprite: ${newSpriteKey} -> frame ${newFrame} (textIndex: ${textIndex})`);
+    console.log(`Ã°Å¸â€â€ž Updating to sprite: ${newSpriteKey} -> frame ${newFrame} (textIndex: ${textIndex})`);
     
     const frameToUse = newFrame !== undefined ? newFrame : SPRITE_FRAMES.menu;
     
     if (newFrame === undefined) {
-      console.warn(`âš ï¸ Frame not found for sprite key "${newSpriteKey}", using menu frame ${SPRITE_FRAMES.menu}`);
+      console.warn(`Ã¢Å¡Â Ã¯Â¸Â Frame not found for sprite key "${newSpriteKey}", using menu frame ${SPRITE_FRAMES.menu}`);
     }
     
     catSprite.use(sprite(`${character.name}Sheet`, { frame: frameToUse }));
@@ -198,7 +198,7 @@ function handleNext() {
       }
     } else {
       const nextState = transition.nextState;
-          console.log('ðŸŽ¬ Transition going to next state:', nextState, 'with HP:', startHP, 'lives:', lives, 'score:', score);
+          console.log('Ã°Å¸Å½Â¬ Transition going to next state:', nextState, 'with HP:', startHP, 'lives:', lives, 'score:', score);
 
       if (nextState === 'level1') {
         go('level1', { character, startHP, lives, score });
@@ -212,8 +212,6 @@ function handleNext() {
         go('level5', { character, startHP, lives, score });
       } else if (nextState === 'observerBoss') {
         go('observerBoss', { character, startHP, lives });
-      } else if (nextState === 'credits') { 
-        go('credits', { character });
       } else {
         go(nextState, { character, startHP, lives, score });
       }
@@ -229,7 +227,7 @@ function handleNext() {
 
 // TRANSITION 6: OBSERVER REVEAL
 function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0) {
-  console.log('âš¡ Starting Transition6 - Observer Reveal Cinematic');
+  console.log('Ã¢Å¡Â¡ Starting Transition6 - Observer Reveal Cinematic');
   hideJoystickControls(); 
   
   
@@ -314,9 +312,222 @@ function createTransition6ObserverIntro(character, startHP, lives = 3, score = 0
   });
 }
 
-// TRANSITION 7: POST-GAME CINEMATIC / CREDITS
+// TRANSITION 7: POST-NUCLEAR VICTORY + CREDITS
 function createTransition7Cinematic(character, startHP) {
-  console.log('ðŸŽ¬ Creating Transition7 cinematic (post-Observer)');
+  console.log('🎬 Starting Transition7 - Post Nuclear Cinematic + Credits');
+  console.log('🎵 Starting FinalVictoryTrack (50 seconds)');
+  
+
+  
+  const bg = add([
+    sprite("transitionBG7"),
+    pos(0, 0),
+    scale(SCREEN_W / 1000, SCREEN_H / 480),
+    opacity(0),  
+    z(0)
+  ]);
+
+  const whiteScreen = add([
+    rect(width(), height()),
+    pos(0, 0),
+    color(255, 255, 255),
+    opacity(1),
+    fixed(),
+    z(10000),
+    "whiteScreen"
+  ]);
+
+  wait(0.3, () => {
+    tween(whiteScreen.opacity, 0, 0.8, (val) => whiteScreen.opacity = val, easings.easeOutQuad);
+    animateSmokeTransition();
+    wait(0.3, () => {
+      for (let i = 0; i < 12; i++) {
+        const xPos = (i % 4) * (width() / 3) + rand(-50, 50);
+        const yPos = Math.floor(i / 4) * (height() / 2) + rand(-50, 50);
+
+        const poof = add([
+          sprite("smokeBlob", { anim: "puff" }),
+          pos(xPos, yPos),
+          scale(6 + rand(-1, 1)),
+          opacity(0),
+          z(9998),
+          anchor("center"),
+          fixed(),
+        ]);
+        poof.play("puff", { loop: true });
+
+        tween(poof.pos.y, poof.pos.y + rand(-30, 30), 2, (y) => poof.pos.y = y, easings.easeOutQuad);
+
+        wait(1.0 + (i * 0.03), () => {
+          tween(poof.opacity, 0, 1.5, (o) => poof.opacity = o, easings.easeOutQuad)
+            .then(() => destroy(poof));
+        });
+      }
+
+      wait(1.0, () => {
+        destroy(whiteScreen);
+        tween(bg.opacity, 0.7, 2.0, (o) => bg.opacity = o, easings.easeOutQuad);
+
+        wait(7, () => {  
+          tween(bg.opacity, 0, 1.5, (o) => bg.opacity = o)
+            .then(() => destroy(bg));
+        });
+      });
+    });
+  });
+
+  const charSprite = add([
+    sprite(`${character.name}Sheet`, { frame: SPRITE_FRAMES.sitLookForwardRegular }),
+    pos(330, 260),
+    scale(1),
+    z(10),
+    opacity(0)
+  ]);
+
+  const transitionText = add([
+    text("QUANTUM BLISS RESTORED!", {
+      size: 50,
+      font: "science",
+      width: 800,
+      align: "center"
+    }),
+    pos(SCREEN_W / 2, SCREEN_H / 2 - 130),
+    anchor("center"),
+    color(255, 255, 255),
+    z(11),
+    opacity(0)
+  ]);
+
+  const shadowText = add([
+    text("QUANTUM BLISS RESTORED!", {
+      size: 50,
+      font: "science",
+      width: 800,
+      align: "center"
+    }),
+    pos(SCREEN_W / 2 + 3, SCREEN_H / 2 - 128),
+    anchor("center"),
+    color(144, 144, 192),
+    z(9),
+    opacity(0)
+  ]);
+
+  const shadowText2 = add([
+    text("QUANTUM BLISS RESTORED!", {
+      size: 50,
+      width: 800,
+      align: "center",
+      font: "science" 
+    }),
+    pos(width() / 2 + 1, height() / 2 - 129),
+    anchor("center"),
+    color(0, 0, 0),
+    z(10),
+    opacity(0)
+  ]);
+
+  const messages = [
+    "QUANTUM BLISS RESTORED!",
+    "TIME FOR ME TO TAKE A CATNAP",
+    "zzzZZZzzzZZZzzz"
+  ];
+
+  const spriteFrames = [
+    SPRITE_FRAMES.sitLookForwardRegular,
+    SPRITE_FRAMES.stretch,
+    SPRITE_FRAMES.sleep
+  ];
+
+  let msgIdx = 0;
+
+  wait(1.8, () => {
+    tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
+    wait(0.7, () => {
+      tween(transitionText.opacity, 1, 0.8, (o) => {
+        transitionText.opacity = o;
+        shadowText.opacity = o;
+        shadowText2.opacity = o;
+      });
+    });
+
+    wait(2.4, () => {
+      msgIdx = 1;
+      transitionText.text = messages[1];
+      shadowText.text = messages[1];
+      shadowText2.text = messages[1];
+      charSprite.use(sprite(`${character.name}Sheet`, { frame: spriteFrames[1] }));
+      transitionText.opacity = shadowText.opacity = shadowText2.opacity = charSprite.opacity = 0;
+      tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
+      tween(transitionText.opacity, 1, 0.8, (o) => { 
+        transitionText.opacity = o; 
+        shadowText.opacity = o; 
+        shadowText2.opacity = o; 
+      });
+
+      wait(2.4, () => {
+        msgIdx = 2;
+        transitionText.text = messages[2];
+        shadowText.text = messages[2];
+        shadowText2.text = messages[2];
+        charSprite.use(sprite(`${character.name}Sheet`, { frame: spriteFrames[2] }));
+        transitionText.opacity = shadowText.opacity = shadowText2.opacity = charSprite.opacity = 0;
+        tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
+        tween(transitionText.opacity, 1, 0.8, (o) => { 
+          transitionText.opacity = o; 
+          shadowText.opacity = o; 
+          shadowText2.opacity = o; 
+        });
+
+        wait(2.5, () => {
+          tween(charSprite.opacity, 0, 1.0, (o) => charSprite.opacity = o);
+          tween(transitionText.opacity, 0, 1.0, (o) => {
+            transitionText.opacity = o;
+            shadowText.opacity = o;
+            shadowText2.opacity = o;
+          }).then(() => {
+            destroy(charSprite);
+            destroy(transitionText);
+            destroy(shadowText);
+            destroy(shadowText2);
+          });
+
+          wait(0.8, () => {
+            startCreditsSequence(character);
+          });
+        });
+      });
+    });
+  });
+
+  wait(16, () => {
+    const confettiColors = [
+      rgb(144,144,192),
+      rgb(219,226,233),
+      rgb(101,115,131),
+      rgb(158,255,158),
+      rgb(255,199,255)
+    ];
+    loop(0.1, () => {
+      const c = add([
+        rect(8, 8),
+        pos(rand(0, SCREEN_W), -20),
+        color(choose(confettiColors)),
+        rotate(rand(0, 360)),
+        opacity(0.6),
+        z(15),
+        { vel: rand(30, 100), rotSpeed: rand(-5, 5) }
+      ]);
+      c.onUpdate(() => {
+        c.move(0, c.vel);
+        c.angle += c.rotSpeed;
+        if (c.pos.y > SCREEN_H + 20) destroy(c);
+      });
+    });
+  });
+}
+
+function startCreditsSequence(character) {
+  console.log('🎬 Starting credits sequence');
   hideJoystickControls(); 
   // GET ACTUAL SCREEN DIMENSIONS
   const centerX = SCREEN_W / 2;
@@ -411,7 +622,7 @@ function createTransition7Cinematic(character, startHP) {
       "CATastrophe2",
       `Starring: ${character.name}`,
       "Special thanks:",
-      "The cats at SchrÃ¶dinger's Cat CafÃ©"
+      "The cats at Schrödinger's Cat Café"
     ], 120, 80, 1.2);
 
     // 20s INTO CREDITS
@@ -492,8 +703,6 @@ function createTransition7Cinematic(character, startHP) {
     });
   });
 }
-
-
 
 function animateSmokeTransition(){
   // GET ACTUAL SCREEN DIMENSIONS

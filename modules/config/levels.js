@@ -22,7 +22,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 1',
     timeLimit: 90,
     length:  25500, 
-    playerSpawn: { x: 300, y: 200 },   // FOR TESTING: USE 12210 FOR CHALLENGE ROOMS / USE 24950 FOR BOSS BATTLES
+    playerSpawn: { x: 24950, y: 200 },   // FOR TESTING: USE 12210 FOR CHALLENGE ROOMS / USE 24950 FOR BOSS BATTLES
     GroundSegments: [
     { x: -1000, y: 440, width: 3000, height: 50 },
     { x: 4800, y: 440, width: 2000, height: 50 },
@@ -100,7 +100,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 2',
     timeLimit: 90,
     length:  25825,    
-    playerSpawn: { x: 300, y: 200 },  // FOR TESTING: USE 8100 FOR CHALLENGE ROOMS / USE 25225 FOR BOSS BATTLES
+    playerSpawn: { x: 25225, y: 200 },  // FOR TESTING: USE 8100 FOR CHALLENGE ROOMS / USE 25225 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 4865, y: 440, width: 2000, height: 50 },
@@ -195,7 +195,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 3',
     timeLimit: 90,
     length:  27900,  
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 15155 FOR CHALLENGE ROOMS / USE 28350 FOR BOSS BATTLES
+    playerSpawn: { x: 27450, y: 200 }, // FOR TESTING: USE 15155 FOR CHALLENGE ROOMS / USE 27450 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5280, y: 440, width: 2000, height: 50 },
@@ -301,7 +301,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 4',
     timeLimit: 90,
     length:  28850,  
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 17700 FOR CHALLENGE ROOMS / USE 28350 FOR BOSS BATTLES
+    playerSpawn: { x: 28350, y: 200 }, // FOR TESTING: USE 17700 FOR CHALLENGE ROOMS / USE 28350 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5470, y: 440, width: 2000, height: 50 },
@@ -419,8 +419,8 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     id: 'level5',
     name: 'Level 5',
     timeLimit: 90,
-    length:  300,   
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 4865 FOR CHALLENGE ROOMS / USE 27350 FOR BOSS BATTLES
+    length:  27800,   
+    playerSpawn: { x: 27350, y: 200 }, // FOR TESTING: USE 4865 FOR CHALLENGE ROOMS / USE 27350 FOR BOSS BATTLES
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5660, y: 440, width: 2000, height: 50 },

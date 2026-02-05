@@ -15,8 +15,10 @@ export function addBossBackground(bossConfig) {
     sprite(bossConfig.background),
     pos(0, 0),
     scale(SCREEN_W / 1000, SCREEN_H / 480),
+    opacity(0), // TEMPORARILY SETTING TO 0 WHILE I STYLE THE HTML/CSS UI
     z(0)
   ]);
+
 }
 
 export function addBattleSprites(character, bossConfig) {
@@ -239,6 +241,9 @@ export function showMoveButtons(moveButtons) {
     btn.style.display = '';
   });
 }
+
+
+
 
 
 // ================================================== ANIMATIONS ==================================================
@@ -1582,6 +1587,13 @@ export function animatePoisonAttack(boss, hero) {
 // =================== FELINE FISSION ===================
 
   function animateSuperSaiyan(){
+     const battleUI = document.getElementById('battleUI');
+      if (battleUI) {
+        battleUI.classList.add('hidden');
+        console.log('🧹 Battle UI hidden on scene leave');
+      }
+
+      
      const finalMoveBG = add([
       sprite("finalMoveBG", { anim: "fade" }),
       pos(SCREEN_W / 2, SCREEN_H / 2),
