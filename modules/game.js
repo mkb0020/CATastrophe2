@@ -41,12 +41,10 @@ function getCanvasSize() {
 const canvasSize = getCanvasSize();
 
 updateScreenDimensions(canvasSize.width, canvasSize.height);
-const scale = 2; // SCALE TO FIX KPLAY PIXEL PADDING ISSUE
-const scaleWidth = SCREEN_W / 2;
-const scaleHeight = SCREEN_H / 2;
+const scale = 2;
 const k = kaplay({
-  width: scaleWidth * scale, 
-  height: scaleHeight * scale,
+  width: (SCREEN_W / 2) * scale,   
+  height: (SCREEN_H / 2) * scale,  
   scale,
   letterbox: true,  
   background: [11, 11, 27, 0],

@@ -243,8 +243,44 @@ export function showMoveButtons(moveButtons) {
 }
 
 
+export function hideBattleUI(duration = 0.3) {
+  const bossHPPanel = document.getElementById('bossHPPanel');
+  const playerHPPanel = document.getElementById('playerHPPanel');
+  const battleLogPanel = document.getElementById('battleLogPanel');
+  
+  [bossHPPanel, playerHPPanel, battleLogPanel].forEach(panel => {
+    if (panel) {
+      panel.style.transition = `opacity ${duration}s ease-out`;
+      panel.style.opacity = '0';
+      
+      setTimeout(() => {
+        panel.style.display = 'none';
+      }, duration * 1000);
+    }
+  });
+  
+  console.log('👻 Battle UI fading out for FINISH HIM');
+}
 
-
+export function showBattleUI(duration = 0.3) {
+  const bossHPPanel = document.getElementById('bossHPPanel');
+  const playerHPPanel = document.getElementById('playerHPPanel');
+  const battleLogPanel = document.getElementById('battleLogPanel');
+  
+  [bossHPPanel, playerHPPanel, battleLogPanel].forEach(panel => {
+    if (panel) {
+      panel.style.display = 'block';
+      panel.style.opacity = '0';
+      panel.style.transition = `opacity ${duration}s ease-in`;
+      
+      setTimeout(() => {
+        panel.style.opacity = '1';
+      }, 10);
+    }
+  });
+  
+  console.log('✅ Battle UI fading in');
+}
 
 // ================================================== ANIMATIONS ==================================================
 export function animateAttack(sprite, glow, isPlayer) {

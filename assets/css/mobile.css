@@ -242,57 +242,103 @@
     width: auto;
     min-width: 0;
   }
+/* ======================== DESKTOP (≥1024px) ======================== */
+@media (min-width: 1024px) {
+  .mobile-hud-controls {
+    display: none;
+  }
 
+  .mobile-hud-top {
+    width: 100%;
+    max-width: 700px;
+  }
 
-  /* DESKTOP */
+  .mobile-hud-stat {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
   #muteBtn,
   #pauseBtn {
+    --glow-intensity: 0.4;
     position: fixed;
     top: 10px;
     z-index: 901;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid rgba(103, 254, 189, 0.6);
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
+    border: 1px solid var(--AquaAura);
     font-size: 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    box-shadow: 0 0 15px rgba(103, 254, 189, 0.3);
     pointer-events: all;
     color: #67febd;
+    background: #0f0f1a;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    box-shadow: 
+      0 0 8px var(--AquaAura),
+      inset 0 0 9px rgba(255, 255, 255, 0.103),
+      0 0 10px var(--AquaAura);
   }
 
-   #muteIcon,
-  #pauseBtn img {
-    width: 20px;
-    height: 20px;
+  #muteBtn::before,
+  #pauseBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255,255,255,0.25),
+      transparent
+    );
+    transition: 0.7s;
+  }
+
+  #pauseBtn img,
+  #muteIcon img {
+    width: 20px !important;
+    height: 20px !important;
+    position: relative;
+    z-index: 1; /* Keep icon above the ::before shine */
   }
 
   #muteBtn {
     right: 60px;
   }
 
+  #muteBtn img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
   #pauseBtn {
-    right: 10px; 
+    right: 10px;
   }
 
   #muteBtn:hover,
   #pauseBtn:hover {
-    transform: scale(1.1);
-    background: rgba(103, 254, 189, 0.2);
-    box-shadow: 0 0 20px rgba(103, 254, 189, 0.6);
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 
+      0 0 10px var(--AlphaAqua),
+      inset 0 0 15px rgba(255, 255, 255, 0.103),
+      0 0 20px var(--AlphaAqua);
   }
 
-  #muteBtn:active,
-  #pauseBtn:active {
-    transform: scale(0.95);
-    background: rgba(103, 254, 189, 0.3);
+  #muteBtn:hover::before,
+  #pauseBtn:hover::before {
+    left: 100%;
   }
+}
+
+  
 }
 
 /* ======================== MOBILE (<1024px) ========================= */

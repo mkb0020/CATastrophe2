@@ -15,6 +15,8 @@ import {
   createMoveButtons,
   updateHPBars,
   updateMoveButtons,
+  hideBattleUI,  
+  showBattleUI,
   animateAttack,
   animateHit,
   animateHeal,
@@ -497,6 +499,7 @@ function checkBattleEnd() {
       battleActive = false;
       waitingForPlayer = false;
       hideMoveButtons(moveButtons);
+      hideBattleUI();
       const finishHimMove = bossConfig.finishHim;
       
       moveButtons.forEach(({ btn }) => {
