@@ -230,9 +230,9 @@ async function loadAssets() {
   loadSprite("moveUpgrade", "assets/images/animationSprites/moveUpgrade.png", { sliceX:33, sliceY:1, anims:{pulse:{from:0,to:32, loop: true, speed:5}} });
   // SCENES
   loadSprite("drip", "assets/images/animationSprites/drip.png", { 
-    sliceX: 11, 
+    sliceX: 14, 
     sliceY: 1, 
-    anims: { drip: { from: 0, to: 10 } } 
+    anims: { drip: { from: 0, to: 13 } } 
 });
   loadSprite("lightning", "assets/images/animationSprites/Lightning.png", { sliceX:6, sliceY:1, anims:{glitch:{from:0,to:5}} });
   loadSprite("smokeClear", "assets/images/animationSprites/smokeClear.png", { sliceX:18, sliceY:1, anims:{puff:{from:0,to:17, loop: false, speed:10}} });
