@@ -239,7 +239,7 @@ export function createChallengeRoomScene(data) {
     setupTouchEvents(mobileSetup.controls, mobileSetup.mobileState, document.getElementById("gameCanvas"));
     setTimeout(() => showJoystickControls(), 100); 
     
-    setupMobileExitWindow(player, exitWindow, document.getElementById("gameCanvas"), returnScene, returnData, getScore, getLives);
+    setupMobileExitWindow(player, exitWindow, mobileSetup.mobileState, returnScene, returnData, getScore, getLives);
   } else {
     setupPlayerControls(player, getGameActive);
   }

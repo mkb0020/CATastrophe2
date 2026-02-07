@@ -6,6 +6,8 @@ import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../hel
 import { hideHUD } from '../helpers/levelHelpers.js';
 
 
+
+
 // ==================== INITIALIZE GAME STATE ====================
 if (!window.gameState) {
   window.gameState = {
@@ -18,7 +20,6 @@ if (!window.gameState) {
 export function createStartScene(){
   hideHUD();
   hideJoystickControls(); 
-  
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;
   
@@ -82,6 +83,7 @@ export function createStartScene(){
 export function createMainMenuScene() {
   hideHUD();
   hideJoystickControls(); 
+  
   
   const mobileSetup = window.mobileSetup;
   const mobileHUD = window.mobileHUD;

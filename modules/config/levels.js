@@ -22,7 +22,9 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 1',
     timeLimit: 90,
     length:  25500, 
-    playerSpawn: { x: 300, y: 200 },   // FOR TESTING: USE 12210 FOR CHALLENGE ROOMS / USE 24950 FOR BOSS BATTLES
+    playerSpawn: { x: 300, y: 200 }, // NORMAL
+    //playerSpawn: { x: 15300, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    //playerSpawn: { x: 24950, y: 200 },   // FOR TESTING BOSS BATTLES
     GroundSegments: [
     { x: -1000, y: 440, width: 3000, height: 50 },
     { x: 4800, y: 440, width: 2000, height: 50 },
@@ -33,35 +35,35 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
 
   ],
  platforms: [
-  { x: 1875, y: 310, width: 250, height: 20 },
-  { x: 2575, y: 270, width: 250, height: 20 },
-  { x: 3275, y: 340, width: 250, height: 20 },
-  { x: 3975, y: 260, width: 250, height: 20 },
-  { x: 4675, y: 300, width: 250, height: 20 },
+  { x: 1875, y: 310, width: 260, height: 20 },
+  { x: 2575, y: 270, width: 260, height: 20 },
+  { x: 3275, y: 340, width: 260, height: 20 },
+  { x: 3975, y: 260, width: 260, height: 20 },
+  { x: 4675, y: 300, width: 260, height: 20 },
 
-  { x: 6675, y: 280, width: 250, height: 20 },
-  { x: 7375, y: 330, width: 250, height: 20 },
-  { x: 8075, y: 260, width: 250, height: 20 },
-  { x: 8775, y: 340, width: 250, height: 20 },
-  { x: 9475, y: 300, width: 250, height: 20 },
+  { x: 6675, y: 280, width: 260, height: 20 },
+  { x: 7375, y: 330, width: 260, height: 20 },
+  { x: 8075, y: 260, width: 260, height: 20 },
+  { x: 8775, y: 340, width: 260, height: 20 },
+  { x: 9475, y: 300, width: 260, height: 20 },
 
-  { x: 11475, y: 320, width: 250, height: 20 },
-  { x: 12175, y: 260, width: 250, height: 20 },
-  { x: 12875, y: 350, width: 250, height: 20 },
-  { x: 13575, y: 260, width: 250, height: 20 },
-  { x: 14275, y: 300, width: 250, height: 20 },
+  { x: 11475, y: 320, width: 260, height: 20 },
+  { x: 12175, y: 260, width: 260, height: 20 },
+  { x: 12875, y: 350, width: 260, height: 20 },
+  { x: 13575, y: 260, width: 260, height: 20 },
+  { x: 14275, y: 300, width: 260, height: 20 },
 
-  { x: 16275, y: 290, width: 250, height: 20 },
-  { x: 16975, y: 340, width: 250, height: 20 },
-  { x: 17675, y: 270, width: 250, height: 20 },
-  { x: 18375, y: 350, width: 250, height: 20 },
-  { x: 19075, y: 310, width: 250, height: 20 },
+  { x: 16275, y: 290, width: 260, height: 20 },
+  { x: 16975, y: 340, width: 260, height: 20 },
+  { x: 17675, y: 270, width: 260, height: 20 },
+  { x: 18375, y: 350, width: 260, height: 20 },
+  { x: 19075, y: 310, width: 260, height: 20 },
 
-  { x: 21075, y: 330, width: 250, height: 20 },
-  { x: 21775, y: 280, width: 250, height: 20 },
-  { x: 22475, y: 350, width: 250, height: 20 },
-  { x: 23175, y: 260, width: 250, height: 20 },
-  { x: 23875, y: 290, width: 250, height: 20 }
+  { x: 21075, y: 330, width: 260, height: 20 },
+  { x: 21775, y: 280, width: 260, height: 20 },
+  { x: 22475, y: 350, width: 260, height: 20 },
+  { x: 23175, y: 260, width: 260, height: 20 },
+  { x: 23875, y: 290, width: 260, height: 20 }
  
 
   ],
@@ -99,8 +101,10 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     id: 'level2',
     name: 'Level 2',
     timeLimit: 90,
-    length:  25825,    
-    playerSpawn: { x: 300, y: 200 },  // FOR TESTING: USE 8100 FOR CHALLENGE ROOMS / USE 25225 FOR BOSS BATTLES
+    length:  25825,   
+    playerSpawn: { x: 300, y: 200 }, // NORMAL
+    //playerSpawn: { x: 8200, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    //playerSpawn: { x: 25225, y: 200 },   // FOR TESTING BOSS BATTLES 
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 4865, y: 440, width: 2000, height: 50 },
@@ -112,35 +116,35 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
 
     ],
     platforms: [
-      { x: 1950, y: 330, width: 225, height: 20 },
-      { x: 2635, y: 300, width: 225, height: 20 },
-      { x: 3320, y: 270, width: 225, height: 20 },
-      { x: 4005, y: 310, width: 225, height: 20 },
-      { x: 4690, y: 350, width: 225, height: 20 },
+      { x: 1950, y: 330, width: 235, height: 20 },
+      { x: 2635, y: 300, width: 235, height: 20 },
+      { x: 3320, y: 270, width: 235, height: 20 },
+      { x: 4005, y: 310, width: 235, height: 20 },
+      { x: 4690, y: 350, width: 235, height: 20 },
 
-      { x: 6815, y: 360, width: 225, height: 20 },
-      { x: 7500, y: 330, width: 225, height: 20 },
-      { x: 8185, y: 290, width: 225, height: 20 },
-      { x: 8870, y: 260, width: 225, height: 20 },
-      { x: 9555, y: 350, width: 225, height: 20 },
+      { x: 6815, y: 360, width: 235, height: 20 },
+      { x: 7500, y: 330, width: 235, height: 20 },
+      { x: 8185, y: 290, width: 235, height: 20 },
+      { x: 8870, y: 260, width: 235, height: 20 },
+      { x: 9555, y: 350, width: 235, height: 20 },
 
-      { x: 11680, y: 330, width: 225, height: 20 },
-      { x: 12365, y: 310, width: 225, height: 20 },
-      { x: 13050, y: 280, width: 225, height: 20 },
-      { x: 13735, y: 240, width: 225, height: 20 },
-      { x: 14420, y: 350, width: 225, height: 20 },
+      { x: 11680, y: 330, width: 235, height: 20 },
+      { x: 12365, y: 310, width: 235, height: 20 },
+      { x: 13050, y: 280, width: 235, height: 20 },
+      { x: 13735, y: 240, width: 235, height: 20 },
+      { x: 14420, y: 350, width: 235, height: 20 },
 
-      { x: 16545, y: 320, width: 225, height: 20 },
-      { x: 17230, y: 280, width: 225, height: 20 },
-      { x: 17915, y: 260, width: 225, height: 20 },
-      { x: 18600, y: 230, width: 225, height: 20 }, // EGG
-      { x: 19285, y: 340, width: 225, height: 20 },
+      { x: 16545, y: 320, width: 235, height: 20 },
+      { x: 17230, y: 280, width: 235, height: 20 },
+      { x: 17915, y: 260, width: 235, height: 20 },
+      { x: 18600, y: 230, width: 235, height: 20 }, // EGG
+      { x: 19285, y: 340, width: 235, height: 20 },
 
-      { x: 21410, y: 300, width: 225, height: 20 },
-      { x: 22095, y: 280, width: 225, height: 20 },
-      { x: 22780, y: 250, width: 225, height: 20 },
-      { x: 23465, y: 220, width: 225, height: 20 }, // MILK
-      { x: 24150, y: 360, width: 225, height: 20 }
+      { x: 21410, y: 300, width: 235, height: 20 },
+      { x: 22095, y: 280, width: 235, height: 20 },
+      { x: 22780, y: 250, width: 235, height: 20 },
+      { x: 23465, y: 220, width: 235, height: 20 }, // MILK
+      { x: 24150, y: 360, width: 235, height: 20 }
         ],
     noStuffZones: [{ start: 24100, end: 24450 }, { start: 8100, end: 8500 }, { start: 10412, end: 10912 }, { start: 18500, end: 18920 }], // BONUS HP AND MILK BOTTLE
     cups: { enabled: true, count: 15 },
@@ -195,7 +199,9 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 3',
     timeLimit: 90,
     length:  27900,  
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 20720 FOR CHALLENGE ROOMS / USE 27450 FOR BOSS BATTLES
+    playerSpawn: { x: 300, y: 200 }, // NORMAL
+    //playerSpawn: { x: 20770, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    //playerSpawn: { x: 27350, y: 200 },   // FOR TESTING BOSS BATTLES 
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5280, y: 440, width: 2000, height: 50 },
@@ -205,36 +211,36 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       { x: 26400, y: 440, width: 2000, height: 50 }
 ],
     platforms: [
-      { x: 2200, y: 380, width: 200, height: 20 },
-      { x: 2870, y: 300, width: 200, height: 20 },
-      { x: 3540, y: 250, width: 200, height: 20 },
-      { x: 4210, y: 300, width: 200, height: 20 },
-      { x: 4880, y: 200, width: 200, height: 20 }, // CATNIP
+      { x: 2200, y: 380, width: 220, height: 20 },
+      { x: 2870, y: 300, width: 220, height: 20 },
+      { x: 3540, y: 250, width: 220, height: 20 },
+      { x: 4210, y: 300, width: 220, height: 20 },
+      { x: 4880, y: 200, width: 220, height: 20 }, // CATNIP
 
-      { x: 7480, y: 250, width: 200, height: 20 },
-      { x: 8150, y: 350, width: 200, height: 20 },
-      { x: 8820, y: 270, width: 200, height: 20 },
-      { x: 9490, y: 210, width: 200, height: 20 },
-      { x: 10160, y: 350, width: 200, height: 20 },
+      { x: 7480, y: 250, width: 220, height: 20 },
+      { x: 8150, y: 350, width: 220, height: 20 },
+      { x: 8820, y: 270, width: 220, height: 20 },
+      { x: 9490, y: 210, width: 220, height: 20 },
+      { x: 10160, y: 350, width: 220, height: 20 },
 
-      { x: 12760, y: 320, width: 200, height: 20 },
-      { x: 13430, y: 380, width: 200, height: 20 },
-      { x: 14100, y: 290, width: 200, height: 20 },
-      { x: 14770, y: 220, width: 200, height: 20 },
-      { x: 15440, y: 350, width: 200, height: 20 },
+      { x: 12760, y: 320, width: 220, height: 20 },
+      { x: 13430, y: 380, width: 220, height: 20 },
+      { x: 14100, y: 290, width: 220, height: 20 },
+      { x: 14770, y: 220, width: 220, height: 20 },
+      { x: 15440, y: 350, width: 220, height: 20 },
 
-      { x: 18040, y: 280, width: 200, height: 20 },
-      { x: 18710, y: 420, width: 200, height: 20 },
-      { x: 19380, y: 380, width: 200, height: 20 },
-      { x: 20050, y: 310, width: 200, height: 20 },
-      { x: 20720, y: 280, width: 200, height: 20 }, // CHALLENGE DOOR IN
+      { x: 18040, y: 280, width: 220, height: 20 },
+      { x: 18710, y: 420, width: 220, height: 20 },
+      { x: 19380, y: 380, width: 220, height: 20 },
+      { x: 20050, y: 310, width: 220, height: 20 },
+      { x: 20720, y: 280, width: 220, height: 20 }, // CHALLENGE DOOR IN
 
 
-      { x: 23320, y: 340, width: 200, height: 20 }, // CHALLENGE DOOR OUT
-      { x: 23990, y: 220, width: 200, height: 20 }, // STAIRWAY
-      { x: 24660, y: 150, width: 200, height: 20 }, // STAIRWAY
-      { x: 25330, y: 390, width: 200, height: 20 }, // LOWER LEVEL = NO EGG
-      { x: 26000, y: 400, width: 200, height: 20 }, // LOWER LEVEL = NO EGG
+      { x: 23320, y: 340, width: 220, height: 20 }, // CHALLENGE DOOR OUT
+      { x: 23990, y: 220, width: 220, height: 20 }, // STAIRWAY
+      { x: 24660, y: 150, width: 220, height: 20 }, // STAIRWAY
+      { x: 25330, y: 390, width: 220, height: 20 }, // LOWER LEVEL = NO EGG
+      { x: 26000, y: 400, width: 220, height: 20 }, // LOWER LEVEL = NO EGG
 
       { x: 25160, y: -15, width: 600, height: 20, isRect: true } , // SECRET PLATFORM
       { x: 26200, y: 100, width: 100, height: 20 } // EGG
@@ -281,10 +287,10 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       bonusHP: { enabled: true, count: 1 }
     },
     challengeDoorIN: [ 
-    { x: 20720, 
+    { x: 20770, 
       y: 110, 
       roomId: 'room3',
-      returnX: 16490,  
+      returnX: 23320,  
       returnY: 70
     }    
     ],
@@ -301,7 +307,9 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 4',
     timeLimit: 90,
     length:  28850,  
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 16710 FOR CHALLENGE ROOMS / USE 28350 FOR BOSS BATTLES
+    playerSpawn: { x: 300, y: 200 }, // NORMAL
+    //playerSpawn: { x: 16710, y: 200 }, // FOR TESTING CHALLENGE ROOMS
+    //playerSpawn: { x: 28350, y: 200 },   // FOR TESTING BOSS BATTLES 
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5470, y: 440, width: 2000, height: 50 },
@@ -313,44 +321,44 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     ],
     sequentialPlatforms: {
       enabled: true,
-      platformIds: [21, 22, 23, 24] 
+      platformIds: [20, 21, 22, 23] 
     },
     platforms: [
-    { x: 2300, y: 380, width: 190, height: 20 },
-    { x: 2970, y: 350, width: 190, height: 20 },
-    { x: 3640, y: 300, width: 190, height: 20 },
-    { x: 4310, y: 340, width: 190, height: 20 },
-    { x: 4980, y: 270, width: 190, height: 20 },
+    { x: 2300, y: 380, width: 220, height: 20 },
+    { x: 2970, y: 350, width: 220, height: 20 },
+    { x: 3640, y: 300, width: 220, height: 20 },
+    { x: 4310, y: 340, width: 220, height: 20 },
+    { x: 4980, y: 270, width: 220, height: 20 },
 
-    { x: 7770, y: 360, width: 190, height: 20 },
-    { x: 8440, y: 250, width: 190, height: 20 },
-    { x: 9110, y: 190, width: 190, height: 20 },  // CATNIP
-    { x: 9780, y: 350, width: 190, height: 20 },
-    { x: 10450, y: 270, width: 190, height: 20 },
+    { x: 7770, y: 360, width: 220, height: 20 },
+    { x: 8440, y: 250, width: 220, height: 20 },
+    { x: 9110, y: 190, width: 220, height: 20 },  // CATNIP
+    { x: 9780, y: 350, width: 220, height: 20 },
+    { x: 10450, y: 270, width: 220, height: 20 },
 
-    { x: 13240, y: 280, width: 190, height: 20 },
-    { x: 13910, y: 410, width: 190, height: 20 },
-    { x: 14580, y: 380, width: 190, height: 20 },
-    { x: 15250, y: 290, width: 190, height: 20 },
-    { x: 15920, y: 290, width: 190, height: 20 },
+    { x: 13240, y: 280, width: 220, height: 20 }, //10
+    { x: 13910, y: 410, width: 220, height: 20 },
+    { x: 14580, y: 380, width: 220, height: 20 },
+    { x: 15250, y: 290, width: 220, height: 20 },
+    { x: 15920, y: 290, width: 220, height: 20 },
 
 
-      { x: 18710, y: 280, width: 190, height: 20 }, // GAUNTLET 4: 14610 ~ 16900 - STAIRS UP TO EASY PLATFORMS
-      { x: 19380, y: 140, width: 190, height: 20 }, // STAIRS UP TO EASY PLATFORMS
-      { x: 20050, y: 90, width: 225, height: 20 }, // EASY = NO EGG
-      { x: 20720, y: 80, width: 225, height: 20 },  // EASY = NO EGG
-      { x: 21390, y: 90, width: 225, height: 20 },  // EASY = NO EGG
+      { x: 18710, y: 280, width: 220, height: 20 }, // GAUNTLET 4: 14610 ~ 16900 - STAIRS UP TO EASY PLATFORMS
+      { x: 19380, y: 140, width: 220, height: 20 }, // STAIRS UP TO EASY PLATFORMS
+      { x: 20050, y: 90, width: 250, height: 20 }, // EASY = NO EGG
+      { x: 20720, y: 80, width: 250, height: 20 },  // EASY = NO EGG
+      { x: 21390, y: 90, width: 250, height: 20 },  // EASY = NO EGG
 
-      { x: 19480, y: 460, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
-      { x: 20150, y: 430, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
-      { x: 20820, y: 460, width: 150, height: 20 }, // SEQUENTIAL PLATFORM
-      { x: 21490, y: 450, width: 150, height: 20 }, // EGG
+      { x: 19480, y: 460, width: 185, height: 20 }, // SEQUENTIAL PLATFORM
+      { x: 20150, y: 430, width: 185, height: 20 }, // SEQUENTIAL PLATFORM
+      { x: 20820, y: 460, width: 185, height: 20 }, // SEQUENTIAL PLATFORM
+      { x: 21490, y: 450, width: 185, height: 20 }, // EGG
 
-      { x: 24180, y: 370, width: 200, height: 20 },
-      { x: 24850, y: 250, width: 200, height: 20 },
-      { x: 25520, y: 200, width: 200, height: 20 },
-      { x: 26190, y: 260, width: 200, height: 20 },
-      { x: 26860, y: 370, width: 200, height: 20 }
+      { x: 24180, y: 370, width: 220, height: 20 },
+      { x: 24850, y: 250, width: 220, height: 20 },
+      { x: 25520, y: 200, width: 220, height: 20 },
+      { x: 26190, y: 260, width: 220, height: 20 },
+      { x: 26860, y: 370, width: 220, height: 20 }
 
     ],
     noStuffZones: [  { start: 4900, end: 5300  }, { start: 16510, end: 17010  }, { start: 17810, end: 18220 }, { start: 18510, end: 21590 }], // CATNIP AND EGG
@@ -390,7 +398,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       { x: 21560, y: 320 }, 
     ],  
     catnipZones: [
-      { x: 5020, y: 80 }, 
+      { x: 5050, y: 100 }, 
     ],
     items: {
       fishBones: { enabled: true, count: 1 },
@@ -421,7 +429,9 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     name: 'Level 5',
     timeLimit: 90,
     length:  27800,   
-    playerSpawn: { x: 300, y: 200 }, // FOR TESTING: USE 5047 FOR CHALLENGE ROOMS / USE 27350 FOR BOSS BATTLES
+    playerSpawn: { x: 300, y: 200 }, // NORMAL
+    //playerSpawn: { x: 5100, y: 100 }, // FOR TESTING CHALLENGE ROOMS
+    //playerSpawn: { x: 27350, y: 200 },   // FOR TESTING BOSS BATTLES 
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
       { x: 5660, y: 440, width: 2000, height: 50 },
@@ -433,29 +443,29 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
 ],
     solidPlatforms: [20],
     platforms: [
-        { x: 2400,    y: 380, width: 175, height: 20 },
-        { x: 3065,    y: 320, width: 175, height: 20 },
-        { x: 3730,    y: 250, width: 175, height: 20 },
-        { x: 4395,    y: 210, width: 175, height: 20 },
-        { x: 5060,    y: 150, width: 175, height: 20 },
+        { x: 2400,    y: 380, width: 220, height: 20 },
+        { x: 3065,    y: 320, width: 220, height: 20 },
+        { x: 3730,    y: 250, width: 220, height: 20 },
+        { x: 4395,    y: 210, width: 220, height: 20 },
+        { x: 5060,    y: 150, width: 220, height: 20 },
 
-        { x: 7995,    y: 350, width: 175, height: 20 },
-        { x: 8660,    y: 390, width: 175, height: 20 },
-        { x: 9325,    y: 450, width: 175, height: 20 },
-        { x: 9990,    y: 430, width: 175, height: 20 },
-        { x: 10655,   y: 370, width: 175, height: 20 },
+        { x: 7995,    y: 350, width: 220, height: 20 },
+        { x: 8660,    y: 390, width: 220, height: 20 },
+        { x: 9325,    y: 450, width: 220, height: 20 },
+        { x: 9990,    y: 430, width: 220, height: 20 },
+        { x: 10655,   y: 370, width: 220, height: 20 },
 
-        { x: 13590,   y: 360, width: 175, height: 20 },
-        { x: 14255,   y: 310, width: 175, height: 20 },
-        { x: 14920,   y: 260, width: 175, height: 20 },
-        { x: 15585,   y: 190, width: 175, height: 20 },
-        { x: 16250,   y: 370, width: 175, height: 20 },
+        { x: 13590,   y: 360, width: 220, height: 20 },
+        { x: 14255,   y: 310, width: 220, height: 20 },
+        { x: 14920,   y: 260, width: 220, height: 20 },
+        { x: 15585,   y: 190, width: 220, height: 20 },
+        { x: 16250,   y: 370, width: 220, height: 20 },
 
-        { x: 19185,   y: 280, width: 175, height: 20 },
-        { x: 19850,   y: 430, width: 175, height: 20 },
-        { x: 20515,   y: 360, width: 175, height: 20 },
-        { x: 21180,   y: 280, width: 175, height: 20 },
-        { x: 21845,   y: 460, width: 175, height: 20 },
+        { x: 19185,   y: 280, width: 220, height: 20 },
+        { x: 19850,   y: 430, width: 220, height: 20 },
+        { x: 20515,   y: 360, width: 220, height: 20 },
+        { x: 21180,   y: 280, width: 220, height: 20 },
+        { x: 21845,   y: 460, width: 220, height: 20 },
         { x: 24780, y: 330, width: 1200, height: 20 }
         ],
     noStuffZones: [  
@@ -518,7 +528,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       bonusHP: { enabled: true, count: 2 }
     },
     challengeDoorIN: [  
-    { x: 5047, 
+    { x: 5100, 
       y: 30, 
       roomId: 'room5',
       returnX: 6560,

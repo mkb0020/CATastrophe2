@@ -315,24 +315,24 @@
 
 </div>
 
-<div id="newMoveModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title"> 🔓 NEW BATTLE MOVE UNLOCKED! 🔓 </h1>
+<div id="newMoveModal" class="modal-whiskerWhip">
+  <div class="modal-whiskerWhip-content">
+    <div class="modal-whiskerWhip-header">
+      <div class="modal-whiskerWhip-title"> 🔓 NEW BATTLE MOVE UNLOCKED! 🔓 </div>
     </div>
     <div class="modal-body">
       <div class="unlock">
-        <h1 id="moveName">WHISKER WHIP!</h1>
-        <h2 id="moveStats">(DMG: 40, Uses: 2)</h2>
-        <img id="moveImage" src="./assets/images/items/whiskerWhip.PNG" alt="WHISKER WHIP" style="display: block; margin: 20px auto; max-width: 200px; filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));">
-        <h3>Select a move to replace:</h3>
+        <img id="moveImage" class="whiskerWhip-img" src="./assets/images/items/whiskerWhip.PNG" alt="WHISKER WHIP">
+        <div id="moveName" class="whiskerWhip-name">WHISKER WHIP!</div>
+        <div id="moveStats" class="whiskerWhip-stats">(DMG: 40, Uses: 2)</div>
+        <div class="replace-move">Select a move to replace:</div>
         
         <div class="move-container">
           <div class="move-grid" id="moveButtonsContainer">
           </div>
         </div>
         
-        <button class="modal-button" id="confirmMoveBtn" disabled style="opacity: 0.5;">CONFIRM</button>
+        <button class="modal-button-whiskerWhip" id="confirmMoveBtn" disabled style="opacity: 0.5;">CONFIRM</button>
       </div>
     </div>
   </div>
@@ -341,12 +341,12 @@
 <div id="fragmentModal" class="modal">
   <div class="modal-fragment-content">
     <div class="modal-fragment-header">
-      <h1 class="modal-fragment-title">YOU'RE ON 🔥 RIGHT MEOW!</h1>
+      <div class="modal-fragment-title">YOU'RE ON 🔥 RIGHT MEOW!</div>
     </div>
     <div class="modal-body">
       <div class="unlock">
         <div class="fragment-progress">
-          <h3 id="fragmentCount">1/3 electron states collected!</h3>
+          <div id="fragmentCount" class="fragment-count">1/3 electron states collected!</div>
           <div class="fragment-icons">
             <div class="fragment-icon" id="fragment1">💫</div>
             <div class="fragment-icon" id="fragment2">💫</div>
@@ -362,14 +362,14 @@
 
 <div id="upgradeModal" class="modal">
   <div class="modal-upgrade-content">
-    <div class="modal-upgrade-header">
-      <h1 class="modal-upgrade-title">💥 THAT WAS SUPURRRRR!! 💥</h1>
-    </div>
     <div class="modal-body">
       <div class="unlock">
-        <div class="stats-modal-instructions" id="upgradeInstructions">You can meow select a stat to increase by 1 point!</div>
+        <div class="stats-modal-points-remaining" id="pointsRemaining">
+          <strong>💥 THAT WAS SUPURRRRR!! 💥</strong><br>
+          You can meow select a stat to increase by <span class="stats-modal-points-value" id="pointsValue">1</span> point!
+        </div>
+
         <div class="stats-info">
-          
           <div class="stats-card">
             <div class="stats-content">
               <div class="stats-title">CURRENT STATS:</div>
@@ -405,27 +405,23 @@
             <!-- DEFENSE -->
             <div class="stats-little-buttons-row">
               <button class="stats-modal-little-button-defense" id="defenseDecBtn" disabled>−</button>
-                <div class="stats-modal-between-little-buttons">
-                  <strong class="stats-modal-little-buttons-label">DEFENSE</strong>
-                  <span class="stats-modal-little-buttons-sub-label">+<span id="defenseIncrease">0</span></span>
-                </div>
+              <div class="stats-modal-between-little-buttons">
+                <strong class="stats-modal-little-buttons-label">DEFENSE</strong>
+                <span class="stats-modal-little-buttons-sub-label">+<span id="defenseIncrease">0</span></span>
+              </div>
               <button class="stats-modal-little-button-defense" id="defenseIncBtn">+</button>
             </div>
 
             <!-- SPEED -->
             <div class="stats-little-buttons-row">
-              <button class="stats-modal-little-button-speed" id="speedDecBtn"  disabled>−</button>
-                <div class="stats-modal-between-little-buttons">
-                  <strong class="stats-modal-little-buttons-label">SPEED</strong>
-                  <span class="stats-modal-little-buttons-sub-label">+<span id="speedIncrease">0</span></span>
-                </div>
+              <button class="stats-modal-little-button-speed" id="speedDecBtn" disabled>−</button>
+              <div class="stats-modal-between-little-buttons">
+                <strong class="stats-modal-little-buttons-label">SPEED</strong>
+                <span class="stats-modal-little-buttons-sub-label">+<span id="speedIncrease">0</span></span>
+              </div>
               <button class="stats-modal-little-button-speed" id="speedIncBtn">+</button>
             </div>
           </div>
-        </div>
-
-        <div class="stats-modal-points-remaining" id="pointsRemaining">
-          Points Remaining: <span class="stats-modal-points-value" id="pointsValue">1</span>
         </div>
         
         <button class="modal-button-confirm-upgrade" id="confirmUpgradeBtn" disabled style="opacity: 0.5;">CONFIRM</button>
@@ -499,7 +495,7 @@
 <!-- ======================= BOSS BATTLES =======================-->
 <div id="battleUI" class="battle-ui hidden">
   <div class="battle-hp-panel battle-hp-panel--boss" id="bossHPPanel">
-    <div class="battle-hp-panel__name" id="bossName">Boss Name</div> 
+    <div class="battle-hp-panel__name battle-boss-name" id="bossName">Boss Name</div> 
     <div class="battle-hp-panel__row"> 
       <span class="battle-hp-panel__label">HP:</span>
       <div class="battle-hp-panel__bar-track"> 
@@ -510,7 +506,7 @@
   </div>
 
   <div class="battle-hp-panel battle-hp-panel--player" id="playerHPPanel"> 
-    <div class="battle-hp-panel__name" id="playerName">Player Name</div> 
+    <div class="battle-hp-panel__name battle-player-name" id="playerName">Player Name</div> 
     <div class="battle-hp-panel__row"> 
       <span class="battle-hp-panel__label">HP:</span> 
       <div class="battle-hp-panel__bar-track"> 
@@ -536,6 +532,8 @@
 
     </div>
 </div>
+
+        
 
 <!-- ======================= SCRIPTS =======================-->
 <script type="module" src="modules/game.js"></script>   
@@ -593,37 +591,43 @@ class UpgradeModalController {
   }
 
   // ==================== STATS UPGRADE MODAL ====================
-  openStatsUpgrade(statPoints, currentStats, onComplete) {
-    console.log('📈 Opening stats upgrade modal:', { statPoints, currentStats });
-    
-    this.totalPoints = statPoints;
-    this.remainingPoints = statPoints;
-    this.tempStats = { attack: 0, defense: 0, speed: 0 };
-    this.baseStats = { ...currentStats }; 
-    this.callbacks.statsComplete = onComplete;
+openStatsUpgrade(statPoints, currentStats, onComplete) {
+  console.log('📈 Opening stats upgrade modal:', { statPoints, currentStats });
+  
+  this.totalPoints = statPoints;
+  this.remainingPoints = statPoints;
+  this.tempStats = { attack: 0, defense: 0, speed: 0 };
+  this.baseStats = { ...currentStats }; 
+  this.callbacks.statsComplete = onComplete;
 
-    document.getElementById('upgradeInstructions').textContent = 
-      `You can meow select a stat to increase by ${statPoints} point${statPoints > 1 ? 's' : ''}!`;
-    
-    document.getElementById('attackValue').textContent = currentStats.attack || 0;
-    document.getElementById('defenseValue').textContent = currentStats.defense || 0;
-    document.getElementById('speedValue').textContent = currentStats.speed || 0;
-    
-    console.log('📊 Displaying current stats:', currentStats);
-    
-    document.getElementById('pointsValue').textContent = this.remainingPoints;
-    document.getElementById('attackIncrease').textContent = 0;
-    document.getElementById('defenseIncrease').textContent = 0;
-    document.getElementById('speedIncrease').textContent = 0;
-    
-    this.updateButtonStates();
-    
-    const confirmBtn = document.getElementById('confirmUpgradeBtn');
-    confirmBtn.disabled = true;
-    confirmBtn.style.opacity = '0.5';
-
-    this.showModal('upgradeModal');
+  const pointsRemainingDiv = document.getElementById('pointsRemaining');
+  if (pointsRemainingDiv) {
+    pointsRemainingDiv.innerHTML = `
+      <strong>💥 THAT WAS SUPURRRRR!! 💥</strong><br>
+      You can meow select a stat to increase by <span class="stats-modal-points-value" id="pointsValue">${statPoints}</span> point${statPoints > 1 ? 's' : ''}!
+    `;
   }
+  
+  document.getElementById('attackValue').textContent = currentStats.attack || 0;
+  document.getElementById('defenseValue').textContent = currentStats.defense || 0;
+  document.getElementById('speedValue').textContent = currentStats.speed || 0;
+  
+  console.log('📊 Displaying current stats:', currentStats);
+  
+  document.getElementById('attackIncrease').textContent = 0;
+  document.getElementById('defenseIncrease').textContent = 0;
+  document.getElementById('speedIncrease').textContent = 0;
+  
+  this.updateButtonStates();
+  
+  const confirmBtn = document.getElementById('confirmUpgradeBtn');
+  confirmBtn.disabled = true;
+  confirmBtn.style.opacity = '0.5';
+
+  this.showModal('upgradeModal');
+}
+
+
 
   incrementStat(stat) {
     if (this.remainingPoints <= 0) return;
@@ -649,19 +653,23 @@ class UpgradeModalController {
     if (window.play) window.play("happyMeow", { volume: 0.15 });
   }
 
-  updateStatDisplay(stat) {
-    document.getElementById(`${stat}Increase`).textContent = this.tempStats[stat];
-    
-    document.getElementById('pointsValue').textContent = this.remainingPoints;
-
-    const statMultiplier = 1;
-    const newStatValue = this.baseStats[stat] + (this.tempStats[stat] * statMultiplier);
-    document.getElementById(`${stat}Value`).textContent = newStatValue;
-
-    const row = document.getElementById(`${stat}Row`);
-    row.classList.add('increase');
-    setTimeout(() => row.classList.remove('increase'), 500);
+updateStatDisplay(stat) {
+  document.getElementById(`${stat}Increase`).textContent = this.tempStats[stat];
+  
+  const pointsValueSpan = document.getElementById('pointsValue');
+  if (pointsValueSpan) {
+    pointsValueSpan.textContent = this.remainingPoints;
   }
+
+  const statMultiplier = 1;
+  const newStatValue = this.baseStats[stat] + (this.tempStats[stat] * statMultiplier);
+  document.getElementById(`${stat}Value`).textContent = newStatValue;
+
+  const row = document.getElementById(`${stat}Row`);
+  row.classList.add('increase');
+  setTimeout(() => row.classList.remove('increase'), 500);
+}
+
 
   updateButtonStates() {
     const canIncrement = this.remainingPoints > 0;
@@ -772,7 +780,7 @@ class UpgradeModalController {
     
     Object.entries(currentMoves).forEach(([name, move]) => {
       const btn = document.createElement('button');
-      btn.className = 'cyber-button grey-btn cool';
+      btn.className = 'modal-button-replace-move';
       btn.innerHTML = `<strong>${name}</strong><br>${move.dmg ? `DMG: ${move.dmg}` : `HEAL: ${move.heal}`}`;
       
       btn.addEventListener('click', () => {

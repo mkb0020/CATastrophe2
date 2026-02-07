@@ -155,7 +155,7 @@ function createUnifiedLevel(levelId, data) {
         lives: getLives(),
         score: getScore(),
         timeLeft: getTimeLeft()
-      }), document.getElementById("gameCanvas"));
+      }), mobileSetup.mobileState);
     }
   } else {
     //DESKTOP CONTROLS
@@ -238,6 +238,7 @@ export function createLevel4Scene(data) {
 
 
 export function createLevel5Scene(data) {
+  showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startLives = data?.lives || 3;
@@ -343,7 +344,7 @@ export function createLevel5Scene(data) {
         lives: getLives(),
         score: getScore(),
         timeLeft: getTimeLeft()
-      }), document.getElementById("gameCanvas"));
+      }), mobileSetup.mobileState);
     }
   } else {
     // DESKTOP CONTROLS

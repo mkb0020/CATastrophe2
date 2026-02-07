@@ -112,10 +112,10 @@ export function setupJoystickControls(controls, mobileState) {
     joystickStick.style.transform = `translate(calc(-50% + ${deltaX}px), -50%)`;
     joystickX = deltaX / maxDistance;
     
-    if (joystickX < -0.3) {
+    if (joystickX < -0.15) {
       mobileState.left = true;
       mobileState.right = false;
-    } else if (joystickX > 0.3) {
+    } else if (joystickX > 0.15) {
       mobileState.right = true;
       mobileState.left = false;
     } else {
@@ -302,18 +302,30 @@ export function setupTouchEvents(controls, mobileState, canvas) {
 }
 
 // ==================== SETUP MOBILE DOOR INTERACTION ====================
-export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, getGameData, canvas) {
-  console.log('ðŸ”§ Setting up MOBILE door interactions for', doors.length, 'doors');
+export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, getGameData, mobileState) {
+  console.log('Setting up MOBILE door interactions for', doors.length, 'doors');
   
   doors.forEach((door, index) => {
     const doorConfig = door.doorConfig;
     const doorObj = door.doorObj;
     
+    const prompt = add([
+      text("Press JUMP to enter", { size: 20 }),
+      pos(0, 0),
+      anchor("center"),
+      color(255, 255, 255),
+      opacity(0),
+      z(100),
+      fixed(),
+      `doorPrompt_${index}`
+    ]);
+    
     let playerNear = false;
     let windowOpen = false;
+    let hasEnteredDoor = false;
     
     player.onUpdate(() => {
-      if (!doorObj.exists()) return;
+      if (!doorObj.exists() || hasEnteredDoor) return;
       
       const dist = player.pos.dist(doorObj.pos);
       const isNear = dist < 100;
@@ -324,49 +336,33 @@ export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, 
         if (!windowOpen) {
           windowOpen = true;
           doorObj.use(sprite('window', { frame: 1 }));
-          console.log('ðŸªŸ Window opened!');
+          console.log('Window opened!');
         }
+        
+        prompt.pos = vec2(doorObj.pos.x, doorObj.pos.y - 80);
+        prompt.opacity = 1;
       } else if (!isNear && playerNear) {
         playerNear = false;
         
         if (windowOpen) {
           windowOpen = false;
           doorObj.use(sprite('window', { frame: 0 }));
-          console.log('ðŸªŸ Window closed!');
+          console.log('Window closed!');
         }
+        
+        prompt.opacity = 0;
       }
-    });
-    
-    canvas.addEventListener('touchstart', (e) => {
-      if (!playerNear) return;
       
-      const touch = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      
-      const scaleX = 1000 / rect.width;
-      const scaleY = 480 / rect.height;
-      
-      const canvasX = (touch.clientX - rect.left) * scaleX;
-      const canvasY = (touch.clientY - rect.top) * scaleY;
-      
-      const camX = camPos().x;
-      const camY = camPos().y;
-      const worldX = canvasX + camX - 500; 
-      const worldY = canvasY + camY - 240; 
-      
-      const doorDist = Math.sqrt(
-        Math.pow(worldX - doorObj.pos.x, 2) + 
-        Math.pow(worldY - doorObj.pos.y, 2)
-      );
-      
-      if (doorDist < 100) {
-        console.log('ðŸšª Door tapped! Entering...');
+      if (playerNear && mobileState.jumpJustPressed && !hasEnteredDoor) {
+        hasEnteredDoor = true;
+        console.log('Jumping into door!');
         
         const gameData = getGameData();
         const roomConfig = ROOMS[doorConfig.roomId] || getRoom(doorConfig.roomId);
         
         if (!roomConfig) {
-          console.error('âŒ Room not found:', doorConfig.roomId);
+          console.error('Room not found:', doorConfig.roomId);
+          hasEnteredDoor = false;
           return;
         }
         
@@ -390,43 +386,41 @@ export function setupMobileDoorInteraction(player, doors, levelConfig, levelId, 
   });
 }
 
+
 // ==================== SETUP MOBILE EXIT WINDOW ====================
-export function setupMobileExitWindow(player, exitWindow, canvas, returnScene, returnData, scoreGetter, livesGetter) {
+export function setupMobileExitWindow(player, exitWindow, mobileState, returnScene, returnData, scoreGetter, livesGetter) {
+  const prompt = add([
+    text("Press JUMP to exit", { size: 20 }),
+    pos(0, 0),
+    anchor("center"),
+    color(255, 255, 255),
+    opacity(0),
+    z(100),
+    fixed(),
+    "exitPrompt"
+  ]);
+  
   let playerNear = false;
+  let hasExited = false;
   
   player.onUpdate(() => {
-    if (!exitWindow.exists()) return;
+    if (!exitWindow.exists() || !exitWindow.isOpen || hasExited) return;
     
     const dist = player.pos.dist(exitWindow.pos);
     const isNear = dist < 120;
     
-    playerNear = isNear;
-  });
-  
-  canvas.addEventListener('touchstart', (e) => {
-    if (!playerNear || !exitWindow.isOpen) return;
+    if (isNear && !playerNear) {
+      playerNear = true;
+      prompt.pos = vec2(exitWindow.pos.x, exitWindow.pos.y - 80);
+      prompt.opacity = 1;
+    } else if (!isNear && playerNear) {
+      playerNear = false;
+      prompt.opacity = 0;
+    }
     
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    
-    const scaleX = 1000 / rect.width;
-    const scaleY = 480 / rect.height;
-    
-    const canvasX = (touch.clientX - rect.left) * scaleX;
-    const canvasY = (touch.clientY - rect.top) * scaleY;
-    
-    const camX = camPos().x;
-    const camY = camPos().y;
-    const worldX = canvasX + camX - 500;
-    const worldY = canvasY + camY - 240;
-    
-    const windowDist = Math.sqrt(
-      Math.pow(worldX - exitWindow.pos.x, 2) + 
-      Math.pow(worldY - exitWindow.pos.y, 2)
-    );
-    
-    if (windowDist < 120) {
-      console.log('ðŸšª Exit window tapped! Leaving...');
+    if (playerNear && mobileState.jumpJustPressed && !hasExited) {
+      hasExited = true;
+      console.log('Exit window jumped! Leaving...');
       
       returnData.startHP = player.hp;
       returnData.lives = livesGetter();
@@ -436,6 +430,7 @@ export function setupMobileExitWindow(player, exitWindow, canvas, returnScene, r
     }
   });
 }
+
 
 // ==================== MAIN INITIALIZATION ====================
 export function initializeMobileControls(canvasElement) {

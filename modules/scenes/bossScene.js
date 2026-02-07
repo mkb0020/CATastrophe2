@@ -153,17 +153,21 @@ applyUpgradesToBossPlayer(player);
   const battleUI = document.getElementById('battleUI');
   if (battleUI) {
     battleUI.classList.remove('hidden');
-    console.log('✅ Battle UI shown');
+    battleUI.style.display = ''; 
+    battleUI.style.visibility = ''; 
+    console.log('✅ Battle UI shown, classes:', battleUI.className);
+  } else {
+    console.error('❌ battleUI element not found in DOM!');
   }
 
   // VISUAL ELEMENTS
   addBossBackground(bossConfig);
-  const { playerSprite, playerGlow, bossSprite, bossGlow } = addBattleSprites(character, bossConfig);
+  const { playerSprite, bossSprite } = addBattleSprites(character, bossConfig);
   const { playerHPBar, playerHPText } = addPlayerHPPanel(player);
   const { bossHPBar, bossHPText } = addBossHPPanel(boss);
   const logText = addBattleLogPanel(battleLog);
   addMoveButtonsPanel();
-
+  showBattleUI(0);
   // GETTERS FOR GAME STATES
   const getGameActive = () => battleActive && waitingForPlayer;
 
@@ -181,7 +185,7 @@ function updateLog(message) {
 }
 
   // ANIMATIONS
-  function playAttackAnimation(moveName, attackerSprite, targetSprite, attackerGlow, isHeal) {
+  function playAttackAnimation(moveName, attackerSprite, targetSprite, isHeal) {
     console.log('ðŸŽ® Playing animation for:', moveName, 'uppercase:', moveName.toUpperCase());
 
     const isPlayer = attackerSprite === playerSprite;
@@ -192,148 +196,148 @@ function updateLog(message) {
       // PLAYER MOVES
       case "ZOOMIES":
         animateZoomies(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "CATNIP CLAW":
         animateClaw(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "SCRATCH":
         animateScratch(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "MAKE BISCUITS":
         animateBiscuits(attackerSprite);
-        animateHeal(attackerSprite, attackerGlow);
+        animateHeal(attackerSprite);
         break;
 
       case "WHISKER WHIP":
         animateWhiskerWhip(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
       
       // LASER POINTER BOSS MOVES
 
       case "PHOTON FLASH":
         animateFlash();
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
 
       case "ZAP":
         animateZap(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "LASER BEAM":
         animateLaserBeam(attackerSprite, targetSprite);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        wait(0.2, () => animateHit(targetSprite));
         break;
       
       // BOSS CUP MOVES
       case "ESPRESSO EMBER":
         animateEspressoFireball(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "STEAM BURN":
         animatePoooof(targetSprite);
         animateBurn(targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "REFILL":
         animatePowerup(attackerSprite);
-        animateHeal(attackerSprite, attackerGlow);
+        animateHeal(attackerSprite);
         break;
       
       // BOSS CUCUMBER MOVES
       case "CUCUMBER CRUNCH":
         animateGreenBoom(targetSprite);
         shake(20);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "CUCUMBER CANNON":
         animateGreenBlast(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "PICKLE":
         animatePowerup(attackerSprite);
-        animateHeal(attackerSprite, attackerGlow);
+        animateHeal(attackerSprite);
         break;
         
       case "GOURD GUARD":
         animatePowerup(attackerSprite);
-        animateHeal(attackerSprite, attackerGlow);
+        animateHeal(attackerSprite);
         break;
       
       // RAT KING
       case "BITE":
         animateBite(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
     
       case "RODENT RAGE":
         animateRodentRage(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
         
       case "MOUSE MISSILES":
         animateMouseMissiles(attackerSprite, targetSprite);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        wait(0.2, () => animateHit(targetSprite));
         break;
 
       case "SCURRY":
           animatePowerup(attackerSprite);
-          animateHeal(attackerSprite, attackerGlow);
+          animateHeal(attackerSprite);
           break;
 
       // OBSERVER MOVES 
       case "POISON":
         animatePoisonAttack(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
           
       case "HYDROGEN HAMMER":
         animateHydrogenHammer(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
           
       case "SUPERPOSITION SLAM":
         animateSuperpositionSlam(attackerSprite, targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
 
       case "QUANTUM RECOVER":
         animatePowerup(attackerSprite);
-        animateHeal(attackerSprite, attackerGlow);
+        animateHeal(attackerSprite);
         break;
 
         
       // DEFAULT: SIMPLE EXPLOSION
       default:
         animateExplosion(targetSprite);
-        animateAttack(attackerSprite, attackerGlow, isPlayer);
-        wait(0.2, () => animateHit(targetSprite, isPlayer ? bossGlow : playerGlow));
+        animateAttack(attackerSprite, isPlayer);
+        wait(0.2, () => animateHit(targetSprite));
         break;
     }
   }
@@ -353,7 +357,7 @@ function updateLog(message) {
     let firstAttacker, secondAttacker;
     let firstMove, secondMove;
     let firstMoveName, secondMoveName;
-    let firstSprite, secondSprite, firstGlow, secondGlow;
+    let firstSprite, secondSprite;
     
     if (player.speed >= boss.speed) {
       firstAttacker = player;
@@ -364,8 +368,6 @@ function updateLog(message) {
       secondMoveName = bossMoveName;
       firstSprite = playerSprite;
       secondSprite = bossSprite;
-      firstGlow = playerGlow;
-      secondGlow = bossGlow;
     } else {
       firstAttacker = boss;
       secondAttacker = player;
@@ -375,14 +377,12 @@ function updateLog(message) {
       secondMoveName = playerMoveName;
       firstSprite = bossSprite;
       secondSprite = playerSprite;
-      firstGlow = bossGlow;
-      secondGlow = playerGlow;
     }
     
     wait(0.5, () => {
       let logMessage = "";
       
-      playAttackAnimation(firstMoveName, firstSprite, secondSprite, firstGlow, firstMove.heal);
+      playAttackAnimation(firstMoveName, firstSprite, secondSprite, firstMove.heal);
       
       if (firstAttacker === player) {
         logMessage = executeMove(player, boss, firstMoveName, firstMove);
@@ -400,7 +400,7 @@ function updateLog(message) {
       wait(3, () => {
         let secondLogMessage = "";
         
-        playAttackAnimation(secondMoveName, secondSprite, firstSprite, secondGlow, secondMove.heal);
+        playAttackAnimation(secondMoveName, secondSprite, firstSprite, secondMove.heal);
         
         if (secondAttacker === player) {
           secondLogMessage = executeMove(player, boss, secondMoveName, secondMove);
@@ -618,7 +618,7 @@ function checkBattleEnd() {
                 go("transition", "Transition7", character, player.hp, player.lives, startScore);
 
               } else {
-                animateDefeat(bossSprite, bossGlow, false);
+                animateDefeat(bossSprite, false);
                 updateLog(`PURRRRRFECT VICTORY! THE ${boss.name} HAS BEEN DEFEATED!`);
                 
                 wait(1.5, () => {
@@ -673,7 +673,7 @@ function checkBattleEnd() {
       waitingForPlayer = false;
       updateLog(`${player.name} has been defeated...`);
       
-      animateDefeat(playerSprite, playerGlow, true);
+      animateDefeat(playerSprite, true);
       wait(1, () => {
         const currentLives = character.lives !== undefined ? character.lives : (player.lives || 0);
         if (currentLives > 0) {

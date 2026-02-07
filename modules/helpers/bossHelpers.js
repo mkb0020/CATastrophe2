@@ -15,23 +15,17 @@ export function addBossBackground(bossConfig) {
     sprite(bossConfig.background),
     pos(0, 0),
     scale(SCREEN_W / 1000, SCREEN_H / 480),
-    opacity(0), // TEMPORARILY SETTING TO 0 WHILE I STYLE THE HTML/CSS UI
+    opacity(1),
     z(0)
   ]);
+
+
+
 
 }
 
 export function addBattleSprites(character, bossConfig) {
   const prefix = character.name; 
-  const playerGlow = add([
-    sprite("characterGlow"),
-    pos(260, 235),
-    anchor("center"),
-    scale(1.3),
-    opacity(1),
-    z(0),
-    "playerGlow"
-  ]);
 
   const playerSprite = add([
     sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.battle }),
@@ -43,16 +37,6 @@ export function addBattleSprites(character, bossConfig) {
     "playerSprite"
   ]);
   
-  const bossGlow = add([
-    sprite(bossConfig.glowSprite || "glow"),
-    pos(740, 120),
-    anchor("center"),
-    scale(1.05),
-    opacity(1),
-    z(0),
-    "bossGlow"
-  ]);
-
   const bossSprite = add([
     sprite(bossConfig.sprite),
     pos(740, 120),
@@ -63,7 +47,7 @@ export function addBattleSprites(character, bossConfig) {
     "bossSprite"
   ]);
 
-  return { playerSprite, playerGlow, bossSprite, bossGlow };
+  return { playerSprite, bossSprite };
 }
 
 export function addPlayerHPPanel(player) {
@@ -283,7 +267,7 @@ export function showBattleUI(duration = 0.3) {
 }
 
 // ================================================== ANIMATIONS ==================================================
-export function animateAttack(sprite, glow, isPlayer) {
+export function animateAttack(sprite, isPlayer) {
   const originalX = sprite.pos.x;
   const slideDistance = isPlayer ? 100 : -100;
   
@@ -293,7 +277,6 @@ export function animateAttack(sprite, glow, isPlayer) {
     0.2,
     (val) => {
       sprite.pos.x = val;
-      glow.pos.x = val;
     },
     easings.easeOutQuad
   ).then(() => {
@@ -303,60 +286,50 @@ export function animateAttack(sprite, glow, isPlayer) {
       0.2,
       (val) => {
         sprite.pos.x = val;
-        glow.pos.x = val;
       },
       easings.easeInQuad
     );
   });
 }
 
-export function animateHit(sprite, glow) {
+export function animateHit(sprite) {
   const originalX = sprite.pos.x;
   const shakeAmount = 10;
   const shakeDuration = 0.05;
   
   tween(sprite.pos.x, originalX - shakeAmount, shakeDuration, (val) => {
     sprite.pos.x = val;
-    glow.pos.x = val;
   })
     .then(() => tween(sprite.pos.x, originalX + shakeAmount, shakeDuration, (val) => {
       sprite.pos.x = val;
-      glow.pos.x = val;
     }))
     .then(() => tween(sprite.pos.x, originalX - shakeAmount, shakeDuration, (val) => {
       sprite.pos.x = val;
-      glow.pos.x = val;
     }))
     .then(() => tween(sprite.pos.x, originalX + shakeAmount, shakeDuration, (val) => {
       sprite.pos.x = val;
-      glow.pos.x = val;
     }))
     .then(() => tween(sprite.pos.x, originalX, shakeDuration, (val) => {
       sprite.pos.x = val;
-      glow.pos.x = val;
     }));
 }
 
-export function animateHeal(sprite, glow) {
+export function animateHeal(sprite) {
   tween(sprite.opacity, 0.3, 0.3, (val) => {
     sprite.opacity = val;
-    glow.opacity = val;
   })
     .then(() => tween(sprite.opacity, 1, 0.3, (val) => {
       sprite.opacity = val;
-      glow.opacity = val;
     }))
     .then(() => tween(sprite.opacity, 0.3, 0.3, (val) => {
       sprite.opacity = val;
-      glow.opacity = val;
     }))
     .then(() => tween(sprite.opacity, 1, 0.3, (val) => {
       sprite.opacity = val;
-      glow.opacity = val;
     }));
 }
 
-export function animateDefeat(sprite, glow, isPlayer) {
+export function animateDefeat(sprite, isPlayer) {
   const slideDirection = isPlayer ? -300 : 300;
   const targetX = sprite.pos.x + slideDirection;
   
@@ -366,7 +339,6 @@ export function animateDefeat(sprite, glow, isPlayer) {
     1.0,
     (val) => {
       sprite.opacity = val;
-      glow.opacity = val;
     },
     easings.easeInQuad
   );
@@ -377,7 +349,6 @@ export function animateDefeat(sprite, glow, isPlayer) {
     1.0,
     (val) => {
       sprite.pos.x = val;
-      glow.pos.x = val;
     },
     easings.easeInQuad
   );

@@ -536,7 +536,6 @@ function startCreditsSequence(character) {
   stopAllMusic();
   startFinalVictoryMusic();
   
-  animateSmokeTransition();
 
   const cafeBG = add([
     sprite("cafe"),

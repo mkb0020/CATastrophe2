@@ -1238,69 +1238,74 @@ export function setupTimer(
 export function setupCucumberSpawner(levelConfig, gameStateGetter) {
   if (!levelConfig.enemies.cucumbers.enabled) return;
   
-  const spawnRate = levelConfig.enemies.cucumbers.spawnRate / 1000;
   const zones = levelConfig.enemies.cucumbers.spawnZones || [];
   
   if (zones.length === 0) {
     zones.push({ start: 0, end: levelConfig.length });
   }
   
-  loop(spawnRate, () => {
-    if (gameStateGetter()) {
-      const camX = camPos().x;
-      const camLeft = camX - SCREEN_W / 2;
-      const camRight = camX + SCREEN_W / 2;
-      
-      const activeZones = zones.filter(zone => 
-        zone.end > camLeft - 100 && 
-        zone.start < camRight + 100
-      );
-      
-      if (activeZones.length === 0) return;
-      
-      const zone = choose(activeZones);
-      
-      const spawnX = rand(
-        Math.max(zone.start, camLeft),
-        Math.min(zone.end, camRight)
-      );
-      
-      const spawnY = -50;
-      
-      const cucumber = add([
-        sprite('littleCucumber'),
-        pos(spawnX, spawnY),
-        area({ width: 40, height: 60 }),
-        anchor("center"),
-        scale(0.8),
-        rotate(0),
-        {
-          fallSpeed: rand(3, 6),
-          rotationSpeed: rand(2, 5),
-          damage: levelConfig.enemies.cucumbers.damage,
-          isActive: true
-        },
-        z(3),
-        "cucumber"
-      ]);
-      
-      cucumber.onUpdate(() => {
-        const distFromCam = Math.abs(cucumber.pos.x - camPos().x);
+  const spawnedZones = new Set();
+  
+  onUpdate(() => {
+    if (!gameStateGetter()) return;
+    
+    const camX = camPos().x;
+    const camLeft = camX - SCREEN_W / 2;
+    const camRight = camX + SCREEN_W / 2;
+    
+    zones.forEach((zone, index) => {
+      if (zone.end > camLeft - 400 && 
+          zone.start < camRight + 400 &&
+          !spawnedZones.has(index)) {
         
-        if (distFromCam > SCREEN_W * 0.75) {
-          cucumber.isActive = false;
-          return;
+        spawnedZones.add(index);
+        
+        const count = zone.count || levelConfig.enemies.cucumbers.count || 3;
+        
+        for (let i = 0; i < count; i++) {
+          wait(i * 0.5, () => {
+            if (!gameStateGetter()) return;
+            
+            const spawnX = rand(zone.start + 50, zone.end - 50);
+            const spawnY = -50 - (i * 30); 
+            
+            const cucumber = add([
+              sprite('littleCucumber'),
+              pos(spawnX, spawnY),
+              area({ width: 40, height: 60 }),
+              anchor("center"),
+              scale(0.8),
+              rotate(0),
+              {
+                fallSpeed: rand(3, 6),
+                rotationSpeed: rand(2, 5),
+                damage: levelConfig.enemies.cucumbers.damage,
+                isActive: true
+              },
+              z(3),
+              "cucumber"
+            ]);
+            
+            cucumber.onUpdate(() => {
+              const distFromCam = Math.abs(cucumber.pos.x - camPos().x);
+              
+              if (distFromCam > SCREEN_W * 0.75) {
+                cucumber.isActive = false;
+                return;
+              }
+              
+              cucumber.isActive = true;
+              cucumber.pos.y += cucumber.fallSpeed;
+              cucumber.angle += cucumber.rotationSpeed;
+              
+              if (cucumber.pos.y > SCREEN_H + 100) {
+                destroy(cucumber);
+              }
+            });
+          });
         }
-        
-        cucumber.isActive = true;
-        cucumber.pos.y += cucumber.fallSpeed;
-        cucumber.angle += cucumber.rotationSpeed;
-        
-        if (cucumber.pos.y > SCREEN_H + 100) {
-          destroy(cucumber);
-        }
-      });
-    }
+      }
+    });
   });
 }
 
@@ -1360,7 +1365,6 @@ export function setupCucumberCollision(
 export function setupRatSpawner(levelConfig, gameStateGetter, player) {
   if (!levelConfig.enemies.rats.enabled) return;
   
-  const spawnRate = levelConfig.enemies.rats.spawnRate / 1000;
   const zones = levelConfig.enemies.rats.spawnZones || [];
   
   if (zones.length === 0) {
@@ -1385,124 +1389,132 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
     return groundMap.get(gridX) || false;
   };
   
-  loop(spawnRate, () => {
-    if (gameStateGetter()) {
-      const camX = camPos().x;
-      const camLeft = camX - SCREEN_W / 2;
-      const camRight = camX + SCREEN_W / 2;
-      
-      const activeZones = zones.filter(zone => 
-        zone.end > camLeft - 200 && 
-        zone.start < camRight + 200
-      );
-      
-      if (activeZones.length === 0) return;
-      
-      const zone = choose(activeZones);
-      let spawnX; 
+  const spawnedZones = new Set();
+  
+  onUpdate(() => {
+    if (!gameStateGetter()) return;
+    
+    const camX = camPos().x;
+    const camLeft = camX - SCREEN_W / 2;
+    const camRight = camX + SCREEN_W / 2;
+    
+    zones.forEach((zone, index) => {
+      if (zone.end > camLeft - 500 && 
+          zone.start < camRight + 500 &&
+          !spawnedZones.has(index)) {
+        
+        spawnedZones.add(index);
+        
+        const count = zone.count || levelConfig.enemies.rats.count || 3;
+        
+        for (let i = 0; i < count; i++) {
+          wait(i * 0.2, () => {
+            if (!gameStateGetter()) return;
+            
+            let spawnX;
+            const offScreenLeft = zone.start < camLeft - 100;
+            const offScreenRight = zone.end > camRight + 100;
 
-      const offScreenLeft = zone.start < camLeft - 100;
-      const offScreenRight = zone.end > camRight + 100;
+            if (offScreenLeft && Math.random() > 0.5) {
+              spawnX = rand(
+                Math.max(zone.start + 100, zone.start),
+                Math.min(camLeft - 100, zone.end - 100)
+              );
+            } else if (offScreenRight) {
+              spawnX = rand(
+                Math.max(camRight + 100, zone.start + 100),
+                Math.min(zone.end - 100, zone.end)
+              );
+            } else {
+              spawnX = rand(zone.start + 100, zone.end - 100);
+            }
 
-      if (offScreenLeft && Math.random() > 0.5) {
-        spawnX = rand(
-          Math.max(zone.start + 100, zone.start),
-          Math.min(camLeft - 100, zone.end - 100)
-        );
-      } else if (offScreenRight) {
-        spawnX = rand(
-          Math.max(camRight + 100, zone.start + 100),
-          Math.min(zone.end - 100, zone.end)
-        );
-      } else {
-        spawnX = rand(zone.start + 100, zone.end - 100);
+            const spawnY = 390;
+            
+            const MIN_SPAWN_DISTANCE = 150; 
+            const distanceToPlayer = Math.abs(spawnX - player.pos.x);
+            
+            if (distanceToPlayer < MIN_SPAWN_DISTANCE) {
+              console.warn(`Rat spawn aborted at x:${spawnX} - too close to player!`);
+              return;
+            }
+            
+            if (!hasGroundAt(spawnX)) {
+              console.warn(`Rat spawn aborted at x:${spawnX} - no ground detected!`);
+              return;
+            }
+            
+            const rat = add([
+              sprite('smallRat2'),
+              pos(spawnX, spawnY),
+              area({ width: 40, height: 30 }),
+              anchor("center"),
+              scale(1),
+              {
+                speed: rand(60, 100),
+                direction: -1,
+                hp: 1,
+                yVelocity: 0,
+                patrolZone: zone,
+                groundCheckDistance: 50,
+                baseY: spawnY,
+                bobTimer: rand(0, 100), 
+                bobSpeed: rand(8, 12),
+                bobAmount: rand(2, 4),
+                leftBoundary: zone.start + 50,
+                rightBoundary: zone.end - 50,
+                hasGroundAt: hasGroundAt 
+              },
+              z(3),
+              "rat"
+            ]);
+            
+            rat.onUpdate(() => {
+              const distFromCam = Math.abs(rat.pos.x - camPos().x);
+              if (distFromCam > SCREEN_W * 1.2) {
+                return;
+              }
+           
+              rat.move(rat.speed * rat.direction, 0);
+              rat.flipX = rat.direction === 1;
+              
+              rat.bobTimer += dt() * rat.bobSpeed;
+              const bobOffset = Math.sin(rat.bobTimer) * rat.bobAmount;
+              
+              if (rat.pos.y < rat.baseY) {
+                rat.yVelocity += 1600 * dt();
+                rat.pos.y += rat.yVelocity * dt();
+              } else {
+                rat.pos.y = rat.baseY + bobOffset;
+                rat.yVelocity = 0;
+              }
+              
+              if (rat.direction === -1 && rat.pos.x <= rat.leftBoundary) {
+                rat.direction = 1;
+              } else if (rat.direction === 1 && rat.pos.x >= rat.rightBoundary) {
+                rat.direction = -1;
+              }
+              
+              const distFromLeft = rat.pos.x - rat.leftBoundary;
+              const distFromRight = rat.rightBoundary - rat.pos.x;
+              const nearEdge = Math.min(distFromLeft, distFromRight) < 100;
+              
+              if (nearEdge) {
+                const checkX = rat.pos.x + (rat.direction * rat.groundCheckDistance);
+                if (!rat.hasGroundAt(checkX)) {
+                  rat.direction *= -1;
+                }
+              }
+              
+              if (rat.pos.x < camPos().x - SCREEN_W - 200 || 
+                  rat.pos.x > camPos().x + SCREEN_W + 200) {
+                destroy(rat);
+              }
+            });
+          });
+        }
       }
-
-      const spawnY = 390;
-      
-     
-      const MIN_SPAWN_DISTANCE = 150; 
-      const distanceToPlayer = Math.abs(spawnX - player.pos.x);
-      
-      if (distanceToPlayer < MIN_SPAWN_DISTANCE) {
-        console.warn(`Rat spawn aborted at x:${spawnX} - too close to player!`);
-        return;
-      }
-      
-      if (!hasGroundAt(spawnX)) {
-        console.warn(`Rat spawn aborted at x:${spawnX} - no ground detected!`);
-        return;
-      }
-      
-      const rat = add([
-        sprite('smallRat2'),
-        pos(spawnX, spawnY),
-        area({ width: 40, height: 30 }),
-        anchor("center"),
-        scale(1),
-        {
-          speed: rand(60, 100),
-          direction: -1,
-          hp: 1,
-          yVelocity: 0,
-          patrolZone: zone,
-          groundCheckDistance: 50,
-          baseY: spawnY,
-          bobTimer: rand(0, 100), 
-          bobSpeed: rand(8, 12),
-          bobAmount: rand(2, 4),
-          leftBoundary: zone.start + 50,
-          rightBoundary: zone.end - 50,
-          hasGroundAt: hasGroundAt 
-        },
-        z(3),
-        "rat"
-      ]);
-      
-      rat.onUpdate(() => {
-
-        const distFromCam = Math.abs(rat.pos.x - camPos().x);
-        if (distFromCam > SCREEN_W * 1.2) {
-          return;
-        }
-     
-        rat.move(rat.speed * rat.direction, 0);
-        rat.flipX = rat.direction === 1;
-        
-        rat.bobTimer += dt() * rat.bobSpeed;
-        const bobOffset = Math.sin(rat.bobTimer) * rat.bobAmount;
-        
-        if (rat.pos.y < rat.baseY) {
-          rat.yVelocity += 1600 * dt();
-          rat.pos.y += rat.yVelocity * dt();
-        } else {
-          rat.pos.y = rat.baseY + bobOffset;
-          rat.yVelocity = 0;
-        }
-        
-        if (rat.direction === -1 && rat.pos.x <= rat.leftBoundary) {
-          rat.direction = 1;
-        } else if (rat.direction === 1 && rat.pos.x >= rat.rightBoundary) {
-          rat.direction = -1;
-        }
-        
-        const distFromLeft = rat.pos.x - rat.leftBoundary;
-        const distFromRight = rat.rightBoundary - rat.pos.x;
-        const nearEdge = Math.min(distFromLeft, distFromRight) < 100;
-        
-        if (nearEdge) {
-          const checkX = rat.pos.x + (rat.direction * rat.groundCheckDistance);
-          if (!rat.hasGroundAt(checkX)) {
-            rat.direction *= -1;
-          }
-        }
-        
-        if (rat.pos.x < camPos().x - SCREEN_W - 200 || 
-            rat.pos.x > camPos().x + SCREEN_W + 200) {
-          destroy(rat);
-        }
-      });
-    }
+    });
   });
 }
 
@@ -1574,7 +1586,6 @@ export function setupRatCollision(
     }
   });
 }
-
 //==================================== LASERS ====================================
 export function addLaserBeams(levelConfig) {
   if (!levelConfig.enemies.lasers.enabled) return;

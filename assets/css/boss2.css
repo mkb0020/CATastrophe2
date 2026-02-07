@@ -16,53 +16,61 @@
 /* ==================== HP PANELS ==================== */
 .battle-hp-panel {
   position: fixed;
-  background: linear-gradient(155deg, #9090c0 0%, #5e5e85 100%);
-  border: 3px solid #2a3439;
+  background: linear-gradient(155deg, #a6a6c9 0%, #7b7bad 100%);
+  border: 3px solid #6868a1;
   border-radius: 50px;
-  padding: 7px 20px;
+  padding: 3px 20px;
   box-shadow: 
-    0 0 20px #00ffffa2,
+    0 0 15px #000000,
     inset 0 2px 10px rgba(255, 255, 255, 0.1);
   pointer-events: none;
   z-index: 9998;
-  width: 570px;
+  width: 600px;
+  max-height: 110px;
 }
 
 .battle-hp-panel--boss {
   top: 20px;
-  left: 3%;
+  left: 1%;
 }
 
 .battle-hp-panel--player {
-  bottom: 32%;
-  right: 3%;
+  bottom: 29%;
+  right: 1%;
   
 }
 
 .battle-hp-panel__name {
   font-family: 'GothNerd', monospace;
-  font-size: 1.4rem;
-  color: #ffffff;
-  text-shadow: 
-    2px 2px 0 #000000,
-    0 0 10px rgba(103, 254, 189, 0.6);
-  margin-bottom: 5px;
+  color: #000000;
+  margin-bottom: 0px;
   margin-left: 25px;
   text-transform: uppercase;
+}
+
+.battle-boss-name{
+  font-size: 1.3rem;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3);
+}
+
+.battle-player-name {
+  font-size: 1.6rem;
+  text-shadow: 3px 2px 0px rgba(255, 255, 255, 0.3);
 }
 
 .battle-hp-panel__row {
   display:grid;
   grid-template-columns: 1fr 10fr;
   align-items: center;
-  gap: 7px;
+  gap: 0px;
 }
 
 .battle-hp-panel__label {
   font-family: 'GothNerd', monospace;
   font-size: 1.2rem;
-  color: #ffffff;
-  text-shadow: 1px 1px 0 #000000;
+  color: #000000;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3);
+
 }
 
 .battle-hp-panel__bar-track {
@@ -84,11 +92,14 @@
 
 .battle-hp-panel__text {
   font-family: 'GothNerd', monospace;
-  font-size: 0.9rem;
-  color: #ffffff;
-  text-shadow: 1px 1px 0 #000000;
+  font-size: 1rem;
+  color: #000000;
+  /*text-shadow: 1px 1px 0 #00000000;*/
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3);
   text-align: right;
-  margin-right: 30px;
+  margin-right: 40px;
+  line-height:0.6rem;
+  margin-top: 0px !important;
 }
 
 
@@ -108,11 +119,15 @@
     width: 450px;
   }
   
-  .battle-hp-panel__name {
-    font-size: 1rem;
-    font-weight: 300;
-    margin-bottom: 3px;
-  }
+.battle-boss-name{
+  font-size: 0.9rem;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3);
+}
+
+.battle-player-name {
+  font-size: 1.2rem;
+  text-shadow: 3px 2px 0px rgba(255, 255, 255, 0.3);
+}
   
   .battle-hp-panel__label {
     font-size: 0.8rem;
@@ -124,8 +139,7 @@
   }
   
   .battle-hp-panel__text {
-    font-size: 0.8rem;
-    font-weight: 300;
+    font-size: 0.7rem;
     margin-right: 5px;
   }
 }
@@ -171,25 +185,28 @@
   position: fixed;
   bottom: 0px;
   left: 0px;
-  background: transparent;
-  border-top: 4px dashed #000000;
+  background: #000000;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border: 2px solid #6868a1;
   width: 100%;
-  height: 30%;
+  height: 27%;
   pointer-events: none;
   padding: 5px 10px;
   z-index: 9998;
+  box-shadow: 0 0 7px #000000;
 }
 
 .battle-log {
-  background: linear-gradient(135deg, #9797c0 0%, #626282 100%);
-  border: 4px solid #2a3439;
+  background: linear-gradient(135deg, #a6a6c9 0%, #7b7bad 100%);
+  border: 2px solid #6868a1;
   border-radius: 15px;
   padding: 15px;
   width: 61%;
   height: 100%;
   margin-bottom: 15px;
   box-shadow: 
-    0 0 20px rgba(144, 144, 192, 0.4),
+    0 0 20px rgba(155, 155, 196, 0.4),
     inset 0 2px 10px rgba(255, 255, 255, 0.1);
 }
 
@@ -207,23 +224,22 @@
 
 @media (max-width: 950px) { /* ~~~~ MOBILE FOR BATTLE LOG ~~~~ */
 .battle-bottom-bar {
-  border-top: 2px dashed #000000;
   padding: 5px;
 }
 
 .battle-log {
-  border: 2px solid #2a3439;
+  border: 2px solid #6868a1;
 }
   
   .battle-log__text {
-    font-size: 1rem;
+    font-size: 0.9rem;
     min-height: 40px;
   }
 }
 
 @media (max-width: 750px) { /* ~~~~ MOBILE FOR BATTLE LOG ~~~~ */
   .battle-log__text {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -231,9 +247,6 @@
 /* ==================== BOSS BATTLE MOVE BUTTONS ==================== */
 .battle-moves {
   pointer-events: auto;
-  border-left: 4px dashed #000000;
-  border-top: 4px dashed #000000;
-  backdrop-filter: blur(50px);
 }
 
 .battle-move-btn {
@@ -248,7 +261,7 @@
   position: fixed;
   bottom: 0px;
   right: 0px;
-  height: 30%;
+  height: 27%;
   width: 38%;
 }
 
@@ -262,8 +275,8 @@
   color: #000000;
   text-align: center;
   text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, #9090c0 0%, #5e5e85 100%);
-  border: 2px solid #2a3439;
+  background: linear-gradient(135deg, #9090c0 0%, #7b7bad 100%);
+  border: 2px solid #6868a1;
   border-radius: 8px;
   box-shadow: 
     0 0 10px rgba(144, 144, 192, 0.3),
@@ -353,16 +366,12 @@
     .battle-moves{
         gap: 5px;
         padding: 5px;
-        border-left: 2px dashed #000000;
-        border-top: 2px dashed #000000;
-    }
+        padding-right: 7px;
 
-  .battle-move-btn {
-    font-size: 1.2rem !important;
-  }
+    }
   
   .battle-move-btn .move-name {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   
   .battle-move-btn .move-uses {
@@ -379,14 +388,9 @@
 @media (max-width: 750px) { /* ~~~~ MOBILE FOR MOVE BUTTONS ~~~~ */
 
     .battle-moves{
-        gap: 2px;
-        border-left: 2px dashed #000000;
-        border-top: 2px dashed #000000;
+        gap: 5px;
     }
 
-  .battle-move-btn {
-    font-size: 0.7rem !important;
-  }
   
   .battle-move-btn .move-name {
     font-size: 0.6rem;

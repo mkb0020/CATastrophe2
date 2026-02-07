@@ -355,7 +355,6 @@ for (const char of characters) {
   });
 }
 
-loadSprite('characterGlow', characters[0].sprites.glow);
 loadSprite("rainbowCatSheet", "assets/images/cats/RainbowCat.png", {
   sliceX: 12,
   sliceY: 1,
