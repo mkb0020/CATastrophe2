@@ -1,4 +1,3 @@
-// KittyUtils.js
 import { getCharacterList } from '../config/characters.js';
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 
@@ -417,16 +416,26 @@ export function startAtmosphere() {
     console.log('🎵 ATMOSPHERE BG MUSIC STARTED! 👁');
 }
 // ============================== MUSIC CONTROLS (NOW IN HTML/CSS INSTEAD OF IN CANVAS) ==============================================
+
+
 export function initializeMusicControls() {
     const volumeBtn = document.getElementById('muteBtn');
     const pauseBtn = document.getElementById('pauseBtn');
     if (!volumeBtn || !pauseBtn) return;
 
+    const volumeIcon = volumeBtn.querySelector('img');
+    const pauseIcon = pauseBtn.querySelector('img');
+
     let isMuted = false;
     volumeBtn.addEventListener('click', () => {
         isMuted = !isMuted;
-        volumeBtn.src = isMuted ? '../assets/images/icons/mute.png' : '../assets/images/icons/music.png';
+        volumeIcon.src = isMuted ? 'assets/images/icons/mute.png' : 'assets/images/icons/music.png';
         volumeBtn.classList.toggle('muted', isMuted);
+        
+        const mobileVolumeIcon = document.querySelector('#mobileVolumeBtn img');
+        if (mobileVolumeIcon) {
+            mobileVolumeIcon.src = isMuted ? 'assets/images/icons/mute.png' : 'assets/images/icons/music.png';
+        }
         
         volume(isMuted ? 0 : 2);
         
@@ -438,13 +447,28 @@ export function initializeMusicControls() {
         console.log(`🔇 Volume ${isMuted ? 'MUTED (All Audio)' : 'UNMUTED'}`);
     });
 
+    let isPaused = false;
     pauseBtn.addEventListener('click', () => {
         console.log('🎮 Desktop pause button clicked');
         if (window.gamePauseSystem) {
             if (window.gamePauseSystem.isPaused()) {
                 window.gamePauseSystem.resume();
+                isPaused = false;
+                pauseIcon.src = 'assets/images/icons/pause.png';
+                
+                const mobilePauseIcon = document.querySelector('#mobilePauseBtn img');
+                if (mobilePauseIcon) {
+                    mobilePauseIcon.src = 'assets/images/icons/pause.png';
+                }
             } else {
                 window.gamePauseSystem.pause();
+                isPaused = true;
+                pauseIcon.src = 'assets/images/icons/pause.png';
+                
+                const mobilePauseIcon = document.querySelector('#mobilePauseBtn img');
+                if (mobilePauseIcon) {
+                    mobilePauseIcon.src = 'assets/images/icons/pause.png';
+                }
             }
         } else {
             console.warn('⚠️ Pause system not initialized yet');
@@ -455,6 +479,8 @@ export function initializeMusicControls() {
     window.toggleMute = () => volumeBtn.click();
     console.log('🎮 Music controls initialized');
 }
+
+
 
 // ============================== PAUSE SYSTEM ==============================================
 export function setupPauseSystem(gameActiveGetter, gameActiveSetter, onQuitCallback = null) {
