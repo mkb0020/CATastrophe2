@@ -230,7 +230,9 @@
   gap:           16px;            
 }
 
-
+.start-screen-modal__hint {
+  color: transparent;
+}
 
 .modal-buttons-start {
   display: flex;
@@ -240,11 +242,11 @@
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 20%;
+  bottom: 15%;
 }
 
 .modal-buttons-start .modal-button-start-PC, .modal-button-start-mobile {
-  min-width: 350px;
+  min-width: 400px;
   padding: 10px 30px;
 }
 .modal-button-start-PC, .modal-button-start-mobile {   
@@ -264,7 +266,7 @@
 }
 
 .modal-button-start-PC {
-  border: 1px solid var(--PlasmaPurple);
+  border: 2px solid var(--HiggsHotPink);
     box-shadow: 
     0 0 8px var(--PlasmaPurple),
     inset 0 0 9px rgba(255, 255, 255, 0.103),
@@ -300,20 +302,20 @@
 
 
 .modal-button-start-mobile {
-  border: 1px solid var(--PlanksPink);
+  border: 3px solid var(--PlasmaPurple);
     box-shadow: 
-    0 0 8px var(--PlanksPink),
+    0 0 8px var(--HiggsHotPink),
     inset 0 0 9px rgba(255, 255, 255, 0.103),
-    0 0 10px var(--PlanksPink);
+    0 0 10px var(--HiggsHotPink);
   
 }
 
 .modal-button-start-mobile:hover {
   transform: translateY(-1px) scale(1.03);
   box-shadow: 
-    0 0 10px var(--PlanksPink),
+    0 0 10px var(--HiggsHotPink),
     inset 0 0 15px rgba(255, 255, 255, 0.103),
-    0 0 20px var(--PlanksPink);
+    0 0 20px var(--HiggsHotPink);
 }
 
 .modal-button-start-mobile::before {
@@ -414,7 +416,7 @@ cite {
 
 .modal-mainmenu-header {
   position: absolute;
-  top: 5%;
+  top: 6%;
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
@@ -458,12 +460,14 @@ cite {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 7%;
+  bottom: 5%;
 }
 
 .modal-buttons-menu .modal-button-menu-play, .modal-button-menu-how {
-  min-width: 350px;
-  padding: 7px 30px;
+  width: 450px !important;
+  max-width: 450px !important;
+  height: 60px !important;
+  max-height: 60px !important;
 }
 .modal-button-menu-play, .modal-button-menu-how {   
   --glow-intensity: 0.4;
@@ -472,7 +476,7 @@ cite {
   justify-content: center;
   color: #FFFFFF;
   font-family: 'GothNerd', 'Courier New', monospace; 
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   text-transform: uppercase;
   background: #0f0f1a;
   border-radius: 50px;
@@ -482,7 +486,7 @@ cite {
 }
 
 .modal-button-menu-play {
-  border: 1px solid var(--RadioactiveGreen);
+  border: 2px solid var(--RadioactiveGreen);
     box-shadow: 
     0 0 8px var(--RadioactiveGreen),
     inset 0 0 9px rgba(255, 255, 255, 0.103),
@@ -518,20 +522,20 @@ cite {
 
 
 .modal-button-menu-how {
-  border: 1px solid var(--CoolGray);
+  border: 2px solid var(--CoolGray);
     box-shadow: 
-    0 0 8px var(--CoolGray),
+    0 0 8px var(--AlphaAqua),
     inset 0 0 9px rgba(255, 255, 255, 0.103),
-    0 0 10px var(--CoolGray);
+    0 0 10px var(--AlphaAqua);
   
 }
 
 .modal-button-menu-how:hover {
   transform: translateY(-1px) scale(1.03);
   box-shadow: 
-    0 0 10px #9090C0,
+    0 0 10px var(--AlphaAqua),
     inset 0 0 15px rgba(255, 255, 255, 0.103),
-    0 0 20px #9090C0;
+    0 0 20px var(--AlphaAqua);
 }
 
 .modal-button-menu-how::before {
@@ -568,15 +572,20 @@ cite {
   
 
 .button-column {
-  bottom: 5%;
+  bottom: 7%;
 }
 
- .modal-button-menu-play, .modal-button-menu-how {
+.modal-buttons-menu .modal-button-menu-play, .modal-button-menu-how {
+  width: 350px !important;
+  max-width: 350px !important;
+  height: 50px !important;
+  max-height: 50px !important;
   font-size: 1.2rem;
 }
-
-
 }
+
+
+
 
 @media (max-width: 480px) {
   .menu-title-img {
@@ -1213,24 +1222,20 @@ cite {
 @media (max-width: 950px) {
   .modal-title-gameover,
   .modal-title-youdied {
-    font-size: 2.7rem;
+    font-size: 2.6rem;
     margin-bottom: 0px;
+    margin-top: 10px !important;
+    line-height: 2.6rem;
   }
   
 .modal-youdied-content{
-  height: 90%;
+  height: 95%;
   width: 90vw;
 }
 
-.uselife-button {
-  font-size: 0.8rem;
-  height: 30px;
-}
-
-.diedmenu-button
-{    height: 30px;
-  font-size: 0.8rem;
-
+.modal-button-died {
+  font-size: 0.9rem;
+  height: 35px;
 }
 
   .disappointment-text,
@@ -1238,11 +1243,13 @@ cite {
     font-size: 1rem;
     margin-top:0px;
     margin-bottom:0px;
+    line-height:1rem;
   }
   
   .score-text,
   .stat-line {
     font-size: 1rem;
+    line-height:1rem;
   }
   
 
@@ -1271,13 +1278,14 @@ cite {
 
 .modal-pause-content {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(17, 12, 30, 0.95));
-  border: 3px solid var(--AlphaAqua);
+  border: 3px solid var(--CoolGray);
   box-shadow: 
-    0 0 40px rgba(103, 254, 189, 0.6),
+    0 0 40px var(--PlasmaPurple),
     inset 0 0 50px rgba(103, 254, 189, 0.1);
   border-radius: 20px;
   max-width: 600px;
   width: 100%;
+  height: 80%;
   padding: 0rem;
   animation: modalSlideIn 0.3s ease;
   text-align: center;
@@ -1291,40 +1299,108 @@ cite {
 }
 
 .modal-title-pause {
-  font-family: 'Orbitron', monospace;
-  font-size: 5rem;
-  font-weight: bold;
-  color: var(--RadioactiveGreen);
-  text-shadow: 
-    3px 3px 0 rgba(0, 0, 0, 0.8),
-    0 0 30px rgba(158, 255, 158, 0.8),
-    0 0 60px rgba(103, 254, 189, 0.5);
+  font-family: 'GothNerd', monospace;
+  font-size: 4.5rem;
+  background: linear-gradient(45deg, var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink), var(--PlasmaPurple), var(--AquaAura), var(--AlphaAqua), var(--AquaAura), var(--PlasmaPurple), var(--HiggsHotPink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0px;
   text-align: center;
   letter-spacing: 3px;
 }
 
 .pause-buttons{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   align-items: center;
   margin-top: 0px; 
   min-width: 450px;
   font-size: 1.9rem;
 }
 
+
+.modal-buttons-pause {   
+  --glow-intensity: 0.4;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 50px;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: white;
+  background: #0f0f1a;
+  border: 2px solid #9090C0;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 5px var(--AlphaAqua),
+    inset 0 0 8px rgba(255, 255, 255, 0.103),
+    0 0 10px var(--AquaAura);
+  overflow: hidden;
+}
+
+.modal-buttons-pause:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 
+    0 0 10px var(--AlphaAqua),
+    inset 0 0 15px rgba(255, 255, 255, 0.103),
+    0 0 20px var(--AquaAura);
+}
+
+.modal-buttons-pause::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.modal-buttons-pause:hover::before {
+  left: 100%;
+}
+
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 950px) {
   .modal-title-pause {
-    font-size: 4rem;
+    font-size: 3rem;
     margin-bottom: 0px;
   }
   
   .modal-pause-content {
     padding: 0.5rem;
     max-height: 90%;
+    height: 90%;
+    width: 60%;
   }
+
+
+.pause-buttons{
+  gap: 15px;
+  bottom: 18%;
+}
+
+
+.modal-buttons-pause {   
+  width: 200px;
+  height: 40px;
+  font-family: 'GothNerd', 'Courier New', monospace; 
+  font-size: 1rem;
+}
 }
 
 
@@ -2409,7 +2485,7 @@ margin-bottom: 9px;
   position: relative;
   align-items: center;
   justify-content: center;
-  padding: 10px 10px;
+  padding: 10px 30px;
   font-family: 'GothNerd', 'Courier New', monospace; 
   font-size: 1.2rem;
   text-transform: uppercase;
@@ -2420,18 +2496,18 @@ margin-bottom: 9px;
   cursor: pointer;
   transition: all 0.4s ease;
   box-shadow: 
-    0 0 8px #9090C0,
+    0 0 8px var(--AlphaAqua),
     inset 0 0 12px rgba(255, 255, 255, 0.103),
-    0 0 35px #9090C0;
+    0 0 15px var(--AquaAura);
   overflow: hidden;
 }
 
 .modal-button:hover {
   transform: translateY(-1px) scale(1.03);
   box-shadow: 
-    0 0 10px #9090C0,
+    0 0 10px var(--AlphaAqua),
     inset 0 0 15px rgba(255, 255, 255, 0.103),
-    0 0 20px #9090C0;
+    0 0 20px var(--AquaAura);
 }
 
 .modal-button::before {

@@ -49,16 +49,14 @@ function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, charact
     scale(10),
     fixed(),
     z(5000),
-    opacity(0.7),
+    opacity(1),
   ]);
 
   bloodDrip.play('drip', { speed: 7 });
   
-  wait(0.1, () => {
-    bloodDrip.play('drip', { speed: 9 });
-  });
 
-  wait(1.7, () => {
+
+  wait(1.8, () => {
     tween(
       darkOverlay.opacity,
       1,
@@ -78,7 +76,7 @@ function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, charact
     );
   });
 
-  wait(2.3, () => {
+  wait(2.1, () => {
     gameStateSetter(false);
     go("gameOver", {
       score: scoreGetter(),

@@ -17,7 +17,7 @@
 .mobile-hud-top {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: 25px;
   background: rgba(0, 0, 0, 0);
   border: 2px solid rgba(103, 254, 189, 0);
   border-radius: 10px;
@@ -29,28 +29,28 @@
 
 .mobile-hud-stat {
   font-family: 'Orbitron', 'science', sans-serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #67febd;
   text-shadow: 0 0 10px rgba(103, 254, 189, 0.6);
   background: rgba(2, 144, 83, 0.4);
   border: 2px solid rgba(103, 254, 189, 0.6);
   border-radius: 8px;
-  padding: 6px;
-  width: 120px;
+  padding: 6px 20px;
+  width: 150px;
   backdrop-filter: blur(4px);
   white-space: nowrap;
   text-align: center;
 }
 
 .mobile-hud-stat.low-hp {
-  color: #ff4444;
-  text-shadow: 0 0 10px rgba(255, 68, 68, 0.8);
+  color: var(--HiggsHotPink);
+  text-shadow: 0 0 10px var(--HiggsHotPink);
   animation: pulse 0.5s ease-in-out infinite alternate;
 }
 
 .mobile-hud-stat.low-time {
-  color: #ffaa00;
-  text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+  color: var(--HiggsHotPink);
+  text-shadow: 0 0 10px var(--HiggsHotPink);
   animation: pulse 0.5s ease-in-out infinite alternate;
 }
 
@@ -158,8 +158,8 @@
 
       .jump-button {
         position: absolute;
-        bottom: 20px;
-        right: 30px;
+        bottom: 25px;
+        right: 35px;
         font-size: 3rem;
         color: var(--AquaAura);
         background: rgba(0, 89, 89, 0.4);
@@ -196,35 +196,7 @@
       }
     
 
-      .meow-button {
-        position: absolute;
-        bottom: 50px;
-        right: 50px;
-        font-size: 1.2rem;
-        color: var(--AlphaAqua);
-        background: rgba(0, 121, 121, 0.6);
-        border: 1px solid var(--AlphaAqua);
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        pointer-events: auto;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        line-height: 1;
-        text-shadow: 
-          1px -1px 0 #003d3d,
-          -1px -1px 0 #003d3d,
-          -1px 1px 0 #003d3d, 
-          1px 1px 0 #003d3d;
-        transition: background 0.2s;
-        z-index: 1000 !important;
-      }
+
 
 /* ======================== DESKTOP (≥1024px) ======================== */
 @media (min-width: 1024px) {
@@ -353,3 +325,10 @@
   }
 }
 
+
+@media (max-width: 750px) {
+
+.mobile-hud-stat {
+  font-size: 0.9rem;
+}
+}
