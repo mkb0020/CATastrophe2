@@ -1258,7 +1258,7 @@ export function setupCucumberSpawner(levelConfig, gameStateGetter) {
         
         spawnedZones.add(index);
         
-        const count = zone.count || levelConfig.enemies.cucumbers.count || 3;
+        const count = zone.count || levelConfig.enemies.cucumbers.count || 1;
         
         for (let i = 0; i < count; i++) {
           wait(i * 0.7, () => {

@@ -484,22 +484,28 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
           spawnRate: 2000,
           damage: 5,
           spawnZones: [
-            { start: 5450, end: 5900  }, 
-            { start: 7200, end: 7560  },
-            { start: 17380, end: 18680  }
-          ]
+            { start: 5850, end: 5950  },
+            { start: 6050, end: 6150  },
+            { start: 7160, end: 7260  }, 
+            { start: 7460, end: 7560  },
+            { start: 17280, end: 17480  },
+            { start: 17680, end: 17880  },
+            { start: 18080, end: 18280  },
+            { start: 18480, end: 18680  }
+            ]
         },
     rats: { 
       enabled: true,
       spawnRate: 2500, 
       spawnZones: [
-        { start: 11550, end: 12900 }, 
-        { start: 12000, end: 13220 }, 
-        { start: 17200, end: 18000 },
-        { start: 17800, end: 18700 },
-        { start: 22800, end: 24100 },
-        { start: 22840, end: 23900 },
-        { start: 23040, end: 24300 } 
+        { start: 11550, end: 12700 }, 
+        { start: 17300, end: 18000 }, 
+        { start: 17800, end: 18600 },
+        { start: 12400, end: 13200 },
+        { start: 22840, end: 23500 },
+        { start: 23300, end: 23900 },
+        { start: 23700, end: 24000 },
+        { start: 23900, end: 24400 } 
         ]
     },
     lasers: { 
