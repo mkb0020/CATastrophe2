@@ -2,7 +2,7 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getBoss, initializeBoss, chooseBossMove } from '../config/bosses.js';
 import { calculateDamage } from '../systems/battleSystem.js';
-import { stopAllMusic, startBossMusic, startFinalBossMusic } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, startBossMusic, startFinalBossMusic, ensureMusicLoaded } from '../helpers/kittyHelpers.js';
 import {
   addBossBackground,
   addBattleSprites,
@@ -734,35 +734,40 @@ function checkBattleEnd() {
   });
   // ===================================================================
 }
-export function createLaserPointerBossScene(data) {
+
+export async function createLaserPointerBossScene(data) {
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;  
   createBossBattleScene('BossLaserPointer', character, startHP, startScore);
 }
 
-export function createCupBossScene(data) {
+export async function createCupBossScene(data) {
+  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;
   createBossBattleScene('BossCup', character, startHP, startScore);
 }
 
-export function createCucumberBossScene(data) {
+export async function createCucumberBossScene(data) {
+  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;
   createBossBattleScene('BossCucumber', character, startHP, startScore);
 }
 
-export function createRatKingBossScene(data) {
+export async function createRatKingBossScene(data) {
+  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;
   createBossBattleScene('BossRatKing', character, startHP, startScore);
 }
 
-export function createObserverBossScene(data) {
+export async function createObserverBossScene(data) {
+  await ensureMusicLoaded("finalBossMusic", "assets/sounds/tracks/finalBoss.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;

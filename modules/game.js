@@ -116,16 +116,8 @@ async function loadAssets() {
   console.log('📦 Loading game assets...');
   //MUSIC 
   loadSound("menuMusic", "assets/sounds/tracks/mainMenu.m4a"); 
-  loadSound("finalBossMusic", "assets/sounds/tracks/finalBoss.m4a");
   loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.m4a")
   loadSound("finalVictory", "assets/sounds/tracks/endCredits.m4a");
-  loadSound("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
-  loadSound("PlatformerTrack1", "assets/sounds/tracks/level1.m4a");
-  loadSound("PlatformerTrack2", "assets/sounds/tracks/level2.m4a");
-  loadSound("PlatformerTrack3", "assets/sounds/tracks/level3.m4a");
-  loadSound("PlatformerTrack4", "assets/sounds/tracks/level4.m4a");
-  loadSound("PlatformerTrack5", "assets/sounds/tracks/level5.m4a");
-  loadSound("challengeRoom", "assets/sounds/tracks/challengeRoom.m4a");
   //FX SOUNDS
   loadSound("door", "assets/sounds/fx/doorOpen.m4a");
   loadSound("pour", "assets/sounds/fx/coffeePour.m4a");
@@ -275,9 +267,9 @@ async function loadAssets() {
     anims: { fade: { from: 0, to: 79 } }
 });
   loadSprite("finalMove1", "assets/images/animationSprites/finalMove1.png", {
-    sliceX: 12, 
+    sliceX: 10, 
     sliceY: 1, 
-    anims: { fade: { from: 0, to: 11 } }
+    anims: { fade: { from: 0, to: 9 } }
 });
 
   loadSprite("finalMove2", "assets/images/animationSprites/finalMove2.png", { 

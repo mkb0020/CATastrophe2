@@ -1597,7 +1597,7 @@ export function animatePoisonAttack(boss, hero) {
 // =================== FELINE FISSION ===================
 
   function animateSuperSaiyan(){
-     const battleUI = document.getElementById('battleUI');
+    const battleUI = document.getElementById('battleUI');
       if (battleUI) {
         battleUI.classList.add('hidden');
         console.log('🧹 Battle UI hidden on scene leave');
@@ -1617,7 +1617,7 @@ export function animatePoisonAttack(boss, hero) {
     const finalMoveAnimation1 = add([
       sprite("finalMove1", { anim: "fade" }),
       pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(10),
+      scale(2),
       anchor("center"),
       z(1002),
       fixed(),
@@ -1627,7 +1627,7 @@ export function animatePoisonAttack(boss, hero) {
     const finalMoveAnimation2 = add([
       sprite("finalMove2", { anim: "fade" }),
       pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(10),
+      scale(2),
       anchor("center"),
       z(1002),
       fixed(),

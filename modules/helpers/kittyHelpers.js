@@ -209,6 +209,19 @@ export async function preloadInitialAssets() {
     console.log('✅ Initial assets loaded!');
 }
 
+
+// =================================== LAZY LOAD TRACKS ===================================
+
+export async function ensureMusicLoaded(soundName, soundPath) {
+  if (!getSound(soundName)) {
+    console.log(`🎵 Loading ${soundName}...`);
+    await loadSound(soundName, soundPath);
+    console.log(`✅ ${soundName} loaded!`);
+  } else {
+    console.log(`✅ ${soundName} already cached`);
+  }
+}
+
 // =================================== AUDIO CONTROLS =========================================
 export function fadeMusicOut(duration = 2) {
     if (window.levelMusic && !window.isMuted) {

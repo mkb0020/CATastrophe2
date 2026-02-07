@@ -43,6 +43,7 @@ import {
 } from '../helpers/upgradeHelper.js';
 import { getRoom } from '../config/challengeRoom.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
+import { stopAllMusic, ensureMusicLoaded } from '../helpers/kittyHelpers.js';
 
 
 
@@ -217,27 +218,30 @@ function createUnifiedLevel(levelId, data) {
 }
 
 
-export function createLevel1Scene(data) {
+export async function createLevel1Scene(data) {
+  // Load level 1 music first
+  await ensureMusicLoaded("PlatformerTrack1", "assets/sounds/tracks/level1.m4a");
   createUnifiedLevel('level1', data);
 }
 
-
-export function createLevel2Scene(data) {
+export async function createLevel2Scene(data) {
+  await ensureMusicLoaded("PlatformerTrack2", "assets/sounds/tracks/level2.m4a");
   createUnifiedLevel('level2', data);
 }
 
-
-export function createLevel3Scene(data) {
+export async function createLevel3Scene(data) {
+  await ensureMusicLoaded("PlatformerTrack3", "assets/sounds/tracks/level3.m4a");
   createUnifiedLevel('level3', data);
 }
 
-
-export function createLevel4Scene(data) {
+export async function createLevel4Scene(data) {
+  await ensureMusicLoaded("PlatformerTrack4", "assets/sounds/tracks/level4.m4a");
   createUnifiedLevel('level4', data);
 }
 
 
-export function createLevel5Scene(data) {
+export async function createLevel5Scene(data) {
+  await ensureMusicLoaded("PlatformerTrack5", "assets/sounds/tracks/level5.m4a");
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;

@@ -21,11 +21,12 @@ import {
   applyUpgradesToPlayer
 } from '../helpers/upgradeHelper.js';
 import { returnToLevel } from '../helpers/roomHelper.js';
-import { startChallenegeMusic, stopAllMusic } from '../helpers/kittyHelpers.js';
+import { startChallenegeMusic, stopAllMusic, ensureMusicLoaded } from '../helpers/kittyHelpers.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileExitWindow, showMobileArrows, hideMobileArrows, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
 
 
-export function createChallengeRoomScene(data) {
+export async function createChallengeRoomScene(data)  {
+  await ensureMusicLoaded("challengeRoom", "assets/sounds/tracks/challengeRoom.m4a");
   console.log('ðŸŽ® CHALLENGE ROOM SCENE');
   console.log('ðŸ“¦ Data received:', data);
   
