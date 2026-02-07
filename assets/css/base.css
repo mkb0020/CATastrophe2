@@ -196,7 +196,7 @@ html, body {
       position: fixed;
       inset: 0;
       background: rgba(80, 0, 150, 0.1);
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(10px);
       pointer-events: none;
       z-index: -1;
     }
