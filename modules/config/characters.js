@@ -2,7 +2,6 @@ function getCharacterSpritePaths(catName) {
   const base = 'assets/images/cats';
   return {
     sheet: `${base}/${catName}.png`,  
-    glow: `${base}/Glow.png`,
   };
 }
 

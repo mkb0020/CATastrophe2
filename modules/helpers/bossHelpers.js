@@ -10,28 +10,31 @@ export function setupBossMusic() {
 
 
 
+
 export function addBossBackground(bossConfig) {
-  add([
-    sprite(bossConfig.background),
-    pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
-    opacity(1),
-    z(0)
-  ]);
-
-
-
-
+  const backgroundEl = document.getElementById('bossBackground');
+  if (backgroundEl) {
+    backgroundEl.classList.add('visible');
+    console.log('✅ Boss background shown via CSS');
+  }
 }
 
+
+
+
+
+
 export function addBattleSprites(character, bossConfig) {
+
+  
+  
   const prefix = character.name; 
 
   const playerSprite = add([
     sprite(`${prefix}Sheet`, { frame: SPRITE_FRAMES.battle }),
-    pos(245, 265),
+    pos(180, 265),
     anchor("center"),
-    scale(1.1),
+    scale(1),
     opacity(1),
     z(1),
     "playerSprite"
@@ -39,7 +42,7 @@ export function addBattleSprites(character, bossConfig) {
   
   const bossSprite = add([
     sprite(bossConfig.sprite),
-    pos(740, 120),
+    pos(800, 135),
     anchor("center"),
     scale(1),
     opacity(1),

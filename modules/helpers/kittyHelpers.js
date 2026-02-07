@@ -282,7 +282,7 @@ export function startMenuMusic() {
     
     if (!window.menuMusic || window.menuMusic.paused) {
         window.menuMusic = play("menuMusic", {
-            volume: window.isMuted ? 0 : 0.7,
+            volume: window.isMuted ? 0 : 2,
             loop: true
         });
         console.log('🎵 Menu music started');
@@ -293,7 +293,7 @@ export function startLevelMusic(Track) {
     stopAllMusic(); 
     
     window.levelMusic = play(Track, { 
-        volume: window.isMuted ? 0 : 0.7, 
+        volume: window.isMuted ? 0 : 2, 
         loop: true 
     });
     console.log(`🎵 Level music started: ${Track}`);
@@ -310,7 +310,7 @@ export function startBossMusic() {
     stopAllMusic();
     
     window.bossMusic = play("bossMusic", { 
-        volume: window.isMuted ? 0 : 0.7, 
+        volume: window.isMuted ? 0 : 2, 
         loop: true 
     });
     console.log('🎵 Boss music started');
@@ -327,7 +327,7 @@ export function startFinalBossMusic() {
     stopAllMusic(); 
     
     window.finalBossMusic = play("finalBossMusic", { 
-        volume: window.isMuted ? 0 : 0.7, 
+        volume: window.isMuted ? 0 : 2, 
         loop: true 
     });
     console.log('🎵 👁 FINAL BOSS MUSIC STARTED! 👁');
@@ -344,7 +344,7 @@ export function startChallenegeMusic() {
     stopAllMusic(); 
     
     window.challengeRoom = play("challengeRoom", { 
-        volume: window.isMuted ? 0 : 0.8, 
+        volume: window.isMuted ? 0 : 2, 
         loop: true 
     });
     console.log('🎵 👁 CHALLENGE ROOM MUSIC STARTED! 👁');
@@ -395,7 +395,7 @@ export function startFinalVictoryMusic() {
     stopAllMusic();
     
     window.levelMusic = play("finalVictory", { 
-        volume: window.isMuted ? 0 : 0.8, 
+        volume: window.isMuted ? 0 : 2, 
         loop: false 
     });
     console.log('🎵 Final Victory music started');
@@ -428,10 +428,10 @@ export function initializeMusicControls() {
         volumeBtn.src = isMuted ? '../assets/images/icons/mute.png' : '../assets/images/icons/music.png';
         volumeBtn.classList.toggle('muted', isMuted);
         
-        volume(isMuted ? 0 : 1);
+        volume(isMuted ? 0 : 2);
         
         ['menuMusic', 'levelMusic', 'bossMusic', 'finalBossMusic', 'gameOverMusic', 'victoryMusic', 'atmosphere'].forEach(music => {
-            if (window[music]) window[music].volume = isMuted ? 0 : 0.5;
+            if (window[music]) window[music].volume = isMuted ? 0 : 2;
         });
         
         window.isMuted = isMuted;

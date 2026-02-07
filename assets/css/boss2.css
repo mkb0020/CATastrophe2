@@ -1,4 +1,3 @@
-
 #battleUI {
   position: fixed;
   top: 0;
@@ -408,10 +407,9 @@
 .finish-him-container {
   position: fixed;
   left: 50%;
-  bottom: 30%;
+  bottom: 10%;
   transform: translateX(-50%);
   max-width: 1000px;
-  height: 70px;
   z-index: 10000 !important;
 }
 
@@ -420,36 +418,40 @@
   font-family: 'GothNerd', 'Courier New', monospace; 
   font-size: 2.5rem;
   text-transform: uppercase;
-  padding: 10px 30px;
   color: white;
+  font-weight: bold;
   text-shadow: 
-    3px -1px 0 #000000,
-    -3px 1px 0 #000000,
-    4px 2px 0 #00FFFF,
-    -4px -2px 0 rgb(255,0,0),
+    2px -1px 0 #000000,
+    -2px 1px 0 #000000,
+    3px 1px 0 #00FFFF,
+    -3px -1px 0 rgb(255,0,0),
 
     0 0 20px rgb(2, 2, 2);
   background: #0f0f1a;
-  border: 4px solid #c71585;
+  border: 2px solid var(--HiggsHotPink);
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.4s ease;
   box-shadow: 
-    0 0 10px #c71585,
+    0 0 10px var(--HiggsHotPink),
     inset 0 0 15px rgba(199, 21, 133, 0.3),
-    0 0 50px #c71585;
+    0 0 50px var(--HiggsHotPink);
   overflow: hidden;
+  width: 800px;
+  height: 90px;
+  max-width: 900px !important;
+  max-height: 90px !important;
 }
 
 .finish-him-button:hover {
   transform: translateY(-1px) scale(1.01);
-  color: rgb(255,0,0);
+  color: rgb(0,0,0);
   font-weight: bold;
   text-shadow: 
-    1px 0px 0 rgb(0,0,0),
-    -1px 0px 0 rgb(0,0,0),
-    8px 4px 0 var(--AquaAura),
-    -8px -4px 0 var(--AquaAura),
+    0px 0px 0 rgb(0,0,0),
+    -0px 0px 0 rgb(0,0,0),
+    9px 4px 0 var(--AquaAura),
+    -9px -4px 0 var(--LaserRed),
     0 0 20px rgb(2, 2, 2);
   box-shadow: 
     0 0 15px #c71585,
@@ -482,39 +484,153 @@
 }
 
 @media (max-width: 968px){ /* ~~~~ MOBILE FOR FINISH HIM ~~~~ */
-.finish-him-container {
-  position: fixed;
-  left: 50%;
-  bottom: 20%;
-  transform: translateX(-50%);
-  max-width: 1000px;
-  height: 50px;
-  z-index: 100;
-}
 
 .finish-him-button {   
-  font-size: 1.7rem;
+  width: 600px;
+  height: 70px;
+  max-width: 700px !important;
+  max-height: 70px !important;
+  font-size: 1.6rem;
   text-shadow: 
-    0px 0px 0 #000000,
-    0px 0px 0 #000000,
-    0px 0px 0 #00FFFF,
-    0px 0px 0 rgb(255,0,0),
-
-    0 0 20px rgb(2, 2, 2);
+    0px 0px 0 rgb(0,0,0),
+    0px 0px 0 rgb(0,0,0),
+    0px 0px 0 var(--AquaAura),
+    0px 0px 0 var(--LaserRed),
+  }
+}
+/* ==================== FINISH HIM TEXT ==================== */
+.finish-him-text {
+  position: fixed;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+  z-index: 10001 !important;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
 }
 
-.finish-him-button:hover {
-    transform: translateY(0px) scale(1.05);
-    color: rgb(255,0,0);
-    font-weight: bold;
-    text-shadow: 
-        0px 0px 0 rgb(0,0,0),
-        0px 0px 0 rgb(0,0,0),
-        0px 0px 0 var(--AquaAura),
-        0px 0px 0 var(--AquaAura),
-        0 0 20px rgb(2, 2, 2);
-    }
+.finish-him-text.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.finish-him-text__main,
+.finish-him-text__shadow,
+.finish-him-text__shadow2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'GothNerd', monospace;
+  font-size: 7.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+ /* animation: finishHimPulse 0.5s ease-out forwards, finishHimScale 6s ease-in-out infinite;*/
+}
+
+.finish-him-text__main {
+  color: rgb(157, 1, 40);
+  z-index: 3;
+  animation: finishHimColorCycle 0.3s linear infinite;
+}
+
+.finish-him-text__shadow {
+  color: rgb(0,0,0);
+  z-index: 2;
+  left: calc(50% + 6px);
+  top: calc(50% + 6px);
+}
+
+.finish-him-text__shadow2 {
+  color: #000000;
+  z-index: 1;
+  left: calc(50% - 6px);
+  top: calc(50% - 6px);
+}
+
+@keyframes finishHimPulse {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes finishHimScale {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.01);
+  }
+}
+
+@keyframes finishHimColorCycle {
+  0% {
+    color: rgb(157, 1, 40);
+  }
+  50% {
+    color: var(--HiggsHotPink);
+  }
+  100% {
+    color: rgb(157, 1, 40);
+  }
+}
+
+@media (max-width: 968px) {
+  .finish-him-text__main,
+  .finish-him-text__shadow,
+  .finish-him-text__shadow2 {
+    font-size: 4.5rem;
+  }
+  
+  .finish-him-text__shadow {
+    left: calc(50% + 4px);
+    top: calc(50% - 4px);
+  }
+  
+  .finish-him-text__shadow2 {
+    left: calc(50% - 4px);
+  }
+}
+
+@media (max-width: 750px) {
+  .finish-him-text__main,
+  .finish-him-text__shadow,
+  .finish-him-text__shadow2 {
+    font-size: 40px;
+  }
+  
+  .finish-him-text__shadow {
+    left: calc(50% + 1px);
+    top: calc(50% - 1px);
+  }
+  
+  .finish-him-text__shadow2 {
+    left: calc(50% - 1px);
+  }
+}
 
 
 
+/* ==================== BOSS BACKGROUND ==================== */
+.boss-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1; 
+  background-image: url('../../assets/images/backgrounds/BattleBG1.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.boss-background.visible {
+  opacity: 1;
 }

@@ -203,7 +203,7 @@ export function createCharSelectScene() {
       
       wait(2.2, () => {
         cafeSprite.frame = 1;
-        play("door", { volume: 0.5 });
+        play("door", { volume: 0.2 });
         wait(0.3, () => {
           tween(
             MID_SCALE,
@@ -229,7 +229,7 @@ export function createCharSelectScene() {
           cafeSprite.opacity = 0;
           
           showCharSelectModal();
-          shopMusic = play("shop", { volume: 0.3, loop: true });
+          shopMusic = play("shop", { volume: 0.08, loop: true });
           
           wait(0.8, () => {
             animationComplete = true;
@@ -313,7 +313,7 @@ function buildCharacterCards() {
         console.log('ðŸ”˜ Button disabled after:', confirmBtn.disabled);
       }
       
-      if (window.play) play("happyMeow", { volume: 0.2 });
+      if (window.play) play("happyMeow", { volume: 0.1 });
     };
     
     grid.appendChild(card);
@@ -407,7 +407,7 @@ function playPourAnimation(onComplete) {
     "pourBlackOverlay",
   ]);
 
-  play("pour", { volume: 0.3 });
+  play("pour", { volume: 0.2 });
 
   const POUR_COUNT = 3;
   const STAGGER = 0.1;

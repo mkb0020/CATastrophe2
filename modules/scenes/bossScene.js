@@ -159,6 +159,16 @@ applyUpgradesToBossPlayer(player);
   } else {
     console.error('❌ battleUI element not found in DOM!');
   }
+  
+  const battleBottomBar = document.getElementById('battleBottomBar');
+  if (battleBottomBar) {
+    battleBottomBar.classList.remove('hidden');
+  }
+  
+  const finishHimTextElement = document.getElementById('finishHimText');
+  if (finishHimTextElement) {
+    finishHimTextElement.classList.add('hidden');
+  }
 
   // VISUAL ELEMENTS
   addBossBackground(bossConfig);
@@ -518,91 +528,34 @@ function checkBattleEnd() {
         finishHimBtnText.textContent = `USE ${formattedMoveName}`;
         
         finishHimButton.classList.remove('hidden');
+        finishHimButton.classList.remove('hidden');
       }
       
-      const finishText = add([
-        text("FINISH HIM!", { size: 100, font: "orbitronBold" }),
-        pos(SCREEN_W / 2, SCREEN_H / 2 - 50),
-        anchor("center"),
-        color(rgb(157, 1, 40)), 
-        z(200),
-        opacity(0),
-        "finishText"
-      ]);
-
-      const finishTextShadow = add([
-        text("FINISH HIM!", { size: 100, font: "orbitronBold" }),
-        pos(SCREEN_W / 2 + 4, SCREEN_H / 2 - 46),
-        anchor("center"),
-        color(0, 0, 0),
-        z(199),
-        opacity(0),
-        "finishTextShadow"
-      ]);
-
-      const finishTextShadow2 = add([
-        text("FINISH HIM!", { size: 100, font: "orbitronBold" }),
-        pos(SCREEN_W / 2 - 4, SCREEN_H / 2 - 50),
-        anchor("center"),
-        color(255, 255, 255),
-        z(198),
-        opacity(0),
-        "finishTextShadow2"
-      ]);
-
-      tween(0, 1, 0.5, (o) => {
-        finishText.opacity = o;
-        finishTextShadow.opacity = o * 0.8; 
-        finishTextShadow2.opacity = o * 0.7; 
-      }, easings.easeOutQuad);
-
-      let pulseTime = 0;
-
-      finishText.onUpdate(() => {
-        pulseTime += dt();
-
-        const pulseScale = 1 + Math.sin(pulseTime * 6) * 0.03; 
-        finishText.scale = vec2(pulseScale);
-        finishTextShadow.scale = vec2(pulseScale);
-        finishTextShadow2.scale = vec2(pulseScale);
-
-        const cycleTime = pulseTime % 4; 
-        let r, g, b;
-
-        if (cycleTime < 1.33) {
-          const t = cycleTime / 1.33;
-          r = lerp(157, 184, t);  
-          g = lerp(1, 59, t);     
-          b = lerp(40, 0, t);    
-        } else if (cycleTime < 2.66) {
-          const t = (cycleTime - 1.33) / 1.33;
-          r = lerp(184, 192, t);  
-          g = lerp(59, 57, t);   
-          b = lerp(0, 200, t);  
-        } else {
-          const t = (cycleTime - 2.66) / 1.34;
-          r = lerp(192, 157, t); 
-          g = lerp(57, 1, t);     
-          b = lerp(200, 40, t);   
-        }
-        finishText.color = rgb(r, g, b);
-      });
+      const finishHimTextElement = document.getElementById('finishHimText');
+      const battleBottomBar = document.getElementById('battleBottomBar');
+      
+      if (finishHimTextElement) {
+        finishHimTextElement.classList.remove('hidden');
+      }
+      
+      if (battleBottomBar) {
+        battleBottomBar.classList.add('hidden');
+      }
       
       if (finishHimBtn) {
         finishHimBtn.onclick = () => {
-          console.log('ðŸ’¥ SPECIAL ATTACK INITIATED!');
+          console.log('💥 SPECIAL ATTACK INITIATED!');
           
           finishHimButton.classList.add('hidden');
           
-          tween(1, 0, 0.3, (o) => {
-            finishText.opacity = o;
-            finishTextShadow.opacity = o;
-            finishTextShadow2.opacity = o;
-          }).then(() => {
-            destroy(finishText);
-            destroy(finishTextShadow);
-            destroy(finishTextShadow2);
-          });
+          if (finishHimTextElement) {
+            finishHimTextElement.style.transition = 'opacity 0.3s ease';
+            finishHimTextElement.style.opacity = '0';
+            setTimeout(() => {
+              finishHimTextElement.classList.add('hidden');
+              finishHimTextElement.style.opacity = '';
+            }, 300);
+          }
           
           wait(0.5, () => {
             playFinishHimMove(finishHimMove);
@@ -762,6 +715,12 @@ function checkBattleEnd() {
       if (battleUI) {
         battleUI.classList.add('hidden');
         console.log('🧹 Battle UI hidden on scene leave');
+      }
+
+      const backgroundEl = document.getElementById('bossBackground');
+      if (backgroundEl) {
+        backgroundEl.classList.remove('visible');
+        console.log('🧹 Boss background hidden on scene leave');
       }
     });
   

@@ -527,7 +527,7 @@ export function addCups(levelConfig) {
     
     const platform = platforms[idx];
     const x = platform.x + (platform.width / 2);
-    const y = platform.y - 61;
+    const y = platform.y - 44;
     
     cupData.push({ x, y, spawned: false });
     cupsPlaced++;
@@ -546,9 +546,9 @@ export function addCups(levelConfig) {
         add([
           sprite('cup'),
           pos(cup.x, cup.y),
-          area({ width: 40, height: 60 }),
+          area({ width: 40, height: 50 }),
           anchor("center"),
-          scale(0.8),
+          scale(1.2),
           rotate(0),
           {
             hasBeenKnocked: false,
@@ -641,7 +641,7 @@ export function addSpecialItems(levelConfig, platformsWithCups = new Set()) {
         pos(x, y),
         area({ width: 50, height: 50 }),
         anchor("center"),
-        scale(0.6),
+        scale(1),
         "fishBones"
       ]);
     }
@@ -1263,11 +1263,11 @@ export function setupCucumberSpawner(levelConfig, gameStateGetter) {
         const count = zone.count || levelConfig.enemies.cucumbers.count || 3;
         
         for (let i = 0; i < count; i++) {
-          wait(i * 0.5, () => {
+          wait(i * 0.7, () => {
             if (!gameStateGetter()) return;
             
-            const spawnX = rand(zone.start + 50, zone.end - 50);
-            const spawnY = -50 - (i * 30); 
+            const spawnX = rand(zone.start + 100, zone.end - 100);
+            const spawnY = -5 - (i * 30); 
             
             const cucumber = add([
               sprite('littleCucumber'),
@@ -1405,7 +1405,7 @@ export function setupRatSpawner(levelConfig, gameStateGetter, player) {
         
         spawnedZones.add(index);
         
-        const count = zone.count || levelConfig.enemies.rats.count || 3;
+        const count = zone.count || levelConfig.enemies.rats.count || 1;
         
         for (let i = 0; i < count; i++) {
           wait(i * 0.2, () => {

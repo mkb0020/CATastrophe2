@@ -167,9 +167,9 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       lasers: { enabled: false }
     },
     bonusHPZone: [
-      { x: 18650, y: 170 }, 
+      { x: 18750, y: 170 }, 
     ],
-    milkBottlePosition: { x: 24150, y: 140 },
+    milkBottlePosition: { x: 24250, y: 220 },
     items: {
       fishBones: { enabled: true, count: 2 },
       tunaCan: { enabled: true, count: 1 },
@@ -178,7 +178,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       bonusHP: { enabled: true, count: 1 } // EASY
     },
     challengeDoorIN: [ 
-    { x: 8200,
+    { x: 8250,
       y: 140, 
       roomId: 'room2',
       returnX: 10512,  
@@ -264,7 +264,8 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       spawnRate: 2500,
       spawnZones: [
         { start: 1300, end: 1800 },   
-        { start: 5800, end: 7000 },  
+        { start: 5800, end: 6300 },
+        { start: 6200, end: 7000 }, 
         { start: 10900, end: 12300 }, 
         { start: 16200, end: 17600 },
         { start: 21600, end: 22800 },
@@ -277,7 +278,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       { x: 26250, y: 50 }, 
     ],
     catnipZones: [
-      { x: 4880, y: 80 },
+      { x: 4900, y: 80 },
     ],
     items: {
       fishBones: { enabled: true, count: 1 },
@@ -312,10 +313,10 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     //playerSpawn: { x: 28350, y: 200 },   // FOR TESTING BOSS BATTLES 
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
-      { x: 5470, y: 440, width: 2000, height: 50 },
-      { x: 10940, y: 440, width: 2000, height: 50 },
-      { x: 16410, y: 440, width: 2000, height: 50 },
-      { x: 21880, y: 440, width: 2000, height: 50 },
+      { x: 5470, y: 440, width: 2000, height: 50 }, // 5470 - 7470
+      { x: 10940, y: 440, width: 2000, height: 50 }, // 10940 - 12940
+      { x: 16410, y: 440, width: 2000, height: 50 }, // 16410-18410
+      { x: 21880, y: 440, width: 2000, height: 50 }, // 21880 - 23880
       { x: 27350, y: 440, width: 2000, height: 50 }
 
     ],
@@ -370,8 +371,8 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
         damage: 5,
         spawnZones: [
           { start: 6100, end: 7100 },
-          { start: 12300, end: 12600 },
-          { start: 17350, end: 17650 }
+          { start: 12200, end: 12800 },
+          { start: 17000, end: 18000 }
         ]
       },
     rats: { 
@@ -379,9 +380,12 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       spawnRate: 2500,
       spawnZones: [
         { start: 1100, end: 1700 },
-        { start: 6000, end: 7000 },
-        { start: 11400, end: 12400 },
-        { start: 22200, end: 23500 }
+        { start: 5900, end: 6700 },
+        { start: 6600, end: 7000 },
+        { start: 11200, end: 12000 },
+        { start: 11800, end: 12500 },
+        { start: 22000, end: 23000 },
+        { start: 22800, end: 23500 }
       ]
     },
     lasers: { 
@@ -398,7 +402,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       { x: 21560, y: 320 }, 
     ],  
     catnipZones: [
-      { x: 5050, y: 100 }, 
+      { x: 5100, y: 120 }, 
     ],
     items: {
       fishBones: { enabled: true, count: 1 },
@@ -416,7 +420,7 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
      }
     ],
     challengeDoorOUT: [
-    { x: 17910, y: 290, roomId: 'room4' }
+    { x: 17910, y: 30, roomId: 'room4' }
     ],
     levelMusic: 'PlatformerTrack4',
     nextBoss: 'laserPointerBoss',
@@ -434,11 +438,11 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     //playerSpawn: { x: 27350, y: 200 },   // FOR TESTING BOSS BATTLES 
     GroundSegments: [
       { x: -1000, y: 440, width: 3000, height: 50 },
-      { x: 5660, y: 440, width: 2000, height: 50 },
-      { x: 11320, y: 440, width: 2000, height: 50 },
-      { x: 16980, y: 440, width: 2000, height: 50 },
-      { x: 22640, y: 440, width: 2000, height: 50 },
-      { x: 24640, y: 460, width: 2000, height: 50 },
+      { x: 5660, y: 440, width: 2000, height: 50 }, // 5660 - 7660
+      { x: 11320, y: 440, width: 2000, height: 50 }, // 11320 - 13320
+      { x: 16980, y: 440, width: 2000, height: 50 }, // 16980 - 18980
+      { x: 22640, y: 440, width: 2000, height: 50 }, // 22640 - 24640
+      { x: 24640, y: 460, width: 2000, height: 50 }, // 24640 - 26640
       { x: 26300, y: 440, width: 2000, height: 50 }
 ],
     solidPlatforms: [20],
@@ -480,19 +484,23 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
           spawnRate: 2000,
           damage: 5,
           spawnZones: [
-            { start: 5850, end: 6050  }, 
-            { start: 7260, end: 7460  },
-            { start: 17380, end: 18580  }
+            { start: 5450, end: 5900  }, 
+            { start: 7200, end: 7560  },
+            { start: 17380, end: 18680  }
           ]
         },
     rats: { 
       enabled: true,
       spawnRate: 2500, 
       spawnZones: [
-        { start: 11550, end: 13200 }, 
-        { start: 17300, end: 18600 },
-        { start: 23040, end: 24100 }, 
-        { start: 22840, end: 23900 }]
+        { start: 11550, end: 12900 }, 
+        { start: 12000, end: 13220 }, 
+        { start: 17200, end: 18000 },
+        { start: 17800, end: 18700 },
+        { start: 22800, end: 24100 },
+        { start: 22840, end: 23900 },
+        { start: 23040, end: 24300 } 
+        ]
     },
     lasers: { 
           enabled: true,
@@ -528,11 +536,11 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
       bonusHP: { enabled: true, count: 2 }
     },
     challengeDoorIN: [  
-    { x: 5100, 
+    { x: 5175, 
       y: 30, 
       roomId: 'room5',
       returnX: 6560,
-      returnY: 80
+      returnY: 70
      }
     ],
     challengeDoorOUT: [  

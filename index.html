@@ -7,11 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-fullscreen">
   <title>CATastrophe 2</title>
-  <!--<link rel="stylesheet" href="assets/css/HUD.css">-->
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/boss2.css">
   <link rel="stylesheet" href="assets/css/mobile.css">
-  <link rel="stylesheet" href="assets/css/desktopHUD.css">
   <link rel="stylesheet" href="assets/css/modals.css">
   <script type="importmap">
     {
@@ -82,6 +80,12 @@
     </div>
 </div>
 
+<!-- FINISH HIM TEXT -->
+<div id="finishHimText" class="finish-him-text hidden">
+  <div class="finish-him-text__shadow2">FINISH HIM!</div>
+  <div class="finish-him-text__shadow">FINISH HIM!</div>
+  <div class="finish-him-text__main">FINISH HIM!</div>
+</div>
 
 
 <!-- ========================= DEBUG STUFF ===================== 
@@ -493,6 +497,8 @@
 </div>
 
 <!-- ======================= BOSS BATTLES =======================-->
+<div id="bossBackground" class="boss-background"></div>
+
 <div id="battleUI" class="battle-ui hidden">
   <div class="battle-hp-panel battle-hp-panel--boss" id="bossHPPanel">
     <div class="battle-hp-panel__name battle-boss-name" id="bossName">Boss Name</div> 

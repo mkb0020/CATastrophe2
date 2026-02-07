@@ -115,54 +115,54 @@ loadFont("science", "assets/fonts/ScienceGothic.ttf");
 async function loadAssets() {
   console.log('📦 Loading game assets...');
   //MUSIC 
-  loadSound("menuMusic", "assets/sounds/tracks/mainMenu.wav"); 
-  loadSound("finalBossMusic", "assets/sounds/tracks/finalBoss.wav");
-  loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.mp3")
-  loadSound("finalVictory", "assets/sounds/tracks/endCredits.wav");
-  loadSound("bossMusic", "assets/sounds/tracks/bossBattles.wav");
-  loadSound("PlatformerTrack1", "assets/sounds/tracks/level1.wav");
-  loadSound("PlatformerTrack2", "assets/sounds/tracks/level2.wav");
-  loadSound("PlatformerTrack3", "assets/sounds/tracks/level3.wav");
-  loadSound("PlatformerTrack4", "assets/sounds/tracks/level4.wav");
-  loadSound("PlatformerTrack5", "assets/sounds/tracks/level5.wav");
-  loadSound("challengeRoom", "assets/sounds/tracks/challengeRoom.wav");
+  loadSound("menuMusic", "assets/sounds/tracks/mainMenu.m4a"); 
+  loadSound("finalBossMusic", "assets/sounds/tracks/finalBoss.m4a");
+  loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.m4a")
+  loadSound("finalVictory", "assets/sounds/tracks/endCredits.m4a");
+  loadSound("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
+  loadSound("PlatformerTrack1", "assets/sounds/tracks/level1.m4a");
+  loadSound("PlatformerTrack2", "assets/sounds/tracks/level2.m4a");
+  loadSound("PlatformerTrack3", "assets/sounds/tracks/level3.m4a");
+  loadSound("PlatformerTrack4", "assets/sounds/tracks/level4.m4a");
+  loadSound("PlatformerTrack5", "assets/sounds/tracks/level5.m4a");
+  loadSound("challengeRoom", "assets/sounds/tracks/challengeRoom.m4a");
   //FX SOUNDS
-  loadSound("door", "assets/sounds/fx/doorOpen.mp3");
-  loadSound("pour", "assets/sounds/fx/coffeePour.mp3");
-  loadSound("shop", "assets/sounds/fx/coffeeShop.mp3");
-  loadSound("collectCup", "assets/sounds/fx/collectCup.mp3");
-  loadSound("powerUp", "assets/sounds/fx/HappyMeow.mp3");
-  loadSound("extraLife", "assets/sounds/fx/exrtraLife.mp3");
-  loadSound("flip", "assets/sounds/fx/flip.mp3");
-  loadSound("ratKill", "assets/sounds/fx/ratKill.mp3");
-  loadSound("takeHit", "assets/sounds/fx/takehit.mp3");
-  loadSound("laserHit", "assets/sounds/fx/laserHit.mp3");
-  loadSound("gameOverSound", "assets/sounds/fx/gameOverSound.mp3");
-  loadSound("VictorySound", "assets/sounds/fx/VictorySound.mp3");
-  loadSound("lightning", "assets/sounds/fx/Lightning.mp3");
-  loadSound("bossLand", "assets/sounds/fx/bossLand.mp3");
-  loadSound("egg", "assets/sounds/fx/egg.mp3");
-  loadSound("miniBossDie", "assets/sounds/fx/miniBossDie.mp3");
-  loadSound("throw", "assets/sounds/fx/throw.mp3");
-  loadSound("reflect", "assets/sounds/fx/reflect.mp3");
-  loadSound("newMove", "assets/sounds/fx/newMove.wav");
-  loadSound("crumble", "assets/sounds/fx/crumble.mp3");
-  loadSound("upgrade", "assets/sounds/fx/upgrade.mp3");
+  loadSound("door", "assets/sounds/fx/doorOpen.m4a");
+  loadSound("pour", "assets/sounds/fx/coffeePour.m4a");
+  loadSound("shop", "assets/sounds/fx/coffeeShop.m4a");
+  loadSound("collectCup", "assets/sounds/fx/collectCup.m4a");
+  loadSound("powerUp", "assets/sounds/fx/HappyMeow.m4a");
+  loadSound("extraLife", "assets/sounds/fx/exrtraLife.m4a");
+  loadSound("flip", "assets/sounds/fx/flip.m4a");
+  loadSound("ratKill", "assets/sounds/fx/ratKill.m4a");
+  loadSound("takeHit", "assets/sounds/fx/takehit.m4a");
+  loadSound("laserHit", "assets/sounds/fx/laserHit.m4a");
+  loadSound("gameOverSound", "assets/sounds/fx/gameOverSound.m4a");
+  loadSound("VictorySound", "assets/sounds/fx/VictorySound.m4a");
+  loadSound("lightning", "assets/sounds/fx/Lightning.m4a");
+  loadSound("bossLand", "assets/sounds/fx/bossLand.m4a");
+  loadSound("egg", "assets/sounds/fx/egg.m4a");
+  loadSound("miniBossDie", "assets/sounds/fx/miniBossDie.m4a");
+  loadSound("throw", "assets/sounds/fx/throw.m4a");
+  loadSound("reflect", "assets/sounds/fx/reflect.m4a");
+  loadSound("newMove", "assets/sounds/fx/newMove.m4a");
+  loadSound("crumble", "assets/sounds/fx/crumble.m4a");
+  loadSound("upgrade", "assets/sounds/fx/upgrade.m4a");
   // MEOWS
-  loadSound("happyMeow", "assets/sounds/fx/meow06.mp3");
-  loadSound("meow00", "assets/sounds/fx/meow00.mp3");
-  loadSound("meow01", "assets/sounds/fx/meow01.mp3");
-  loadSound("meow02", "assets/sounds/fx/meow05.mp3"); 
+  loadSound("happyMeow", "assets/sounds/fx/meow06.m4a");
+  loadSound("meow00", "assets/sounds/fx/meow00.m4a");
+  loadSound("meow01", "assets/sounds/fx/meow01.m4a");
+  loadSound("meow02", "assets/sounds/fx/meow05.m4a"); 
 // SPECIAL MOVE SOUNDS
-  loadSound("cupFinishHim", "assets/sounds/fx/cup.mp3");
-  loadSound("cucumberFinishHim", "assets/sounds/fx/cucumber.mp3");
-  loadSound("ratFinishHim", "assets/sounds/fx/rat.mp3");
-  loadSound("laserFinishHim", "assets/sounds/fx/laser.mp3");
-  loadSound("finalFinishHim", "assets/sounds/fx/finalBoom.mp3");
-  loadSound("finalFinishHim2", "assets/sounds/fx/finalBossEnd.wav");
-  loadSound("atmosphere", "assets/sounds/fx/atmosphere.wav");
-  loadSound("finalMovePowerUp", "assets/sounds/fx/finalMovePowerUp.wav");
-  loadSound("finalMoveZap", "assets/sounds/fx/finalMoveZap.mp3");
+  loadSound("cupFinishHim", "assets/sounds/fx/cup.m4a");
+  loadSound("cucumberFinishHim", "assets/sounds/fx/cucumber.m4a");
+  loadSound("ratFinishHim", "assets/sounds/fx/rat.m4a");
+  loadSound("laserFinishHim", "assets/sounds/fx/laser.m4a");
+  loadSound("finalFinishHim", "assets/sounds/fx/finalBoom.m4a");
+  loadSound("finalFinishHim2", "assets/sounds/fx/finalBossEnd.m4a");
+  loadSound("atmosphere", "assets/sounds/fx/atmosphere.m4a");
+  loadSound("finalMovePowerUp", "assets/sounds/fx/finalMovePowerUp.m4a");
+  loadSound("finalMoveZap", "assets/sounds/fx/finalMoveZap.m4a");
 
 // ======================================== SPRITES ========================================
 
@@ -204,16 +204,11 @@ async function loadAssets() {
     sliceY: 1
   });
   loadSprite("bossLaserPointer", "assets/images/enemies/BossLaserPointer.png");
-  loadSprite("laserPointerGlow", "assets/images/enemies/LaserGlow.PNG");
   loadSprite("bossCup", "assets/images/enemies/BossCup.png");
-  loadSprite("CupGlow", "assets/images/enemies/CupGlow.png");
   loadSprite("bossRat", "assets/images/enemies/BossRatKing.png");
-  loadSprite("RatGlow", "assets/images/enemies/RatGlow.PNG");
   loadSprite("bossCucumber", "assets/images/enemies/BossCucumber.png");
-  loadSprite("CucumberGlow", "assets/images/enemies/CucumberGlow.png");
   loadSprite("bossRat", "assets/images/enemies/BossRatKing.png");
   loadSprite("observer", "assets/images/enemies/Observer.png");
-  loadSprite("ObserverGlow", "assets/images/enemies/ObserverGlow.png");
   // ITEMS
   loadSprite("catTower", "assets/images/items/CatTower.png");
   loadSprite("arrow", "assets/images/items/Arrow.png");
