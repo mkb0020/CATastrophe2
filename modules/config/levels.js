@@ -16,7 +16,7 @@ export const BUBBLE_FRAMES = {
 };
 
 
-export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS, SPECIAL ITEMS, NO STUFF ZONES, AND ENEMY SPAWN POINTS FOR ALL LEVELS 
+export const LEVELS = {   
   level1: { 
     id: 'level1',
     name: 'Level 1',
@@ -291,12 +291,12 @@ export const LEVELS = {  // NEED TO MOVE CHALLENGE WINDOWS IN AND OUT LOCATIONS,
     { x: 20770, 
       y: 110, 
       roomId: 'room3',
-      returnX: 23320,  
-      returnY: 70
+      returnX: 22620,  
+      returnY: 20
     }    
     ],
-    challengeDoorOUT: [ 
-    { x: 23320, y: 70, roomId: 'room3' }
+    challengeDoorOUT: [  // TESTING NEW LOCATION
+    { x: 22620, y: 20, roomId: 'room3' }
     ],
     levelMusic: 'PlatformerTrack3', 
     nextBoss: 'bossRatKing',

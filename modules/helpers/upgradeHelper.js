@@ -1,4 +1,4 @@
-// upgradeHelper.js - Updated to use HTML/CSS modals
+// upgradeHelper.js
 import { SCREEN_W, SCREEN_H } from '../config/gameConfig.js';
 import { startChallenegeMusic, stopAllMusic } from '../helpers/kittyHelpers.js';
 
@@ -100,6 +100,7 @@ export function openMoveSelectionModal(character, onComplete) {
   }
 }
 
+
 // ==================== TRANSFORMATION ANIMATION ====================
 function playTransformationAnimation(onComplete) {
   stopAllMusic();
@@ -108,17 +109,39 @@ function playTransformationAnimation(onComplete) {
     window.challengeRoom = null;
   }
   
-  const transformationBg = add([
+  // ⏱️ TIMING CONTROLS:
+  const SOUND_VOLUME = 3; // MAY NEED TO ADJUST
+  const PHASE1_START = 0.8;
+  const PHASE1_FRAME_SPEED = 0.07;
+  const PHASE2_START = 3.2;
+  const PHASE2_FRAME_SPEED = 0.15;
+  const PHASE3_START = 5.9;
+  const PHASE3_FRAME_SPEED = 0.16;
+  
+  // ========== WHITE FLASH START ==========
+  const initialFlash = add([
+    rect(SCREEN_W, SCREEN_H),
+    pos(0, 0),
+    color(255, 255, 255),
+    opacity(0),
+    z(1005),
+    fixed()
+  ]);
+  
+  tween(initialFlash.opacity, 1, 0.1, (val) => initialFlash.opacity = val, easings.easeInQuad);
+  
+  // ========== BACKGROUND LAYERS  ==========
+  const transformRainbow = add([
     sprite("transformRainbow", { anim: "fade" }),
     pos(SCREEN_W / 2, SCREEN_H / 2),
-    scale(20),
+    scale(10),
     anchor("center"),
     z(1000),
     fixed(),
     opacity(0)
   ]);
-
-  const transformationBubbles = add([
+  
+  const transformBubbles = add([
     sprite("transformBubbles", { anim: "fade" }),
     pos(SCREEN_W / 2, SCREEN_H / 2),
     scale(20),
@@ -127,62 +150,225 @@ function playTransformationAnimation(onComplete) {
     fixed(),
     opacity(0)
   ]);
-
-  const transformationAnimation = add([
-    sprite("newMove", { anim: "fade" }),
-    pos(SCREEN_W / 2, SCREEN_H / 2),
-    scale(10),
-    anchor("center"),
-    z(1002),
-    fixed(),
-    opacity(0)
-  ]);
   
-  shake(50);
-  tween(transformationBg.opacity, 1, 0.3, (val) => transformationBg.opacity = val);
-  transformationBg.play("fade", { loop: true, speed: 15 });
+  wait(0.1, () => play("newMove", { volume: SOUND_VOLUME }));
   
-  wait(0.2, () => play("newMove", { volume: 0.9 }));
-  
-  wait(0.3, () => {
-    tween(transformationBubbles.opacity, 0.3, 0.3, (val) => transformationBubbles.opacity = val);
-    transformationBubbles.play("fade", { loop: true, speed: 8 });
+  wait(0.15, () => {
+    tween(initialFlash.opacity, 0, 0.3, (val) => initialFlash.opacity = val, easings.easeOutQuad)
+      .then(() => destroy(initialFlash));
+    
+    tween(transformRainbow.opacity, 1, 0.3, (val) => transformRainbow.opacity = val);
+    transformRainbow.play("fade", { loop: true, speed: 15 });
+    
+    tween(transformBubbles.opacity, 0.7, 0.3, (val) => transformBubbles.opacity = val);
+    transformBubbles.play("fade", { loop: true, speed: 8 });
   });
   
-  wait(0.5, () => {
-    tween(transformationAnimation.opacity, 1, 0.3, (val) => transformationAnimation.opacity = val);
-    transformationAnimation.play("fade", { loop: false, speed: 10 });
-  });
-  
-  wait(1.0, () => shake(50));
-  wait(3.0, () => shake(50));
-  wait(5.0, () => shake(50));
-  wait(7.0, () => shake(90));
-  
-  wait(7.5, () => {
-    const whiteFlash = add([
-      rect(SCREEN_W, SCREEN_H),
-      pos(0, 0),
-      color(255, 255, 255),
-      opacity(0),
-      z(1001),
-      fixed()
+  wait(0.1, () => {
+    const moveUpgrade = add([
+      sprite("moveUpgrade"),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      scale(6.5),
+      anchor("center"),
+      z(1003),
+      fixed(),
+      opacity(0)
     ]);
     
-    tween(whiteFlash.opacity, 1, 0.2, (val) => whiteFlash.opacity = val, easings.easeInQuad);
+    tween(moveUpgrade.opacity, 1, 0.5, (val) => moveUpgrade.opacity = val);
+    moveUpgrade.play("pulse", { loop: false, speed: 25 });
     
-    wait(0.2, () => {
-      destroy(transformationBg);
-      destroy(transformationBubbles);
-      destroy(transformationAnimation);
-      
-      wait(0.5, () => {
-        tween(whiteFlash.opacity, 0, 0.5, (val) => whiteFlash.opacity = val, easings.easeOutQuad)
-          .then(() => destroy(whiteFlash));
+    wait(2.4, () => {
+      tween(moveUpgrade.opacity, 0, 1.3, (val) => moveUpgrade.opacity = val)
+        .then(() => {
+          destroy(moveUpgrade);
+        });
+    });
+  });
+  
+  // ========== PHASE 1 ==========
+  wait(PHASE1_START, () => {
+    const phase1Sprite = add([
+      sprite("transformPhase1"),
+      pos(SCREEN_W / 2, SCREEN_H / 2),
+      scale(2.7),
+      anchor("center"),
+      z(1002),
+      fixed(),
+      opacity(0),
+      { currentFrame: 0 }
+    ]);
+    
+    tween(phase1Sprite.opacity, 1, 0.3, (val) => phase1Sprite.opacity = val);
+    
+    let frameCount = 0;
+    const frameInterval = loop(PHASE1_FRAME_SPEED, () => {
+      if (frameCount < 8) {
+        frameCount++;
+        phase1Sprite.frame = frameCount;
+      } else {
+        frameInterval.cancel();
         
-        wait(0.05, () => {
-          startChallenegeMusic();
-          if (onComplete) onComplete();
+        wait(0.2, () => {
+          const handleSprite = add([
+            sprite("transformHandle"),
+            pos(SCREEN_W / 2, SCREEN_H / 2),
+            scale(20),
+            anchor("center"),
+            z(1004),
+            fixed(),
+            opacity(0),
+            { angle: 0 }
+          ]);
+          
+          handleSprite.scale = vec2(10, 10);
+          tween(10, 1, 0.3, (val) => {
+            handleSprite.scale = vec2(3.5, 3.5);
+          }, easings.easeOutBack);
+          
+          tween(handleSprite.opacity, 1, 0.2, (val) => handleSprite.opacity = val);
+          
+          tween(0, 360, 0.3, (val) => handleSprite.angle = val);
+          
+          wait(0.7, () => {
+            tween(phase1Sprite.opacity, 0, 0.6, (val) => phase1Sprite.opacity = val);
+            
+            wait(0.2, () => {
+              tween(handleSprite.opacity, 0, 0.6, (val) => handleSprite.opacity = val)
+                .then(() => {
+                  destroy(phase1Sprite);
+                  destroy(handleSprite);
+                });
+            });
+          });
+        });
+      }
+    });
+  });
+  
+  // ========== PHASE 2 ==========
+  wait(PHASE2_START, () => {
+    wait(0.2, () => {
+      const phase2Sprite = add([
+        sprite("transformPhase2"),
+        pos(SCREEN_W / 2, SCREEN_H / 2),
+        scale(2.5),
+        anchor("center"),
+        z(1002),
+        fixed(),
+        opacity(0),
+        { currentFrame: 0 }
+      ]);
+      
+      tween(phase2Sprite.opacity, 1, 0.3, (val) => phase2Sprite.opacity = val);
+      
+      wait(0.3, () => { // BLINK
+        phase2Sprite.frame = 0; // EYES SHUT
+        
+        wait(0.3, () => {
+          phase2Sprite.frame = 1; // EYES OPEN
+          
+          wait(0.2, () => {
+            phase2Sprite.frame = 0; // EYES SHUT
+            
+            wait(0.3, () => {
+              phase2Sprite.frame = 1; 
+              
+              wait(0.4, () => {
+                let frameCount = 2;
+                const frameInterval = loop(PHASE2_FRAME_SPEED, () => {
+                  if (frameCount <= 7) {
+                    phase2Sprite.frame = frameCount;
+                    frameCount++;
+                  } else {
+                    frameInterval.cancel();
+                  }
+                });
+              });
+            });
+          });
+        });
+        
+        wait(1.1, () => {
+          tween(phase2Sprite.opacity, 0, 1.7, (val) => phase2Sprite.opacity = val)
+            .then(() => {
+              destroy(phase2Sprite);
+            });
+        });
+      });
+    });
+  });
+  
+  // ========== PHASE 3  ==========
+  wait(PHASE3_START, () => {
+    wait(0.1, () => {
+      const phase3Sprite = add([
+        sprite("transformPhase3"),
+        pos((SCREEN_W / 2) + 70, SCREEN_H / 2),
+        scale(3.5),
+        anchor("center"),
+        z(1004),
+        fixed(),
+        opacity(0),
+        { currentFrame: 0 }
+      ]);
+      
+      tween(phase3Sprite.opacity, 1, 1.7, (val) => phase3Sprite.opacity = val);
+      
+      let frameCount = 0;
+      const frameInterval = loop(PHASE3_FRAME_SPEED, () => {
+        if (frameCount <= 10) {
+          phase3Sprite.frame = frameCount;
+          frameCount++;
+        } else {
+          frameInterval.cancel();
+        }
+      });
+      
+      wait(1.3, () => {
+        tween(phase3Sprite.opacity, 0, 0.4, (val) => phase3Sprite.opacity = val);
+        tween(transformRainbow.opacity, 0, 2, (val) => transformRainbow.opacity = val);
+        tween(transformBubbles.opacity, 0, 2, (val) => transformBubbles.opacity = val);
+        
+        wait(0.1, () => {
+          const finalFlash = add([
+            rect(SCREEN_W, SCREEN_H),
+            pos(0, 0),
+            color(255, 255, 255),
+            opacity(0),
+            z(1005),
+            fixed()
+          ]);
+          
+          tween(finalFlash.opacity, 1, 0.1, (val) => finalFlash.opacity = val, easings.easeInQuad);
+          
+          wait(0.5, () => {
+            destroy(transformRainbow);
+            destroy(transformBubbles);
+            destroy(phase3Sprite);
+            
+            const blackScreen = add([
+              rect(SCREEN_W, SCREEN_H),
+              pos(0, 0),
+              color(255, 255, 255),
+              opacity(0),
+              z(1006),
+              fixed()
+            ]);
+            
+            tween(finalFlash.opacity, 0, 0.8, (val) => finalFlash.opacity = val);
+            tween(blackScreen.opacity, 1, 0.1, (val) => blackScreen.opacity = val);
+            
+            wait(0.3, () => {
+              destroy(finalFlash);             
+              tween(blackScreen.opacity, 0, 0.4, (val) => blackScreen.opacity = val, easings.easeOutQuad)
+                .then(() => {
+                  destroy(blackScreen);                 
+                  startChallenegeMusic();
+                  if (onComplete) onComplete();
+                });
+            });
+          });
         });
       });
     });
@@ -195,7 +381,6 @@ function showMoveSwapUI(character, fragmentsAfterCollection, onComplete) {
     console.error('❌ HTML modal controller not found!');
     return;
   }
-  
   
   const moveName = "WHISKER WHIP!";
   const moveStats = "(DMG: 40, Uses: 2)";

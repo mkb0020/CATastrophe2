@@ -46,7 +46,6 @@ import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction
 import { stopAllMusic, ensureMusicLoaded } from '../helpers/kittyHelpers.js';
 
 
-
 function createUnifiedLevel(levelId, data) {
   showHUD();
   const character = data?.character || data;
@@ -219,7 +218,6 @@ function createUnifiedLevel(levelId, data) {
 
 
 export async function createLevel1Scene(data) {
-  // Load level 1 music first
   await ensureMusicLoaded("PlatformerTrack1", "assets/sounds/tracks/level1.m4a");
   createUnifiedLevel('level1', data);
 }
@@ -245,7 +243,7 @@ export async function createLevel5Scene(data) {
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
-  const startLives = data?.lives || 3;
+  const startLives = data?.lives ?? 3;
   const startScore = data?.score ?? 0;
   const startTime = data?.timeLeft ?? 90; 
   

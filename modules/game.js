@@ -79,10 +79,8 @@ window.addEventListener('resize', () => {
 
 
 // ==================== MOBILE INITIALIZATION ====================
-
 const mobileSetup = initializeMobileControls(document.getElementById("gameCanvas"));
 window.mobileSetup = mobileSetup;
-
 
 const mobileHUD = new MobileHUDController();
 window.mobileHUD = mobileHUD; 
@@ -102,8 +100,6 @@ if (mobileSetup.isMobile) {
     }
   });
 }
-
-
 
 loadFont("narrow", "assets/fonts/PTSansNarrow-Regular.ttf");
 loadFont("narrowBold", "assets/fonts/PTSansNarrow-Bold.ttf");
@@ -157,15 +153,13 @@ async function loadAssets() {
   loadSound("finalMoveZap", "assets/sounds/fx/finalMoveZap.m4a");
 
 // ======================================== SPRITES ========================================
-
-
-  loadSprite("realNona", "assets/images/realNona.PNG");
+ loadSprite("realNona", "assets/images/realNona.PNG");
   loadSprite("title", "assets/images/title.PNG");
   loadSprite("bubbles", "assets/images/items/bubbles.png", {
     sliceX: 11,
     sliceY: 1
   });
-  // BACKGRUNDS
+  // BACKGROUNDS
   loadSprite("startBG", "assets/images/backgrounds/StartBG.png");
   loadSprite("menuBG", "assets/images/backgrounds/MenuBG3.png");
   loadSprite("SelectBG", "assets/images/backgrounds/Select.png");
@@ -177,7 +171,6 @@ async function loadAssets() {
   loadSprite("transitionBG6", "assets/images/backgrounds/transitionBG6.png");
   loadSprite("transitionBG7", "assets/images/backgrounds/TransitionBG7.png");
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
-  loadSprite("battleBG1", "assets/images/backgrounds/BattleBG1.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
   loadSprite("groundPlatform", "assets/images/backgrounds/ground.png");
   loadSprite("platform", "assets/images/backgrounds/platform.png");
@@ -208,7 +201,7 @@ async function loadAssets() {
   loadSprite("fish", "assets/images/items/FishBones.png");
   loadSprite("tunaCan", "assets/images/items/TunaCan.PNG");
   loadSprite("milkBottle", "assets/images/items/MilkBottle.png");
-  loadSprite("egg", "assets/images/items/egg.png"); // BUNUS HP ITEM
+  loadSprite("egg", "assets/images/items/egg.png"); // BONUS HP ITEM
   loadSprite("catnip", "assets/images/items/Catnip.PNG");
   loadSprite("yeet", "assets/images/items/yeet.png");
   loadSprite("statsUpgrade", "assets/images/animationSprites/statsUpgrade.png", { sliceX:8, sliceY:1, anims:{pulse:{from:0,to:7, loop: true, speed:5}} });
@@ -245,21 +238,7 @@ async function loadAssets() {
     sliceY: 1, 
     anims: { fade: { from: 0, to: 17 } } 
 });
-  loadSprite("transformBubbles", "assets/images/animationSprites/bubbles.png", { 
-    sliceX: 7, 
-    sliceY: 1, 
-    anims: { fade: { from: 0, to: 6, loop: true} } 
-});
-  loadSprite("transformRainbow", "assets/images/animationSprites/rainbow.png", { 
-    sliceX: 7, 
-    sliceY: 1, 
-    anims: { fade: { from: 0, to: 6, loop: true}} 
-});
-  loadSprite("newMove", "assets/images/animationSprites/transform.png", { 
-    sliceX: 64, 
-    sliceY: 1, 
-    anims: { fade: { from: 0, to: 63 } }
-});
+
 
   loadSprite("finalMoveBG", "assets/images/animationSprites/finalMoveBG.png", { 
     sliceX: 80, 
@@ -278,14 +257,6 @@ async function loadAssets() {
     anims: { fade: { from: 0, to: 9 } }
 });
 
-
-
-//loadSprite("finalMoveBG1", "assets/images/animationSprites/finalMoveBG1.png");
-//loadSprite("finalMoveBG2", "assets/images/animationSprites/finalMoveBG2.png", { 
-//    sliceX: 32, 
-//    sliceY: 1, 
- //   anims: { fade: { from: 0, to: 31 } }
-//});
 
   // BATTLE ANIMATIONS
   loadSprite("smokeBlob", "assets/images/animationSprites/newSmoke.png", { sliceX:9, sliceY:1, anims:{puff:{from:0,to:8}} });
@@ -357,7 +328,6 @@ loadSprite("rainbowCatSheet", "assets/images/cats/RainbowCat.png", {
 
   console.log('✅ Assets loaded!');
 }
-
 
 
 //======================================== REGISTER SCENES ========================================

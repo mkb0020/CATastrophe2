@@ -20,7 +20,7 @@ export function initializeStars() {
 
 // =============================== IMAGE LOADER =============================================
 export class ImageLoader {
-    constructor(baseUrl = '/static/') {
+    constructor(baseUrl = '/assets/') {
         this.baseUrl = baseUrl;
         this.cache = new Map();
         this.loadingPromises = new Map();
@@ -219,6 +219,67 @@ export async function ensureMusicLoaded(soundName, soundPath) {
     console.log(`✅ ${soundName} loaded!`);
   } else {
     console.log(`✅ ${soundName} already cached`);
+  }
+}
+
+// =================================== LAZY LOAD TRANSFORMATION SPRITES ===================================
+
+export async function loadTransformationSprites() {
+  console.log('🌈 Loading transformation animation sprites...');
+  
+  try {
+    if (getSprite("transformRainbow")) {
+      console.log('✅ Transformation sprites already loaded');
+      return;
+    }
+  } catch (e) {
+  }
+  
+  try {
+    await Promise.all([
+      loadSprite("transformRainbow", "assets/images/animationSprites/transformRainbow.png", { 
+        sliceX: 7, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 6, loop: true }} 
+      }),
+      
+      loadSprite("transformBubbles", "assets/images/animationSprites/transformBubbles.png", { 
+        sliceX: 7, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 6, loop: true } } 
+      }),
+      
+      loadSprite("transformPhase1", "assets/images/animationSprites/transformPhase1.png", { 
+        sliceX: 9, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 8 } }
+      }),
+      
+      loadSprite("transformHandle", "assets/images/animationSprites/transformHandle.png"),
+      
+      loadSprite("transformPhase2", "assets/images/animationSprites/transformPhase2.png", { 
+        sliceX: 8, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 7 } } 
+      }),
+      
+      loadSprite("transformPhase3", "assets/images/animationSprites/transformPhase3.png", { 
+        sliceX: 11, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 10 } }
+      })
+    ]);
+    
+    console.log('✅ Transformation sprites loaded successfully!');
+    console.log('✅ transformRainbow loaded:', !!getSprite("transformRainbow"));
+    console.log('✅ transformBubbles loaded:', !!getSprite("transformBubbles"));
+    console.log('✅ transformPhase1 loaded:', !!getSprite("transformPhase1"));
+    console.log('✅ transformHandle loaded:', !!getSprite("transformHandle"));
+    console.log('✅ transformPhase2 loaded:', !!getSprite("transformPhase2"));
+    console.log('✅ transformPhase3 loaded:', !!getSprite("transformPhase3"));
+  } catch (error) {
+    console.error('❌ Error loading transformation sprites:', error);
+    throw error;
   }
 }
 
@@ -429,8 +490,6 @@ export function startAtmosphere() {
     console.log('🎵 ATMOSPHERE BG MUSIC STARTED! 👁');
 }
 // ============================== MUSIC CONTROLS (NOW IN HTML/CSS INSTEAD OF IN CANVAS) ==============================================
-
-
 export function initializeMusicControls() {
     const volumeBtn = document.getElementById('muteBtn');
     const pauseBtn = document.getElementById('pauseBtn');

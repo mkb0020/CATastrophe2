@@ -21,7 +21,12 @@ import {
   applyUpgradesToPlayer
 } from '../helpers/upgradeHelper.js';
 import { returnToLevel } from '../helpers/roomHelper.js';
-import { startChallenegeMusic, stopAllMusic, ensureMusicLoaded } from '../helpers/kittyHelpers.js';
+import { 
+  startChallenegeMusic, 
+  stopAllMusic, 
+  ensureMusicLoaded, 
+  loadTransformationSprites 
+} from '../helpers/kittyHelpers.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileExitWindow, showMobileArrows, hideMobileArrows, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
 
 
@@ -36,6 +41,15 @@ export async function createChallengeRoomScene(data)  {
     console.error('âŒ No room config provided!');
     go("menu");
     return;
+  }
+  
+  // Load transformation sprites for challenge room 4 so animation flows seamlessly
+  if (roomConfig.id === "room4") {
+    console.log("🌈 Challenge Room 4 detected - loading transformation sprites...");
+    await loadTransformationSprites();
+    console.log("✅ Transformation sprites ready for challenge room 4!");
+    // Small wait to ensure sprites are fully loaded
+    await new Promise(resolve => setTimeout(resolve, 100));
   }
   
   const bgElement = document.querySelector('.parallax-bg');
@@ -363,13 +377,12 @@ function openExitWindow() {
     hideHUD();
     showHUD();
     
-    // ==================== HIDE MOBILE HUD ====================
+  // ==================== HIDE MOBILE HUD ====================
     if (mobileSetup && mobileSetup.isMobile && mobileHUD) {
       mobileHUD.hide();
       console.log('ðŸ“± Mobile HUD hidden on challenge room exit');
     }
-    // =================================================================
-    
+  // ================================================================= 
     get("music").forEach(m => m.paused = true);
     const bgElement = document.querySelector('.parallax-bg');
     if (bgElement) {
