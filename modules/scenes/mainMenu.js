@@ -5,9 +5,6 @@ import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, s
 import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../helpers/mobileControls.js';
 import { hideHUD } from '../helpers/levelHelpers.js';
 
-
-
-
 // ==================== INITIALIZE GAME STATE ====================
 if (!window.gameState) {
   window.gameState = {
@@ -44,7 +41,7 @@ export function createStartScene(){
   // ==================== WIRE UP HTML BUTTONS ====================
   function handleDesktop() {
     window.gameState.deviceType = 'desktop';
-    console.log('ðŸ–¥ï¸ Desktop mode selected');
+    console.log('🖥️ Desktop mode selected');
     if (modal) modal.classList.remove('show');
     stopAtmosphere();
     startMenuMusic();
@@ -53,7 +50,7 @@ export function createStartScene(){
 
   function handleMobile() {
     window.gameState.deviceType = 'mobile';
-    console.log('ðŸ“± Mobile mode selected');
+    console.log('📱 Mobile mode selected');
     if (modal) modal.classList.remove('show');
     stopAtmosphere();
     startMenuMusic();
@@ -291,7 +288,7 @@ function buildCharacterCards() {
     card.appendChild(nameLabel);
     
     card.onclick = () => {
-      console.log('ðŸŽ¯ Card clicked!', { index, animationComplete });
+      console.log('👆 Card clicked!', { index, animationComplete });
       
       if (!animationComplete) return;
       
@@ -305,12 +302,12 @@ function buildCharacterCards() {
       updateCharacterStats(char);
       
       const confirmBtn = document.getElementById('confirmCharBtn');
-      console.log('ðŸ”˜ Button element found:', confirmBtn);
-      console.log('ðŸ”˜ Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
+      console.log('🔘 Button element found:', confirmBtn);
+      console.log('🔘 Button disabled before:', confirmBtn ? confirmBtn.disabled : 'N/A');
       
       if (confirmBtn) {
         confirmBtn.disabled = false;
-        console.log('ðŸ”˜ Button disabled after:', confirmBtn.disabled);
+        console.log('🔘 Button disabled after:', confirmBtn.disabled);
       }
       
       if (window.play) play("happyMeow", { volume: 0.1 });
@@ -348,25 +345,42 @@ function setupCharSelectButtons() {
   }
   
   if (confirmBtn) {
-    confirmBtn.onclick = () => {
-      console.log('ðŸš€ Confirm button clicked!', {
+    confirmBtn.onclick = async () => {
+      console.log('🚀 Confirm button clicked!', {
         selectedIndex,
         animationComplete,
         shopMusicExists: !!shopMusic
       });
       
       if (selectedIndex === null || !animationComplete) {
-        console.log('âŒ Cannot proceed:', { selectedIndex, animationComplete });
+        console.log('❌ Cannot proceed:', { selectedIndex, animationComplete });
         return;
       }
+      
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Loading...';
+      
+      const characters = getCharacterList();
+      const char = characters[selectedIndex];
+      
+      console.log(`🐱 Lazy loading sprite sheet for ${char.name}...`);
+      try {
+        const { characterSpriteLoader } = await import('../helpers/characterSpriteLoader.js');
+        await characterSpriteLoader.loadCharacterSprite(char);
+        console.log(`✅ ${char.name} sprite sheet loaded!`);
+      } catch (error) {
+        console.error(`❌ Failed to load character sprite:`, error);
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Confirm Selection';
+        return;
+      }
+      
       if (shopMusic) shopMusic.stop();
       
       const modal = document.getElementById('charSelectModal');
       if (modal) modal.classList.remove('show');
       
       playPourAnimation(() => {
-        const characters = getCharacterList();
-        const char = characters[selectedIndex];
         go("transition", "Transition1", char);
       });
     };

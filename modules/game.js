@@ -26,6 +26,7 @@ import {
 } from './scenes/gameOver.js';
 import { initDebugTools } from './helpers/debugTools.js';
 import { createChallengeRoomScene } from './scenes/challengeRoomScene.js';
+import { characterSpriteLoader } from './helpers/characterSpriteLoader.js';
 
 console.log('🎮 CATastrophe 2 - Kaplay Edition Loading...');
 
@@ -110,7 +111,7 @@ loadFont("science", "assets/fonts/ScienceGothic.ttf");
 // ======================================== LOAD  GAME ASSETS ========================================
 async function loadAssets() {
   console.log('📦 Loading game assets...');
-  //MUSIC 
+ //MUSIC 
   loadSound("menuMusic", "assets/sounds/tracks/mainMenu.m4a"); 
   loadSound("GameOverTrack", "assets/sounds/tracks/GameOverTrack.m4a")
   loadSound("finalVictory", "assets/sounds/tracks/endCredits.m4a");
@@ -290,36 +291,11 @@ async function loadAssets() {
   loadSprite("CrossBow", "assets/images/animationSprites/CatCrossBow2.png", { sliceX: 2, sliceY: 1, anims: { glitch: { from: 0, to: 1 } }});
 // UNLOCK MOVE
   loadSprite("whip", "assets/images/animationSprites/whip2.png", { sliceX:5, sliceY:1, anims:{glitch:{from:0,to:4,speed:50}} });
-//  ======================================== CHARACTER ANIMATION SPRITES ========================================
-const characters = getCharacterList();
-for (const char of characters) {
-  const charName = char.name;
-  loadSprite(`${charName}Sheet`, char.sprites.sheet, {
-    sliceX: 28,
-    sliceY: 1,
-    anims: {
-      walk: { 
-        from: SPRITE_FRAMES.walk0, 
-        to: SPRITE_FRAMES.walk7, 
-        loop: true, 
-        speed: 10 
-      }
-    }
-  });
-}
 
-loadSprite("rainbowCatSheet", "assets/images/cats/RainbowCat.png", {
-  sliceX: 12,
-  sliceY: 1,
-  anims: {
-    walk: { 
-      from: RAINBOW_CAT_FRAMES.walk0, 
-      to: RAINBOW_CAT_FRAMES.walk7, 
-      loop: true, 
-      speed: 10 
-    }
-  }
-});
+
+  // ======================================== CHARACTER PORTRAITS (for selection screen) ========================================
+  console.log('🎨 Loading character portraits...');
+  await characterSpriteLoader.loadCharacterPortraits();
 
   console.log('✅ Assets loaded!');
 }
