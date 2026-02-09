@@ -310,3 +310,33 @@ html, body {
         }
 
 
+/* =============== TRANSITION SCENE BACKGROUNDS =================== */
+.transition-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.transition-bg.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.transition-bg-1 { background-image: url('/assets/images/backgrounds/transitionBG.png'); }
+.transition-bg-2 { background-image: url('/assets/images/backgrounds/transitionBG2.png'); }
+.transition-bg-3 { background-image: url('/assets/images/backgrounds/transitionBG3.png'); }
+.transition-bg-4 { background-image: url('/assets/images/backgrounds/transitionBG4.png'); }
+.transition-bg-5 { background-image: url('/assets/images/backgrounds/transitionBG5.png'); }
+.transition-bg-6 { background-image: url('/assets/images/backgrounds/ObserverIntro.png'); }
+.transition-bg-7 { background-image: url('/assets/images/backgrounds/TransitionBG7.png'); }
+
+

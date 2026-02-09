@@ -1,0 +1,149 @@
+/* PLANNING TO REVISIT LATER 
+
+.transition-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.transition-bg.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.transition-bg-1 { background-image: url('/assets/images/backgrounds/transitionBG.png'); }
+.transition-bg-2 { background-image: url('/assets/images/backgrounds/transitionBG2.png'); }
+.transition-bg-3 { background-image: url('/assets/images/backgrounds/transitionBG3.png'); }
+.transition-bg-4 { background-image: url('/assets/images/backgrounds/transitionBG4.png'); }
+.transition-bg-5 { background-image: url('/assets/images/backgrounds/transitionBG5.png'); }
+.transition-bg-6 { background-image: url('/assets/images/backgrounds/ObserverIntro.png'); }
+.transition-bg-7 { background-image: url('/assets/images/backgrounds/TransitionBG7.png'); }
+
+
+
+
+/* ================ LEVEL BGS ============== 
+
+.level-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.level-bg.active {
+  opacity: 1;
+}
+
+.level-1-bg {
+  background: linear-gradient(45deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  animation: waveGradient 8s ease infinite;
+}
+
+.level-2-bg {
+  background: linear-gradient(45deg, #2d1b4e 0%, #4a2c6d 50%, #6b4494 100%);
+  animation: waveGradient 6s ease infinite;
+}
+
+.level-3-bg {
+  background: linear-gradient(45deg, #4a1c1c 0%, #8b3a3a 50%, #d45d5d 100%);
+  animation: waveGradient 5s ease infinite;
+}
+
+.level-4-bg {
+  background: linear-gradient(45deg, #1a3a1a 0%, #2d5a2d 50%, #4a8a4a 100%);
+  animation: waveGradient 7s ease infinite;
+}
+
+.level-5-bg {
+  background: linear-gradient(45deg, #2d1b1b 0%, #5a2d5a 50%, #8b3a8b 100%);
+  animation: waveGradient 4s ease infinite, pulse 2s ease infinite;
+}
+
+.challenge-room-bg {
+  background: linear-gradient(45deg, #0d3d56 0%, #1a5f7a 50%, #2d8ba3 100%);
+  animation: waveGradient 10s ease infinite, shimmer 3s ease infinite;
+}
+
+
+
+@keyframes waveGradient {
+  0%, 100% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    filter: brightness(1); 
+  }
+  50% { 
+    filter: brightness(1.2); 
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { 
+    filter: hue-rotate(0deg); 
+  }
+  50% { 
+    filter: hue-rotate(20deg); 
+  }
+}
+
+@keyframes bossPulse {
+  0%, 100% { 
+    filter: brightness(0.8); 
+  }
+  50% { 
+    filter: brightness(1.3); 
+  }
+}
+
+
+
+.particles-bg {
+  background: 
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    #0a0a1a;
+  background-size: 200% 200%;
+  animation: particles 20s linear infinite;
+}
+
+@keyframes particles {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+.glitch-bg {
+  background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+  animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+  0%, 100% { filter: hue-rotate(0deg); }
+  33% { filter: hue-rotate(120deg) saturate(3); }
+  66% { filter: hue-rotate(240deg) saturate(0.5); }
+}
+
+
+
+*/

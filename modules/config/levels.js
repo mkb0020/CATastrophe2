@@ -362,7 +362,7 @@ export const LEVELS = {
       { x: 26860, y: 370, width: 220, height: 20 }
 
     ],
-    noStuffZones: [  { start: 4900, end: 5300  }, { start: 16510, end: 17010  }, { start: 17810, end: 18220 }, { start: 18510, end: 21590 }], // CATNIP AND EGG
+    noStuffZones: [  { start: 4900, end: 5300  }, { start: 16610, end: 17010  }, { start: 17810, end: 18220 }, { start: 18510, end: 21590 }], // CATNIP AND EGG
     cups: { enabled: true, count: 15 },
     enemies: {
       cucumbers: { 
@@ -370,33 +370,40 @@ export const LEVELS = {
         spawnRate: 2100,
         damage: 5,
         spawnZones: [
-          { start: 6100, end: 7100 },
-          { start: 12200, end: 12800 },
-          { start: 17000, end: 18000 }
+          { start: 6420, end: 6520 },
+          { start: 11590, end: 11690 },
+          { start: 12290, end: 12390 },
+          { start: 15650, end: 15700 }
         ]
       },
     rats: { 
       enabled: true,
       spawnRate: 2500,
       spawnZones: [
-        { start: 1100, end: 1700 },
-        { start: 5900, end: 6700 },
-        { start: 6600, end: 7000 },
-        { start: 11200, end: 12000 },
-        { start: 11800, end: 12500 },
-        { start: 22000, end: 23000 },
-        { start: 22800, end: 23500 }
+        { start: 1300, end: 1900 },
+        { start: 5670, end: 7270 },
+        { start: 11140, end: 12140 },
+        { start: 11740, end: 12740 },
+        { start: 22400, end: 23500 },
+        { start: 22600, end: 23600 }
       ]
     },
     lasers: { 
       enabled: true,
       positions: [
-        2110, 
-        17450, 
-        10200, 
-        11800, 
-        22800, 
-        27700]}
+        2110,
+        5920,
+        6920,
+        10200,
+        11240,
+        11940,
+        12640,
+        14350,
+        17450,
+        22480,
+        23280,
+        27800
+      ]}
     },
     bonusHPZone: [
       { x: 21560, y: 320 }, 
