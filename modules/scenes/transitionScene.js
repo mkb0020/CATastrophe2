@@ -1,15 +1,15 @@
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getTransition } from '../config/transitions.js';
 import { SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
-import { stopAllMusic, startMenuMusic, startFinalVictoryMusic, stopAtmosphere, fadeMusicOut } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, startMenuMusic, startFinalVictoryMusic, stopAtmosphere, fadeMusicOut, showTransitionBackground, hideAllTransitionBackgrounds } from '../helpers/kittyHelpers.js';
 import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../helpers/mobileControls.js';
 import { hideHUD } from '../helpers/levelHelpers.js';
 
 
 export function createTransitionScene(transitionKey, character, startHP, lives = 3, score = 0) {
-    console.log('Ã°Å¸Å½Â¬ RAW PARAMS:', { transitionKey, character, startHP, lives, score });
-  console.log('Ã°Å¸Å½Â¬ lives type:', typeof lives, 'value:', lives);
-    console.log('Ã°Å¸Å½Â¬ Transition Scene received:', {
+    console.log('🎬 RAW PARAMS:', { transitionKey, character, startHP, lives, score });
+  console.log('🎬 lives type:', typeof lives, 'value:', lives);
+    console.log('🎬 Transition Scene received:', {
     transitionKey,
     character: character?.name,
     startHP,
@@ -45,9 +45,9 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     return;
   }
 
-  console.log(`Ã°Å¸Å½Â¬ Playing transition: ${transitionKey}`);
-  console.log(`Ã°Å¸ÂÂ± Character: ${character.name}`);
-  console.log(`Ã°Å¸â€œâ€¹ Transition sprites:`, transition.sprites);
+  console.log(`🎬 Playing transition: ${transitionKey}`);
+  console.log(`🐱 Character: ${character.name}`);
+  console.log(`🖼️ Transition sprites:`, transition.sprites);
 
   // GET ACTUAL SCREEN DIMENSIONS
   const centerX = SCREEN_W / 2;
@@ -56,13 +56,29 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   let textIndex = 0;
   const textKeys = ['Text1', 'Text2', 'Text3'];
 
-  // BACKGROUND - FULL SCREEN
-  add([
-    sprite(transition.background),
-    pos(0, 0),
-    scale(SCREEN_W / 1000, SCREEN_H / 480),
-    z(0),
-  ]);
+  // MAP BACKGROUND TO TRANSITION NUMBER
+  const bgMap = {
+    'transitionBG': 1,
+    'transitionBG2': 2,
+    'transitionBG3': 3,
+    'transitionBG4': 4,
+    'transitionBG5': 5,
+  };
+  
+  const transitionNumber = bgMap[transition.background];
+  
+  // SHOW HTML BACKGROUND FOR TRANSITIONS 1-5
+  if (transitionNumber) {
+    showTransitionBackground(transitionNumber);
+    console.log(`✨ Showing HTML background for transition ${transitionNumber}`);
+  } else {
+    add([
+      sprite(transition.background),
+      pos(0, 0),
+      scale(SCREEN_W / 1000, SCREEN_H / 480),
+      z(0),
+    ]);
+  }
 
   // DARK OVERLAY - FULL SCREEN
   add([  
@@ -77,7 +93,7 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
   const initialFrame = SPRITE_FRAMES[initialSpriteKey] || SPRITE_FRAMES.menu;
   const initialScale = SPRITE_SCALES[initialSpriteKey] || 1.0;
 
-  console.log(`Ã°Å¸Å½Â­ Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
+  console.log(`🎭 Initial sprite: ${initialSpriteKey} -> frame ${initialFrame}`);
 
   // CAT SPRITE - CENTERED
   const catSprite = add([
@@ -154,12 +170,12 @@ function renderStandardTransition(transitionKey, character, startHP, skipFlipSou
     const newFrame = SPRITE_FRAMES[newSpriteKey];
     const newScale = SPRITE_SCALES[newSpriteKey] || 1.0;
     
-    console.log(`Ã°Å¸â€â€ž Updating to sprite: ${newSpriteKey} -> frame ${newFrame} (textIndex: ${textIndex})`);
+    console.log(`🔄 Updating to sprite: ${newSpriteKey} -> frame ${newFrame} (textIndex: ${textIndex})`);
     
     const frameToUse = newFrame !== undefined ? newFrame : SPRITE_FRAMES.menu;
     
     if (newFrame === undefined) {
-      console.warn(`Ã¢Å¡Â Ã¯Â¸Â Frame not found for sprite key "${newSpriteKey}", using menu frame ${SPRITE_FRAMES.menu}`);
+      console.warn(`⚠️ Frame not found for sprite key "${newSpriteKey}", using menu frame ${SPRITE_FRAMES.menu}`);
     }
     
     catSprite.use(sprite(`${character.name}Sheet`, { frame: frameToUse }));
@@ -198,7 +214,13 @@ function handleNext() {
       }
     } else {
       const nextState = transition.nextState;
-          console.log('Ã°Å¸Å½Â¬ Transition going to next state:', nextState, 'with HP:', startHP, 'lives:', lives, 'score:', score);
+      console.log('🎬 Transition going to next state:', nextState, 'with HP:', startHP, 'lives:', lives, 'score:', score);
+
+      // HIDE HTML BACKGROUND BEFORE TRANSITIONING
+      if (transitionNumber) {
+        hideAllTransitionBackgrounds();
+        console.log('🎬 Hiding HTML backgrounds');
+      }
 
       if (nextState === 'level1') {
         go('level1', { character, startHP, lives, score });

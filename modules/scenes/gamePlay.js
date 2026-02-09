@@ -43,10 +43,12 @@ import {
 } from '../helpers/upgradeHelper.js';
 import { getRoom } from '../config/challengeRoom.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
+//import { stopAllMusic, ensureMusicLoaded, setLevelBackground, hideLevelBackgrounds } from '../helpers/kittyHelpers.js'; // PLANNING TO REVISIT CSS BACKGROUNDS LATER
 import { stopAllMusic, ensureMusicLoaded } from '../helpers/kittyHelpers.js';
 
 
 function createUnifiedLevel(levelId, data) {
+  //setLevelBackground(levelId); // PLANNING TO REVISIT LATER
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
@@ -213,6 +215,7 @@ function createUnifiedLevel(levelId, data) {
 
   onSceneLeave(() => {
     hideHUD();
+    //hideLevelBackgrounds();  // PLANNING TO REVISIT LATER
   });
 }
 
@@ -240,6 +243,7 @@ export async function createLevel4Scene(data) {
 
 export async function createLevel5Scene(data) {
   await ensureMusicLoaded("PlatformerTrack5", "assets/sounds/tracks/level5.m4a");
+  //setLevelBackground('level5'); // PLANNING TO REVISIT LATER
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
@@ -414,5 +418,6 @@ export async function createLevel5Scene(data) {
 
   onSceneLeave(() => {
     hideHUD();
+    //hideLevelBackgrounds();  // PLANNING TO REVISIT LATER
   });
 }

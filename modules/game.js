@@ -163,11 +163,6 @@ async function loadAssets() {
   loadSprite("startBG", "assets/images/backgrounds/StartBG.png");
   loadSprite("menuBG", "assets/images/backgrounds/MenuBG3.png");
   loadSprite("SelectBG", "assets/images/backgrounds/Select.png");
-  loadSprite("transitionBG", "assets/images/backgrounds/transitionBG.png");
-  loadSprite("transitionBG2", "assets/images/backgrounds/transitionBG2.png");
-  loadSprite("transitionBG3", "assets/images/backgrounds/transitionBG3.png");
-  loadSprite("transitionBG4", "assets/images/backgrounds/transitionBG4.png");
-  loadSprite("transitionBG5", "assets/images/backgrounds/transitionBG5.png");
   loadSprite("transitionBG6", "assets/images/backgrounds/transitionBG6.png");
   loadSprite("transitionBG7", "assets/images/backgrounds/TransitionBG7.png");
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
