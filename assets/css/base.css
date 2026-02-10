@@ -21,34 +21,34 @@
   }
 }
 
+#gameRoot {
+  position: fixed;  
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;  
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  z-index: 10;
+  background: rgba(0,0,0,0.1);
+}
+
 #gameCanvas {
-  position: relative !important;
+  position: absolute !important;  
   top: 0 !important;
   left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  max-width: 100vw !important;
-  max-height: 100vh !important;
+  width: 100% !important;  
+  height: 100% !important;  
+  max-width: 100% !important;
+  max-height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   display: block;
   z-index: 10;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  background: rgba(0,0,0,0.1);
-}
-
-#gameRoot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  position: relative;
-  z-index: 10;
   background: rgba(0,0,0,0.1);
 }
 
@@ -159,46 +159,59 @@ html, body {
       overflow-x: hidden;
     }
 
-    .background-gradient {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(to bottom, #000000 25%, #37025A 45%, #8a2be2 70%, var(--HiggsHotPink) 90%, var(--HiggsHotPink) 97%, var(--HiggsHotPink) 100%);
-      opacity: 0.85;
-      z-index: -2;
-    }
+.background-gradient {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, #000000 25%, #37025A 45%, #8a2be2 60%, var(--HiggsHotPink) 65%, var(--HiggsHotPink) 97%, var(--HiggsHotPink) 100%);
+  opacity: 1;
+  z-index: -2;
+}
 
-    .waves {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      pointer-events: none;
-      z-index: -2;
-    }
+.waves {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh; 
+  pointer-events: none;
+  z-index: -2;
+  overflow: hidden; 
+}
 
-    svg {
-      position: absolute;
-      bottom: 0;
-      width: 300%;
-      height: 90vh;
-      animation: wave-scroll linear infinite;
-    }
+.waves svg {
+  position: absolute;
+  bottom: 0;
+  width: 400%;
+  height: 90vh;
+  height: 90dvh;
+  animation: wave-scroll linear infinite;
+}
 
-    #wave1 { animation-duration: 60s; }
-    #wave2 { animation-duration: 50s; }
-    #wave5 { animation-duration: 30s; }
+#wave1 { animation-duration: 60s; } /* DARK PURPLE-ISH BLUE */
+#wave2 { animation-duration: 50s; } /* DARK HOT PINK */
+#wave3 { animation-duration: 45s; } /* COOL-TONED PURPLE */
+#wave4 { animation-duration: 70s; } /* DARK PURPLE-ISH BLUE */
+#wave5 { animation-duration: 30s; } /* LIGHT HOT PINK */
+#wave6 { animation-duration: 55s; } /* DARK HOT PINK */
 
-    @keyframes wave-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-66.66%); }
-    }
+@keyframes wave-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+@media screen and (max-width: 1024px) { /* HIDE WAVES ON MOBILE */
+  .waves {
+    display: none !important;
+  }
+}
 
     .dreamy-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0);
-      backdrop-filter: blur(20px);
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(30px);
       pointer-events: none;
       z-index: -1;
     }
@@ -219,7 +232,7 @@ html, body {
 
     @keyframes twinkle {
       0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
+      50% { opacity: 0.7; }
     }
 
 /* ==================== GAME CONTROLS ==================== */
@@ -317,15 +330,15 @@ html, body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  background-size: contain;  
   background-position: center;
+  background-repeat: no-repeat;  
   z-index: 1;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
-  overflow: hidden;
 }
 
 .transition-bg.active {
@@ -334,12 +347,12 @@ html, body {
   z-index: 1;
 }
 
-.transition-bg-1 { background-image: url('/assets/images/backgrounds/transitionBG.png'); }
-.transition-bg-2 { background-image: url('/assets/images/backgrounds/transitionBG2.png'); }
-.transition-bg-3 { background-image: url('/assets/images/backgrounds/transitionBG3.png'); }
-.transition-bg-4 { background-image: url('/assets/images/backgrounds/transitionBG4.png'); }
-.transition-bg-5 { background-image: url('/assets/images/backgrounds/transitionBG5.png'); }
-.transition-bg-6 { background-image: url('/assets/images/backgrounds/ObserverIntro.png'); }
-.transition-bg-7 { background-image: url('/assets/images/backgrounds/TransitionBG7.png'); }
+.transition-bg-1 { background-image: url('../../assets/images/backgrounds/transitionBG.png'); }
+.transition-bg-2 { background-image: url('../../assets/images/backgrounds/transitionBG2.png'); }
+.transition-bg-3 { background-image: url('../../assets/images/backgrounds/transitionBG3.png'); }
+.transition-bg-4 { background-image: url('../../assets/images/backgrounds/transitionBG4.png'); }
+.transition-bg-5 { background-image: url('../../assets/images/backgrounds/transitionBG5.png'); }
+.transition-bg-6 { background-image: url('../../assets/images/backgrounds/ObserverIntro.png'); }
+.transition-bg-7 { background-image: url('../../assets/images/backgrounds/TransitionBG7.png'); }
 
 
