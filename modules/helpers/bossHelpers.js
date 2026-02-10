@@ -26,7 +26,14 @@ export function addBossBackground(bossConfig) {
 
 export function addBattleSprites(character, bossConfig) {
 
-  
+  const darkOverlay = add([
+    rect(width(), height()),
+    pos(0, 0),
+    fixed(),
+    color(0, 0, 0),
+    opacity(0.2),
+    z(0),
+  ]);
   
   const prefix = character.name; 
 
@@ -1596,107 +1603,420 @@ export function animatePoisonAttack(boss, hero) {
 
 // =================== FELINE FISSION ===================
 
-  function animateSuperSaiyan(){
-    const battleUI = document.getElementById('battleUI');
-      if (battleUI) {
-        battleUI.classList.add('hidden');
-        console.log('🧹 Battle UI hidden on scene leave');
-      }
 
-      
-     const finalMoveBG = add([
-      sprite("finalMoveBG", { anim: "fade" }),
-      pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(20),
-      anchor("center"),
-      z(1000),
-      fixed(),
-      opacity(0)
-    ]);
-  
-    const finalMoveAnimation1 = add([
-      sprite("finalMove1", { anim: "fade" }),
-      pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(2),
-      anchor("center"),
-      z(1002),
-      fixed(),
-      opacity(0)
-    ]);
 
-    const finalMoveAnimation2 = add([
-      sprite("finalMove2", { anim: "fade" }),
-      pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(2),
-      anchor("center"),
-      z(1002),
-      fixed(),
-      opacity(0)
-    ]);
-    
-    shake(50);
-    tween(finalMoveBG.opacity, 1, 0.3, (val) => finalMoveBG.opacity = val);
-    finalMoveBG.play("fade", { loop: false, speed: 10 }); // TOTAL TIME = 8s
-    
-    play("lightning", { volume: 0.4, speed: 0.8 });
-    wait(0.2, () => { play("lightning", { volume: 0.2, speed: 0.8 }) });
-    wait(0.4, () => { play("lightning", { volume: 0.4, speed: 0.8 }) });
-    wait(1, () => { play("lightning", { volume: 0.3, speed: 0.8 }) });
-    wait(5, () => { play("lightning", { volume: 0.3, speed: 0.8 }) });
-    wait(7, () => { play("lightning", { volume: 0.5, speed: 0.8 }) });
-    
-    
-    wait(1.3, () => { play("finalMovePowerUp", { volume: 0.4 }); });
-    wait(3.2, () => {
-      tween(finalMoveAnimation1.opacity, 1, 0.6, (val) => finalMoveAnimation1.opacity = val);
-      finalMoveAnimation1.play("fade", { loop: false, speed: 10 }); // 12 FRAMES / 1.2s
-      wait(1, () => {
-          tween(finalMoveAnimation1.opacity, 0, 0.3, (val) => finalMoveAnimation1.opacity = val);
-      });
-    });
-    wait(2.6, () => { play("finalMoveZap", { volume: 0.1 }); });
-    wait(7.5, () => {
-      play("finalMoveZap", { volume: 0.2 });
-      tween(finalMoveAnimation2.opacity, 1, 0.5, (val) => finalMoveAnimation2.opacity = val);
-      finalMoveAnimation2.play("fade", { loop: true, speed: 10 }); //1.3s
-      wait(1.1, () => {
-          tween(finalMoveAnimation2.opacity, 0, 0.2, (val) => finalMoveAnimation2.opacity = val);
-      });
-    });
-    
-  
-    
-    wait(8.3, () => {
-      const whiteFlash = add([
-        rect(SCREEN_W, SCREEN_H),
-        pos(0, 0),
-        color(255, 255, 255),
-        opacity(0),
-        z(1001),
-        fixed()
-      ]);
-      
-      tween(whiteFlash.opacity, 1, 0.1, (val) => whiteFlash.opacity = val, easings.easeInQuad);
-      
-      wait(0.2, () => {
-            tween(finalMoveBG.opacity, 0, 0.3, (val) => finalMoveBG.opacity = val);
+        function animateSuperSaiyan() {
+          const battleUI = document.getElementById('battleUI');
+            if (battleUI) {
+              battleUI.classList.add('hidden');
+              console.log('🧹 Battle UI hidden on scene leave');
+            }
+            // BOTTOM LAYER - FOR TRANSITIONING SMOOTHLY
+            const bg1 = add([
+                sprite("superSaiyanBG1"),
+                pos(SCREEN_W / 2, SCREEN_H / 2),
+                scale(5),
+                anchor("center"),
+                z(1000),
+                fixed(),
+                opacity(1),
+                "background1"
+            ]);
+            
+            // LAYER 2 - WATER AND ISLAND BACK DROP
+            const phase1BG = add([
+                sprite("superSaiyanPhase1BG"),
+                pos(SCREEN_W / 2, SCREEN_H / 2),
+                scale(2.9),
+                anchor("center"),
+                z(1001),
+                fixed(),
+                opacity(0)
+            ]);
+            
+            // LAYER 3 - WHITE SCREEN
+            const initialWhiteFlash = add([
+                rect(SCREEN_W, SCREEN_H),
+                pos(0, 0),
+                color(255, 255, 255),
+                opacity(1),
+                z(1002),
+                fixed()
+            ]);
+            
+            // ============================= START ANIMATION - FADE OUT WHITE FLASH TO REVEAL PHASE 1 BG  =============================
+            tween(phase1BG.opacity, 1, 0.3, (val) => phase1BG.opacity = val);
+            
+            wait(0.1, () => {
+                tween(initialWhiteFlash.opacity, 0, 0.7, (val) => initialWhiteFlash.opacity = val, easings.easeOutQuad)
+                    .then(() => destroy(initialWhiteFlash));
+            });
+            
+            // ============================ PHASE 1 - LIGHTNING STRIKES ============================
+            const lightningTimings = [
+                // { DELAY, x, SCALE, SPEED }
+                { delay: 0.8, x: 650, scale: 3.5, speed: 35 },      // SMALL BOLT - MIDDLE-RIGHT
+                { delay: 1.2, x: 880, scale: 4.5, speed: 37 },    // MEDIUM BOLT - FAR-RIGHT
+                { delay: 1.8, x: 300, scale: 5.2, speed: 36 },    // BIG BOLT - MIDDLE-LEFT
+                { delay: 2, x: 80, scale: 5.9, speed: 40 },     // BIG BOLT - FAR-LEFT
+                { delay: 2.2, x: 920, scale: 4.5, speed: 35 },   // MEDIUM BOLT - FAR-FAR-RIGHT
+                { delay: 2.5, x: 500, scale: 5.3, speed: 38 },   // BIG BOLT - MIDDLE
+                { delay: 2.6, x: 100, scale: 4, speed: 36},      // SMALL BOLT - FAR-LEFT
+                { delay: 3, x: 500, scale: 4.5, speed: 38 },   // MEDIUM BOLT - MIDDLE
+                { delay: 3.2, x: 700, scale: 6.2, speed: 34 },   // BIG BOLT - MIDDLE-RIGHT
+                { delay: 3.3, x: 900, scale: 3.8, speed: 45 }      // SMALL BOLT - FAR RIGHT
+            ];
+            
+            // SOUND FX
+            const lightningSoundTimings = [0.9, 1.8, 2.2, 3, 3.2];
+            lightningSoundTimings.forEach(time => {
+                wait(time, () => {
+                    play("lightning", { volume: 0.4, speed: 0.8 });
+                });
+            });
+            
+            lightningTimings.forEach(({ delay, x, scale: boltScale, speed }) => { // LIGHTNING BOLTS
+                wait(delay, () => {
+                    const bolt = add([
+                        sprite("superSaiyanBolt", { anim: "flash" }),
+                        pos(x, 0),
+                        scale(boltScale),
+                        anchor("top"),
+                        z(1003),
+                        fixed(),
+                        opacity(1)
+                    ]);
+                    
+                    bolt.play("flash", { loop: false, speed: speed });
+                    
+                    wait(0.3, () => {
+                        tween(bolt.opacity, 0, 0.1, (val) => bolt.opacity = val)
+                            .then(() => destroy(bolt));
+                    });
+                });
+            });
+            
+            wait(3.5, () => { // WHITE FLASH - END PHASE 1
+                const whiteFlash1 = add([
+                    rect(SCREEN_W, SCREEN_H),
+                    pos(0, 0),
+                    color(255, 255, 255),
+                    opacity(0),
+                    z(1004),
+                    fixed()
+                ]);
+                
+                tween(whiteFlash1.opacity, 1, 0.3, (val) => whiteFlash1.opacity = val, easings.easeInQuad);
+                
+                
+                wait(0.2, () => { // CLEANUP PHASE 1
+                    destroy(phase1BG);
+                    
+                    // =============================== PHASE 2 - POWER UP ===============================
+                    tween(whiteFlash1.opacity, 0, 0.6, (val) => whiteFlash1.opacity = val) // WHITE FLASH FADE OUT
+                        .then(() => destroy(whiteFlash1));
+                    
+                    const phase2BG = add([ // PHASE 2 BACKGROUND - YELLOW SWIRLY FLASH - LOOP 3 FRAMES
+                        sprite("superSaiyanPhase2BG", { anim: "flash" }),
+                        pos(SCREEN_W / 2, SCREEN_H / 2),
+                        scale(5.8),
+                        anchor("center"),
+                        z(1001),
+                        fixed(),
+                        opacity(0)
+                    ]);
+                    
+                    tween(phase2BG.opacity, 1, 0.5, (val) => phase2BG.opacity = val);
+                    phase2BG.play("flash", { loop: true, speed: 20 });
+                    
+                    wait(0.5, () => {  // PHASE 2 - FOREGROUND LAYER - FACE SIDE-VIEW - RAINBOW COLOR CYCLE ( 8 FRAMES )
+                        const phase2 = add([
+                            sprite("superSaiyanPhase2", { anim: "fade" }),
+                            pos(SCREEN_W / 2, SCREEN_H / 2),
+                            scale(1.7),
+                            anchor("center"),
+                            z(1002),
+                            fixed(),
+                            opacity(0)
+                        ]);
+                        
+                        tween(phase2.opacity, 1, 0.6, (val) => phase2.opacity = val);
+                        phase2.play("fade", { loop: true, speed: 5 });
+                        
+                        play("finalMoveZap", { volume: 0.1 }); // SOUND FX
+                        
+                        wait(2.6, () => {
+                            play("finalMovePowerUp", { volume: 0.5 });
+                        });
 
-        wait(0.5, () => {
-          tween(whiteFlash.opacity, 0, 0.5, (val) => whiteFlash.opacity = val, easings.easeOutQuad)
-            .then(() => destroy(whiteFlash));
-          shake(100)
-          
+                        wait(1.3, () => { // FADE OUT PHASE 2
+                            tween(phase2BG.opacity, 0, 0.6, (val) => phase2BG.opacity = val);
+                            wait(0.2, () => {
+                                tween(phase2.opacity, 0, 0.7, (val) => phase2.opacity = val)
+                                    .then(() => {
+                                        destroy(phase2BG);
+                                        destroy(phase2);
+                                        
+                                        // =============================== PHASE 3 - WAVES ==================================
+                                        const phase3 = add([
+                                            sprite("superSaiyanPhase3", { anim: "fade" }),
+                                            pos(SCREEN_W / 2, SCREEN_H / 2),
+                                            scale(5),
+                                            anchor("center"),
+                                            z(1002),
+                                            fixed(),
+                                            opacity(0)
+                                        ]);
+                                        
+                                        tween(phase3.opacity, 1, 0.4, (val) => phase3.opacity = val);
+                                        phase3.play("fade", { loop: false, speed: 6 });
+                                        
+                                        wait(0.65, () => {
+                                            tween(phase3.opacity, 0, 0.5, (val) => phase3.opacity = val);
+                                            wait(0.3, () => { // WHITE FLASH BETWEEN WAVES AND ROCKS
+                                                const whiteFlash3 = add([
+                                                    rect(SCREEN_W, SCREEN_H),
+                                                    pos(0, 0),
+                                                    color(255, 255, 255),
+                                                    opacity(0),
+                                                    z(1004),
+                                                    fixed()
+                                                ]);
+                                                
+                                                tween(whiteFlash3.opacity, 1, 0.15, (val) => whiteFlash3.opacity = val);
+                                                wait(0.2, () => {
+                                                    destroy(phase3);  // CLEANUP
+                                                    
+                                                    // =============================== PHASE 4 - GROUND CRACKS & FLOATING ROCKS ==================================                                                   
+                                                    tween(whiteFlash3.opacity, 0, 0.4, (val) => whiteFlash3.opacity = val)
+                                                        .then(() => destroy(whiteFlash3)); // FADE OUT WHITE FLASH
+                                                    
+                                                    const phase4 = add([
+                                                        sprite("superSaiyanPhase4", { anim: "fade" }),
+                                                        pos(SCREEN_W / 2, SCREEN_H / 2),
+                                                        scale(5),
+                                                        anchor("center"),
+                                                        z(1002),
+                                                        fixed(),
+                                                        opacity(0)
+                                                    ]);
+                                                    
+                                                    tween(phase4.opacity, 1, 0.3, (val) => phase4.opacity = val); // FADE IN GROUND
+                                                    phase4.play("fade", { loop: false, speed: 2 });                                           
+                                      
+                                                    const rocks = []; // MAKE ROCKS!!!
+                                                    for (let i = 0; i < 40; i++) { // NUMBER OF ROCKS
+                                                        wait(rand(0, 1), () => { // TIME DELAY BETWEEN ROCKS
+                                                            const rockFrame = choose([0, 1, 2]);
+                                                            const startY = SCREEN_H + rand(-20, 300);  // START BELOW SCREEN
+                                                            const xPos = rand(0, SCREEN_W); // RANGE OF X-POSITIONS
+                                                            const scaleX = rand(0.3, 2.5); 
+                                                            const scaleY = rand(0.3, 2.5);
+                                                            const rotation = rand(0, 360);
+                                                            
+                                                            const rock = add([
+                                                                sprite("superSaiyanPhase4Rocks"),
+                                                                pos(xPos, startY),
+                                                                scale(scaleX, scaleY),
+                                                                anchor("center"),
+                                                                z(1003),
+                                                                fixed(),
+                                                                opacity(0.9),
+                                                                { angle: rotation }
+                                                            ]);
+                                                            
+                                                            rock.frame = rockFrame;
+                                                            rocks.push(rock);
+                                                            
+                                                            tween(startY, -300, rand(1, 5), (val) => rock.pos.y = val);  // FLOAT ROCKS UP                                      
+                                                            const rotateLoop = loop(0.05, () => { // SLOW ROTATION 
+                                                                rock.angle += rand(-2, 2);
+                                                            });
+                                                        });
+                                                    }
+                                                    
+                                                    // BEHIND THE SCENES, SWAP OUT BACKGROUNDS
+                                                    wait(0.5, () => {
+                                                        destroy(bg1);
+                                                        const bg2 = add([
+                                                            sprite("superSaiyanBG2"),
+                                                            pos(SCREEN_W / 2, SCREEN_H / 2),
+                                                            scale(5),
+                                                            anchor("center"),
+                                                            z(1000),
+                                                            fixed(),
+                                                            opacity(1),
+                                                            "background2"
+                                                        ]);
+                                                    });
+                                                    
+                                                    wait(1.4, () => { // FADE OUT PHASE 4 GROUND AND ROCKS
+                                                        tween(phase4.opacity, 0, 0.4, (val) => phase4.opacity = val);
+                                                        rocks.forEach(rock => {
+                                                            tween(rock.opacity, 0, 0.6, (val) => rock.opacity = val);
+                                                        });
+                                                        
+                                                        wait(0.3, () => { // WHITE FLASH AFTER GROUND AND BEFORE FINAL POWER UP
+                                                            const whiteFlash4 = add([
+                                                                rect(SCREEN_W, SCREEN_H),
+                                                                pos(0, 0),
+                                                                color(255, 255, 255),
+                                                                opacity(0),
+                                                                z(1004),
+                                                                fixed()
+                                                            ]);
+                                                            
+                                                            tween(whiteFlash4.opacity, 1, 0.2, (val) => whiteFlash4.opacity = val);
+                                                            
+                                                            wait(0.2, () => {
+                                                                destroy(phase4);
+                                                                rocks.forEach(rock => destroy(rock));
+                                                                
+                                                                // ================================= PHASE 5 - FULL ON SUPER SAIYAN MODE ================================
+                                                                tween(whiteFlash4.opacity, 0, 0.6, (val) => whiteFlash4.opacity = val)
+                                                                    .then(() => destroy(whiteFlash4));
+                                                                
+                                                                // MAKE MORE ROCKS!!!
+                                                                const phase5Rocks = [];
+                                                                for (let i = 0; i < 80; i++) {
+                                                                    wait(rand(0, 1), () => {
+                                                                        const rockFrame = choose([0, 1, 2]);
+                                                                        const startY = SCREEN_H + rand(0, 600);
+                                                                        const xPos = rand(0, SCREEN_W);
+                                                                        const scaleX = rand(0.3, 2.5);
+                                                                        const scaleY = rand(0.3, 2.5);
+                                                                        const rotation = rand(0, 360);
+                                                                        
+                                                                        const rock = add([
+                                                                            sprite("superSaiyanPhase4Rocks"),
+                                                                            pos(xPos, startY),
+                                                                            scale(scaleX, scaleY),
+                                                                            anchor("center"),
+                                                                            z(1005),
+                                                                            fixed(),
+                                                                            opacity(0.7),
+                                                                            { angle: rotation }
+                                                                        ]);
+                                                                        
+                                                                        rock.frame = rockFrame;
+                                                                        phase5Rocks.push(rock);
+                                                                        
+                                                                        tween(startY, -300, rand(1, 4), (val) => rock.pos.y = val);
+                                                                        
+                                                                        const rotateLoop = loop(0.05, () => {
+                                                                            rock.angle += rand(-1.5, 1.5);
+                                                                        });
+                                                                    });
+                                                                }
+                                                                
+                                                                const phase5 = add([
+                                                                    sprite("superSaiyanPhase5"),
+                                                                    pos(SCREEN_W / 2, SCREEN_H / 2),
+                                                                    scale(2.5),
+                                                                    anchor("center"),
+                                                                    z(1003),
+                                                                    fixed(),
+                                                                    opacity(0),
+                                                                    { currentFrame: 0 }
+                                                                ]);
+                                                                
+                                                                tween(phase5.opacity, 1, 0.4, (val) => phase5.opacity = val); // FINAL SPRITE
+                                                                phase5.frame = 0;
+                                                                
+                                                                wait(0.8, () => { // HOLD FIRST FRAME FOR A SEC
+                                                                    // SUPER FAST WHITE-YELLOW FLASH!!!
+                                                                    const transformFlash = add([
+                                                                        rect(SCREEN_W, SCREEN_H),
+                                                                        pos(0, 0),
+                                                                        color(255, 255, 200), 
+                                                                        opacity(0),
+                                                                        z(1004),
+                                                                        fixed()
+                                                                    ]);
+                                                                    
+                                                                    play("finalMoveZap", { volume: 0.3 });
+                                                                    shake(30);
+                                                                    
+                                                                    tween(transformFlash.opacity, 1, 0.1, (val) => transformFlash.opacity = val)
+                                                                        .then(() => {
+                                                                            tween(transformFlash.opacity, 0, 0.2, (val) => transformFlash.opacity = val)
+                                                                                .then(() => destroy(transformFlash));
+                                                                        });
+                                                                    
+                                                                    // FRAME 2
+                                                                    wait(0.1, () => {
+                                                                        phase5.frame = 1;
+                                                                        
+                                                                        // LOOP THROUGH 3-6
+                                                                        wait(0.15, () => {
+                                                                            let frameCount = 2;
+                                                                            const frameLoop = loop(0.08, () => {
+                                                                                phase5.frame = frameCount;
+                                                                                frameCount++;
+                                                                                if (frameCount > 5) {
+                                                                                    frameCount = 2; 
+                                                                                }
+                                                                            });
+                                                                            
+                                                                            wait(2.5, () => {
+                                                                                frameLoop.cancel();
 
-        });
-      });
-    });
-  }
+                                                                                const finalWhiteFlash = add([ // FINAL WHITE FLASH
+                                                                                    rect(SCREEN_W, SCREEN_H),
+                                                                                    pos(0, 0),
+                                                                                    color(255, 255, 255),
+                                                                                    opacity(0),
+                                                                                    z(1006),
+                                                                                    fixed()
+                                                                                ]);
+                                                                                
+                                                                                shake(80);
+                                                                                tween(finalWhiteFlash.opacity, 1, 0.2, (val) => finalWhiteFlash.opacity = val);
+                                                                                
+                                                                                wait(0.3, () => {
+                                                                                    // CLEANUP
+                                                                                    destroy(phase5);
+                                                                                    phase5Rocks.forEach(rock => destroy(rock));
+                                                                                    
+                                                                                    const bg2 = k.get("background2")[0];
+                                                                                    if (bg2) destroy(bg2);
+                                                                                    
+                                                                                    // FADE OUT FINAL FLASH
+                                                                                    wait(0.2, () => {
+                                                                                        tween(finalWhiteFlash.opacity, 0, 0.8, (val) => finalWhiteFlash.opacity = val, easings.easeOutQuad)
+                                                                                            .then(() => {
+                                                                                                destroy(finalWhiteFlash);
+                                                                                            });
+                                                                                    });
+                                                                                });
+                                                                            });
+                                                                        });
+                                                                    });
+                                                                });
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                            });
+                        });
+                    });
+                });
+            });
+    }
+        
+
+
+
+
 
   export function animateFelineFission(boss) {
       animateSuperSaiyan();
-      wait(8.8, () => {
+      wait(13.6, () => {
        
-          shake(30);
+          shake(100);
           stopAllMusic();
           play("finalFinishHim");
           play("finalFinishHim2");
@@ -1722,7 +2042,7 @@ export function animatePoisonAttack(boss, hero) {
           tween(mushroom.opacity, 0.7, 0.5, (o) => mushroom.opacity = o);
           mushroom.play("burst", { loop: false });
 
-          wait(0.4, () => {
+          wait(0.5, () => {
               shake(70); // SHAKE BUILD UP
               const flash1 = add([ // QUICK FLASH
                   rect(width(), height()),
@@ -1750,7 +2070,7 @@ export function animatePoisonAttack(boss, hero) {
                       fixed(),
                       z(10000),
                   ]);
-                  tween(flash2.opacity, 1, 0.6, (val) => flash2.opacity = val, easings.easeInQuad); // LINGERING FULL WHITE SCREEN 
+                  tween(flash2.opacity, 1, 0.7, (val) => flash2.opacity = val, easings.easeInQuad); // LINGERING FULL WHITE SCREEN 
                   
               
               });

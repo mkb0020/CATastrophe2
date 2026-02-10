@@ -1080,8 +1080,8 @@ cite {
 @media (max-width: 950px) {
 
 .gameOver-btn {
-  font-size: 0.8rem;
-  height: 40px;
+  font-size: 0.7rem;
+  height: 35px;
 }
 }
 
@@ -1222,10 +1222,10 @@ cite {
 @media (max-width: 950px) {
   .modal-title-gameover,
   .modal-title-youdied {
-    font-size: 2.6rem;
+    font-size: 2.5rem;
     margin-bottom: 0px;
-    margin-top: 10px !important;
-    line-height: 2.6rem;
+    margin-top: 7px !important;
+    line-height: 2.5rem;
   }
   
 .modal-youdied-content{
@@ -1234,22 +1234,22 @@ cite {
 }
 
 .modal-button-died {
-  font-size: 0.9rem;
-  height: 35px;
+  font-size: 0.7rem;
+  max-height: 35px;
 }
 
   .disappointment-text,
   .encourage-text {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-top:0px;
     margin-bottom:0px;
-    line-height:1rem;
+    line-height: 0.9rem;
   }
   
   .score-text,
   .stat-line {
-    font-size: 1rem;
-    line-height:1rem;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
   }
   
 
@@ -1377,7 +1377,7 @@ cite {
 /* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 950px) {
   .modal-title-pause {
-    font-size: 3rem;
+    font-size: 2.8rem;
     margin-bottom: 0px;
   }
   
@@ -1390,16 +1390,16 @@ cite {
 
 
 .pause-buttons{
-  gap: 15px;
-  bottom: 18%;
+  gap: 10px;
+  bottom: 20%;
 }
 
 
 .modal-buttons-pause {   
   width: 200px;
-  height: 40px;
+  height: 35px;
   font-family: 'GothNerd', 'Courier New', monospace; 
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 }
 
@@ -1753,18 +1753,18 @@ cite {
   }
 
   .stats-modal-points-remaining {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-top: 0px;
   }
 
   .stats-modal-points-remaining strong {
-    font-size: 1rem;
-    line-height: 20px;
+    font-size: 0.9rem;
+    line-height: 17px;
     margin-top: 0px !important;
   }
 
   .stats-modal-points-value {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .stats-info {
@@ -1789,19 +1789,19 @@ cite {
   }
 
   .stats-modal-little-buttons-label {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 
   .stats-modal-little-buttons-sub-label {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
   }
 
   .stats-modal-little-button-attack,
   .stats-modal-little-button-speed,
   .stats-modal-little-button-defense {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
+    width: 33px;
+    height: 33px;
+    font-size: 0.9rem;
   }
 
   .stats-modal-between-little-buttons {
@@ -1809,8 +1809,8 @@ cite {
   }
 
   .modal-button-confirm-upgrade {
-    padding: 7px 35px;
-    font-size: 1rem;
+    padding: 5px 35px;
+    font-size: 0.9rem;
   }
 }
 
@@ -2064,14 +2064,14 @@ cite {
 
 @media (max-width: 950px) {
   .modal-fragment-header {
-  padding: 0.3rem 1.5rem;
+  padding: 0.2rem 1.5rem;
   margin-bottom: 0px !important;
 }
   
   .modal-fragment-title {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     margin-bottom: 0px;
-    margin-top: 15px;
+    margin-top: 12px;
   }
   
   .modal-fragment-content {
@@ -2081,26 +2081,26 @@ cite {
   }
 
 .fragment-count {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-top: 0px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 .fragment-progress{
-    margin: 10px 0;
+    margin: 7px 0;
 }
 
   .fragment-icon {
     font-size:1.3rem;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     margin: 0px !important;
   }
 .modal-button-fragment {
-  padding: 7px 40px !important;
-  margin: 5px;
+  padding: 6px 40px !important;
+  margin: 4px;
   font-family: 'GothNerd', 'Courier New', monospace; 
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 }
 
@@ -2351,37 +2351,37 @@ cite {
 }
 
 .modal-whiskerWhip-header {
-  padding: 0.5rem 1.5rem;
+  padding: 0.4rem 1.5rem;
 }
 
 .modal-whiskerWhip-title {
-  font-size: 1.5rem;
-  margin-top: 5px;
+  font-size: 1.4rem;
+  margin-top: 4px;
   margin-bottom:0px;
-  line-height: 1.6rem;
+  line-height: 1.4rem;
 }
 
 .whiskerWhip-img {
   width: 100px;
   margin-top: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .whiskerWhip-name {
   line-height: 0.5rem;
-  font-size: 1rem;
-  margin-bottom: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 7px;
 }
 
  .whiskerWhip-stats{
     line-height: 0.5rem;
-    font-size: 0.7rem;
-margin-bottom: 10px;
+    font-size: 0.6rem;
+margin-bottom: 7px;
  }
  .replace-move {
   line-height: 0.5rem;
-  font-size: 0.8rem;
-  margin-bottom: 10px;
+  font-size: 0.7rem;
+  margin-bottom: 7px;
  }
  
 
@@ -2392,23 +2392,23 @@ margin-bottom: 10px;
 
 .move-grid {
     gap: 30px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
 .modal-button-replace-move {   
   padding: 5px 30px !important;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   margin-top: 0px;
 }
 
 
 
 .modal-button-whiskerWhip {   
-  padding: 8px 40px !important;
-  margin: 5px;
+  padding: 5px 40px !important;
+  margin: 4px;
   font-family: 'GothNerd', 'Courier New', monospace; 
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 }
 

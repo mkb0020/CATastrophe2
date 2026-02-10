@@ -35,6 +35,7 @@
   z-index: 10;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+  background: rgba(0,0,0,0.1);
 }
 
 #gameRoot {
@@ -48,6 +49,7 @@
   overflow: hidden;
   position: relative;
   z-index: 10;
+  background: rgba(0,0,0,0.1);
 }
 
 html, body {
@@ -160,7 +162,7 @@ html, body {
     .background-gradient {
       position: fixed;
       inset: 0;
-      background: linear-gradient(to bottom, #37025A 40%, #8a2be2 60%, var(--HiggsHotPink) 85%, var(--HiggsHotPink) 97%, var(--HiggsHotPink) 100%);
+      background: linear-gradient(to bottom, #000000 25%, #37025A 45%, #8a2be2 70%, var(--HiggsHotPink) 90%, var(--HiggsHotPink) 97%, var(--HiggsHotPink) 100%);
       opacity: 0.85;
       z-index: -2;
     }
@@ -195,8 +197,8 @@ html, body {
     .dreamy-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(80, 0, 150, 0.1);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(20px);
       pointer-events: none;
       z-index: -1;
     }

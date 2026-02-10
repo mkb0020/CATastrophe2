@@ -328,6 +328,86 @@ export async function loadTransformationSprites() {
   }
 }
 
+// =================================== LAZY LOAD SUPER SAIYAN SPRITES ===================================
+export async function loadSuperSaiyanSprites() {
+  console.log('⚡ Loading Super Saiyan animation sprites...');
+  
+  try {
+    if (getSprite("superSaiyanBG1")) {
+      console.log('✅ Super Saiyan sprites already loaded');
+      return;
+    }
+  } catch (e) {
+
+  }
+  
+  try {
+    await Promise.all([
+      // STATIC BACKGROUNDS
+      loadSprite("superSaiyanBG1", "assets/images/animationSprites/superSaiyanBG1.png"),
+      loadSprite("superSaiyanBG2", "assets/images/animationSprites/superSaiyanBG2.png"),
+      loadSprite("superSaiyanPhase1BG", "assets/images/animationSprites/superSaiyanPhase1BG.png"),
+      
+      // SPRITE SHEETS
+      loadSprite("superSaiyanBolt", "assets/images/animationSprites/superSaiyanBolt.png", { 
+        sliceX: 6, 
+        sliceY: 1, 
+        anims: { flash: { from: 0, to: 5 } }
+      }),
+      
+      loadSprite("superSaiyanPhase2BG", "assets/images/animationSprites/superSaiyanPhase2BG.png", { 
+        sliceX: 3, 
+        sliceY: 1, 
+        anims: { flash: { from: 0, to: 2 } }
+      }),
+      
+      loadSprite("superSaiyanPhase2", "assets/images/animationSprites/superSaiyanPhase2.png", { 
+        sliceX:  8, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 7 } }
+      }),
+      
+      loadSprite("superSaiyanPhase3", "assets/images/animationSprites/superSaiyanPhase3.png", { 
+        sliceX: 6, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 5 } }
+      }),
+      
+      loadSprite("superSaiyanPhase4", "assets/images/animationSprites/superSaiyanPhase4.png", { 
+        sliceX: 5, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 4 } }
+      }),
+      
+      loadSprite("superSaiyanPhase4Rocks", "assets/images/animationSprites/superSaiyanPhase4Rocks.png", { 
+        sliceX: 3, 
+        sliceY: 1
+      }),
+      
+      loadSprite("superSaiyanPhase5", "assets/images/animationSprites/superSaiyanPhase5.png", { 
+        sliceX: 6, 
+        sliceY: 1, 
+        anims: { fade: { from: 0, to: 5 } }
+      })
+    ]);
+    
+    console.log('✅ Super Saiyan sprites loaded successfully!');
+    console.log('✅ superSaiyanBG1 loaded:', !!getSprite("superSaiyanBG1"));
+    console.log('✅ superSaiyanBG2 loaded:', !!getSprite("superSaiyanBG2"));
+    console.log('✅ superSaiyanPhase1BG loaded:', !!getSprite("superSaiyanPhase1BG"));
+    console.log('✅ superSaiyanBolt loaded:', !!getSprite("superSaiyanBolt"));
+    console.log('✅ superSaiyanPhase2BG loaded:', !!getSprite("superSaiyanPhase2BG"));
+    console.log('✅ superSaiyanPhase2 loaded:', !!getSprite("superSaiyanPhase2"));
+    console.log('✅ superSaiyanPhase3 loaded:', !!getSprite("superSaiyanPhase3"));
+    console.log('✅ superSaiyanPhase4 loaded:', !!getSprite("superSaiyanPhase4"));
+    console.log('✅ superSaiyanPhase4Rocks loaded:', !!getSprite("superSaiyanPhase4Rocks"));
+    console.log('✅ superSaiyanPhase5 loaded:', !!getSprite("superSaiyanPhase5"));
+  } catch (error) {
+    console.error('❌ Error loading Super Saiyan sprites:', error);
+    throw error;
+  }
+}
+
 // =================================== AUDIO CONTROLS =========================================
 export function fadeMusicOut(duration = 2) {
     if (window.levelMusic && !window.isMuted) {

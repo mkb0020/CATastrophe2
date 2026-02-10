@@ -556,7 +556,7 @@ function startCreditsSequence(character) {
   const centerY = SCREEN_H / 2;
 
   stopAllMusic();
-  startFinalVictoryMusic();
+  wait(0.6, () => {startFinalVictoryMusic();});
   
 
   const cafeBG = add([

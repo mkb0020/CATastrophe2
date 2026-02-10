@@ -236,23 +236,6 @@ async function loadAssets() {
 });
 
 
-  loadSprite("finalMoveBG", "assets/images/animationSprites/finalMoveBG.png", { 
-    sliceX: 80, 
-    sliceY: 1, 
-    anims: { fade: { from: 0, to: 79 } }
-});
-  loadSprite("finalMove1", "assets/images/animationSprites/finalMove1.png", {
-    sliceX: 10, 
-    sliceY: 1, 
-    anims: { fade: { from: 0, to: 9 } }
-});
-
-  loadSprite("finalMove2", "assets/images/animationSprites/finalMove2.png", { 
-    sliceX: 10, 
-    sliceY: 1, 
-    anims: { fade: { from: 0, to: 9 } }
-});
-
 
   // BATTLE ANIMATIONS
   loadSprite("smokeBlob", "assets/images/animationSprites/newSmoke.png", { sliceX:9, sliceY:1, anims:{puff:{from:0,to:8}} });
