@@ -247,7 +247,7 @@ export function getCharacterStats(characterName) {
 export const rainbowCat = {
   name: "Rainbow Cat",
   sprites: {
-    sheet: "rainbowCat"
+    sheet: "rainbowCatSheet"
   }
 };
 

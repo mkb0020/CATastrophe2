@@ -742,7 +742,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
     destroy(item);
     scoreSetter(scoreGetter() + 25); 
     play("happyMeow", { volume: 0.3 });
-    showBubble(BUBBLE_FRAMES.plusTen);
+    showBubble(BUBBLE_FRAMES.heart);
   });
   
   player.onCollide("tunaCan", (item) => {
@@ -769,7 +769,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
     player.speed = player.baseSpeed * 1.2;
     
     player.rainbowActive = true;
-    showBubble(BUBBLE_FRAMES.star);
+    showBubble(BUBBLE_FRAMES.heart);
 
     wait(15, () => {
       player.catnipActive = false;
@@ -789,7 +789,7 @@ export function setupSpecialItemCollection(player, livesGetter, livesSetter, sco
     player.hp = Math.min(player.hp + healAmount, player.maxHP);
     console.log("🥚 HP after:", player.hp);
     play("egg", { volume: 0.5 });
-    showBubble(BUBBLE_FRAMES.bonusHP); 
+    showBubble(BUBBLE_FRAMES.plusHP); 
   });
 }
 
@@ -1942,22 +1942,8 @@ export function setupMiniBossReflect(player, miniBoss, onDefeatCallback) {
       if (miniBoss.hp <= 0 && !miniBoss.defeated) {
         miniBoss.defeated = true;
         
-        const defeatBubble = add([
-          sprite('bubbles', { frame: BUBBLE_FRAMES.hit2 }),
-          pos(miniBoss.pos.x, miniBoss.pos.y - 60),
-          anchor("center"),
-          scale(0),
-          z(100),
-          "bubble"
-        ]);
-        
-        tween(defeatBubble.scale.x, 2, 0.3, (val) => {
-          defeatBubble.scale.x = val;
-          defeatBubble.scale.y = val;
-        }, easings.easeOutBack);
         
         wait(0.5, () => {
-          destroy(defeatBubble);
           animateGhostPoof(miniBoss);
           destroy(miniBoss);
           play("miniBossDie", { volume: 0.7 });

@@ -2,17 +2,10 @@
 import { SCREEN_W, SCREEN_H } from '../config/gameConfig.js';
 
 export const BUBBLE_FRAMES = {
-  beep: 0,
-  exclamation: 1,
-  heart: 2,
-  plusHP: 3,
-  ko: 4,
-  hit: 5,
-  hit2: 6,
-  question: 7,
-  star: 8,
-  plusTen: 9,
-  bonusHP: 10, 
+  heart: 0,
+  plusHP: 1,
+  exclamation: 2,
+  question: 3,
 };
 
 

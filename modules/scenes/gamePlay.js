@@ -45,6 +45,7 @@ import { getRoom } from '../config/challengeRoom.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
 //import { stopAllMusic, ensureMusicLoaded, setLevelBackground, hideLevelBackgrounds } from '../helpers/kittyHelpers.js'; // PLANNING TO REVISIT CSS BACKGROUNDS LATER
 import { stopAllMusic, ensureMusicLoaded, loadSuperSaiyanSprites  } from '../helpers/kittyHelpers.js';
+import { characterSpriteLoader } from '../helpers/characterSpriteLoader.js';
 
 
 function createUnifiedLevel(levelId, data) {
@@ -232,17 +233,20 @@ export async function createLevel2Scene(data) {
 
 export async function createLevel3Scene(data) {
   await ensureMusicLoaded("PlatformerTrack3", "assets/sounds/tracks/level3.m4a");
+  await characterSpriteLoader.loadRainbowCat();
   createUnifiedLevel('level3', data);
 }
 
 export async function createLevel4Scene(data) {
   await ensureMusicLoaded("PlatformerTrack4", "assets/sounds/tracks/level4.m4a");
+  await characterSpriteLoader.loadRainbowCat();
   createUnifiedLevel('level4', data);
 }
 
 
 export async function createLevel5Scene(data) {
   await loadSuperSaiyanSprites();
+  await characterSpriteLoader.loadRainbowCat();
   await ensureMusicLoaded("PlatformerTrack5", "assets/sounds/tracks/level5.m4a");
   //setLevelBackground('level5'); // PLANNING TO REVISIT LATER
   showHUD();

@@ -156,8 +156,8 @@ async function loadAssets() {
 // ======================================== SPRITES ========================================
  loadSprite("realNona", "assets/images/realNona.PNG");
   loadSprite("title", "assets/images/title.PNG");
-  loadSprite("bubbles", "assets/images/items/bubbles.png", {
-    sliceX: 11,
+  loadSprite("bubbles", "assets/images/items/thoughtBubbles.png", {
+    sliceX: 4,
     sliceY: 1
   });
   // BACKGROUNDS
