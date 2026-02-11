@@ -393,9 +393,9 @@ function openExitWindow() {
 }
 // ==================== HELPER FUNCTIONS ====================
 function createCrumblingPlatform(x, y, width, height) {
-  const spriteWidth = 70;
+  const spriteWidth = 250;
   const scaleX = width / spriteWidth;
-  const scaleY = 2;
+  const scaleY = 0.8;
   
   const platformSprite = add([
     sprite('platform'),
@@ -534,7 +534,7 @@ function setupCrumblingPlatformCollisions(player, platforms) {
 function createSolidPlatform(x, y, width, height) {
   const spriteWidth = 250;
   const scaleX = width / spriteWidth;
-  const scaleY = 1;
+  const scaleY = 0.8;
   
   add([
     sprite('platform'),

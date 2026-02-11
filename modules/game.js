@@ -169,7 +169,7 @@ async function loadAssets() {
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
   loadSprite("groundPlatform", "assets/images/backgrounds/ground.png");
-  loadSprite("platform", "assets/images/backgrounds/platform2.png");
+  loadSprite("platform", "assets/images/backgrounds/platform.png");
   loadSprite("window", "assets/images/items/window.png", {
     sliceX: 2, // FRAME 1 IS WINDOW SHUT.  FRAM 2 IS WINDOW OPEN.  EACH FRAME IS 200x150 SO NO SCALING SHOULD BE NEEDED
     sliceY: 1

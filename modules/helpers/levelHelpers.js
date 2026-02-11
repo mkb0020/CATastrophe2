@@ -99,7 +99,7 @@ export function setupLevelMusic(levelConfig) {
 function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSolidPlatform = false) {
   const spriteWidth = 250;
   const scaleX = width / spriteWidth;
-  const scaleY = 1; 
+  const scaleY = 0.8; 
   
   const spriteLayer = add([
     sprite('platform'),
