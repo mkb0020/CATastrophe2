@@ -356,3 +356,122 @@ html, body {
 .transition-bg-7 { background-image: url('../../assets/images/backgrounds/TransitionBG7.png'); }
 
 
+/* =============== LEVEL BACKGROUNDS =================== */
+.level-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.level-bg.active {
+  opacity: 1;
+}
+
+/* LEVEL 1 */
+.level-1-bg {
+  background: linear-gradient(180deg, 
+        #000000 0%, 
+        #1f0038 25%,
+        #ae00ff 40%, 
+        #6a00ff 45%,
+        #8800ff 60%, 
+        #ae00ff 75%,
+        #fb0079 90%,
+        #ff6200 100%);
+  overflow: hidden;
+}
+
+.level-1-bg::before { /* SUNRISE*/
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, 
+        #9681ed 0%, 
+        #a581ed 15%,
+        #fe6fb4 30%, 
+        #ff831e 45%,
+        #ff831e 60%, 
+        #fd6db3 75%,
+        #a581ed 90%,
+        #9681ed 100%);
+      animation: morningFlow 30s ease-in-out infinite;
+      background-size: 200% 200%;
+      filter: blur(10px);
+      z-index: -5;
+  pointer-events: none;
+}
+
+.level-1-bg::after { /* LIGHT RAYS */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+        linear-gradient(110deg, 
+          transparent 0%, 
+          transparent 40%,
+          rgba(248, 232, 153, 0.1) 45%,
+          rgba(248, 232, 153, 0.2) 48%,
+          rgba(248, 232, 153, 0.3) 50%, 
+          rgba(248, 232, 153, 0.2) 52%,
+          rgba(248, 232, 153, 0.1) 55%,
+          transparent 60%,
+          transparent 100%),
+        linear-gradient(105deg, 
+          transparent 0%,
+          transparent 45%,
+          rgba(248, 232, 153, 0.1) 48%,
+          rgba(248, 232, 153, 0.2) 50%,
+          rgba(248, 232, 153, 0.1) 52%,
+          transparent 55%,
+          transparent 100%);
+      background-size: 200% 200%;
+      animation: lightRays 20s linear infinite;
+      filter: blur(20px);
+      z-index: -4;
+  pointer-events: none;
+}
+
+
+@keyframes morningFlow {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 0% 50%; }
+    }
+
+    @keyframes lightRays {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+/* LEVEL 2 */
+
+.level-2-bg {
+  background: transparent;
+  overflow: hidden;
+}
+
+
+/* LEVEL 3 */
+.level-3-bg {
+  background: transparent;
+  overflow: hidden;
+}
+
+/* LEVEL 4  */
+.level-4-bg {
+  background: transparent;
+  overflow: hidden;
+}
+
+
+/* LEVEL 5  */
+.level-5-bg {
+  background: transparent;
+  overflow: hidden;
+}
+

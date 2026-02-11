@@ -105,7 +105,7 @@ export function createBossBattleScene(bossId, character, startHP, startScore = 0
     levelShift.play('glitch');
       
  
-    const animDuration = 3; 
+    const animDuration = 1; 
 
         wait(animDuration - 0.3, () => {
           tween(
@@ -743,7 +743,7 @@ export async function createLaserPointerBossScene(data) {
 }
 
 export async function createCupBossScene(data) {
-  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
+  //await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;
@@ -751,7 +751,7 @@ export async function createCupBossScene(data) {
 }
 
 export async function createCucumberBossScene(data) {
-  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
+  //await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;
@@ -759,7 +759,7 @@ export async function createCucumberBossScene(data) {
 }
 
 export async function createRatKingBossScene(data) {
-  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
+  //await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;
@@ -767,7 +767,7 @@ export async function createRatKingBossScene(data) {
 }
 
 export async function createObserverBossScene(data) {
-  await ensureMusicLoaded("finalBossMusic", "assets/sounds/tracks/finalBoss.m4a");
+  //await ensureMusicLoaded("finalBossMusic", "assets/sounds/tracks/finalBoss.m4a");
   const character = data?.character || data;
   const startHP = data?.startHP;
   const startScore = data?.score || 0;

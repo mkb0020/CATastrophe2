@@ -97,9 +97,9 @@ export function setupLevelMusic(levelConfig) {
 }
 
 function createSpritePlatform(x, y, width, height, isHintPlatform = false, isSolidPlatform = false) {
-  const spriteWidth = 70;
+  const spriteWidth = 250;
   const scaleX = width / spriteWidth;
-  const scaleY = 2; 
+  const scaleY = 0.9; 
   
   const spriteLayer = add([
     sprite('platform'),
@@ -414,7 +414,7 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
   const exclamationBubble = add([
     sprite('bubbles', { frame: BUBBLE_FRAMES.exclamation }),
     pos(bossX - 45, 65),
-    scale(1.8),
+    scale(1.5),
     z(15),
     "bubble"
   ]);
@@ -425,7 +425,7 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
   const questionBubble = add([
     sprite('bubbles', { frame: BUBBLE_FRAMES.question }),
     pos(levelConfig.length - 540, 130),
-    scale(1.8),
+    scale(1.5),
     z(12),
     "bubble"
   ]);
@@ -444,7 +444,7 @@ export function setupVictoryCollision(player, levelName, nextBoss, character, ga
         
       levelShift.play("glitch");
       
-      await wait(2);
+      await wait(1);
       
         go(nextBoss, {
         level: levelName,

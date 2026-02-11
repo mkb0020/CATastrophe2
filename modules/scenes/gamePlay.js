@@ -43,13 +43,12 @@ import {
 } from '../helpers/upgradeHelper.js';
 import { getRoom } from '../config/challengeRoom.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
-//import { stopAllMusic, ensureMusicLoaded, setLevelBackground, hideLevelBackgrounds } from '../helpers/kittyHelpers.js'; // PLANNING TO REVISIT CSS BACKGROUNDS LATER
-import { stopAllMusic, ensureMusicLoaded, loadSuperSaiyanSprites  } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, ensureMusicLoaded, loadSuperSaiyanSprites, setLevelBackground, hideLevelBackgrounds  } from '../helpers/kittyHelpers.js';
 import { characterSpriteLoader } from '../helpers/characterSpriteLoader.js';
 
 
 function createUnifiedLevel(levelId, data) {
-  //setLevelBackground(levelId); // PLANNING TO REVISIT LATER
+  setLevelBackground(levelId); // TESTING
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
@@ -216,29 +215,33 @@ function createUnifiedLevel(levelId, data) {
 
   onSceneLeave(() => {
     hideHUD();
-    //hideLevelBackgrounds();  // PLANNING TO REVISIT LATER
+    hideLevelBackgrounds();  // TESTING
   });
 }
 
 
 export async function createLevel1Scene(data) {
   await ensureMusicLoaded("PlatformerTrack1", "assets/sounds/tracks/level1.m4a");
+  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   createUnifiedLevel('level1', data);
 }
 
 export async function createLevel2Scene(data) {
   await ensureMusicLoaded("PlatformerTrack2", "assets/sounds/tracks/level2.m4a");
+  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   createUnifiedLevel('level2', data);
 }
 
 export async function createLevel3Scene(data) {
   await ensureMusicLoaded("PlatformerTrack3", "assets/sounds/tracks/level3.m4a");
+  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   await characterSpriteLoader.loadRainbowCat();
   createUnifiedLevel('level3', data);
 }
 
 export async function createLevel4Scene(data) {
   await ensureMusicLoaded("PlatformerTrack4", "assets/sounds/tracks/level4.m4a");
+  await ensureMusicLoaded("bossMusic", "assets/sounds/tracks/bossBattles.m4a");
   await characterSpriteLoader.loadRainbowCat();
   createUnifiedLevel('level4', data);
 }
@@ -248,7 +251,9 @@ export async function createLevel5Scene(data) {
   await loadSuperSaiyanSprites();
   await characterSpriteLoader.loadRainbowCat();
   await ensureMusicLoaded("PlatformerTrack5", "assets/sounds/tracks/level5.m4a");
-  //setLevelBackground('level5'); // PLANNING TO REVISIT LATER
+  await ensureMusicLoaded("finalBossMusic", "assets/sounds/tracks/finalBoss.m4a");
+  
+  setLevelBackground('level5'); // TESTING
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
@@ -423,6 +428,6 @@ export async function createLevel5Scene(data) {
 
   onSceneLeave(() => {
     hideHUD();
-    //hideLevelBackgrounds();  // PLANNING TO REVISIT LATER
+    hideLevelBackgrounds();  // TESTING
   });
 }

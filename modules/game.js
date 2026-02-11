@@ -169,7 +169,7 @@ async function loadAssets() {
   loadSprite("observerIntro", "assets/images/backgrounds/ObserverIntro.png");
   loadSprite("cafe", "assets/images/backgrounds/Cafe.png"); // FOR FINAL VICTORY
   loadSprite("groundPlatform", "assets/images/backgrounds/ground.png");
-  loadSprite("platform", "assets/images/backgrounds/platform.png");
+  loadSprite("platform", "assets/images/backgrounds/platform2.png");
   loadSprite("window", "assets/images/items/window.png", {
     sliceX: 2, // FRAME 1 IS WINDOW SHUT.  FRAM 2 IS WINDOW OPEN.  EACH FRAME IS 200x150 SO NO SCALING SHOULD BE NEEDED
     sliceY: 1
@@ -211,17 +211,17 @@ async function loadAssets() {
   loadSprite("lightning", "assets/images/animationSprites/Lightning.png", { sliceX:6, sliceY:1, anims:{glitch:{from:0,to:5}} });
   loadSprite("smokeClear", "assets/images/animationSprites/smokeClear.png", { sliceX:18, sliceY:1, anims:{puff:{from:0,to:17, loop: false, speed:10}} });
   loadSprite("levelShiftStart", "assets/images/animationSprites/glitchTransition.png", { 
-    sliceX: 55, 
+    sliceX: 18, 
     sliceY: 1, 
     anims: {
-      glitch: { from: 0, to: 16, loop: false, speed: 50 }
+      glitch: { from: 0, to: 17, loop: false, speed: 50 }
     } 
   });
   loadSprite("levelShiftEnd", "assets/images/animationSprites/glitchTransition.png", { 
-    sliceX: 55, 
+    sliceX: 18, 
     sliceY: 1, 
     anims: {
-      glitch: { from: 32, to: 54, loop: false, speed: 50 }
+      glitch: { from: 17, to: 0, loop: false, speed: 50 }
     } 
   });
   loadSprite("cafeDay", "assets/images/backgrounds/cafeDay.png", { 
@@ -264,8 +264,8 @@ async function loadAssets() {
   loadSprite("catArrow", "assets/images/animationSprites/CatArrow2.PNG");
   loadSprite("CocktailLight", "assets/images/animationSprites/MeowlotovCocktailLight2.png", { sliceX:3, sliceY:1, anims:{glitch:{from:0,to:2}} });
   loadSprite("CocktailSpin", "assets/images/animationSprites/MeowlotovCocktailSpin2.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
-  loadSprite("Burn", "assets/images/animationSprites/Burn.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3}} });
-  loadSprite("Burn2", "assets/images/animationSprites/Burn2.png", { sliceX:16, sliceY:1, anims:{glitch:{from:0,to:15}} });
+  loadSprite("Burn", "assets/images/animationSprites/Burn.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3, loop: true, speed:15}} });
+  loadSprite("Burn2", "assets/images/animationSprites/Burn2.png", { sliceX:4, sliceY:1, anims:{glitch:{from:0,to:3, loop: true, speed:15}} });
   loadSprite("MuzzleFlash", "assets/images/animationSprites/MuzzleFlash.png", { sliceX:6, sliceY:1, anims:{burst:{from:0,to:5}} });
   loadSprite("mushroom", "assets/images/animationSprites/MushroomCloud2.PNG", { sliceX:4, sliceY:2, anims:{burst:{from:0,to:7}} });
   loadSprite("splat", "assets/images/animationSprites/Splat.png", { sliceX: 4, sliceY: 1, anims: { glitch: { from: 0, to: 3 } }});

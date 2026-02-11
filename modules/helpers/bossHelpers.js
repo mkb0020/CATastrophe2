@@ -1592,7 +1592,7 @@ export function animatePoisonAttack(boss, hero) {
                           opacity(0.7),
                           z(35),
                       ]);
-                      burn.play("glitch", { loop: false });
+                      burn.play("glitch", { loop: true });
                       wait(1, () => destroy(burn));
                   });
               }
@@ -1908,7 +1908,38 @@ export function animatePoisonAttack(boss, hero) {
                                                                         });
                                                                     });
                                                                 }
-                                                                
+                                                                                                                                const phase5Particles = [];
+                                                                for (let i = 0; i < 120; i++) { // NUMBER OF PARTICLES
+                                                                    wait(rand(0, 1.5), () => {
+                                                                        const size = rand(5, 10);
+                                                                        const startY = SCREEN_H + rand(0, 400);
+                                                                        const xPos = rand(0, SCREEN_W);
+                                                                        const particle = add([
+                                                                            circle(size),
+                                                                            pos(xPos, startY),
+                                                                            color(255, 255, 180), 
+                                                                            opacity(rand(0.08, 0.2)), 
+                                                                            anchor("center"),
+                                                                            z(1004),
+                                                                            fixed()
+                                                                        ]);
+                                                                        phase5Particles.push(particle);
+                                                                        const drift = rand(-40, 40);
+                                                                        const duration = rand(2, 5);
+                                                                        tween(startY, -200, duration, (val) => { // FLOAT UP
+                                                                            particle.pos.y = val;
+                                                                        });
+                                                                        tween(xPos, xPos + drift, duration, (val) => { // SLIGHT HORIZONTAL DRIFT
+                                                                            particle.pos.x = val;
+                                                                        });
+                                                                        wait(duration - 0.5, () => { // FADE OUT AS IT RISES
+                                                                            tween(particle.opacity, 0, 0.5, (val) => {
+                                                                                particle.opacity = val;
+                                                                            }).then(() => destroy(particle));
+                                                                        });
+                                                                    });
+                                                                }
+
                                                                 const phase5 = add([
                                                                     sprite("superSaiyanPhase5"),
                                                                     pos(SCREEN_W / 2, SCREEN_H / 2),
@@ -1977,6 +2008,7 @@ export function animatePoisonAttack(boss, hero) {
                                                                                     // CLEANUP
                                                                                     destroy(phase5);
                                                                                     phase5Rocks.forEach(rock => destroy(rock));
+                                                                                    phase5Particles.forEach(p => destroy(p)); // PARTICLE CLEANUP
                                                                                     
                                                                                     const bg2 = k.get("background2")[0];
                                                                                     if (bg2) destroy(bg2);
@@ -2079,7 +2111,6 @@ export function animatePoisonAttack(boss, hero) {
   }
 
 // =================== BRASS TOE BEANS ===================
-
   export function animateBrassToeBeans(hero, boss) {
       const startPos = hero.pos.add(vec2(100, -100));
       
@@ -2272,129 +2303,4 @@ export function animatePoisonAttack(boss, hero) {
       opacity(0),
       z(zIndex),
     ]);
-  }
-  
-  function animateSuperSaiyanRefactor() {
-  
-    shake(50);
-  
-    const flash = add([
-      rect(SCREEN_W, SCREEN_H),
-      pos(0, 0),
-      fixed(),
-      color(255, 255, 255),
-      opacity(0),
-      z(2000),
-    ]);
-  
-    const bg1 = add([
-      sprite("finalMoveBG"),
-      pos(SCREEN_W / 2, SCREEN_H / 2),
-      anchor("center"),
-      scale(5),
-      fixed(),
-      z(1000),
-      opacity(0),
-    ]);
-  
-    const lightning = add([
-      sprite("lightning", { anim: "glitch" }),
-      pos(0, 0),
-      scale(10),
-      fixed(),
-      z(1001),
-      opacity(0),
-    ]);
-  
-    const fm1 = add([
-      sprite("finalMove1", { anim: "fade" }),
-      pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(10),
-      anchor("center"),
-      fixed(),
-      z(2002),
-      opacity(0),
-    ]);
-  
-    const fm2 = add([
-      sprite("finalMove2", { anim: "fade" }),
-      pos(SCREEN_W / 2, SCREEN_H / 2),
-      scale(10),
-      anchor("center"),
-      fixed(),
-      z(2002),
-      opacity(0),
-    ]);
-  
-    tween(bg1.opacity, 1, 0.3, v => bg1.opacity = v);
-  
-    wait(0.2, () => {
-      lightning.opacity = 1;
-      lightning.play("glitch", { speed: 15 });
-    });
-  
-    play("lightning", { volume: 0.4, speed: 0.8 });
-    wait(0.2, () => play("lightning", { volume: 0.2, speed: 0.8 }));
-    wait(0.4, () => play("lightning", { volume: 0.4, speed: 0.8 }));
-    wait(1, () => play("lightning", { volume: 0.3, speed: 0.8 }));
-  
-    wait(0.5, () => {
-      tween(fm1.opacity, 1, 0.6, v => fm1.opacity = v);
-      fm1.play("fade", { speed: 10 });
-  
-      wait(1.2, () => {
-        tween(fm1.opacity, 0, 0.6, v => fm1.opacity = v);
-      });
-    });
-  
-    wait(1, () => {
-  
-      tween(flash.opacity, 1, 0.2, v => flash.opacity = v);
-  
-      wait(1, () => {
-        tween(bg1.opacity, 0, 0.3, v => bg1.opacity = v);
-  
-        destroy(lightning);
-        destroy(bg1);
-  
-        const bg2 = add([
-          sprite("finalMoveBG", { anim: "fade" }),
-          pos(SCREEN_W / 2, SCREEN_H / 2),
-          anchor("center"),
-          scale(5),
-          fixed(),
-          z(1000),
-        ]);
-  
-        bg2.play("fade", { speed: 8 }); 
-  
-      
-        tween(flash.opacity, 0, 0.3, v => flash.opacity = v);
-  
-        // ---------- FINAL MOVE 2 (late beat) ----------
-        wait(3, () => {
-          play("finalMoveZap", { volume: 0.2 });
-          tween(fm2.opacity, 1, 0.5, v => fm2.opacity = v);
-          fm2.play("fade", { speed: 10 });
-  
-          wait(1.1, () => {
-            tween(fm2.opacity, 0, 0.2, v => fm2.opacity = v);
-          });
-        });
-  
-        // ---------- END FLASH ----------
-        wait(4.3, () => {
-          tween(flash.opacity, 1, 0.1, v => flash.opacity = v);
-  
-          wait(0.2, () => {
-            tween(flash.opacity, 0, 0.5, v => flash.opacity = v);
-            shake(100);
-            destroy(fm2);
-            destroy(fm1);
-            destroy(bg2);
-           
-          });
-        });
-      });
-    });
   }
