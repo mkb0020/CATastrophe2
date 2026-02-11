@@ -43,12 +43,13 @@ import {
 } from '../helpers/upgradeHelper.js';
 import { getRoom } from '../config/challengeRoom.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
-import { stopAllMusic, ensureMusicLoaded, loadSuperSaiyanSprites, setLevelBackground, hideLevelBackgrounds  } from '../helpers/kittyHelpers.js';
+//import { stopAllMusic, ensureMusicLoaded, loadSuperSaiyanSprites, setLevelBackground, hideLevelBackgrounds  } from '../helpers/kittyHelpers.js';
+import { stopAllMusic, ensureMusicLoaded, loadSuperSaiyanSprites   } from '../helpers/kittyHelpers.js';
 import { characterSpriteLoader } from '../helpers/characterSpriteLoader.js';
 
 
 function createUnifiedLevel(levelId, data) {
-  setLevelBackground(levelId); // TESTING
+  //setLevelBackground(levelId); // TESTING
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
@@ -215,7 +216,7 @@ function createUnifiedLevel(levelId, data) {
 
   onSceneLeave(() => {
     hideHUD();
-    hideLevelBackgrounds();  // TESTING
+    //hideLevelBackgrounds();  
   });
 }
 
@@ -253,7 +254,7 @@ export async function createLevel5Scene(data) {
   await ensureMusicLoaded("PlatformerTrack5", "assets/sounds/tracks/level5.m4a");
   await ensureMusicLoaded("finalBossMusic", "assets/sounds/tracks/finalBoss.m4a");
   
-  setLevelBackground('level5'); // TESTING
+  //setLevelBackground('level5'); // TESTING
   showHUD();
   const character = data?.character || data;
   const startHP = data?.startHP;
@@ -428,6 +429,6 @@ export async function createLevel5Scene(data) {
 
   onSceneLeave(() => {
     hideHUD();
-    hideLevelBackgrounds();  // TESTING
+    //hideLevelBackgrounds();  
   });
 }

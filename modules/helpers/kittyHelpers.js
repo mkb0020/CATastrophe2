@@ -21,35 +21,35 @@ export function initializeStars() {
 
 // =================================== DYNAMIC CSS BACKGROUNDS - PLANNING TO REVIST LATER ===================================
 
-export function setLevelBackground(levelId) {
-  document.querySelectorAll('.level-bg').forEach(bg => {
-    bg.classList.remove('active');
-  });
+//export function setLevelBackground(levelId) {
+//  document.querySelectorAll('.level-bg').forEach(bg => {
+//    bg.classList.remove('active');
+//  });
   
-  const bgMap = {
-    'level1': 'level-1-bg',
-    'level2': 'level-2-bg',
-    'level3': 'level-3-bg',
-    'level4': 'level-4-bg',
-    'level5': 'level-5-bg',
+//  const bgMap = {
+//    'level1': 'level-1-bg',
+ //   'level2': 'level-2-bg',
+//    'level3': 'level-3-bg',
+//    'level4': 'level-4-bg',
+//    'level5': 'level-5-bg',
 //    'challengeRoom': 'challenge-room-bg'
-  };
+//  };
   
-  const bgId = bgMap[levelId];
-  if (bgId) {
-    const bgElement = document.getElementById(bgId);
-    if (bgElement) {
-      bgElement.classList.add('active');
-      console.log(`🎨 Showing level background: ${bgId}`);
-    }
-  }
-}
+//  const bgId = bgMap[levelId];
+//  if (bgId) {
+//    const bgElement = document.getElementById(bgId);
+//    if (bgElement) {
+//      bgElement.classList.add('active');
+//      console.log(`🎨 Showing level background: ${bgId}`);
+//    }
+//  }
+//}
 
-export function hideLevelBackgrounds() {
-  document.querySelectorAll('.level-bg').forEach(bg => {
-    bg.classList.remove('active');
-  });
-}
+//export function hideLevelBackgrounds() {
+//  document.querySelectorAll('.level-bg').forEach(bg => {
+//    bg.classList.remove('active');
+//  });
+//}
 // =============================== IMAGE LOADER =============================================
 export class ImageLoader {
     constructor(baseUrl = '/assets/') {
