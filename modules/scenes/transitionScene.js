@@ -359,10 +359,10 @@ function createTransition7Cinematic(character, startHP) {
     "whiteScreen"
   ]);
 
-  wait(0.3, () => {
-    tween(whiteScreen.opacity, 0, 0.8, (val) => whiteScreen.opacity = val, easings.easeOutQuad);
+  wait(0.6, () => {
+    tween(whiteScreen.opacity, 0, 1, (val) => whiteScreen.opacity = val, easings.easeOutQuad);
     animateSmokeTransition();
-    wait(0.3, () => {
+    wait(0.1, () => {
       for (let i = 0; i < 12; i++) {
         const xPos = (i % 4) * (width() / 3) + rand(-50, 50);
         const yPos = Math.floor(i / 4) * (height() / 2) + rand(-50, 50);
@@ -381,16 +381,16 @@ function createTransition7Cinematic(character, startHP) {
         tween(poof.pos.y, poof.pos.y + rand(-30, 30), 2, (y) => poof.pos.y = y, easings.easeOutQuad);
 
         wait(1.0 + (i * 0.03), () => {
-          tween(poof.opacity, 0, 1.5, (o) => poof.opacity = o, easings.easeOutQuad)
+          tween(poof.opacity, 0, 1.7, (o) => poof.opacity = o, easings.easeOutQuad)
             .then(() => destroy(poof));
         });
       }
 
-      wait(1.0, () => {
+      wait(1.1, () => {
         destroy(whiteScreen);
         tween(bg.opacity, 0.7, 2.0, (o) => bg.opacity = o, easings.easeOutQuad);
 
-        wait(7, () => {  
+        wait(7.1, () => {  
           tween(bg.opacity, 0, 1.5, (o) => bg.opacity = o)
             .then(() => destroy(bg));
         });
@@ -462,9 +462,9 @@ function createTransition7Cinematic(character, startHP) {
 
   let msgIdx = 0;
 
-  wait(1.8, () => {
-    tween(charSprite.opacity, 1, 0.5, (o) => charSprite.opacity = o);
-    wait(0.7, () => {
+  wait(3, () => {
+    tween(charSprite.opacity, 1, 0.7, (o) => charSprite.opacity = o);
+    wait(0.9, () => {
       tween(transitionText.opacity, 1, 0.8, (o) => {
         transitionText.opacity = o;
         shadowText.opacity = o;
@@ -472,7 +472,7 @@ function createTransition7Cinematic(character, startHP) {
       });
     });
 
-    wait(2.4, () => {
+    wait(2.8, () => {
       msgIdx = 1;
       transitionText.text = messages[1];
       shadowText.text = messages[1];
@@ -486,7 +486,7 @@ function createTransition7Cinematic(character, startHP) {
         shadowText2.opacity = o; 
       });
 
-      wait(2.4, () => {
+      wait(2.5, () => {
         msgIdx = 2;
         transitionText.text = messages[2];
         shadowText.text = messages[2];
@@ -500,7 +500,7 @@ function createTransition7Cinematic(character, startHP) {
           shadowText2.opacity = o; 
         });
 
-        wait(2.5, () => {
+        wait(2.7, () => {
           tween(charSprite.opacity, 0, 1.0, (o) => charSprite.opacity = o);
           tween(transitionText.opacity, 0, 1.0, (o) => {
             transitionText.opacity = o;
@@ -513,7 +513,7 @@ function createTransition7Cinematic(character, startHP) {
             destroy(shadowText2);
           });
 
-          wait(0.8, () => {
+          wait(1, () => {
             startCreditsSequence(character);
           });
         });

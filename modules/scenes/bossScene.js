@@ -564,7 +564,7 @@ function checkBattleEnd() {
             if (finishHimMove === 'CatCrossbow') victoryDelay = 3.2;
             if (finishHimMove === 'PURRcisionRifle') victoryDelay = 2.8;
             if (finishHimMove === 'MeowlotovCocktail') victoryDelay = 2.2;
-            if (finishHimMove === 'FelineFission') victoryDelay = 14.8;
+            if (finishHimMove === 'FelineFission') victoryDelay = 17;
             
             wait(victoryDelay, () => {
               if (bossId === 'observerBoss') {

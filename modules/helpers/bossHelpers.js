@@ -1315,7 +1315,7 @@ export function animatePoisonAttack(boss, hero) {
                     z(60)
                   ]);
 
-                  tween(drip.opacity, 1, 0.2, (o) => drip.opacity = o);
+                  tween(drip.opacity, 0.8, 0.2, (o) => drip.opacity = o);
                   tween(drip.pos.y, hero.pos.y + 40, 0.6, (y) => drip.pos.y = y, easings.easeInQuad);
 
                   wait(0.5, () => {
@@ -1602,9 +1602,6 @@ export function animatePoisonAttack(boss, hero) {
   }
 
 // =================== FELINE FISSION ===================
-
-
-
         function animateSuperSaiyan() {
           const battleUI = document.getElementById('battleUI');
             if (battleUI) {
@@ -1767,13 +1764,28 @@ export function animatePoisonAttack(boss, hero) {
                                             fixed(),
                                             opacity(0)
                                         ]);
+
+                                        const phase3layer = add([
+                                            sprite("superSaiyanPhase3", { anim: "fade" }),
+                                            pos(SCREEN_W / 2, SCREEN_H / 2),
+                                            scale(5),
+                                            anchor("center"),
+                                            z(1003),
+                                            fixed(),
+                                            opacity(0)
+                                        ]);
                                         
-                                        tween(phase3.opacity, 1, 0.4, (val) => phase3.opacity = val);
-                                        phase3.play("fade", { loop: false, speed: 6 });
-                                        
-                                        wait(0.65, () => {
-                                            tween(phase3.opacity, 0, 0.5, (val) => phase3.opacity = val);
-                                            wait(0.3, () => { // WHITE FLASH BETWEEN WAVES AND ROCKS
+                                        tween(phase3.opacity, 0.8, 0.6, (val) => phase3.opacity = val);
+                                        phase3.play("fade", { loop: false, speed: 4 });
+                                        wait(0.07, () => {
+                                          tween(phase3layer.opacity, 0.7, 0.4, (val) => phase3layer.opacity = val);
+                                          phase3layer.play("fade", { loop: false, speed: 4 });
+                                        });
+                                        wait(0.6, () => {
+                                            tween(phase3.opacity, 0, 0.9, (val) => phase3.opacity = val);
+                                            tween(phase3layer.opacity, 0, 0.7, (val) => phase3layer.opacity = val);
+
+                                            wait(0.35, () => { // WHITE FLASH BETWEEN WAVES AND ROCKS
                                                 const whiteFlash3 = add([
                                                     rect(SCREEN_W, SCREEN_H),
                                                     pos(0, 0),
@@ -1786,6 +1798,7 @@ export function animatePoisonAttack(boss, hero) {
                                                 tween(whiteFlash3.opacity, 1, 0.15, (val) => whiteFlash3.opacity = val);
                                                 wait(0.2, () => {
                                                     destroy(phase3);  // CLEANUP
+                                                    destroy(phase3layer); 
                                                     
                                                     // =============================== PHASE 4 - GROUND CRACKS & FLOATING ROCKS ==================================                                                   
                                                     tween(whiteFlash3.opacity, 0, 0.4, (val) => whiteFlash3.opacity = val)
@@ -2039,14 +2052,9 @@ export function animatePoisonAttack(boss, hero) {
             });
     }
         
-
-
-
-
-
   export function animateFelineFission(boss) {
       animateSuperSaiyan();
-      wait(13.6, () => {
+      wait(13.7, () => {
        
           shake(100);
           stopAllMusic();
@@ -2091,8 +2099,8 @@ export function animatePoisonAttack(boss, hero) {
                   wait(0.2, () => destroy(flash1));
               });
               
-              wait(1.5, () => destroy(mushroom)); // DESTROY MUSHROOM AFTER FIRST FLASH
-              wait(0.6, () => { // CINEMATIC FLASH
+              wait(1.8, () => destroy(mushroom)); // DESTROY MUSHROOM AFTER FIRST FLASH
+              wait(0.9, () => { // CINEMATIC FLASH
                   shake(100);
                   const flash2 = add([
                       rect(width(), height()),
@@ -2102,7 +2110,7 @@ export function animatePoisonAttack(boss, hero) {
                       fixed(),
                       z(10000),
                   ]);
-                  tween(flash2.opacity, 1, 0.7, (val) => flash2.opacity = val, easings.easeInQuad); // LINGERING FULL WHITE SCREEN 
+                  tween(flash2.opacity, 1, 0.8, (val) => flash2.opacity = val, easings.easeInQuad); // LINGERING FULL WHITE SCREEN 
                   
               
               });

@@ -214,24 +214,24 @@ export async function createChallengeRoomScene(data)  {
     specialItem.scale = vec2(val, val);
   }, easings.easeOutBack);
   
-  const glow = add([
-    circle(60),
-    pos(roomConfig.itemLocation.x, roomConfig.itemLocation.y),
-    color(255, 215, 0),
-    opacity(0),
-    anchor("center"),
-    z(9),
-    "itemGlow"
-  ]);
+  //const glow = add([
+  //  circle(60),
+   // pos(roomConfig.itemLocation.x, roomConfig.itemLocation.y),
+   // color(255, 215, 0),
+   // opacity(0),
+  //  anchor("center"),
+  //  z(9),
+  //  "itemGlow"
+ // ]);
   
-  let glowDirection = 1;
-  glow.onUpdate(() => {
-    glow.opacity += glowDirection * dt() * 0.5;
-    if (glow.opacity >= 0.3) glowDirection = -1;
-    if (glow.opacity <= 0.1) glowDirection = 1;
+//  let glowDirection = 1;
+//  glow.onUpdate(() => {
+//    glow.opacity += glowDirection * dt() * 0.5;
+//    if (glow.opacity >= 0.3) glowDirection = -1;
+//    if (glow.opacity <= 0.1) glowDirection = 1;
     
-    glow.scale = vec2(1 + Math.sin(time() * 2) * 0.1);
-  });
+ //   glow.scale = vec2(1 + Math.sin(time() * 2) * 0.1);
+ // });
   
  const player = createPlayer(roomConfig, character, startHP);
   player.pos = vec2(roomConfig.playerSpawn.x, roomConfig.playerSpawn.y);
@@ -268,9 +268,9 @@ player.onCollide("specialItem", (item) => {
     itemCollected = true;
     destroy(item);
     
-    if (glow && glow.exists()) {
-      destroy(glow);
-    }
+    //if (glow && glow.exists()) {
+    //  destroy(glow);
+   // }
     
     play("upgrade", { volume: 0.3 });
     

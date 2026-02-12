@@ -210,7 +210,7 @@ html, body {
     .dreamy-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.1);
       backdrop-filter: blur(30px);
       pointer-events: none;
       z-index: -1;

@@ -148,10 +148,15 @@ export const LEVELS = {
           damage: 5,
           spawnZones: [
             { start: 1400, end: 1500  }, 
-            { start: 5400, end: 6300  }, 
-            { start: 11200, end: 11400  },  
-            { start: 15100, end: 16000  },
-            { start: 19900, end: 21000  },
+            { start: 5300, end: 6000  }, 
+            { start: 5800, end: 6500  }, 
+            { start: 10100, end: 10200  }, 
+            { start: 11200, end: 11300  }, 
+            { start: 15100, end: 15300  },
+            { start: 15500, end: 15700  },
+            { start: 15900, end: 16100  },
+            { start: 19900, end: 20300  },
+            { start: 20600, end: 21000  },
             { start: 24800, end: 24900  }
              ]
         },
@@ -248,20 +253,27 @@ export const LEVELS = {
         spawnRate: 2200,
         damage: 5,
         spawnZones: [
-          { start: 6300, end: 6800 },  
-          { start: 16800, end: 17200 }
+          { start: 6200, end: 6600 },  
+          { start: 6400, end: 6800 },  
+          { start: 16400, end: 16600 },
+          { start: 16800, end: 17000 },
+          { start: 17200, end: 17400 }
         ]
       },
     rats: { 
       enabled: true,
       spawnRate: 2500,
       spawnZones: [
-        { start: 1300, end: 1800 },   
-        { start: 5800, end: 6300 },
-        { start: 6200, end: 7000 }, 
-        { start: 10900, end: 12300 }, 
+        { start: 1300, end: 1600 },  
+        { start: 1500, end: 1800 },  
+        { start: 5600, end: 7200 },
+        { start: 10900, end: 11900 }, 
+        { start: 11100, end: 12100 }, 
+        { start: 11300, end: 12300 }, 
         { start: 16200, end: 17600 },
-        { start: 21600, end: 22800 },
+        { start: 21600, end: 22400 },
+        { start: 21800, end: 22600 },
+        { start: 22000, end: 22800 },
         { start: 26700, end: 27000 }
       ]
     },
