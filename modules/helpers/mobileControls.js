@@ -1,8 +1,11 @@
 // mobileControls.js
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, Colors, ACTUAL_H, ACTUAL_W } from '../config/gameConfig.js';
 import { SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
 import { ROOMS } from '../config/challengeRoom.js';
 import { getRoom } from '../config/challengeRoom.js';
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // ==================== MOBILE DETECTION ====================
 export function detectMobile() {

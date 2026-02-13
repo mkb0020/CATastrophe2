@@ -1,6 +1,9 @@
 // upgradeHelper.js
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H } from '../config/gameConfig.js';
 import { startChallenegeMusic, stopAllMusic } from '../helpers/kittyHelpers.js';
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // ==================== UPGRADE STATE MANAGEMENT ====================
 let upgradeState = {

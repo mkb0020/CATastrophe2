@@ -10,9 +10,11 @@
 // updateUnifiedHUD() - Update HUD display
 // showHUD() / hideHUD() - Toggle HUD visibility
 
-//==================================== IMPORTS ====================================
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_H } from '../config/gameConfig.js';
 import { SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '../config/characters.js';
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //==================================== PLAYER CREATION ====================================
 export function createPlayer(levelConfig, character, startHP) {

@@ -1,8 +1,10 @@
-// bossHelpers.js - BOSS BATTLE SETUP AND ANIMATIONS
+// bossHelpers.js - 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { stopAllMusic, startBossMusic, startAtmosphere } from '../helpers/kittyHelpers.js';
 import { rainbowCat, SPRITE_FRAMES } from '../config/characters.js';
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export function setupBossMusic() {
   startBossMusic();

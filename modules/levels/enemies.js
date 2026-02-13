@@ -10,10 +10,12 @@
 // addMiniBoss() - Create mini-boss enemy
 // setupMiniBossReflect() - Handle cucumber reflection mechanic
 
-//==================================== IMPORTS ====================================
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, BUBBLE_FRAMES } from '../config/gameConfig.js';
 import { animateGhostPoof } from '../helpers/bossHelpers.js';
 import { playBloodDripAnimation } from './levelEnvironment.js';
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //==================================== CUCUMBERS ====================================
 export function setupCucumberSpawner(levelConfig, gameStateGetter) {

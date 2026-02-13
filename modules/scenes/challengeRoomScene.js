@@ -1,17 +1,20 @@
 // challengeRoomScene.js
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
-import { 
-  createPlayer, 
-  setupPlayerControls, 
-  updatePlayerAnim,
-  createUnifiedHUD,
-  updateUnifiedHUD,
-  hideHUD,
-  showHUD,
-  setupPlayerCamera,
-  setupFallDetection,
-  createSpriteGround
-} from '../helpers/levelHelpers.js';
+//import { 
+ // createPlayer, // playerSetup
+//  setupPlayerControls,  // playerSetup
+//  updatePlayerAnim, // playerSetup
+ // createUnifiedHUD, // playerSetup
+//  updateUnifiedHUD, // playerSetup
+//  hideHUD, // playerSetup
+//  showHUD, // playerSetup
+//  setupPlayerCamera, // playerSetup
+//  setupFallDetection, // levelEnvironment
+//  createSpriteGround //  levelEnvironment
+//} from '../helpers/levelHelpers.js'; // NEW MODULES ARE WORKING FINE BUT KEEPING THIS HERE WHILE I TEST MORE TO MAKE SURE
+
 import { 
   openStatUpgradeModal, 
   openMoveSelectionModal, 
@@ -29,6 +32,23 @@ import {
 } from '../helpers/kittyHelpers.js';
 import { setupMobilePlayerControls, setupTouchEvents, setupMobileExitWindow, showMobileArrows, hideMobileArrows, showJoystickControls, hideJoystickControls } from '../helpers/mobileControls.js';
 
+import { 
+  createPlayer, 
+  setupPlayerControls,  
+  updatePlayerAnim, 
+  createUnifiedHUD, 
+  updateUnifiedHUD, 
+  hideHUD, 
+  showHUD, 
+  setupPlayerCamera, 
+} from '../levels/playerSetup.js'; // TESTING
+
+import { 
+  setupFallDetection,
+  createSpriteGround 
+} from '../levels/levelEnvironment.js'; // TESTING
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export async function createChallengeRoomScene(data)  {
   await ensureMusicLoaded("challengeRoom", "assets/sounds/tracks/challengeRoom.m4a");

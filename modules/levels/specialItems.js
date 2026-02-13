@@ -7,8 +7,10 @@
 // setupSpecialItemCollection() - Handle item pickups
 // spawnRewardItems() - Spawn reward drops (after boss defeat)
 
-//==================================== IMPORTS ====================================
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, BUBBLE_FRAMES } from '../config/gameConfig.js';
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //==================================== CUPS ====================================
 export function addCups(levelConfig) {

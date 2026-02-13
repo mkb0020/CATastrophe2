@@ -12,10 +12,13 @@
     // setupFallDetection() - Detect when player falls off level
     // setupTimer() - Handle time limit countdown
     // setupLevelPause() - Configure pause functionality
-
+    
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, Colors, BUBBLE_FRAMES } from '../config/gameConfig.js';
 import { setupPauseSystem, stopAllMusic, startLevelMusic } from '../helpers/kittyHelpers.js';
 import { SPRITE_FRAMES } from '../config/characters.js';
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //==================================== TRANSITION ANIMATION - TO GAME OVER ====================================
 export function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {

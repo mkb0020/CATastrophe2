@@ -1,9 +1,10 @@
 // roomHelper.js
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H } from '../config/gameConfig.js';
 import { getRoom, ROOMS } from '../config/challengeRoom.js';
 import { setupPauseSystem, stopAllMusic, startChallenegeMusic} from '../helpers/kittyHelpers.js';
 
-
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // ==================== DOOR CREATION ====================
 export function createDoor(x, y, roomId, doorType = 'in') {

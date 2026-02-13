@@ -1,4 +1,5 @@
 // bossScene.js
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getBoss, initializeBoss, chooseBossMove } from '../config/bosses.js';
 import { calculateDamage } from '../systems/battleSystem.js';
@@ -57,9 +58,11 @@ import {
 } from '../helpers/bossHelpers.js';
 import { applyUpgradesToBossPlayer } from '../helpers/upgradeHelper.js';
 import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../helpers/mobileControls.js';
-import { hideHUD } from '../helpers/levelHelpers.js';
+// import { hideHUD } from '../helpers/levelHelpers.js';  // NEW MODULES ARE WORKING FINE BUT KEEPING THIS HERE WHILE I TEST MORE TO MAKE SURE
 
+import { hideHUD } from '../levels/playerSetup.js'; // TESTING
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export function createBossBattleScene(bossId, character, startHP, startScore = 0) {
     hideHUD();

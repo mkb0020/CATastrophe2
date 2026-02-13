@@ -1,38 +1,41 @@
 // gamePlay.js
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { getLevel } from '../config/levels.js';
-import { 
-  setupLevelMusic,
-  addLevelEnvironment,
-  addVictoryArea,
-  addCups,
-  addSpecialItems,
-  addLaserBeams,
-  createPlayer,
-  setupPlayerControls,
-  createUnifiedHUD,
-  updateUnifiedHUD,
-  setupVictoryCollision,
-  setupCupCollection,
-  setupSpecialItemCollection,
-  setupTimer,
-  setupFallDetection,
-  setupCucumberSpawner,
-  setupCucumberCollision,
-  setupRatSpawner,
-  setupRatCollision,
-  setupLaserCollision,
-  setupPlayerCamera,
-  setupLevelPause, 
-  setupOneWayPlatforms,
-  setupSequentialPlatforms,
-  setupSequentialPlatformActivation,
-  addMiniBoss,
-  setupMiniBossReflect,
-  spawnRewardItems,
-  hideHUD,
-  showHUD,
-  setupParticleSystem
-} from '../helpers/levelHelpers.js';
+//import { 
+  //setupLevelMusic, 
+  //addLevelEnvironment,
+  //addVictoryArea,
+  //addCups,
+  //addSpecialItems,
+  //addLaserBeams,
+  //createPlayer,
+  //setupPlayerControls,
+  //createUnifiedHUD,
+  //updateUnifiedHUD,
+  //setupVictoryCollision,
+ // setupCupCollection,
+  //setupSpecialItemCollection,
+  //setupTimer,
+  //setupFallDetection,
+  //setupCucumberSpawner,
+  //setupCucumberCollision,
+  //setupRatSpawner,
+  //setupRatCollision,
+  //setupLaserCollision,
+  //setupPlayerCamera,
+  //setupLevelPause, 
+  //setupOneWayPlatforms,
+ // setupSequentialPlatforms,
+  //setupSequentialPlatformActivation,
+  //addMiniBoss,
+  //setupMiniBossReflect,
+  //spawnRewardItems,
+  //hideHUD,
+  //showHUD,
+  //setupParticleSystem
+//} from '../helpers/levelHelpers.js'; // NEW MODULES ARE WORKING FINE BUT KEEPING THIS HERE WHILE I TEST MORE TO MAKE SURE
+
 import { 
   addDoorsToLevel, 
   setupDoorInteraction 
@@ -47,6 +50,53 @@ import { setupMobilePlayerControls, setupTouchEvents, setupMobileDoorInteraction
 import { stopAllMusic, ensureMusicLoaded, loadSuperSaiyanSprites   } from '../helpers/kittyHelpers.js';
 import { characterSpriteLoader } from '../helpers/characterSpriteLoader.js';
 
+
+
+import { 
+  addLaserBeams, //enemies
+  setupCucumberSpawner, //enemies
+  setupCucumberCollision, //enemies
+  setupRatSpawner, //enemies
+  setupRatCollision, //enemies
+  setupLaserCollision, //enemies
+  addMiniBoss,//enemies
+  setupMiniBossReflect, //enemies
+} from '../levels/enemies.js'; // TESTING
+
+import { 
+  setupLevelMusic, // levelEnvironment
+  addLevelEnvironment,  // levelEnvironment
+  addVictoryArea,  // levelEnvironment
+  setupVictoryCollision,  // levelEnvironment
+  setupTimer,  // levelEnvironment
+  setupFallDetection,  // levelEnvironment
+  setupLevelPause,   // levelEnvironment
+  setupOneWayPlatforms,  // levelEnvironment
+  setupSequentialPlatforms,  // levelEnvironment
+  setupSequentialPlatformActivation,  // levelEnvironment
+} from '../levels/levelEnvironment.js'; // TESTING
+
+import { 
+  createPlayer, // playerSetup
+  setupPlayerControls, // playerSetup
+  createUnifiedHUD, // playerSetup
+  updateUnifiedHUD, // playerSetup
+  setupPlayerCamera, // playerSetup
+  hideHUD, // playerSetup
+  showHUD, // playerSetup
+  setupParticleSystem // playerSetup
+} from '../levels/playerSetup.js';  // TESTING
+
+import { 
+  addCups,
+  addSpecialItems,
+  setupCupCollection,
+  setupSpecialItemCollection,
+  spawnRewardItems
+} from '../levels/specialItems.js'; // TESTING
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function createUnifiedLevel(levelId, data) {
   //setLevelBackground(levelId); // TESTING

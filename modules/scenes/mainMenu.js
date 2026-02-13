@@ -1,9 +1,15 @@
 // mainMenu.js
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { getCharacterList, SPRITE_FRAMES, SPRITE_SCALES } from '../config/characters.js';
 import { stopAllMusic, startMenuMusic, openHowToPlayModal, openAboutCatsModal, stopAtmosphere } from '../helpers/kittyHelpers.js';
 import { showMobileArrows, hideMobileArrows, hideJoystickControls } from '../helpers/mobileControls.js';
-import { hideHUD } from '../helpers/levelHelpers.js';
+//import { hideHUD } from '../helpers/levelHelpers.js'; // NEW MODULES ARE WORKING FINE BUT KEEPING THIS HERE WHILE I TEST MORE TO MAKE SURE
+
+import { hideHUD } from '../levels/playerSetup.js'; // TESTING
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // ==================== INITIALIZE GAME STATE ====================
 if (!window.gameState) {

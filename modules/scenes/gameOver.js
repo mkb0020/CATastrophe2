@@ -1,10 +1,15 @@
 // gameOver.js 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPORTS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import { SCREEN_W, SCREEN_H, Colors } from '../config/gameConfig.js';
 import { stopAllMusic, startMenuMusic, startGameOverMusic, startVictoryMusic } from '../helpers/kittyHelpers.js';
 import { getCharacterStats } from '../config/characters.js'; 
 import { showMobileArrows, hideMobileArrows } from '../helpers/mobileControls.js';
-import { hideHUD } from '../helpers/levelHelpers.js';
+// import { hideHUD } from '../helpers/levelHelpers.js'; // NEW MODULES ARE WORKING FINE BUT KEEPING THIS HERE WHILE I TEST MORE TO MAKE SURE
 
+import { hideHUD } from '../levels/playerSetup.js'; // TESTING
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export function createGameOverScene(data) {
   console.log('☠️ GAME OVER SCENE (NO LIVES LEFT)');

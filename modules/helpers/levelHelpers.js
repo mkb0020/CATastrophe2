@@ -29,6 +29,8 @@ import { rainbowCat, SPRITE_FRAMES, SPRITE_SCALES, RAINBOW_CAT_FRAMES } from '..
  // }
 //}
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 //==================================== TRANSITION ANIMATION - TO GAME OVER ====================================
 function playBloodDripAnimation(gameStateSetter, scoreGetter, levelName, character) {
   console.log('☠️ No lives remaining - GAME OVER');
